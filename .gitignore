@@ -1,0 +1,5 @@
+.idea
+runtime/*
+htroot/assets/*
+app/app-1.dev/controllers/TestController.php
+app/app-1.dev/views/test/*
