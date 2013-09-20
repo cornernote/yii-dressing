@@ -1,2 +1,2 @@
-php-yii_skeleton
+yii-dressing
 ================
