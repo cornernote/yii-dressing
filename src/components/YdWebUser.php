@@ -111,7 +111,7 @@ class YdWebUser extends CWebUser
      */
     function getUser($id = null)
     {
-        if ($this->_model === null && Helper::tableExists('user')) {
+        if ($this->_model === null && YdHelper::tableExists('user')) {
             if ($id !== null)
                 $this->_model = User::model()->findByPk($id);
             else

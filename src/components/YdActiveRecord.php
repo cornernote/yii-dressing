@@ -191,34 +191,22 @@ class YdActiveRecord extends CActiveRecord
      * Check if any fields have changed
      *
      * @param string $field
-     * @param bool $details return the field name that was changed
      * @return bool|string|array
      */
-    public function changed($field = '*', $details = false)
+    public function changed($field = null)
     {
         if ($this->isNewRecord)
             return false;
         $changed = array();
-        if ($field != '*') {
-            if ($details) {
-                if ($this->getDbAttribute($field) == $this->{$field}) {
-                    $changed[$field] = array($this->getDbAttribute($field), $this->{$field});
-                }
-                return !empty($changed) ? $changed : false;
-            }
+        if ($field) {
             return $this->getDbAttribute($field) != $this->{$field};
         }
-        $changed = array();
         foreach ($this->attributes as $k => $v) {
             if ($this->getDbAttribute($k) != $v) {
-                if (!$details)
-                    return true;
-                else {
-                    $changed[$k] = array('old' => $this->getDbAttribute($k), 'new' => $v);
-                }
+				return true;
             }
         }
-        return !empty($changed) && $details ? $changed : false;
+        return false;
     }
 
     /**
