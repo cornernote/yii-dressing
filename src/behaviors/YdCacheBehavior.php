@@ -60,7 +60,7 @@ class YdCacheBehavior extends CActiveRecordBehavior
         foreach ($this->cacheRelations as $cacheRelation) {
             $models = is_array($this->owner->$cacheRelation) ? $this->owner->$cacheRelation : array($this->owner->$cacheRelation);
             foreach ($models as $cacheRelationModel) {
-                if ($cacheRelationModel instanceof ActiveRecord) {
+                if ($cacheRelationModel instanceof CActiveRecord) {
                     $cacheRelationModel->clearCache();
                 }
             }
@@ -75,13 +75,10 @@ class YdCacheBehavior extends CActiveRecordBehavior
      * @param bool $removeOldKey
      * @return bool|string
      */
-    public function getCacheKeyPrefix($removeOldKey = false)
+    private function getCacheKeyPrefix($removeOldKey = false)
     {
         $key = 'getCacheKeyPrefix.' . get_class($this->owner) . '.' . $this->owner->getPrimaryKeyString();
-        $prefix = false;
-        if (!$removeOldKey) {
-            $prefix = Yii::app()->cache->get($key);
-        }
+		$prefix = $removeOldKey ? false : Yii::app()->cache->get($key);
         if (!$prefix) {
             $prefix = uniqid();
             Yii::app()->cache->set($key, $prefix);
