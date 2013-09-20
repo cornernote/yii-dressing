@@ -1,0 +1,79 @@
+/*********************
+   Sticky Footer
+*********************/
+html, body {
+    height: 100%
+}
+
+body {
+    padding-top: 0;
+}
+
+#holder {
+    min-height: 100%;
+    position: relative;
+}
+
+#subpage {
+    padding-bottom: 362px;
+}
+
+#subpage>header {
+    padding-top: 60px;
+}
+
+#subpage>footer {
+    /* height: 362px; */
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 0;
+    margin: 0;
+}
+
+footer p {
+    line-height: normal;
+}
+
+/*********************
+   Navbar
+*********************/
+
+.dropdown-menu {
+    z-index: 3000;
+    margin: 0;
+}
+
+.navbar .brand {
+    text-shadow: none;
+    color: #fff;
+    padding-left: 0;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle,
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+    color: #fff;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.navbar .nav > li > a {
+    -webkit-transition: all .2s linear 0s;
+    -moz-transition: all .2s linear 0s;
+    -ms-transition: all .2s linear 0s;
+    -o-transition: all .2s linear 0s;
+    transition: all .2s linear 0s;
+}
+
+.navbar .nav > li > a:hover {
+    -moz-transform: translateY(-5px);
+    -webkit-transform: translateY(-5px);
+    -o-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    transform: translateY(-5px);
+}

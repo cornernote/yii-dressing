@@ -1,0 +1,71 @@
+/*********************
+    HTML Elements
+*********************/
+
+footer {
+    margin-top: 18px;
+}
+
+h1, h2, h3, h4, h5 {
+    margin-bottom: 18px;
+    border: 2px solid #808080;
+    background: #808080;
+    color: #fff;
+    padding: 7px 14px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+h1 small, h2 small, h3 small, h4 small, h5 small {
+    color: #fff;
+}
+
+h1 a, h2 a, h3 a, h4 a {
+    color: #fff;
+}
+
+h1 small a, h2 small a, h3 small a, h4 small a, h5 small a {
+    color: #fff;
+}
+
+h2 {
+    line-height: 18px;
+}
+
+h3 {
+    line-height: 16px;
+}
+
+h4 {
+    line-height: 14px;
+}
+
+h5 {
+    line-height: 12px;
+}
+
+.hero-unit h1 {
+    background: transparent;
+    border: 0;
+}
+
+/*********************
+    Tabs Menu
+*********************/
+
+#menu > li > a {
+    background: #ccc;
+    color: #000;
+    border: 1px solid #ccc;
+}
+
+#menu > li > a:hover {
+    background: #ebebeb;
+}
+
+#menu > .active > a, #menu > .active > a:hover {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #fff;
+}

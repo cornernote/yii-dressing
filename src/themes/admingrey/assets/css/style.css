@@ -1,0 +1,123 @@
+/*********************
+    HTML Elements
+*********************/
+body {
+    background: url(../img/main-bg.png) repeat-x #f9f9f9;
+}
+
+footer {
+    margin-top: 18px;
+}
+
+h1, h2, h3, h4, h5 {
+    margin-bottom: 18px;
+    border: 2px solid #808080;
+    background: #808080;
+    color: #fff;
+    padding: 7px 14px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+h1 small, h2 small, h3 small, h4 small, h5 small {
+    color: #fff;
+}
+
+h1 a, h2 a, h3 a, h4 a {
+    color: #fff;
+}
+
+h1 small a, h2 small a, h3 small a, h4 small a, h5 small a {
+    color: #fff;
+}
+
+/*
+h1 small {
+    font-size: 26px;
+}
+
+h2 small {
+    font-size: 24px;
+}
+
+h3 small {
+    font-size: 18px;
+}
+
+h4 small {
+    font-size: 14px;
+}
+
+h5 small {
+    font-size: 12px;
+}
+*/
+
+h2 {
+    line-height: 18px;
+}
+
+h3 {
+    line-height: 16px;
+}
+
+h4 {
+    line-height: 14px;
+}
+
+h5 {
+    line-height: 12px;
+}
+
+.hero-unit h1 {
+    background: transparent;
+    border: 0;
+}
+
+/*********************
+    Structure
+*********************/
+
+#content {
+    padding: 10px;
+    border: 1px solid #b6b6b6;
+    background: #dfdfdf;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+#inner {
+    clear: both;
+    margin: -1px 0px 0px 0px;
+    padding: 10px;
+    border: 1px #CCCCCC solid;
+    background-color: #f9f9f9;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+/*********************
+    Tabs Menu
+*********************/
+#menu {
+    margin: 0 0 0 18px;
+}
+
+#menu > li > a {
+    background: #ccc;
+    color: #000;
+    border: 1px solid #ccc;
+}
+
+#menu > li > a:hover {
+    background: #ebebeb;
+}
+
+#menu > .active > a, #menu > .active > a:hover {
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #f9f9f9;
+}
