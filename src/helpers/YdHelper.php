@@ -57,6 +57,24 @@ class YdHelper
     }
 
     /**
+     * @static
+     * @return bool
+     */
+    public static function isWindowsServer()
+    {
+        return (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+    }
+
+    /**
+     * @static
+     * @return bool
+     */
+    public static function isLinuxServer()
+    {
+        return (strtoupper(substr(PHP_OS, 0, 5)) === 'LINUX');
+    }
+
+    /**
      * @param $table
      * @param CDbConnection $db
      * @return bool
