@@ -5,12 +5,11 @@
  * @var $recaptcha string
  */
 
-$this->pageTitle = $this->pageHeading = t('Recover Password');
-$this->breadcrumbs = array(
-    t('Recover Password'),
-);
+$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Recover Password');
+$this->breadcrumbs[] = Yii::t('dressing', 'Recover Password');
 
-/* @var $form ActiveForm */
+
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'recover-form',
     //'enableAjaxValidation' => false,
@@ -34,13 +33,13 @@ if ($recaptcha) {
 echo $form->endModalWrap();
 echo '<div class="' . $form->getSubmitRowClass() . '">';
 $this->widget('bootstrap.widgets.TbButton', array(
-    'label' => t('Recover'),
+    'label' => Yii::t('dressing', 'Recover'),
     'type' => 'primary',
     'buttonType' => 'submit',
 ));
 echo ' ';
 $this->widget('bootstrap.widgets.TbButton', array(
-    'label' => t('Back to Login'),
+    'label' => Yii::t('dressing', 'Back to Login'),
     'url' => array('/account/login'),
 ));
 echo '</div>';

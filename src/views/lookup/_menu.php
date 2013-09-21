@@ -6,14 +6,14 @@
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = YdMenu::getItemsFromMenu('System');
+    $this->menu = YdMenu::getItemsFromMenu('Settings', YdMenu::MENU_ADMIN);
     return; // no more links
 }
 
 // create
 if ($lookup->isNewRecord) {
     $this->menu[] = array(
-        'label' => t('Create'),
+        'label' => Yii::t('dressing', 'Create'),
         'url' => array('/lookup/create'),
     );
     return; // no more links
@@ -21,11 +21,11 @@ if ($lookup->isNewRecord) {
 
 // view
 $this->menu[] = array(
-    'label' => t('View'),
+    'label' => Yii::t('dressing', 'View'),
     'url' => $lookup->getUrl(),
 );
 
 // others
-foreach ($lookup->getDropdownLinkItems(true) as $linkItem) {
+foreach ($lookup->getMenuLinks(true) as $linkItem) {
     $this->menu[] = $linkItem;
 }

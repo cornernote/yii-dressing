@@ -31,12 +31,12 @@ class YdRequiredOtherValidator extends CRequiredValidator
         if ($this->otherFieldValue === false && !$object->{$this->otherField}) return;
         if ($this->otherFieldValue === false || $object->{$this->otherField} == $this->otherFieldValue) {
             $otherFieldLabel = $object->getAttributeLabel($this->otherField);
-            $otherFieldValueLabel = $this->otherFieldValue ? $this->otherFieldValue : t('not blank');
+            $otherFieldValueLabel = $this->otherFieldValue ? $this->otherFieldValue : Yii::t('dressing', 'not blank');
 
             $value = $object->$attribute;
             if ($this->requiredValue !== null) {
                 if (!$this->strict && $value != $this->requiredValue || $this->strict && $value !== $this->requiredValue) {
-                    $message = $this->message !== null ? $this->message : t('{attribute} must be {value} when {otherFieldLabel} is {otherFieldValueLabel}.', 'app', array(
+                    $message = $this->message !== null ? $this->message : Yii::t('dressing', '{attribute} must be {value} when {otherFieldLabel} is {otherFieldValueLabel}.', 'app', array(
                         '{value}' => $this->requiredValue,
                         '{otherFieldLabel}' => $otherFieldLabel,
                         '{otherFieldValueLabel}' => $otherFieldValueLabel,
@@ -45,7 +45,7 @@ class YdRequiredOtherValidator extends CRequiredValidator
                 }
             }
             else if ($this->isEmpty($value, true)) {
-                $message = $this->message !== null ? $this->message : t('{attribute} cannot be blank when {otherFieldLabel} is {otherFieldValueLabel}.', 'app', array(
+                $message = $this->message !== null ? $this->message : Yii::t('dressing', '{attribute} cannot be blank when {otherFieldLabel} is {otherFieldValueLabel}.', 'app', array(
                     '{otherFieldLabel}' => $otherFieldLabel,
                     '{otherFieldValueLabel}' => $otherFieldValueLabel,
                 ));

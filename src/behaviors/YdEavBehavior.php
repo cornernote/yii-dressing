@@ -43,7 +43,7 @@ class YdEavBehavior extends EEavBehavior
         if ($this->getOwner()->asa('AuditBehavior')) {
             $auditId = Audit::findCurrentId();
             try {
-                $userid = user()->id;
+                $userid = Yii::app()->user->id;
             } catch (Exception $e) { //If we have no user object, this must be a command line program
                 $userid = 0;
             }

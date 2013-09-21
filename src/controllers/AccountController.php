@@ -18,7 +18,7 @@ class AccountController extends YdWebController
     {
         return array(
             array('allow',
-                'actions' => array('login', 'register', 'recover', 'passwordReset'),
+                'actions' => array('login', 'signup', 'recover', 'passwordReset'),
                 'users' => array('*'),
             ),
             array('allow',
@@ -34,7 +34,7 @@ class AccountController extends YdWebController
      */
     public function actionIndex()
     {
-        $user = $this->loadModel(user()->id, 'YdUser');
+        $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
         $this->render('dressing.views.account.view', array(
             'user' => $user,
         ));
@@ -46,7 +46,7 @@ class AccountController extends YdWebController
     public function actionLogin()
     {
         // redirect if the user is already logged in
-        if (user()->id) {
+        if (Yii::app()->user->id) {
             $this->redirect(Yii::app()->homeUrl);
         }
 
@@ -87,28 +87,28 @@ class AccountController extends YdWebController
 
 
     /**
-     * Displays the register page
+     * Displays the signup page
      */
-    public function actionRegister()
+    public function actionSignup()
     {
         // redirect if the user is already logged in
-        if (user()->id) {
+        if (Yii::app()->user->id) {
             $this->redirect(Yii::app()->homeUrl);
         }
 
-        $user = new YdUserRegister();
-        $this->performAjaxValidation($user, 'register-form');
+        $user = new YdUserSignup();
+        $this->performAjaxValidation($user, 'signup-form');
 
         // collect user input data
-        if (isset($_POST['UserRegister'])) {
-            $user->attributes = $_POST['UserRegister'];
+        if (isset($_POST['UserSignup'])) {
+            $user->attributes = $_POST['UserSignup'];
             if ($user->save()) {
                 $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
             }
         }
 
-        // display the register form
-        $this->render('dressing.views.account.register', array(
+        // display the signup form
+        $this->render('dressing.views.account.signup', array(
             'user' => $user,
         ));
     }
@@ -119,7 +119,7 @@ class AccountController extends YdWebController
     public function actionRecover()
     {
         // redirect if the user is already logged in
-        if (user()->id) {
+        if (Yii::app()->user->id) {
             $this->redirect(Yii::app()->homeUrl);
         }
 
@@ -139,7 +139,7 @@ class AccountController extends YdWebController
             if ($userRecover->validate()) {
                 $user = User::model()->findbyPk($userRecover->user_id);
                 email()->sendRecoverPasswordEmail($user);
-                user()->addFlash(sprintf(t('Password reset instructions have been sent to %s. Please check your email.'), $user->email), 'success');
+                Yii::app()->user->addFlash(sprintf(Yii::t('dressing', 'Password reset instructions have been sent to %s. Please check your email.'), $user->email), 'success');
                 Yii::app()->cache->delete("recover.attempt.{$_SERVER['REMOTE_ADDR']}");
                 $this->redirect(array('/account/login'));
             }
@@ -168,7 +168,7 @@ class AccountController extends YdWebController
     public function actionPasswordReset($id, $token)
     {
         // redirect if the user is already logged in
-        if (user()->id) {
+        if (Yii::app()->user->id) {
             $this->redirect(Yii::app()->homeUrl);
         }
 
@@ -186,10 +186,10 @@ class AccountController extends YdWebController
                 'model' => 'PasswordRecover',
                 'model_id' => 2,
                 'details' => array(
-                    'user_id' => user()->id,
+                    'user_id' => Yii::app()->user->id,
                 ),
             ));
-            user()->addFlash(t('Invalid key.'), 'warning');
+            Yii::app()->user->addFlash(Yii::t('dressing', 'Invalid key.'), 'warning');
             $this->redirect(array('/account/recover'));
         }
 
@@ -201,12 +201,12 @@ class AccountController extends YdWebController
 
                 $user->password = $user->hashPassword($userPassword->password);
                 if (!$user->save(false)) {
-                    user()->addFlash(t('Your password could not be saved.'), 'error');
+                    Yii::app()->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'error');
                 }
 
                 $identity = new YdUserIdentity($user->email, $userPassword->password);
                 if ($identity->authenticate()) {
-                    user()->login($identity);
+                    Yii::app()->user->login($identity);
                 }
 
                 Log::model()->add('password has been saved and user logged in', array(
@@ -219,7 +219,7 @@ class AccountController extends YdWebController
 
                 Token::model()->useToken('RecoverPasswordEmail', $id, $token);
 
-                user()->addFlash(t('Your password has been saved and you have been logged in.'), 'success');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Your password has been saved and you have been logged in.'), 'success');
                 $this->redirect(Yii::app()->homeUrl);
             }
             else {
@@ -230,7 +230,7 @@ class AccountController extends YdWebController
                         'user_id' => $user->id,
                     ),
                 ));
-                user()->addFlash(t('Your password could not be saved.'), 'warning');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'warning');
             }
         }
         $this->render('dressing.views.account.password_reset', array('user' => $userPassword));
@@ -241,9 +241,8 @@ class AccountController extends YdWebController
      */
     public function actionLogout()
     {
-        user()->logout();
+        Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
-
     }
 
     /**
@@ -251,7 +250,7 @@ class AccountController extends YdWebController
      */
     public function actionUpdate()
     {
-        $user = $this->loadModel(user()->id, 'YdUser');
+        $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
         $user->scenario = 'account';
 
         $this->performAjaxValidation($user, 'account-form');
@@ -259,11 +258,11 @@ class AccountController extends YdWebController
         if (isset($_POST['User'])) {
             $user->attributes = $_POST['User'];
             if ($user->save()) {
-                user()->addFlash('Your account has been saved.', 'success');
+                Yii::app()->user->addFlash('Your account has been saved.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl());
             }
             else {
-                user()->addFlash('Your account could not be saved.', 'warning');
+                Yii::app()->user->addFlash('Your account could not be saved.', 'warning');
             }
         }
 
@@ -278,7 +277,7 @@ class AccountController extends YdWebController
     public function actionPassword()
     {
         /**@var $user User * */
-        $user = $this->loadModel(user()->id, 'YdUser');
+        $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
         $userPassword = new YdUserPassword('password');
         $this->performAjaxValidation($userPassword, 'password-form');
         if (isset($_POST['UserPassword'])) {
@@ -286,12 +285,12 @@ class AccountController extends YdWebController
             if ($userPassword->validate()) {
                 $user->password = $user->hashPassword($userPassword->password);
                 if ($user->save(false)) {
-                    user()->addFlash('Your password has been saved.', 'success');
+                    Yii::app()->user->addFlash('Your password has been saved.', 'success');
                     $this->redirect(array('/account/index'));
                 }
             }
             else {
-                user()->addFlash('Your password could not be saved.', 'warning');
+                Yii::app()->user->addFlash('Your password could not be saved.', 'warning');
             }
         }
         $this->render('dressing.views.account.password', array('user' => $userPassword));
@@ -304,7 +303,7 @@ class AccountController extends YdWebController
     public function actionSettings()
     {
         /** @var $user User */
-        $user = $this->loadModel(user()->id, 'YdUser');
+        $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
 
         if (isset($_POST['UserEav'])) {
 
@@ -317,11 +316,11 @@ class AccountController extends YdWebController
             }
 
             if ($user->setEavAttributes($_POST['UserEav'], true)) {
-                user()->addFlash('Your settings have been saved.', 'success');
+                Yii::app()->user->addFlash('Your settings have been saved.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl());
             }
             else {
-                user()->addFlash('Your settings could not be saved.', 'warning');
+                Yii::app()->user->addFlash('Your settings could not be saved.', 'warning');
             }
         }
 

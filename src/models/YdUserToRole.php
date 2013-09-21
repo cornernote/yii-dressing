@@ -22,7 +22,7 @@
  *
  * --- END GenerateProperties ---
  */
-class UserToRole extends YdActiveRecord
+class YdUserToRole extends YdActiveRecord
 {
 
     /**
@@ -36,14 +36,6 @@ class UserToRole extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'user_to_role';
-    }
-
-    /**
      * @return array containing model behaviors
      */
     public function behaviors()
@@ -53,7 +45,7 @@ class UserToRole extends YdActiveRecord
                 'class' => 'dressing.behaviors.YdAuditBehavior',
                 'additionalAuditModels' => array(
                     'User' => 'user_id',
-                    'Role' => 'role_id',
+                    //'Role' => 'role_id',
                 ),
             ),
         );

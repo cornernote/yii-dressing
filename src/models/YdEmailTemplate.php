@@ -43,23 +43,15 @@ class YdEmailTemplate extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'email_template';
-    }
-
-    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
-            'name' => t('Name'),
-            'created' => t('Created'),
-            'deleted' => t('Deleted'),
+            'id' => Yii::t('dressing', 'ID'),
+            'name' => Yii::t('dressing', 'Name'),
+            'created' => Yii::t('dressing', 'Created'),
+            'deleted' => Yii::t('dressing', 'Deleted'),
         );
     }
 

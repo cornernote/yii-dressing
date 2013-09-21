@@ -75,18 +75,16 @@ class SettingController extends YdWebController
                 $transaction->commit();
 
                 // clear cache
-                cache()->flush();
-                ModelCache::model()->flush();
-                Helper::removeDirectory(app()->getAssetManager()->basePath, false);
+                Yii::app()->cache()->flush();
 
                 // flash and redirect
-                user()->addFlash(t('Settings have been saved.'), 'success');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Settings have been saved.'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl(array('/setting/index')));
             }
 
             // rollback transaction and flash error
             $transaction->rollback();
-            user()->addFlash(t('Settings could not be saved.'), 'error');
+            Yii::app()->user->addFlash(Yii::t('dressing', 'Settings could not be saved.'), 'error');
 
         }
 

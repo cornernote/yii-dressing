@@ -62,7 +62,7 @@ class YdReCaptchaValidator extends CValidator
      */
     public function setPrivateKey($value)
     {
-        if (empty($value) || !is_string($value)) throw new CException(Yii::t('yii', 'ReCaptchaValidator.privateKey must contain your reCAPTCHA private key.'));
+        if (empty($value) || !is_string($value)) throw new CException(Yii::t('dressing', 'ReCaptchaValidator.privateKey must contain your reCAPTCHA private key.'));
         $this->privateKey = $value;
     }
 
@@ -84,13 +84,13 @@ class YdReCaptchaValidator extends CValidator
      */
     protected function validateAttribute($object, $attribute)
     {
-        require_once(vp() . '/reCAPTCHA/recaptchalib.php');
+        require_once(Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'recaptcha' . DIRECTORY_SEPARATOR . 'recaptcha' . DIRECTORY_SEPARATOR . 'recaptchalib.php');
         $resp = recaptcha_check_answer($this->privateKey,
             $_SERVER['REMOTE_ADDR'],
             $_POST['recaptcha_challenge_field'],
             $_POST['recaptcha_response_field']);
         if (!$resp->is_valid) {
-            $message = $this->message !== null ? $this->message : Yii::t('yii', 'The verification code is incorrect.');
+            $message = $this->message !== null ? $this->message : Yii::t('dressing', 'The verification code is incorrect.');
             $this->addError($object, $attribute, $message);
         }
     }

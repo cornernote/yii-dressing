@@ -5,8 +5,8 @@
  */
 
 // list
-$this->widget('widgets.ListView', array(
+$this->widget('dressing.widgets.YdListView', array(
     'id' => 'contactUs-list',
     'dataProvider' => $contactUs->search(),
-    'itemView' => '_list_view',
+    'itemView' => 'dressing.views.contactUs._list_view',
 ));

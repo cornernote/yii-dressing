@@ -4,7 +4,7 @@
  * @var $contactUs YdContactUs
  */
 
-/** @var ActiveForm $form */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'contactUs-form',
     'type' => 'vertical',
@@ -26,7 +26,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     'buttonType' => 'submit',
     'type' => 'primary',
     'icon' => 'ok white',
-    'label' => t('Send') ,
+    'label' => Yii::t('dressing', 'Send') ,
     'htmlOptions' => array('class' => 'pull-right'),
 ));
 echo '</div>';

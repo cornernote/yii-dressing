@@ -73,14 +73,14 @@ class ErrorController extends YdWebController
         if (strpos($contents, '<body>')) {
             $contents = str_replace('</h1>', ' - ' . $errorCode . $auditId . '</h1>' . '<h3> ' . $auditLink . ' logged on ' . date('Y-m-d H:i:s', filemtime($path)) . '</h3>', $contents);
             $contents = StringHelper::getBetweenString($contents, '<body>', '</body>');
-            cs()->registerCss('error', file_get_contents(dirname($this->getViewFile('index')) . '/view.css'));
+            Yii::app()->clientScript->registerCss('error', file_get_contents(dirname($this->getViewFile('index')) . '/view.css'));
         }
         else {
             $contents = '<h1>' . $errorCode . $auditId . '</h1>' . '<h3> ' . $auditLink . ' logged on ' . date('Y-m-d H:i:s', filemtime($path)) . '</h3><pre>' . $contents . '</pre>';
         }
         $this->breadcrumbs = array(
-            t('Error List') => array('/error/index'),
-            t('Error') . ' ' . $error,
+            Yii::t('dressing', 'Error List') => array('/error/index'),
+            Yii::t('dressing', 'Error') . ' ' . $error,
         );
         $this->renderText($contents);
         app()->end();
@@ -94,7 +94,7 @@ class ErrorController extends YdWebController
         foreach ($this->getErrors() as $error) {
             unlink($error);
         }
-        user()->addFlash('Errors cleared ', 'success');
+        Yii::app()->user->addFlash('Errors cleared ', 'success');
         $this->redirect(array('error/index'));
     }
 

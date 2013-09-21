@@ -40,9 +40,25 @@ class YdRole extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @param array $options
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function tableName()
+    public function search($options = array())
+    {
+        $criteria = new CDbCriteria;
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.name', $this->name, true);
+
+        return new YdActiveDataProvider($this, CMap::mergeArray(array(
+            'criteria' => $criteria,
+        ), $options));
+    }
+
+    /**
+     * @return string
+     */
+    public function getControllerName()
     {
         return 'role';
     }

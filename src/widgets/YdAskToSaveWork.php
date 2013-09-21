@@ -6,7 +6,7 @@
  *
  *
  * USAGE:
- * $this->widget('widgets.AskToSaveWork', array('watchElement' => '#my-form :input', 'message' => t('Please save before leaving the page')));
+ * $this->widget('widgets.AskToSaveWork', array('watchElement' => '#my-form :input', 'message' => Yii::t('dressing', 'Please save before leaving the page')));
  *
  *
  * @author aleksdj
@@ -25,12 +25,18 @@ class YdAskToSaveWork extends CWidget
      */
     public $watchElement;
 
+    /**
+     *
+     */
     public function init()
     {
         parent::init();
         $this->message = isset($this->message) ? $this->message : Yii::t('messages', "Please save before leaving the page");
     }
 
+    /**
+     *
+     */
     public function run()
     {
         parent::run();
@@ -58,4 +64,3 @@ class YdAskToSaveWork extends CWidget
     }
 }
 
-?>

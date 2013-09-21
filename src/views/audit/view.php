@@ -3,10 +3,10 @@
  * @var $this AuditController
  * @var $audit YdAudit
  */
-$this->pageTitle = $this->pageHeading = $audit->getName() . ' - ' . $this->getName() . ' ' . t('View');
+$this->pageTitle = $this->pageHeading = $audit->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'View');
 
-$this->breadcrumbs[t('Tools')] = array('/tool/index');
-$this->breadcrumbs[t('Audits')] = user()->getState('index.audit', array('/audit/index'));
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[Yii::t('dressing', 'Audits')] = Yii::app()->user->getState('index.audit', array('/audit/index'));
 $this->breadcrumbs[] = $audit->getName();
 
 $this->renderPartial('dressing.views.audit._menu', array(
@@ -18,7 +18,7 @@ $this->renderPartial('dressing.views.audit._menu', array(
 <div>
 
     <fieldset>
-        <legend><?php echo $this->getName() . ' ' . t('Details') ?></legend>
+        <legend><?php echo $this->getName() . ' ' . Yii::t('dressing', 'Details') ?></legend>
         <?php
 
         $attributes = array();
@@ -64,12 +64,12 @@ $this->renderPartial('dressing.views.audit._menu', array(
             'name' => 'user_id',
             'label' => 'user',
             'type' => 'raw',
-            'value' => $audit->user ? ('user-' . $audit->user->id . '  ' . l(h($audit->user->name), $audit->user->url)) : null,
+            'value' => $audit->user ? ('user-' . $audit->user->id . '  ' . CHtml::link(h($audit->user->name), $audit->user->url)) : null,
         );
         $attributes[] = array(
             'name' => 'preserve',
-            'value' => $audit->preserve ? t('This audit is Preserved.') . ' - ' . l('Remove Preserve', array('/audit/preserve', 'id' => $audit->id, 'status' => 0))
-                : l('Preserve Values', array('/audit/preserve', 'id' => $audit->id, 'status' => 1)),
+            'value' => $audit->preserve ? Yii::t('dressing', 'This audit is Preserved.') . ' - ' . CHtml::link('Remove Preserve', array('/audit/preserve', 'id' => $audit->id, 'status' => 0))
+                : CHtml::link('Preserve Values', array('/audit/preserve', 'id' => $audit->id, 'status' => 1)),
             'type' => 'raw',
         );
 
@@ -82,7 +82,7 @@ $this->renderPartial('dressing.views.audit._menu', array(
     </fieldset>
 
     <fieldset>
-        <legend><?php echo t('Audit Trail') ?></legend>
+        <legend><?php echo Yii::t('dressing', 'Audit Trail') ?></legend>
         <?php
         $auditTrail = new AuditTrail('search');
         if (isset($_GET['AuditTrail'])) {
@@ -96,7 +96,7 @@ $this->renderPartial('dressing.views.audit._menu', array(
     </fieldset>
 
     <fieldset>
-        <legend><?php echo t('Version Settings') ?></legend>
+        <legend><?php echo Yii::t('dressing', 'Version Settings') ?></legend>
         <?php
         $this->widget('dressing.widgets.YdDetailView', array(
             'data' => $audit,
@@ -113,7 +113,7 @@ $this->renderPartial('dressing.views.audit._menu', array(
     </fieldset>
 
     <fieldset>
-        <legend><?php echo t('Page Variables') ?></legend>
+        <legend><?php echo Yii::t('dressing', 'Page Variables') ?></legend>
         <?php
         $this->widget('dressing.widgets.YdDetailView', array(
             'data' => $audit,
@@ -139,7 +139,7 @@ $this->renderPartial('dressing.views.audit._menu', array(
     </fieldset>
 
     <fieldset>
-        <legend><?php echo t('Session and Cookies') ?></legend>
+        <legend><?php echo Yii::t('dressing', 'Session and Cookies') ?></legend>
         <a href='javascript:void(0)' onclick="$('#show_session_detail').show('slow');$('#show_session').hide();"
            id='show_session'>Show</a>
 
@@ -167,7 +167,7 @@ $this->renderPartial('dressing.views.audit._menu', array(
     </fieldset>
 
     <fieldset>
-        <legend><?php echo t('Server Data') ?></legend>
+        <legend><?php echo Yii::t('dressing', 'Server Data') ?></legend>
         <a href='javascript:void(0)' onclick="$('#show_server_detail').show('slow');$('#show_server').hide();"
            id='show_server'>Show</a>
 
@@ -190,7 +190,7 @@ $this->renderPartial('dressing.views.audit._menu', array(
 
     <?php if ($audit->error) { ?>
         <fieldset>
-            <legend><?php echo t('Error');
+            <legend><?php echo Yii::t('dressing', 'Error');
                 if ($audit->error_code) echo '-' . $audit->error_code ?></legend>
             <a href='javascript:void(0)' onclick="$('#show_error_detail').show('slow');$('#show_error').hide();"
                id='show_error'>Show</a>
@@ -203,7 +203,7 @@ $this->renderPartial('dressing.views.audit._menu', array(
                 $contents = str_replace('class="container"', 'class="container-fluid"', $contents);
                 if (strpos($contents, '<body>')) {
                     $contents = StringHelper::getBetweenString($contents, '<body>', '</body>');
-                    cs()->registerCss('error', file_get_contents(dirname($this->getViewFile('/error/index')) . '/view.css'));
+                    Yii::app()->clientScript->registerCss('error', file_get_contents(dirname($this->getViewFile('/error/index')) . '/view.css'));
                 }
                 else {
                     $contents = '<pre>' . $contents . '</pre>';

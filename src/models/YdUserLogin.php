@@ -68,10 +68,10 @@ class YdUserLogin extends YdFormModel
     public function attributeLabels()
     {
         return array(
-            'email' => t('Email'),
-            'password' => t('Password'),
-            'remember_me' => t('Remember me next time'),
-            'recaptcha' => t('Enter both words separated by a space'),
+            'email' => Yii::t('dressing', 'Email'),
+            'password' => Yii::t('dressing', 'Password'),
+            'remember_me' => Yii::t('dressing', 'Remember me next time'),
+            'recaptcha' => Yii::t('dressing', 'Enter both words separated by a space'),
         );
     }
 
@@ -100,7 +100,7 @@ class YdUserLogin extends YdFormModel
         }
         if ($this->_identity->authenticate()) {
             $duration = $this->remember_me ? 3600 * 24 * 30 : 0; // 30 days
-            user()->login($this->_identity, $duration);
+            Yii::app()->user->login($this->_identity, $duration);
             return true;
         }
         return false;

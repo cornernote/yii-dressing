@@ -41,14 +41,6 @@ class YdToken extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'token';
-    }
-
-    /**
      * @return array containing model behaviors
      */
     public function behaviors()
@@ -64,7 +56,7 @@ class YdToken extends YdActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
+            'id' => Yii::t('dressing', 'ID'),
         );
     }
 
@@ -103,22 +95,22 @@ class YdToken extends YdActiveRecord
             ':model_id' => $model_id,
         ));
         if (!$token) {
-            $this->addError('token', t('missing token'));
+            $this->addError('token', Yii::t('dressing', 'missing token'));
             return false;
         }
         // check uses remaining
         if ($token->uses_remaining <= 0) {
-            $this->addError('token', t('no uses remaining'));
+            $this->addError('token', Yii::t('dressing', 'no uses remaining'));
             return false;
         }
         // check expires
         if (strtotime($token->expires) <= time()) {
-            $this->addError('token', t('token has expired'));
+            $this->addError('token', Yii::t('dressing', 'token has expired'));
             return false;
         }
         // check token plain
         if (!$token->validateToken($plain)) {
-            $this->addError('token', t('token is invalid'));
+            $this->addError('token', Yii::t('dressing', 'token is invalid'));
             return false;
         }
         return $token;

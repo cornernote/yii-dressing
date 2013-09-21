@@ -27,10 +27,10 @@ echo CHtml::encode($data->subject) . '<br />';
 echo '<b>' . CHtml::encode($data->getAttributeLabel('message')) . ':</b>';
 echo CHtml::encode($data->message) . '<br />';
 
-echo '<b>' . CHtml::encode($data->getAttributeLabel('created_at')) . ':</b>';
-echo CHtml::encode($data->created_at) . '<br />';
-
 echo '<b>' . CHtml::encode($data->getAttributeLabel('ip_address')) . ':</b>';
 echo CHtml::encode($data->ip_address) . '<br />';
+
+echo '<b>' . CHtml::encode($data->getAttributeLabel('created')) . ':</b>';
+echo CHtml::encode($data->created) . '<br />';
 
 echo '</div>';

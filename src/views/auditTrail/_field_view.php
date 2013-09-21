@@ -20,7 +20,7 @@ echo '<small>' . $data->created . '</small>';
 echo '</td>';
 
 echo '<td>';
-if (user()->checkAccess('admin')) {
+if (Yii::app()->user->checkAccess('admin')) {
     echo ($data->user_id && is_numeric($data->user_id) ? User::model()->findByPk($data->user_id)->getLink() : $data->user_id);
 }
 else {
@@ -28,7 +28,7 @@ else {
 }
 echo '</td>';
 
-if (user()->checkAccess('admin')) {
+if (Yii::app()->user->checkAccess('admin')) {
     echo '<td>';
     echo $data->audit ? $data->audit->getLink() : '';
     echo '</td>';

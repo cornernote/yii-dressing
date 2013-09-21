@@ -13,18 +13,17 @@ echo " */\n";
 echo "\n";
 
 if ($action === 'index') {
-    echo "user()->setState('index." . $this->getUniqueControllerID() . "', ru());\n";
+    echo "Yii::app()->user->setState('index." . $this->getUniqueControllerID() . "', Yii::app()->request->requestUri);\n";
     echo "\n";
-    echo "\$this->pageTitle = \$this->pageHeading = \$this->getName() . ' ' . t('List');\n";
+    echo "\$this->pageTitle = \$this->pageHeading = \$this->getName() . ' ' . Yii::t('app', 'List');\n";
     echo "\n";
-    echo "\$this->breadcrumbs = array(\$this->getName() . ' ' . t('List'));\n";
+    echo "\$this->breadcrumbs[] = \$this->getName() . ' ' . Yii::t('app', 'List');\n";
 }
 else {
     $action = ucfirst($action);
-    echo "\$this->pageTitle = \$this->pageHeading = \$" . $this->getUniqueControllerID() . "->getName() . ' - ' . \$this->getName() . ' ' . t('" . $action . "');\n";
+    echo "\$this->pageTitle = \$this->pageHeading = \$" . $this->getUniqueControllerID() . "->getName() . ' - ' . \$this->getName() . ' ' . Yii::t('app', '" . $action . "');\n";
     echo "\n";
-    echo "\$this->breadcrumbs = array();\n";
-    echo "\$this->breadcrumbs[\$this->getName() . ' ' . t('List')] = user()->getState('index." . $this->getUniqueControllerID() . "', array('/" . $this->getUniqueControllerID() . "/index'));\n";
+    echo "\$this->breadcrumbs[\$this->getName() . ' ' . Yii::t('app', 'List')] = Yii::app()->user->getState('index." . $this->getUniqueControllerID() . "', array('/" . $this->getUniqueControllerID() . "/index'));\n";
     echo "\$this->breadcrumbs[] = \$" . $this->getUniqueControllerID() . "->getName();\n";
 }
 echo "\n";

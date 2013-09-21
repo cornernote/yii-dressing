@@ -38,13 +38,13 @@ class YdApiController extends YdController
             // allow a secure link to api-login
             $identity = new UserIdentity($username, $password);
             if ($identity->authenticateApi()) {
-                user()->login($identity, $duration = 0);
+                Yii::app()->user->login($identity, $duration = 0);
             }
         }
 
         // ensure the user is an api login
-        if (!user()->isGuest && !user()->getState('UserIdentity.api')) {
-            throw new CHttpException(403, t('Please login to API.'));
+        if (!Yii::app()->user->isGuest && !Yii::app()->user->getState('UserIdentity.api')) {
+            throw new CHttpException(403, Yii::t('dressing', 'Please login to API.'));
         }
     }
 
@@ -109,7 +109,7 @@ class YdApiController extends YdController
         if ($this->loadModel === null) {
             $this->loadModel = CActiveRecord::model($model)->findbyPk($id);
             if ($this->loadModel === null)
-                throw new CHttpException(404, t('The requested model does not exist.'));
+                throw new CHttpException(404, Yii::t('dressing', 'The requested model does not exist.'));
         }
         return $this->loadModel;
     }

@@ -4,18 +4,17 @@
  * @var $contactUs YdContactUs
  */
 
-Helper::searchToggle('contactUs-grid');
-echo '<div class="search-form hide">';
-
-/** @var ActiveForm $form */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
-	'action' => url($this->route),
-	'type' => 'horizontal',
-	'method' => 'get',
+    'action' => Yii::app()->createUrl($this->route),
+    'type' => 'horizontal',
+    'method' => 'get',
+    'htmlOptions' => array('class' => 'hide'),
 ));
+$form->searchToggle('contactUs-grid-search', 'contactUs-grid');
 
 echo '<fieldset>';
-echo '<legend>' . $this->getName() . ' ' .t('Search') . '</legend>';
+echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
 echo $form->textFieldRow($contactUs, 'id');
 echo $form->textFieldRow($contactUs, 'name');
 echo $form->textFieldRow($contactUs, 'email');
@@ -23,13 +22,12 @@ echo $form->textFieldRow($contactUs, 'phone');
 echo $form->textFieldRow($contactUs, 'company');
 echo $form->textFieldRow($contactUs, 'subject');
 echo $form->textFieldRow($contactUs, 'message');
-echo $form->textFieldRow($contactUs, 'created_at');
 echo $form->textFieldRow($contactUs, 'ip_address');
+echo $form->textFieldRow($contactUs, 'created');
 echo '</fieldset>';
 
 echo '<div class="form-actions">';
-$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'icon' => 'search white', 'label' => t('Search')));
+$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'icon' => 'search white', 'label' => Yii::t('dressing', 'Search')));
 echo '</div>';
 
 $this->endWidget();
-echo '</div>';

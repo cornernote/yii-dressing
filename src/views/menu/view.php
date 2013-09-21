@@ -4,10 +4,10 @@
  * @var $menu YdMenu
  */
 
-$this->pageTitle = $this->pageHeading = $menu->getName() . ' - ' . $this->getName() . ' ' . t('View');
+$this->pageTitle = $this->pageHeading = $menu->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'View');
 
-$this->breadcrumbs[t('Tools')] = array('/tool/index');
-$this->breadcrumbs[t('Menus')] = user()->getState('index.menu', array('/menu/index'));
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[Yii::t('dressing', 'Menus')] = Yii::app()->user->getState('index.menu', array('/menu/index'));
 $this->breadcrumbs[] = $menu->getName();
 
 $this->renderPartial('dressing.views.menu._menu', array(
@@ -44,7 +44,7 @@ $this->renderPartial('dressing.views.menu._menu', array(
         <?php
         // actions
         $this->widget('bootstrap.widgets.TbButton', array(
-            'label' => t('Create Menu Item'),
+            'label' => Yii::t('dressing', 'Create Menu Item'),
             'url' => array('/menu/create', 'Menu[parent_id]' => $menu->id),
             'type' => 'primary',
             'size' => 'mini',
@@ -54,7 +54,7 @@ $this->renderPartial('dressing.views.menu._menu', array(
         // menuItems
         $sortables = array();
         foreach ($menu->child as $_menu) {
-            $sortables[$_menu->id] = '<i class="icon-move handle" title="' . t('Move') . '"></i> ' . $_menu->getLink();
+            $sortables[$_menu->id] = '<i class="icon-move handle" title="' . Yii::t('dressing', 'Move') . '"></i> ' . $_menu->getLink();
         }
         $this->widget('zii.widgets.jui.CJuiSortable', array(
             'items' => $sortables,

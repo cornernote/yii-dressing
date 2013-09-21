@@ -3,14 +3,14 @@
  * @var $this AccountController
  * @var $user YdUser
  */
-$this->pageTitle = $this->pageHeading = t('Update Account');
-$this->breadcrumbs = array(
-    t('My Account') => array('index'),
-    t('Update Account'),
-);
+$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Update Account');
+
+$this->breadcrumbs[Yii::t('dressing', 'My Account')] = array('/account/index');
+$this->breadcrumbs[] = Yii::t('dressing', 'Update Account');
+
 $this->menu = YdMenu::getItemsFromMenu('User');
 
-/* @var $form ActiveForm */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'account-form',
     //'enableAjaxValidation' => true,
@@ -30,7 +30,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     'buttonType' => 'submit',
     'type' => 'primary',
     'icon' => 'ok white',
-    'label' => t('Save'),
+    'label' => Yii::t('dressing', 'Save'),
     'htmlOptions' => array('class' => 'pull-right'),
 ));
 echo '</div>';

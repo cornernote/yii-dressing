@@ -45,8 +45,8 @@ $columns[] = array(
 // multi actions
 $multiActions = array();
 $multiActions[] = array(
-    'name' => t('Delete'),
-    'url' => url('/attachment/delete'),
+    'name' => Yii::t('dressing', 'Delete'),
+    'url' => Yii::app()->createUrl('/attachment/delete'),
 );
 
 // grid

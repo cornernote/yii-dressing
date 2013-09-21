@@ -63,12 +63,9 @@ class EmailTemplateController extends YdWebController
         if (isset($_POST['YdEmailTemplate'])) {
             $emailTemplate->attributes = $_POST['YdEmailTemplate'];
             if ($emailTemplate->save()) {
-                $this->flashAndRedirect(t('Email Template has been updated'), 'success');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Email Template has been updated'), 'success');
+                $this->redirect(Yii::app()->returnUrl->getUrl($emailTemplate->getUrl()));
             }
-            else {
-                user()->addFlash('Email Template could not be updated', 'warning');
-            }
-
         }
         else {
             // pre-fill the form with variables from _GET

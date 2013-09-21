@@ -51,7 +51,7 @@ class UserController extends YdWebController
 
         // check for deleted user
         if ($user->deleted) {
-            user()->addFlash('THIS USER IS DELETED', 'warning');
+            Yii::app()->user->addFlash('THIS USER IS DELETED', 'warning');
         }
 
         $this->render('dressing.views.user.view', array(
@@ -89,7 +89,7 @@ class UserController extends YdWebController
                 //$userToRole->user_id = $user->id;
                 //$userToRole->role_id = $role->id;
                 //$userToRole->save(false);
-                user()->addFlash('User has been created.', 'success');
+                Yii::app()->user->addFlash('User has been created.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($user->getUrl()));
             }
         }
@@ -118,10 +118,9 @@ class UserController extends YdWebController
         if (isset($_POST['YdUser'])) {
             $user->attributes = $_POST['YdUser'];
             if ($user->save()) {
-                user()->addFlash(t('User has been updated'), 'success');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'User has been updated'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($user->getUrl()));
             }
-            user()->addFlash(t('User could not be updated'), 'warning');
         }
         else {
             //set defaults
@@ -139,23 +138,22 @@ class UserController extends YdWebController
      */
     public function actionDelete($id = null)
     {
-        $task = sf('task', 'YdUser') == 'undelete' ? 'undelete' : 'delete';
-        if (sf('confirm', 'YdUser')) {
-            $ids = sfGrid($id);
-            foreach ($ids as $id) {
-                $user = YdUser::model()->findByPk($id);
+        $task = YdHelper::getSubmittedField('task', 'YdUser') == 'undelete' ? 'undelete' : 'delete';
+        if (YdHelper::getSubmittedField('confirm', 'YdUser')) {
+            foreach ($this->getGridIds($id) as $_id) {
+                $user = YdUser::model()->findByPk($_id);
 
                 // check access
-                if (!$user->checkUserAccess(user()->id)) {
+                if (!$user->checkUserAccess(Yii::app()->user->id)) {
                     continue;
                 }
                 call_user_func(array($user, $task));
-                user()->addFlash(strtr('User :name has been :tasked.', array(
+                Yii::app()->user->addFlash(strtr('User :name has been :tasked.', array(
                     ':name' => $user->getName(),
                     ':tasked' => $task . 'd',
                 )), 'success');
             }
-            $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.user', array('/user/index'))));
+            $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->getState('index.user', array('/user/index'))));
         }
 
         $this->render('dressing.views.user.delete', array(

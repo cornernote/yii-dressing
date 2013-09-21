@@ -18,10 +18,10 @@ $dataProvider = new CActiveDataProvider('AuditTrail', array(
 ));
 
 echo '<div class="grid-view">';
-$this->widget('widgets.ListView', array(
+$this->widget('dressing.widgets.YdListView', array(
     'id' => "audit-list-$model-$model_id-$field",
     'dataProvider' => $dataProvider,
-    'itemView' => '/auditTrail/_field_view',
+    'itemView' => 'dressing.views.auditTrail._field_view',
     'itemsTagName' => 'table',
     'itemsCssClass' => 'table table-condensed table-striped',
 ));

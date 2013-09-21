@@ -113,7 +113,7 @@ class YdWebUser extends CWebUser
             if ($id !== null)
                 $this->_user = YdUser::model()->findByPk($id);
             else
-                $this->_user = YdUser::model()->findByPk(user()->id);
+                $this->_user = YdUser::model()->findByPk(Yii::app()->user->id);
         }
         return $this->_user;
     }

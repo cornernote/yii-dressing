@@ -28,7 +28,6 @@ if (in_array($this->id, array('auditTrail', 'audit'))) {
     );
     $columns[] = array(
         'name' => 'model_id',
-        'header' => t('Id'),
     );
 }
 $columns[] = array(

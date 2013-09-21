@@ -5,19 +5,19 @@
  *
  * This is the model class for table 'audit'
  *
- * @method Audit with() with()
- * @method Audit find() find($condition, array $params = array())
- * @method Audit[] findAll() findAll($condition = '', array $params = array())
- * @method Audit findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method Audit[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method Audit findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Audit[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Audit findBySql() findBySql($sql, array $params = array())
- * @method Audit[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdAudit with() with()
+ * @method YdAudit find() find($condition, array $params = array())
+ * @method YdAudit[] findAll() findAll($condition = '', array $params = array())
+ * @method YdAudit findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdAudit[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdAudit findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdAudit[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdAudit findBySql() findBySql($sql, array $params = array())
+ * @method YdAudit[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from relation
- * @property User $user
- * @property AuditTrail[] $auditTrail
+ * @property YdUser $user
+ * @property YdAuditTrail[] $auditTrail
  * @property integer $auditTrailCount
  *
  * Properties from table fields
@@ -48,10 +48,6 @@
  */
 class YdAudit extends YdActiveRecord
 {
-    /**
-     * @var bool
-     */
-    public $modelCache = false;
 
     /**
      * @var
@@ -99,14 +95,6 @@ class YdAudit extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'audit';
-    }
-
-    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
@@ -146,7 +134,7 @@ class YdAudit extends YdActiveRecord
     public function getLinkString()
     {
         $link = $this->link;
-        $path = Yii::app()->getRequest()->getHostInfo() . bu();
+        $path = Yii::app()->getRequest()->getHostInfo() . Yii::app()->request->baseUrl;
         if (strpos($link, $path) === 0) {
             $link = substr($link, strlen($path));
         }
@@ -163,7 +151,7 @@ class YdAudit extends YdActiveRecord
     static function reverseLinkString($linkGiven)
     {
         if (strpos($linkGiven, '/') === 0) {
-            $path = Yii::app()->getRequest()->getHostInfo() . bu();
+            $path = Yii::app()->getRequest()->getHostInfo() . Yii::app()->request->baseUrl;
             $result = $path . $linkGiven;
             return $result;
         }
@@ -179,7 +167,7 @@ class YdAudit extends YdActiveRecord
     {
         // get info
         $this->created = date('Y-m-d H:i:s');
-        $this->user_id = user()->id;
+        $this->user_id = Yii::app()->user->id;
         $this->link = $this->getCurrentLink();
         $this->app_version = YdSetting::item('app_version');
         $this->yii_version = YdSetting::item('yii_version');
@@ -376,7 +364,7 @@ class YdAudit extends YdActiveRecord
         }
 
         $criteria->compare('t.user_id', $this->user_id);
-        if (sf('limit') != 'ignore') {
+        if (YdHelper::getSubmittedField('limit') != 'ignore') {
             $date = date('Y-m-d', strtotime('-15 days'));
             $criteria->compare('t.created', ' > ' . $date);
             $criteria->compare('t.user_id', '<> ""');
@@ -428,7 +416,7 @@ class YdAudit extends YdActiveRecord
         $len = $endPos - $startPos;
         $shortVersion = substr($this->yii_version, $startPos, $len);
         $shortVersion = substr($shortVersion, 4);
-        $icon = l(i(au() . '/icons/comments.png'), 'javascript:void();', array('title' => $this->yii_version));
+        $icon = CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $this->yii_version));
         return $icon . '&nbsp;' . $shortVersion;
     }
 
@@ -438,7 +426,7 @@ class YdAudit extends YdActiveRecord
      */
     public function showAppVersion()
     {
-        return l(i(au() . '/icons/comments.png'), 'javascript:void();', array('title' => $this->app_version));
+        return CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $this->app_version));
     }
 
     /**
@@ -485,5 +473,6 @@ class YdAudit extends YdActiveRecord
         }
         return false;
     }
+
 
 }

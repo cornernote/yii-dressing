@@ -55,9 +55,9 @@ class YdTime
         if (!$date) {
             return '';
         }
-        $paramFormat = param($format);
+        $paramFormat = Yii::app()->params[$format];
         if (!$paramFormat) {
-            $paramFormat = param('dateTimeFormat');
+            $paramFormat = Yii::app()->params['dateTimeFormat'];
         }
         return date($paramFormat, $date);
     }
@@ -81,7 +81,7 @@ class YdTime
     /**
      * @static
      * @param string $date1 bigger date value
-     * @param string $date2  smaller date value
+     * @param string $date2 smaller date value
      * @param bool $round
      * @param bool|array $holidays
      * @return int
@@ -92,8 +92,8 @@ class YdTime
         $diff = $diff / (60 * 60 * 24);
 
         if (($diff > 1) && is_array($holidays)) {
-            if (current($holidays)=='victoria'){
-                $holidays=self::getVictoriaHolidays();
+            if (current($holidays) == 'victoria') {
+                $holidays = self::getVictoriaHolidays();
             }
             $diff = self::getWorkingDays($date2, $date1, $holidays) - 1;
         }
@@ -330,7 +330,7 @@ class YdTime
         $dtStamp = self::timestamp($dtGiven);
         $ago = self::ago($dtStamp);
         $date = date($format, $dtStamp);
-        $icon = l(i(bu() . '/img/app_icons/lookup/SmallIcons/8.png'), 'javascript:void();', array('title' => $date));
+        $icon = CHtml::link('<i class="icon-time"></i>', 'javascript:void();', array('title' => $date));
         $agoWithIcon = $icon . '&nbsp;' . $ago;
         return $agoWithIcon;
     }

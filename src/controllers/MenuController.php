@@ -47,7 +47,7 @@ class MenuController extends YdWebController
 
         // check for deleted YdMenu
         if ($menu->deleted) {
-            user()->addFlash('THIS RECORD IS DELETED', 'warning');
+            Yii::app()->user->addFlash('THIS RECORD IS DELETED', 'warning');
         }
 
         $this->render('dressing.views.menu.view', array(
@@ -80,7 +80,7 @@ class MenuController extends YdWebController
         if (isset($_POST['YdMenu'])) {
             $menu->attributes = $_POST['YdMenu'];
             if ($menu->save()) {
-                user()->addFlash('Menu has been created.', 'success');
+                Yii::app()->user->addFlash('Menu has been created.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($menu->getUrl()));
             }
         }
@@ -109,10 +109,9 @@ class MenuController extends YdWebController
         if (isset($_POST['YdMenu'])) {
             $menu->attributes = $_POST['YdMenu'];
             if ($menu->save()) {
-                user()->addFlash(t('Menu has been updated'), 'success');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Menu has been updated'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($menu->getUrl()));
             }
-            user()->addFlash(t('Menu could not be updated'), 'warning');
         }
 
         $this->render('dressing.views.menu.update', array(
@@ -126,21 +125,20 @@ class MenuController extends YdWebController
      */
     public function actionDelete($id = null)
     {
-        $task = sf('task', 'YdMenu') == 'undelete' ? 'undelete' : 'delete';
-        if (sf('confirm', 'YdMenu')) {
-            $ids = sfGrid($id);
-            foreach ($ids as $id) {
-                $menu = YdMenu::model()->findByPk($id);
+        $task = YdHelper::getSubmittedField('task', 'YdMenu') == 'undelete' ? 'undelete' : 'delete';
+        if (YdHelper::getSubmittedField('confirm', 'YdMenu')) {
+            foreach ($this->getGridIds($id) as $_id) {
+                $menu = YdMenu::model()->findByPk($_id);
                 if (!$menu) {
                     continue;
                 }
                 call_user_func(array($menu, $task));
-                user()->addFlash(strtr('Lookup :name has been :tasked.', array(
+                Yii::app()->user->addFlash(strtr('Lookup :name has been :tasked.', array(
                     ':name' => $menu->getName(),
                     ':tasked' => $task . 'd',
                 )), 'success');
             }
-            $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.menu', array('/menu/index'))));
+            $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->getState('index.menu', array('/menu/index'))));
         }
 
         $this->render('dressing.views.menu.delete', array(

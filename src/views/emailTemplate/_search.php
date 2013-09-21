@@ -4,18 +4,17 @@
  * @var $emailTemplate YdEmailTemplate
  */
 
-Helper::searchToggle('emailTemplate-grid');
-echo '<div class="search-form hide">';
-
-/** @var ActiveForm $form */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
-	'action' => url($this->route),
-	'type' => 'horizontal',
-	'method' => 'get',
+    //'action' => Yii::app()->createUrl($this->route),
+    'type' => 'horizontal',
+    'method' => 'get',
+    'htmlOptions' => array('class' => 'hide'),
 ));
+$form->searchToggle('emailTemplate-grid-search', 'emailTemplate-grid');
 
 echo '<fieldset>';
-echo '<legend>' . $this->getName() . ' ' .t('Search') . '</legend>';
+echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
 echo $form->textFieldRow($emailTemplate, 'id');
 echo $form->textFieldRow($emailTemplate, 'name');
 echo $form->textFieldRow($emailTemplate, 'message_subject');
@@ -27,8 +26,7 @@ echo $form->textFieldRow($emailTemplate, 'deleted');
 echo '</fieldset>';
 
 echo '<div class="form-actions">';
-$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'icon' => 'search white', 'label' => t('Search')));
+$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'icon' => 'search white', 'label' => Yii::t('dressing', 'Search')));
 echo '</div>';
 
 $this->endWidget();
-echo '</div>';

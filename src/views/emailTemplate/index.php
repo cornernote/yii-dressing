@@ -3,16 +3,19 @@
  * @var $this EmailTemplateController
  * @var $emailTemplate YdEmailTemplate
  */
-user()->setState('index.emailTemplate', ru());
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('List');
-$this->breadcrumbs = array($this->getName() . ' ' . t('List'));
+Yii::app()->user->setState('index.emailTemplate', Yii::app()->request->requestUri);
+$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'List');
+
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[] = Yii::t('dressing', 'Email Templates');
+
 $this->renderPartial('dressing.views.emailTemplate._menu');
 
 echo '<div class="spacer">';
-if (user()->getState('index.emailTemplate') != url('/emailTemplate/index')) {
+if (Yii::app()->user->getState('index.emailTemplate') != Yii::app()->createUrl('/emailTemplate/index')) {
     //echo ' ';
     $this->widget('bootstrap.widgets.TbButton', array(
-        'label' => t('Reset Filters'),
+        'label' => Yii::t('dressing', 'Reset Filters'),
         'url' => array('/emailTemplate/index'),
     ));
 }

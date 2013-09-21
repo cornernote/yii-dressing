@@ -35,10 +35,6 @@
  */
 class YdAuditTrail extends YdActiveRecord
 {
-    /**
-     * @var bool
-     */
-    public $modelCache = false;
 
     /**
      * Returns the static model of the specified AR class.
@@ -48,14 +44,6 @@ class YdAuditTrail extends YdActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
-    }
-
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'audit_trail';
     }
 
     /**
@@ -94,16 +82,16 @@ class YdAuditTrail extends YdActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
-            'old_value' => t('Old Value'),
-            'new_value' => t('New Value'),
-            'action' => t('Action'),
-            'model' => t('Model'),
-            'field' => t('Field'),
-            'created' => t('Created'),
-            'user_id' => t('User'),
-            'model_id' => t('Model'),
-            'audit_id' => t('Audit'),
+            'id' => Yii::t('dressing', 'ID'),
+            'old_value' => Yii::t('dressing', 'Old Value'),
+            'new_value' => Yii::t('dressing', 'New Value'),
+            'action' => Yii::t('dressing', 'Action'),
+            'model' => Yii::t('dressing', 'Model'),
+            'field' => Yii::t('dressing', 'Field'),
+            'created' => Yii::t('dressing', 'Created'),
+            'user_id' => Yii::t('dressing', 'User'),
+            'model_id' => Yii::t('dressing', 'Model'),
+            'audit_id' => Yii::t('dressing', 'Audit'),
         );
     }
 

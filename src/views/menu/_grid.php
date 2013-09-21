@@ -48,8 +48,8 @@ $columns[] = array(
 // multi actions
 $multiActions = array();
 $multiActions[] = array(
-    'name' => t('Delete'),
-    'url' => url('/menu/delete'),
+    'name' => Yii::t('dressing', 'Delete'),
+    'url' => Yii::app()->createUrl('/menu/delete'),
 );
 
 // grid

@@ -4,7 +4,7 @@
  */
 ?>
 <fieldset>
-    <legend><?php echo t('Time Stamps') ?></legend>
+    <legend><?php echo Yii::t('dressing', 'Time Stamps') ?></legend>
     <?php
     $this->widget('dressing.widgets.YdDetailView', array(
         'data' => $model,
@@ -29,6 +29,6 @@
 </fieldset>
 
 <fieldset>
-    <legend><?php echo t('Log') ?></legend>
+    <legend><?php echo Yii::t('dressing', 'Log') ?></legend>
     <?php $this->renderPartial('dressing.views.auditTrail._log', array('model' => $model)); ?>
 </fieldset>

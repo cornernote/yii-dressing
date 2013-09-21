@@ -10,7 +10,7 @@ $columns[] = array(
 $columns[] = array(
     'name' => 'user_id',
     'type' => 'raw',
-    'value' => '$data->user?l(h($data->user->name),$data->user->url):null',
+    'value' => '$data->user?CHtml::link(h($data->user->name),$data->user->url):null',
     'htmlOptions' => array('style' => 'width:105px'),
 );
 $columns[] = array(
@@ -19,7 +19,7 @@ $columns[] = array(
     'type' => 'raw',
 );
 $columns[] = array(
-    'header' => t('Audits'),
+    'header' => Yii::t('dressing', 'Audits'),
     'name' => 'audit_trail_count',
     'value' => '$data->audit_trail_count?$data->audit_trail_count:null',
     'htmlOptions' => array('style' => 'width:50px'),
@@ -50,25 +50,23 @@ $columns[] = array(
 );
 $columns[] = array(
     'name' => 'total_time',
-    'header' => t('Time'),
+    'header' => Yii::t('dressing', 'Time'),
     'value' => 'number_format($data->total_time,3)',
     'htmlOptions' => array('style' => 'width:60px'),
 );
 $columns[] = array(
     'name' => 'memory_peak',
-    'header' => t('Peak'),
+    'header' => Yii::t('dressing', 'Peak'),
     'value' => 'number_format($data->memory_peak/1024/1024,2)',
     'htmlOptions' => array('style' => 'width:70px'),
 );
 $columns[] = array(
     'name' => 'model',
-    'header' => t('model'),
     'value' => '$data->model',
     'htmlOptions' => array('style' => 'width:70px'),
 );
 $columns[] = array(
     'name' => 'model_id',
-    'header' => t('Model ID'),
     'value' => '$data->model_id',
     'htmlOptions' => array('style' => 'width:70px'),
 );

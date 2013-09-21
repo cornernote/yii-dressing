@@ -17,7 +17,7 @@ class YdSecureLink
         $params['ttl'] = $ttl;
         $params['rnd'] = md5(microtime(true));
         $params['key'] = md5(implode('', $params) . YdSetting::item('hashKey'));
-        return 'http://' . param('host') . url($action, $params);
+        return 'http://' . Yii::app()->params['website'] . Yii::app()->createUrl($action, $params);
     }
 
     /**

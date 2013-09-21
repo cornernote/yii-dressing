@@ -40,7 +40,7 @@ class YdPayPalHelper
             'currency_code' => 'AUD',
             'bn' => 'PP-SubscriptionsBF:btn_subscribeCC_LG.gif:NonHosted',
             // overwrite these using $options
-            'item_name' => t('Subscription'),
+            'item_name' => Yii::t('dressing', 'Subscription'),
             'item_number' => 'subscription',
             'a3' => 1.00,
             'custom' => '',

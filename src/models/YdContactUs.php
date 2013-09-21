@@ -42,14 +42,6 @@ class YdContactUs extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'contact_us';
-    }
-
-    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
@@ -70,6 +62,7 @@ class YdContactUs extends YdActiveRecord
     {
         return array(
             'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
         );
     }
 
@@ -79,15 +72,15 @@ class YdContactUs extends YdActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
-            'name' => t('Name'),
-            'email' => t('Email'),
-            'phone' => t('Phone'),
-            'company' => t('Company'),
-            'subject' => t('Subject'),
-            'message' => t('Message'),
-            'created_at' => t('Created At'),
-            'ip_address' => t('Ip Address'),
+            'id' => Yii::t('dressing', 'ID'),
+            'name' => Yii::t('dressing', 'Name'),
+            'email' => Yii::t('dressing', 'Email'),
+            'phone' => Yii::t('dressing', 'Phone'),
+            'company' => Yii::t('dressing', 'Company'),
+            'subject' => Yii::t('dressing', 'Subject'),
+            'message' => Yii::t('dressing', 'Message'),
+            'created' => Yii::t('dressing', 'Created'),
+            'ip_address' => Yii::t('dressing', 'IP Address'),
         );
     }
 
@@ -110,8 +103,8 @@ class YdContactUs extends YdActiveRecord
         $criteria->compare('company', $this->company, true);
         $criteria->compare('subject', $this->subject, true);
         $criteria->compare('message', $this->message, true);
-        $criteria->compare('created_at', $this->created_at, true);
         $criteria->compare('ip_address', $this->ip_address, true);
+        $criteria->compare('created', $this->created, true);
 
         return new YdActiveDataProvider($this, CMap::mergeArray(array(
             'criteria' => $criteria,
@@ -123,10 +116,10 @@ class YdContactUs extends YdActiveRecord
      * @param bool $extra
      * @return array
      */
-    public function getDropdownLinkItems($extra = false)
+    public function getMenuLinks($extra = false)
     {
         $links = array();
-        //$links[] = array('label' => t('Update'), 'url' => $this->getUrl('update'));
+        //$links[] = array('label' => Yii::t('dressing', 'Update'), 'url' => $this->getUrl('update'));
         return $links;
     }
 

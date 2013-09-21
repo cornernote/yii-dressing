@@ -64,14 +64,6 @@ class YdAttachment extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'attachment';
-    }
-
-    /**
      * @return array containing model behaviors
      */
     public function behaviors()
@@ -111,22 +103,26 @@ class YdAttachment extends YdActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
-            'filename' => t('File'),
-            'notes' => t('Notes'),
+            'id' => Yii::t('dressing', 'ID'),
+            'filename' => Yii::t('dressing', 'File'),
+            'notes' => Yii::t('dressing', 'Notes'),
         );
     }
 
     /**
-     * @param array $extraArgs
-     * @return array url to view the model
+     * Returns a URL to this model
+     *
+     * @param string $action
+     * @param array $params
+     * @return string
      */
-    public function getUrl($extraArgs = array())
+    public function getUrl($action = 'view', $params = array())
     {
-        return url('/attachment/view', array_merge(array(
+        return array_merge(array(
+            '/attachment/' . $action,
             'id' => $this->id,
             'file' => $this->filename,
-        ), (array)$extraArgs));
+        ), (array)$params);
     }
 
     /**
@@ -185,8 +181,8 @@ class YdAttachment extends YdActiveRecord
      */
     function getAttachmentPath()
     {
-        $folder = dirname(dirname(bp())) . '/sites/' . param('host') . '/attachment/' . $this->model . '/' . $this->model_id;
-        //$path = $folder . '/' . $this->filename;
+        $folder = dirname(Yii::app()->basePath) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'attachment' . DIRECTORY_SEPARATOR . $this->model . DIRECTORY_SEPARATOR . $this->model_id;
+        //$path = $folder . DIRECTORY_SEPARATOR . $this->filename;
         if (!file_exists($folder)) {
             $success = @mkdir($folder, 0777, true);
             if (!$success) {
@@ -235,15 +231,15 @@ class YdAttachment extends YdActiveRecord
     static function getStaticThumb($size, $created, $id, $filename, $url)
     {
         $wh = explode('x', $size);
-        $cache = ($wh[0] <= 100 && $wh[1] <= 100) ? '/cache/' . md5(param('host')) . '_' . md5($created) : '';
+        $cache = ($wh[0] <= 100 && $wh[1] <= 100) ? '/cache/' . md5(Yii::app()->params['hashKey']) . md5($created) : '';
         if ($cache) {
-            $thumb = i(bu() . '/attachment/view/id/' . $id . '/thumb/' . $size . $cache);
+            $thumb = CHtml::image(Yii::app()->request->baseUrl . '/attachment/view/id/' . $id . '/thumb/' . $size . $cache);
         }
         else {
-            $thumb = i(bu() . '/attachment/view/id/' . $id . '/thumb/' . $size . '/filename/' . $filename);
+            $thumb = CHtml::image(Yii::app()->request->baseUrl . '/attachment/view/id/' . $id . '/thumb/' . $size . '/filename/' . $filename);
         }
         if ($url) {
-            $thumb = l($thumb, $url);
+            $thumb = CHtml::link($thumb, $url);
         }
         return $thumb;
     }
@@ -256,16 +252,16 @@ class YdAttachment extends YdActiveRecord
     public function getPopup($size)
     {
         $link = false;
-        user()->setState('attachmentViewKey.' . $this->id, true);
+        Yii::app()->user->setState('attachmentViewKey.' . $this->id, true);
         if (in_array($this->extension, array('jpg', 'gif', 'png'))) {
-            $img = i(bu() . '/attachment/view/id/' . $this->id . '/thumb/' . $size . '/' . $this->filename);
-            $url = bu() . '/attachment/view/id/' . $this->id . '/thumb/800x800/' . $this->filename;
-            $link = l($img, $url, array('data-toggle' => 'modal'));
+            $img = CHtml::image(Yii::app()->request->baseUrl . '/attachment/view/id/' . $this->id . '/thumb/' . $size . '/' . $this->filename);
+            $url = Yii::app()->request->baseUrl . '/attachment/view/id/' . $this->id . '/thumb/800x800/' . $this->filename;
+            $link = CHtml::link($img, $url, array('data-toggle' => 'modal'));
         }
         elseif (in_array($this->extension, array('pdf'))) {
-            $img = i(bu() . '/attachment/view/id/' . $this->id . '/thumb/' . $size . '/' . $this->filename);
+            $img = CHtml::image(Yii::app()->request->baseUrl . '/attachment/view/id/' . $this->id . '/thumb/' . $size . '/' . $this->filename);
             $url = array('/attachment/view', 'id' => $this->id, 'dl' => '1');
-            $link = l($img, $url);
+            $link = CHtml::link($img, $url);
         }
         return $link;
     }
@@ -291,7 +287,7 @@ class YdAttachment extends YdActiveRecord
 
         // find the image
         $image = $this->getAttachmentFile();
-        $defaultImage = dirname(dirname(bp())) . '/sites/' . param('host') . '/attachment/default.jpg';
+        $defaultImage = dirname(Yii::app()->basePath) . '/data/attachment/default.jpg';
         if (!$image) {
             if (YII_DEBUG)
                 throw new CException('Cannot find source image (' . $image . ').');
@@ -306,7 +302,7 @@ class YdAttachment extends YdActiveRecord
             if ($imageSize[1] < $size[1])
                 $size[1] = $imageSize[1];
         }
-        require_once(bp() . '/../../vendors/phpThumb/phpThumb-1.7.9/phpThumb.php');
+        require_once(Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'phpThumb' . DIRECTORY_SEPARATOR . 'phpThumb.php');
         $phpThumb = new phpThumb;
         $phpThumb->setSourceFilename($image);
         $phpThumb->setParameter('config_imagemagick_path', 'convert');

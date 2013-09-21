@@ -4,12 +4,12 @@
  * @var $menu YdMenu
  */
 
-$this->pageTitle = $this->pageHeading = $menu->getName() . ' - ' . $this->getName() . ' ' . t('Update');
+$this->pageTitle = $this->pageHeading = $menu->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'Update');
 
-$this->breadcrumbs[t('Tools')] = array('/tool/index');
-$this->breadcrumbs[t('Menus')] = user()->getState('index.menu', array('/menu/index'));
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[Yii::t('dressing', 'Menus')] = Yii::app()->user->getState('index.menu', array('/menu/index'));
 $this->breadcrumbs[$menu->getName()] = $menu->getLink();
-$this->breadcrumbs[] = t('Update');
+$this->breadcrumbs[] = Yii::t('dressing', 'Update');
 
 $this->renderPartial('dressing.views.lookup._menu', array(
     'menu' => $menu,

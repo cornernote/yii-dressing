@@ -67,14 +67,6 @@ class YdMenu extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'menu';
-    }
-
-    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
@@ -131,18 +123,18 @@ class YdMenu extends YdActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
-            'parent_id' => t('Parent'),
-            'label' => t('Label'),
-            'icon' => t('Icon'),
-            'url' => t('Url'),
-            'url_params' => t('Url Params'),
-            'target' => t('Target'),
-            'access_role' => t('Access Role'),
-            'created' => t('Created'),
-            'deleted' => t('Deleted'),
-            'sort_order' => t('Sort Order'),
-            'enabled' => t('Enabled'),
+            'id' => Yii::t('dressing', 'ID'),
+            'parent_id' => Yii::t('dressing', 'Parent'),
+            'label' => Yii::t('dressing', 'Label'),
+            'icon' => Yii::t('dressing', 'Icon'),
+            'url' => Yii::t('dressing', 'Url'),
+            'url_params' => Yii::t('dressing', 'Url Params'),
+            'target' => Yii::t('dressing', 'Target'),
+            'access_role' => Yii::t('dressing', 'Access Role'),
+            'created' => Yii::t('dressing', 'Created'),
+            'deleted' => Yii::t('dressing', 'Deleted'),
+            'sort_order' => Yii::t('dressing', 'Sort Order'),
+            'enabled' => Yii::t('dressing', 'Enabled'),
         );
     }
 
@@ -191,19 +183,19 @@ class YdMenu extends YdActiveRecord
      * @param bool $extra
      * @return array
      */
-    public function getDropdownLinkItems($extra = false)
+    public function getMenuLinks($extra = false)
     {
         $links = array();
-        $links[] = array('label' => t('Update'), 'url' => $this->getUrl('update'));
+        $links[] = array('label' => Yii::t('dressing', 'Update'), 'url' => $this->getUrl('update'));
         if ($extra) {
             $more = array();
-            $more[] = array('label' => t('Log'), 'url' => $this->getUrl('log'));
+            $more[] = array('label' => Yii::t('dressing', 'Log'), 'url' => $this->getUrl('log'));
             if (!$this->deleted)
-                $more[] = array('label' => t('Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+                $more[] = array('label' => Yii::t('dressing', 'Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
             else
-                $more[] = array('label' => t('Undelete'), 'url' => $this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+                $more[] = array('label' => Yii::t('dressing', 'Undelete'), 'url' => $this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
             $links[] = array(
-                'label' => t('More'),
+                'label' => Yii::t('dressing', 'More'),
                 'items' => $more,
             );
         }
@@ -258,9 +250,6 @@ class YdMenu extends YdActiveRecord
      */
     static public function getItemsFromMenu($label, $parent_id = 0, $options = array())
     {
-        if (!YdHelper::tableExists('menu')) {
-            return array();
-        }
         $menu = self::model()->findByAttributes(array('label' => $label, 'parent_id' => $parent_id));
         if ($menu) {
             return $menu->getItems($options);
@@ -292,12 +281,12 @@ class YdMenu extends YdActiveRecord
             return true;
         }
         if ($this->access_role == '?') {
-            return user()->isGuest;
+            return Yii::app()->user->isGuest;
         }
         if ($this->access_role == '@') {
-            return !user()->isGuest;
+            return !Yii::app()->user->isGuest;
         }
-        if (user()->checkAccess($this->access_role)) {
+        if (Yii::app()->user->checkAccess($this->access_role)) {
             return true;
         }
         return false;
@@ -419,10 +408,10 @@ class YdMenu extends YdActiveRecord
         );
 
         // search
-        $menu[] = '<form id="navmenu-header-search" class="navbar-search pull-right" action="' . url('/site/jump') . '"><input type="text" name="term" class="search-query span1" id = "jump-search-box" placeholder="' . t('Search') . '"><input type="hidden" name="r" value="site/jump"></form>';
+        $menu[] = '<form id="navmenu-header-search" class="navbar-search pull-right" action="' . Yii::app()->createUrl('/site/search') . '"><input type="text" name="term" class="search-query span1" id = "jump-search-box" placeholder="' . Yii::t('dressing', 'Search') . '"><input type="hidden" name="r" value="site/jump"></form>';
 
         // system
-        if (user()->checkAccess('admin')) {
+        if (Yii::app()->user->checkAccess('admin')) {
             $menu[] = array(
                 'class' => 'bootstrap.widgets.TbMenu',
                 'htmlOptions' => array(
@@ -430,7 +419,7 @@ class YdMenu extends YdActiveRecord
                 ),
                 'items' => array(
                     array(
-                        'label' => t('System'),
+                        'label' => Yii::t('dressing', 'System'),
                         'icon' => 'icon-gears',
                         'items' => self::getItemsFromMenu('System'),
                     ),
@@ -446,7 +435,7 @@ class YdMenu extends YdActiveRecord
             ),
             'items' => array(
                 array(
-                    'label' => t('Help'),
+                    'label' => Yii::t('dressing', 'Help'),
                     'icon' => 'icon-question-sign',
                     'items' => self::getItemsFromMenu('Help'),
                 ),
@@ -474,7 +463,7 @@ class YdMenu extends YdActiveRecord
             ),
             'buttons' => array(
                 array(
-                    'label' => user()->isGuest ? t('Login or Signup') : user()->name,
+                    'label' => Yii::app()->user->isGuest ? Yii::t('dressing', 'Login or Signup') : Yii::app()->user->name,
                     'icon' => 'icon-user',
                     'items' => self::getItemsFromMenu('User'),
                 ),
@@ -494,4 +483,3 @@ class YdMenu extends YdActiveRecord
     }
 
 }
-

@@ -6,14 +6,14 @@
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = YdMenu::getItemsFromMenu('System');
+    $this->menu = YdMenu::getItemsFromMenu('Settings', YdMenu::MENU_ADMIN);
     return; // no more links
 }
 
 // create
 //if ($emailTemplate->isNewRecord) {
 //    $this->menu[] = array(
-//        'label' => t('Create'),
+//        'label' => Yii::t('dressing', 'Create'),
 //        'url' => array('/emailTemplate/create'),
 //    );
 //    return; // no more links
@@ -21,11 +21,11 @@ if ($this->action->id == 'index') {
 
 // view
 $this->menu[] = array(
-    'label' => t('View'),
+    'label' => Yii::t('dressing', 'View'),
     'url' => $emailTemplate->getUrl(),
 );
 
 // others
-foreach ($emailTemplate->getDropdownLinkItems(true) as $linkItem) {
+foreach ($emailTemplate->getMenuLinks(true) as $linkItem) {
     $this->menu[] = $linkItem;
 }

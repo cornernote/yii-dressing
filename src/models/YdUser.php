@@ -71,14 +71,6 @@ class YdUser extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'user';
-    }
-
-    /**
      * @return array relational rules.
      */
     public function relations()
@@ -103,14 +95,13 @@ class YdUser extends YdActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
-            'reseller_id' => t('Reseller'),
-            'email' => t('Email'),
-            'username' => t('Username'),
-            'password' => t('Password'),
-            'name' => t('Name'),
-            'role_id' => t('Role'),
-            'web_status' => t('Web Login'),
+            'id' => Yii::t('dressing', 'ID'),
+            'email' => Yii::t('dressing', 'Email'),
+            'username' => Yii::t('dressing', 'Username'),
+            'password' => Yii::t('dressing', 'Password'),
+            'name' => Yii::t('dressing', 'Name'),
+            'role_id' => Yii::t('dressing', 'Roles'),
+            'web_status' => Yii::t('dressing', 'Web Login'),
         );
     }
 
@@ -313,7 +304,7 @@ class YdUser extends YdActiveRecord
             return;
         }
         if (!$this->$attribute) {
-            $this->addError($attribute, t('You must enter an email when Web Login is enabled'));
+            $this->addError($attribute, Yii::t('dressing', 'You must enter an email when Web Login is enabled'));
         }
     }
 
@@ -356,19 +347,19 @@ class YdUser extends YdActiveRecord
      * @param bool $extra
      * @return array
      */
-    public function getDropdownLinkItems($extra = false)
+    public function getMenuLinks($extra = false)
     {
         $links = array();
-        $links[] = array('label' => t('Update'), 'url' => $this->getUrl('update'));
+        $links[] = array('label' => Yii::t('dressing', 'Update'), 'url' => $this->getUrl('update'));
         if ($extra) {
             $more = array();
-            $more[] = array('label' => t('Log'), 'url' => $this->getUrl('log'));
+            $more[] = array('label' => Yii::t('dressing', 'Log'), 'url' => $this->getUrl('log'));
             if (!$this->deleted)
-                $more[] = array('label' => t('Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+                $more[] = array('label' => Yii::t('dressing', 'Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
             else
-                $more[] = array('label' => t('Undelete'), 'url' => $this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+                $more[] = array('label' => Yii::t('dressing', 'Undelete'), 'url' => $this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
             $links[] = array(
-                'label' => t('More'),
+                'label' => Yii::t('dressing', 'More'),
                 'items' => $more,
             );
         }

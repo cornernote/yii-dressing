@@ -48,7 +48,7 @@ class YdModal extends CWidget
                     url: url,
                     beforeSend: function (data) {
                         if (!modalRemote.length) modalRemote = $('<div class="modal hide fade" id="modal-remote"></div>');
-                        modalRemote.html('<div class="modal-header"><h3><?php echo t('Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>');
+                        modalRemote.html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>');
                         modalRemote.modalResponsiveFix();
                         modalRemote.touchScroll();
                         modalRemote.modal();
@@ -60,7 +60,7 @@ class YdModal extends CWidget
                         $('#modal-remote input:text:visible:first').focus();
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        modalRemote.children('.modal-header').html('<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button><h3><?php echo t('Error!'); ?></h3>');
+                        modalRemote.children('.modal-header').html('<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button><h3><?php echo Yii::t('dressing', 'Error!'); ?></h3>');
                         modalRemote.children('.modal-body').html(XMLHttpRequest.responseText);
                     }
                 });

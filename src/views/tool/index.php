@@ -4,8 +4,9 @@
  * @var $user YdUser
  */
 
-$this->pageTitle = $this->pageHeading = t('Tools');
-$this->breadcrumbs = array(t('Tools'));
+$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Tools');
+
+$this->breadcrumbs[] = Yii::t('dressing', 'Tools');
 
 $this->menu = YdMenu::getItemsFromMenu('User');
 

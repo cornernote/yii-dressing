@@ -2,13 +2,13 @@
 Yii::import('bootstrap.widgets.TbActiveForm');
 
 /**
- * Class ActiveForm
+ * Class YdActiveForm
  */
 class YdActiveForm extends TbActiveForm
 {
 
     /**
-     * @var ActiveFormModel
+     * @var YdActiveFormModel
      */
     public $model;
 
@@ -42,7 +42,7 @@ class YdActiveForm extends TbActiveForm
 
         // ask to save work
         if ($this->askToSaveWork)
-            Yii::app()->controller->widget('widgets.AskToSaveWork', array('watchElement' => '#setting-form :input', 'message' => t('Please save before leaving the page')));
+            Yii::app()->controller->widget('widgets.AskToSaveWork', array('watchElement' => '#setting-form :input', 'message' => Yii::t('dressing', 'Please save before leaving the page.')));
 
     }
 
@@ -93,7 +93,7 @@ class YdActiveForm extends TbActiveForm
                 });
             ";
         }
-        cs()->registerScript($this->id . '-searchToggle', $script, CClientScript::POS_READY);
+        Yii::app()->clientScript->registerScript($this->id . '-searchToggle', $script, CClientScript::POS_READY);
     }
 
 }

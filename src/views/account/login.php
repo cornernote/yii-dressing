@@ -5,12 +5,11 @@
  * @var $recaptcha string
  */
 
-$this->pageTitle = $this->pageHeading = t('Login');
-$this->breadcrumbs = array(
-    t('Login'),
-);
+$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Login');
 
-/* @var $form ActiveForm */
+$this->breadcrumbs[] = Yii::t('dressing', 'Login');
+
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'login-form',
     //'enableAjaxValidation' => false,
@@ -34,18 +33,18 @@ if ($recaptcha) {
 echo $form->endModalWrap();
 echo '<div class="' . $form->getSubmitRowClass() . '">';
 $this->widget('bootstrap.widgets.TbButton', array(
-    'label' => t('Login'),
+    'label' => Yii::t('dressing', 'Login'),
     'type' => 'primary',
     'buttonType' => 'submit',
 ));
 echo ' ';
 $this->widget('bootstrap.widgets.TbButton', array(
-    'label' => t('Lost Password'),
+    'label' => Yii::t('dressing', 'Lost Password'),
     'url' => array('/account/recover'),
 ));
 echo ' ';
 $this->widget('bootstrap.widgets.TbButton', array(
-    'label' => t('Register New Account'),
+    'label' => Yii::t('dressing', 'Register New Account'),
     'url' => array('/account/register'),
 ));
 echo '</div>';

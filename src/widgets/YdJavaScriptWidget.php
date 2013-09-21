@@ -26,6 +26,6 @@ class YdJavaScriptWidget extends CWidget
         $contents = str_replace(array('<script>', '<script type="text/javascript">', '</script>'), '', $contents);
 
         // register the js script
-        cs()->registerScript($this->id, $contents, $this->position);
+        Yii::app()->clientScript->registerScript($this->id, $contents, $this->position);
     }
 }

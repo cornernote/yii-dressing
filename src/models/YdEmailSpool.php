@@ -61,33 +61,25 @@ class YdEmailSpool extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'email_spool';
-    }
-
-    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
-            'status' => t('Status'),
-            'model' => t('Model'),
-            'model_id' => t('Model ID'),
-            'to_email' => t('To Email'),
-            'to_name' => t('To Name'),
-            'from_email' => t('From Email'),
-            'from_name' => t('From Name'),
-            'message_subject' => t('Message Subject'),
-            'message_html' => t('Message Html'),
-            'message_text' => t('Message Text'),
-            'sent' => t('Sent'),
-            'created' => t('Created'),
-            'deleted' => t('Deleted'),
+            'id' => Yii::t('dressing', 'ID'),
+            'status' => Yii::t('dressing', 'Status'),
+            'model' => Yii::t('dressing', 'Model'),
+            'model_id' => Yii::t('dressing', 'Model ID'),
+            'to_email' => Yii::t('dressing', 'To Email'),
+            'to_name' => Yii::t('dressing', 'To Name'),
+            'from_email' => Yii::t('dressing', 'From Email'),
+            'from_name' => Yii::t('dressing', 'From Name'),
+            'message_subject' => Yii::t('dressing', 'Message Subject'),
+            'message_html' => Yii::t('dressing', 'Message Html'),
+            'message_text' => Yii::t('dressing', 'Message Text'),
+            'sent' => Yii::t('dressing', 'Sent'),
+            'created' => Yii::t('dressing', 'Created'),
+            'deleted' => Yii::t('dressing', 'Deleted'),
         );
     }
 

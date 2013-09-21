@@ -157,7 +157,7 @@ class YdReCaptcha extends CInputWidget
      */
     public function run()
     {
-        require_once(vp() . '/reCAPTCHA/recaptchalib.php');
+        require_once(Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'recaptcha' . DIRECTORY_SEPARATOR . 'recaptcha' . DIRECTORY_SEPARATOR . 'recaptchalib.php');
 
         $customthemewidget = (($w = $this->customThemeWidget) != '') ? "'{$w}'" : 'null';
         $cs = Yii::app()->getClientScript();

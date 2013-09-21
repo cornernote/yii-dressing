@@ -28,8 +28,8 @@ $columns[] = array(
 // multi actions
 $multiActions = array();
 $multiActions[] = array(
-    'name' => t('Delete'),
-    'url' => url('/lookup/delete'),
+    'name' => Yii::t('dressing', 'Delete'),
+    'url' => Yii::app()->createUrl('/lookup/delete'),
 );
 
 // grid

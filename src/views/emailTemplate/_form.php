@@ -4,7 +4,7 @@
  * @var $emailTemplate YdEmailTemplate
  */
 
-/* @var $form ActiveForm */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'emailTemplate-form',
     'enableAjaxValidation' => true,
@@ -26,7 +26,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     'buttonType' => 'submit',
     'type' => 'primary',
     'icon' => 'ok white',
-    'label' => $emailTemplate->isNewRecord ? t('Create') : t('Save'),
+    'label' => $emailTemplate->isNewRecord ? Yii::t('dressing', 'Create') : Yii::t('dressing', 'Save'),
     'htmlOptions' => array('class' => 'pull-right'),
 ));
 echo '</div>';

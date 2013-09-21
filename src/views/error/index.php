@@ -3,19 +3,21 @@
  * @var $this ErrorController
  * @var $errors array
  */
-$this->pageTitle = t('Errors');
-$this->pageHeading = t('Errors');
-$this->breadcrumbs = array(t('Errors'));
+$this->pageTitle = Yii::t('dressing', 'Errors');
+$this->pageHeading = Yii::t('dressing', 'Errors');
+
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[] = Yii::t('dressing', 'Errors');
 ?>
 
-<?php echo l(t('Clear Errors'), array('/error/clear')); ?>
+<?php echo CHtml::link(Yii::t('dressing', 'Clear Errors'), array('/error/clear')); ?>
 
 <table class="table table-bordered table-striped table-condensed">
     <tr>
-        <td><?php echo t('Error'); ?></td>
-        <td><?php echo t('Audit'); ?></td>
-        <td><?php echo t('Route'); ?></td>
-        <td><?php echo t('Date'); ?></td>
+        <td><?php echo Yii::t('dressing', 'Error'); ?></td>
+        <td><?php echo Yii::t('dressing', 'Audit'); ?></td>
+        <td><?php echo Yii::t('dressing', 'Route'); ?></td>
+        <td><?php echo Yii::t('dressing', 'Date'); ?></td>
     </tr>
     <?php
     foreach ($errors as $error) {
@@ -34,7 +36,7 @@ $this->breadcrumbs = array(t('Errors'));
                 $auditCreated = $audit->created;
                 $auditCreated = Time::agoIcon($auditCreated);
                 $auditRoute = $audit->link;
-                $auditRoute = str_replace(bu(), '', $auditRoute);
+                $auditRoute = str_replace(Yii::app()->request->baseUrl, '', $auditRoute);
                 $auditRoute = str_replace($_SERVER['HTTP_HOST'], '', $auditRoute);
                 $auditRoute = str_replace('http://', '', $auditRoute);
                 $auditRoute = StringHelper::getFirstLineWithIcon($auditRoute, 60);
@@ -42,7 +44,7 @@ $this->breadcrumbs = array(t('Errors'));
         }
         ?>
         <tr>
-            <td><?php echo l($error, $errorLink); ?></td>
+            <td><?php echo CHtml::link($error, $errorLink); ?></td>
             <td><?php echo $auditLink; ?></td>
             <td><?php echo $auditRoute; ?></td>
             <td><?php echo $auditCreated; ?></td>

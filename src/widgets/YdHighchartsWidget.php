@@ -107,8 +107,8 @@ class YdHighchartsWidget extends CWidget
     protected function registerScripts($id, $embeddedScript)
     {
 
-        $basePath = vp() . DS . 'highcharts';
-        $baseUrl = Yii::app()->assetManager->publish($basePath, true, 1, assetCopy());
+        $basePath = Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'highcharts' . DIRECTORY_SEPARATOR . 'highcharts';
+        $baseUrl = Yii::app()->assetManager->publish($basePath, true, 1, YII_DEBUG);
         $scriptFile = YII_DEBUG ? '/highcharts.src.js' : '/highcharts.js';
 
         $cs = Yii::app()->clientScript;

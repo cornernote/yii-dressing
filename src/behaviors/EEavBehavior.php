@@ -208,7 +208,7 @@ class EEavBehavior extends CActiveRecordBehavior {
     public function attach($owner) {
         // Check required property tableName.
         if (!is_string($this->tableName) || empty($this->tableName)) {
-            throw new CException(self::t('yii', 'Property "{class}.{property}" is not defined.',
+            throw new CException(Yii::t('yii', 'Property "{class}.{property}" is not defined.',
                 array('{class}' => get_class($this), '{property}' => 'tableName')));
         }
         // Prepare translate component for behavior messages.

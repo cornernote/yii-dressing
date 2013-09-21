@@ -18,6 +18,16 @@ class YiiDressing extends CApplicationComponent
     public $assetPath;
 
     /**
+     * @var string Url to the assets
+     */
+    public $assetUrl;
+
+    /**
+     * @var array
+     */
+    public $tableMap = array();
+
+    /**
      *
      */
     public function init()
@@ -32,8 +42,23 @@ class YiiDressing extends CApplicationComponent
         // start the audit
         YdAudit::findCurrent();
 
-        // publish assets
-        $this->assetPath = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.yii-dressing'), true, -1, YII_DEBUG);
-        Yii::app()->clientScript->registerCSSFile($this->assetPath . '/css/yii-dressing.css');
+        // map tables
+        $this->tableMap = array_merge($this->tableMap, array(
+            'YdAttachment' => 'attachment',
+            'YdAudit' => 'audit',
+            'YdAuditTrail' => 'audit_trail',
+            'YdContactUs' => 'contact_us',
+            'YdEmailSpool' => 'email_spool',
+            'YdEmailTemplate' => 'email_template',
+            'YdLookup' => 'lookup',
+            'YdMenu' => 'menu',
+            'YdRole' => 'role',
+            'YdSetting' => 'setting',
+            'YdToken' => 'token',
+            'YdUser' => 'user',
+            'YdUserToRole' => 'user_to_role',
+        ));
+
     }
+
 }

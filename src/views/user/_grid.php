@@ -13,7 +13,7 @@ $columns[] = array(
 
 $columns[] = array(
     'name' => 'email',
-    'value' => '$data->email ? l($data->email, "mailto:" . $data->email) : null',
+    'value' => '$data->email ? CHtml::link($data->email, "mailto:" . $data->email) : null',
     'type' => 'raw',
 );
 $columns[] = array(
@@ -34,8 +34,8 @@ if (!$user->role_id) {
 // multi actions
 $multiActions = array();
 $multiActions[] = array(
-    'name' => t('Delete'),
-    'url' => url('/user/delete'),
+    'name' => Yii::t('dressing', 'Delete'),
+    'url' => Yii::app()->createUrl('/user/delete'),
 );
 
 // grid

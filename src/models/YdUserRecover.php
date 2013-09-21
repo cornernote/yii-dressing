@@ -54,8 +54,8 @@ class YdUserRecover extends YdFormModel
     public function attributeLabels()
     {
         return array(
-            'username_or_email' => t('Username or Email'),
-            'recaptcha' => t('Enter both words separated by a space'),
+            'username_or_email' => Yii::t('dressing', 'Username or Email'),
+            'recaptcha' => Yii::t('dressing', 'Enter both words separated by a space'),
         );
     }
 

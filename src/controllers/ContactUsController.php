@@ -77,15 +77,14 @@ class ContactUsController extends YdWebController
         $this->performAjaxValidation($contactUs, 'contactUs-form');
         if (isset($_POST['YdContactUs'])) {
             $contactUs->attributes = $_POST['YdContactUs'];
-            $contactUs->created_at = date('Y-m-d H:i:s');
             $contactUs->ip_address = si($_SERVER, 'REMOTE_ADDR');
             $contactUs->message = format()->formatNtext($contactUs->message);
             if ($contactUs->save()) {
                 EMailHelper::sendContactEmail($contactUs);
-                user()->addFlash(t('Your message has been sent successfully.'), 'success');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Your message has been sent successfully.'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl(array('contactUs/thankYou')));
             }
-            user()->addFlash(t('Could not communicate the message.'), 'warning');
+            Yii::app()->user->addFlash(Yii::t('dressing', 'Could not communicate the message.'), 'warning');
         }
         else {
             if (isset($_GET['YdContactUs'])) {

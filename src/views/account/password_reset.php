@@ -1,15 +1,13 @@
 <?php
 /**
  * @var $this AccountController
- * @var $form ActiveForm
  * @var $user YdUser
  */
-$this->pageTitle = $this->pageHeading = t('Set Password');
-$this->breadcrumbs = array(
-    t('Set Password'),
-);
+$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Set Password');
 
-/** @var ActiveForm $form */
+$this->breadcrumbs[] = Yii::t('dressing', 'Set Password');
+
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'password-form',
     //'enableAjaxValidation' => true,
@@ -28,7 +26,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     'buttonType' => 'submit',
     'type' => 'primary',
     'icon' => 'ok white',
-    'label' => t('Save'),
+    'label' => Yii::t('dressing', 'Save'),
 ));
 echo '</div>';
 $this->endWidget();

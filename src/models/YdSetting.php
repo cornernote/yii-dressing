@@ -52,14 +52,6 @@ class YdSetting extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return $_ENV['_config']['db']['setting'];
-    }
-
-    /**
      * @return array containing model behaviors
      */
     public function behaviors()
@@ -83,7 +75,7 @@ class YdSetting extends YdActiveRecord
         if (isset($items[$name])) {
             return $items[$name];
         }
-        return param($name);
+        return isset(Yii::app()->params[$name]) ? Yii::app()->params[$name] : false;
     }
 
     /**
@@ -105,11 +97,11 @@ class YdSetting extends YdActiveRecord
     static public function appVersions()
     {
         $_versions = array();
-        $p = dirname(bp());
+        $p = dirname(Yii::app()->basePath);
         $d = dir($p);
         while (false !== ($entry = $d->read())) {
             if (substr($entry, 0, 3) == 'app') {
-                $time = filemtime($p . DS . $entry);
+                $time = filemtime($p . DIRECTORY_SEPARATOR . $entry);
                 $_versions[$time] = array(
                     'entry' => $entry,
                     'display' => $entry . ' -- ' . YdTime::date($time, self::item('dateTimeFormat')) . ' -- (' . YdTime::ago($time) . ')',
@@ -134,7 +126,7 @@ class YdSetting extends YdActiveRecord
         $p = Yii::app()->themeManager->basePath;
         $d = dir($p);
         while (false !== ($entry = $d->read())) {
-            $time = filemtime($p . DS . $entry);
+            $time = filemtime($p . DIRECTORY_SEPARATOR . $entry);
             $_themes[$time] = array(
                 'entry' => $entry,
                 'display' => $entry . ' -- ' . YdTime::date($time, self::item('dateTimeFormat')) . ' -- (' . YdTime::ago($time) . ')',
@@ -147,32 +139,6 @@ class YdSetting extends YdActiveRecord
             $themes[$theme['entry']] = $theme['display'];
         }
         return $themes;
-    }
-
-    /**
-     * @return array
-     */
-    static public function yiiVersions()
-    {
-        $_versions = array();
-        $p = vp() . DS . 'yii';
-        $d = dir($p);
-        while (false !== ($entry = $d->read())) {
-            if (substr($entry, 0, 4) == 'yii-') {
-                $time = filemtime($p . DS . $entry);
-                $_versions[$time] = array(
-                    'entry' => $entry,
-                    'display' => $entry . ' -- ' . YdTime::date($time, self::item('dateTimeFormat')) . ' -- (' . YdTime::ago($time) . ')',
-                );
-            }
-        }
-        $d->close();
-        krsort($_versions);
-        $versions = array();
-        foreach ($_versions as $version) {
-            $versions[$version['entry']] = $version['display'];
-        }
-        return $versions;
     }
 
     /**

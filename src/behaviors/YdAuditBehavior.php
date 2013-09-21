@@ -67,7 +67,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
                     $log->model_id = $logModel['model_id'];
                     $log->field = $logModel['prefix'] . $name;
                     $log->created = $date;
-                    $log->user_id = user() ? user()->id : 0;
+                    $log->user_id = Yii::app()->user ? Yii::app()->user->id : 0;
                     $log->audit_id = $auditId;
                     $log->save();
                 }
@@ -98,7 +98,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
                     $log->model_id = $logModel['model_id'];
                     $log->field = $logModel['prefix'] . $name;
                     $log->created = $date;
-                    $log->user_id = user() ? user()->id : 0;
+                    $log->user_id = Yii::app()->user ? Yii::app()->user->id : 0;
                     $log->audit_id = $auditId;
                     $log->save();
                 }
@@ -132,7 +132,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
             $log->model_id = $logModel['model_id'];
             $log->field = $prefix . '*';
             $log->created = $date;
-            $log->user_id = user() ? user()->id : 0;
+            $log->user_id = Yii::app()->user ? Yii::app()->user->id : 0;
             $log->audit_id = $auditId;
             $log->save();
         }

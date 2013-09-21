@@ -24,23 +24,21 @@ $columns[] = array(
 $columns[] = array(
     'name' => 'subject',
 );
-		/*
-$columns[] = array(
-    'name' => 'message',
-);
-$columns[] = array(
-    'name' => 'created_at',
-);
+//$columns[] = array(
+//    'name' => 'message',
+//);
 $columns[] = array(
     'name' => 'ip_address',
 );
-		*/
+$columns[] = array(
+    'name' => 'created',
+);
 
 // multi actions
 $multiActions = array();
 $multiActions[] = array(
-    'name' => t('Delete'),
-    'url' => url('/contactUs/delete'),
+    'name' => Yii::t('dressing', 'Delete'),
+    'url' => Yii::app()->createUrl('/contactUs/delete'),
 );
 
 // grid

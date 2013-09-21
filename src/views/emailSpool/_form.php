@@ -4,7 +4,7 @@
  * @var $emailSpool YdEmailSpool
  */
 
-/* @var $form ActiveForm */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'emailSpool-form',
     'enableAjaxValidation' => true,
@@ -26,7 +26,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     'buttonType' => 'submit',
     'type' => 'primary',
     'icon' => 'ok white',
-    'label' => $emailSpool->isNewRecord ? t('Create') : t('Save'),
+    'label' => $emailSpool->isNewRecord ? Yii::t('dressing', 'Create') : Yii::t('dressing', 'Save'),
     'htmlOptions' => array('class' => 'pull-right'),
 ));
 echo '</div>';

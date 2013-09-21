@@ -5,8 +5,8 @@
  */
 
 // list
-$this->widget('widgets.ListView', array(
+$this->widget('dressing.widgets.YdListView', array(
     'id' => 'attachment-list',
     'dataProvider' => $attachment->search(),
-    'itemView' => '_list_view',
+    'itemView' => 'dressing.views.attachment._list_view',
 ));

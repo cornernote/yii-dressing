@@ -4,23 +4,25 @@
  * @var $contactUs YdContactUs
  */
 
-user()->setState('index.contactUs', ru());
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('List');
-$this->breadcrumbs = array($this->getName() . ' ' . t('List'));
+Yii::app()->user->setState('index.contactUs', Yii::app()->request->requestUri);
+$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'List');
+
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[] = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
 $this->renderPartial('dressing.views.contactUs._menu');
 
 echo '<div class="spacer">';
 
 $this->widget('bootstrap.widgets.TbButton', array(
-    'label' => t('Search'),
-    'htmlOptions' => array('class' => 'search-button'),
+    'label' => Yii::t('dressing', 'Search'),
+    'htmlOptions' => array('class' => 'contactUs-grid-search'),
     'toggle' => true,
 ));
-if (user()->getState('index.contactUs') != url('/contactUs/index')) {
+if (Yii::app()->user->getState('index.contactUs') != Yii::app()->createUrl('/contactUs/index')) {
     echo ' ';
     $this->widget('bootstrap.widgets.TbButton', array(
-        'label' => t('Reset Filters'),
+        'label' => Yii::t('dressing', 'Reset Filters'),
         'url' => array('/contactUs/index'),
     ));
 }

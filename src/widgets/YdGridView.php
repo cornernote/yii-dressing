@@ -119,7 +119,7 @@ class YdGridView extends TbGridView
                             $('#<?php echo $this->id; ?>-form').attr('action', url).submit();
                         }
                         else {
-                            alert('No rows selected');
+                            alert('<?php echo Yii::t('dressing', 'No rows selected.'); ?>');
                         }
                     }
                 });
@@ -152,7 +152,7 @@ class YdGridView extends TbGridView
                             if (!modalRemote.length) modalRemote = $('<div class="modal hide fade" id="modal-remote"></div>');
                             modalRemote.modalResponsiveFix();
                             modalRemote.touchScroll();
-                            modalRemote.html('<div class="modal-header"><h3><?php echo t('Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>').modal();
+                            modalRemote.html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>').modal();
                         },
                         success: function (response) {
                             modalRemote.html(response);
@@ -160,7 +160,7 @@ class YdGridView extends TbGridView
                             $('#modal-remote input:text:visible:first').focus();
                         },
                         error: function (response) {
-                            modalRemote.children('.modal-header').html('<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button><h3><?php echo t('Error!'); ?></h3>');
+                            modalRemote.children('.modal-header').html('<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button><h3><?php echo Yii::t('dressing', 'Error!'); ?></h3>');
                             modalRemote.children('.modal-body').html(response);
                         }
                     });
@@ -181,7 +181,7 @@ class YdGridView extends TbGridView
                     'id' => $this->id . '-multi-checkbox',
                     'class' => 'multi-checkbox-table',
                 )) . "\n";
-            echo CHtml::beginForm(ru(), 'POST', array(
+            echo CHtml::beginForm('', 'POST', array(
                 'id' => $this->id . '-form',
             ));
             echo CHtml::hiddenField('returnUrl', Yii::app()->returnUrl->getFormValue(true));
@@ -201,8 +201,8 @@ class YdGridView extends TbGridView
     public function renderToggleFilters()
     {
         $js = "jQuery(document).on('click','.toggle-filters',function(){ jQuery(this).closest('.grid-view').find('.filters').toggle(); });";
-        cs()->registerScript(__CLASS__ . '_toggle-filters', $js);
-        echo '<i class="icon-search toggle-filters" title="' . t('Show Filters') . '"></i>';
+        Yii::app()->clientScript->registerScript(__CLASS__ . '_toggle-filters', $js);
+        echo '<i class="icon-search toggle-filters" title="' . Yii::t('dressing', 'Show Filters') . '"></i>';
     }
 
     /**
@@ -210,7 +210,7 @@ class YdGridView extends TbGridView
      */
     public function renderPageSelect()
     {
-        $label = t('per page');
+        $label = Yii::t('dressing', 'per page');
         $options = array(
             10 => '10 ' . $label,
             100 => '100 ' . $label,
@@ -230,7 +230,7 @@ class YdGridView extends TbGridView
         if ($this->dataProvider->getItemCount() > 0 && $this->multiActions) {
             echo '<div class="form-multi-actions">';
             echo CHtml::dropDownList("multiAction[{$this->id}]", '', CHtml::listData($this->multiActions, 'url', 'name'), array(
-                'empty' => t('with selected...'),
+                'empty' => Yii::t('dressing', 'with selected...'),
                 'class' => 'multi-actions',
             ));
             echo '</div>';
@@ -245,7 +245,7 @@ class YdGridView extends TbGridView
         if ($this->gridActions) {
             echo '<div class="form-grid-actions">';
             echo CHtml::dropDownList("gridAction[{$this->id}]", '', CHtml::listData($this->gridActions, 'url', 'name'), array(
-                'empty' => t('with all matching rows...'),
+                'empty' => Yii::t('dressing', 'with all matching rows...'),
                 'class' => 'grid-actions',
             ));
             echo '</div>';
@@ -280,9 +280,9 @@ class YdGridView extends TbGridView
     private function getUserPageSize()
     {
         $key = 'userPageSize.' . str_replace('-', '_', $this->id);
-        $size = user()->getState($key, param('defaultPageSize'));
+        $size = Yii::app()->user->getState($key, Yii::app()->params['defaultPageSize']);
         if (!$size) {
-            $size = param('defaultPageSize');
+            $size = Yii::app()->params['defaultPageSize'];
         }
         return $size;
     }
@@ -294,7 +294,7 @@ class YdGridView extends TbGridView
     {
         if (isset($_GET['userPageSize'])) {
             foreach ($_GET['userPageSize'] as $type => $size) {
-                user()->setState('userPageSize.' . $type, (int)$size);
+                Yii::app()->user->setState('userPageSize.' . $type, (int)$size);
             }
             unset($_GET['userPageSize']);
         }

@@ -2,29 +2,29 @@
 /**
  * @var $this EmailTemplateController
  * @var $id int
- * @var $action string
+ * @var $task string
  */
 
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t(ucfirst($action));
-$this->breadcrumbs = array();
-$this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.emailTemplate', array('/emailTemplate/index'));
-$this->breadcrumbs[] = t(ucfirst($action));
+$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
+
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[Yii::t('dressing', 'Email Templates')] = Yii::app()->user->getState('index.emailTemplate', array('/emailTemplate/index'));
+$this->breadcrumbs[] = Yii::t('dressing', ucfirst($task));
 
 $emailTemplate = $id ? EmailTemplate::model()->findByPk($id) : new EmailTemplate('search');
-/** @var ActiveForm $form */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
-    'id' => 'emailTemplate-' . $action . '-form',
+    'id' => 'emailTemplate-' . $task . '-form',
     'type' => 'horizontal',
-    'action' => array('/emailTemplate/' . $action, 'id' => $id),
+    'action' => array('/emailTemplate/' . $task, 'id' => $id, 'confirm' => 1),
 ));
-echo sfGridHidden($id);
-echo CHtml::hiddenField('confirm', 1);
+echo $this->getGridIdHiddenFields($id);
 echo $form->beginModalWrap();
 echo $form->errorSummary($emailTemplate);
 
 echo '<fieldset>';
-echo '<legend>' . t('Selected Records') . '</legend>';
-$emailTemplates = EmailTemplate::model()->findAll('t.id IN (' . implode(',', sfGrid($id)) . ')');
+echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
+$emailTemplates = EmailTemplate::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
 if ($emailTemplates) {
     echo '<ul>';
     foreach ($emailTemplates as $emailTemplate) {
@@ -41,7 +41,7 @@ echo '<div class="' . $form->getSubmitRowClass() . '">';
 $this->widget('bootstrap.widgets.TbButton', array(
     'buttonType' => 'submit',
     'type' => 'primary',
-    'label' => t('Confirm ' . ucfirst($action)),
+    'label' => Yii::t('dressing', 'Confirm ' . ucfirst($task)),
     'htmlOptions' => array('class' => 'pull-right'),
 ));
 echo '</div>';

@@ -6,14 +6,14 @@
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = YdMenu::getItemsFromMenu('System');
+    $this->menu = YdMenu::getItemsFromMenu('Logs', YdMenu::MENU_ADMIN);
     return; // no more links
 }
 
 // create
 //if ($audit->isNewRecord) {
 //    $this->menu[] = array(
-//        'label' => t('Create'),
+//        'label' => Yii::t('dressing', 'Create'),
 //        'url' => array('/audit/create'),
 //    );
 //    return; // no more links
@@ -21,11 +21,11 @@ if ($this->action->id == 'index') {
 
 // view
 $this->menu[] = array(
-    'label' => t('View'),
+    'label' => Yii::t('dressing', 'View'),
     'url' => $audit->getUrl(),
 );
 
 // others
-foreach ($audit->getDropdownLinkItems(true) as $linkItem) {
+foreach ($audit->getMenuLinks(true) as $linkItem) {
     $this->menu[] = $linkItem;
 }

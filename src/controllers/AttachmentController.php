@@ -79,30 +79,8 @@ class AttachmentController extends YdWebController
         }
 
         // allow if they have a valid attachment key
-        if (user()->getState('attachmentViewKey.' . $attachment->id)) {
+        if (Yii::app()->user->getState('attachmentViewKey.' . $attachment->id)) {
             return true;
-        }
-
-        // allow customers and suppliers to view their own job attachments
-        if ($attachment->model == 'Job') {
-            $job = Job::model()->findByPk((int)$attachment->foreign_key);
-            if (user()->checkAccess('customer,templogin_customer') && $job->checkCustomerAccess(user()->id)) {
-                return true;
-            }
-            if (user()->checkAccess('supplier') && $job->checkSupplierAccess(user()->id)) {
-                return true;
-            }
-        }
-
-        // allow customers and suppliers to view their own item attachments
-        if ($attachment->model == 'Item') {
-            $item = Item::model()->findByPk((int)$attachment->foreign_key);
-            if (user()->checkAccess('customer,templogin_customer') && $item->checkCustomerAccess(user()->id)) {
-                return true;
-            }
-            if (user()->checkAccess('supplier') && $item->checkSupplierAccess(user()->id)) {
-                return true;
-            }
         }
 
         // do not allow
@@ -154,9 +132,9 @@ class AttachmentController extends YdWebController
                 $cache = false;
             if ($cache) {
                 // cannot use Yii::app()->request->scriptFile with a symlink
-                $filename = hp() . '/attachment/view/id/' . $id . '/thumb/' . urlencode($thumb) . '/cache/' . $cache;
+                $filename = dirname(Yii::app()->request->scriptFile) . DIRECTORY_SEPARATOR . 'attachment' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'id' . DIRECTORY_SEPARATOR . $id . DIRECTORY_SEPARATOR . 'thumb' . DIRECTORY_SEPARATOR . urlencode($thumb) . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . $cache;
                 if (!file_exists(dirname($filename))) {
-                    Helper::createDirectory(dirname($filename), 0777, true);
+                    YdFileHelper::createDirectory(dirname($filename), 0777, true);
                 }
                 copy($thumbFilename, $filename);
             }
@@ -176,9 +154,9 @@ class AttachmentController extends YdWebController
                 if (filesize($file) > (1024 * 10))
                     $cache = false;
                 if ($cache) {
-                    $filename = dirname(dirname(bp())) . '/sites/' . param('host') . '/attachment/view/id/' . $id . '/cache/' . $cache;
+                    $filename = dirname(Yii::app()->basePath) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'attachment' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'id' . DIRECTORY_SEPARATOR . $id . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . $cache;
                     if (!file_exists(dirname($filename))) {
-                        Helper::createDirectory(dirname($filename), 0777, true);
+                        YdFileHelper::createDirectory(dirname($filename), 0777, true);
                     }
                     copy($file, $filename);
                 }
@@ -263,13 +241,13 @@ class AttachmentController extends YdWebController
             }
             else {
                 if ($saved) {
-                    user()->addFlash('Attachment has been created', 'success');
+                    Yii::app()->user->addFlash('Attachment has been created', 'success');
                     if (!isAjax())
                         $this->redirect(Yii::app()->returnUrl->getUrl());
                 }
                 else {
                     if (!$attachment->getErrorString()) {
-                        user()->addFlash('Could not create Attachment', 'error');
+                        Yii::app()->user->addFlash('Could not create Attachment', 'error');
                     }
 
                 }
@@ -330,30 +308,28 @@ class AttachmentController extends YdWebController
      */
     public function actionDelete($id = null)
     {
-        $ids = sfGrid($id);
-        foreach ($ids as $id) {
-            $attachment = YdAttachment::model()->findByPk($id);
-            user()->addFlash(sprintf('Attachment attachment-%s has been deleted', $id), 'success');
-            $attachment->delete();
-        }
-        if (!isAjax())
-            $this->redirect(Yii::app()->returnUrl->getUrl());
-    }
+        $task = YdHelper::getSubmittedField('task', 'YdAttachment') == 'undelete' ? 'undelete' : 'delete';
+        if (YdHelper::getSubmittedField('confirm', 'YdAttachment')) {
+            foreach ($this->getGridIds($id) as $_id) {
+                $attachment = YdAttachment::model()->findByPk($_id);
 
-    /**
-     * Undeletes a particular model.
-     * @param integer $id the ID of the model to be deleted
-     */
-    public function actionUndelete($id = null)
-    {
-        $ids = sfGrid($id);
-        foreach ($ids as $id) {
-            $attachment = YdAttachment::model()->findByPk($id);
-            user()->addFlash(sprintf('Attachment attachment-%s has been undeleted', $id), 'success');
-            $attachment->undelete();
+                // check access
+                if (!$attachment->checkUserAccess(Yii::app()->user->id)) {
+                    continue;
+                }
+                call_user_func(array($user, $task));
+                Yii::app()->user->addFlash(strtr('Attachment :name has been :tasked.', array(
+                    ':name' => $attachment->getName(),
+                    ':tasked' => $task . 'd',
+                )), 'success');
+            }
+            $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->getState('index.attachment', array('/attachment/index'))));
         }
-        if (!isAjax())
-            $this->redirect(Yii::app()->returnUrl->getUrl());
+
+        $this->render('dressing.views.attachment.delete', array(
+            'id' => $id,
+            'task' => $task,
+        ));
     }
 
 }

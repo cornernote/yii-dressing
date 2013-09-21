@@ -3,10 +3,10 @@
  * @var $this EmailSpoolController
  * @var $emailSpool YdEmailSpool
  */
-$this->pageTitle = $this->pageHeading = $emailSpool->getName() . ' - ' . $this->getName() . ' ' . t('View');
+$this->pageTitle = $this->pageHeading = $emailSpool->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'View');
 
-$this->breadcrumbs = array();
-$this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.emailSpool', array('/emailSpool/index'));
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[Yii::t('dressing', 'Email Spools')] = Yii::app()->user->getState('index.emailSpool', array('/emailSpool/index'));
 $this->breadcrumbs[] = $emailSpool->getName();
 
 $this->renderPartial('dressing.views.emailSpool._menu', array(
@@ -44,8 +44,8 @@ $details = ob_get_clean();
 $this->widget('bootstrap.widgets.TbTabs', array(
     'type' => 'pills', // 'tabs' or 'pills'
     'tabs' => array(
-        array('label' => t('Details'), 'content' => $details, 'active' => true),
-        array('label' => t('HTML Message'), 'content' => $emailSpool->message_html),
-        array('label' => t('Text Message'), 'content' => nl2br($emailSpool->message_text)),
+        array('label' => Yii::t('dressing', 'Details'), 'content' => $details, 'active' => true),
+        array('label' => Yii::t('dressing', 'HTML Message'), 'content' => $emailSpool->message_html),
+        array('label' => Yii::t('dressing', 'Text Message'), 'content' => nl2br($emailSpool->message_text)),
     ),
 ));

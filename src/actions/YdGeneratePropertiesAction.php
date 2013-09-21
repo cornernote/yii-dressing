@@ -26,7 +26,7 @@ class YdGeneratePropertiesAction extends CAction
     public function run()
     {
         // try get the model name
-        $this->modelName = sf('modelName');
+        $this->modelName = YdHelper::getSubmittedField('modelName');
 
         // show a list
         if (!$this->modelName) {
@@ -37,7 +37,7 @@ class YdGeneratePropertiesAction extends CAction
         // load the model
         $this->model = CActiveRecord::model($this->modelName);
         if (!$this->model) {
-            throw new CHttpException(strtr(t('No CActiveRecord Class with name :modelName was not found.'), array(':modelName' => $this->modelName)));
+            throw new CHttpException(strtr(Yii::t('dressing', 'No CActiveRecord Class with name :modelName was not found.'), array(':modelName' => $this->modelName)));
         }
 
         // render the properties
@@ -107,8 +107,8 @@ class YdGeneratePropertiesAction extends CAction
             }
         }
         $this->controller->breadcrumbs = array(
-            t('Generate Properties') => array('/tool/generateProperties'),
-            t('Model') . ' ' . $this->modelName,
+            Yii::t('dressing', 'Generate Properties') => array('/tool/generateProperties'),
+            Yii::t('dressing', 'Model') . ' ' . $this->modelName,
         );
         $this->controller->renderText($message . '<pre>' . $contents . '</pre>');
     }

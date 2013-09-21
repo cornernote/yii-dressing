@@ -40,7 +40,7 @@ class YdDbMigration extends CDbMigration
      */
     public function import($file)
     {
-        $file = bp() . '/migrations/' . $file;
+        $file = Yii::app()->basePath . '/migrations/' . $file;
         $pdo = Yii::app()->db->pdoInstance;
         if (!file_exists($file)) {
             throw new Exception('File ' . $file . ' was not found');

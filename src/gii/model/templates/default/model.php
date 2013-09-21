@@ -99,7 +99,7 @@ echo "    public function attributeLabels()\n";
 echo "    {\n";
 echo "        return array(\n";
 foreach ($labels as $name => $label) {
-    echo "            '$name' => t('$label'),\n";
+    echo "            '$name' => Yii::t('app', '$label'),\n";
 }
 echo "        );\n";
 echo "    }\n";
@@ -138,20 +138,20 @@ echo "     */\n";
 echo "    public function getMenuLinks(\$extra = false)\n";
 echo "    {\n";
 echo "        \$links = array();\n";
-echo "        \$links[] = array('label' => t('Update'), 'url' => \$this->getUrl('update'));\n";
+echo "        \$links[] = array('label' => Yii::t('app', 'Update'), 'url' => \$this->getUrl('update'));\n";
 echo "        if (\$extra) {\n";
 echo "            \$more = array();\n";
-echo "            \$more[] = array('label' => t('Clear Cache'), 'url' => array('/tool/clearCacheModel', 'model' => get_class(\$this), 'id' => \$this->getPrimaryKeyString()));\n";
-echo "            \$more[] = array('label' => t('View Log'), 'url' => \$this->getUrl('log'));\n";
+echo "            \$more[] = array('label' => Yii::t('app', 'Clear Cache'), 'url' => array('/tool/clearCacheModel', 'model' => get_class(\$this), 'id' => \$this->getPrimaryKeyString()));\n";
+echo "            \$more[] = array('label' => Yii::t('app', 'View Log'), 'url' => \$this->getUrl('log'));\n";
 if (in_array('deleted', CHtml::listData($columns, 'name', 'name')))
     echo "            if (!\$this->deleted)\n    ";
-echo "            \$more[] = array('label' => t('Delete'), 'url' => \$this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
+echo "            \$more[] = array('label' => Yii::t('app', 'Delete'), 'url' => \$this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
 if (in_array('deleted', CHtml::listData($columns, 'name', 'name'))) {
     echo "            else\n";
-    echo "                \$more[] = array('label' => t('Undelete'), 'url' => \$this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
+    echo "                \$more[] = array('label' => Yii::t('app', 'Undelete'), 'url' => \$this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
 }
 echo "            \$links[] = array(\n";
-echo "                'label' => t('More'),\n";
+echo "                'label' => Yii::t('app', 'More'),\n";
 echo "                'items' => \$more,\n";
 echo "            );\n";
 echo "        }\n";

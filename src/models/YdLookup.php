@@ -49,14 +49,6 @@ class YdLookup extends YdActiveRecord
     }
 
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'lookup';
-    }
-
-    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
@@ -87,12 +79,12 @@ class YdLookup extends YdActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => t('ID'),
-            'name' => t('Name'),
-            'type' => t('Type'),
-            'position' => t('Position'),
-            'created' => t('Created'),
-            'deleted' => t('Deleted'),
+            'id' => Yii::t('dressing', 'ID'),
+            'name' => Yii::t('dressing', 'Name'),
+            'type' => Yii::t('dressing', 'Type'),
+            'position' => Yii::t('dressing', 'Position'),
+            'created' => Yii::t('dressing', 'Created'),
+            'deleted' => Yii::t('dressing', 'Deleted'),
         );
     }
 
@@ -125,19 +117,19 @@ class YdLookup extends YdActiveRecord
      * @param bool $extra
      * @return array
      */
-    public function getDropdownLinkItems($extra = false)
+    public function getMenuLinks($extra = false)
     {
         $links = array();
-        $links[] = array('label' => t('Update'), 'url' => $this->getUrl('update'));
+        $links[] = array('label' => Yii::t('dressing', 'Update'), 'url' => $this->getUrl('update'));
         if ($extra) {
             $more = array();
-            $more[] = array('label' => t('Log'), 'url' => $this->getUrl('log'));
+            $more[] = array('label' => Yii::t('dressing', 'Log'), 'url' => $this->getUrl('log'));
             if (!$this->deleted)
-                $more[] = array('label' => t('Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+                $more[] = array('label' => Yii::t('dressing', 'Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
             else
-                $more[] = array('label' => t('Undelete'), 'url' => $this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+                $more[] = array('label' => Yii::t('dressing', 'Undelete'), 'url' => $this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
             $links[] = array(
-                'label' => t('More'),
+                'label' => Yii::t('dressing', 'More'),
                 'items' => $more,
             );
         }

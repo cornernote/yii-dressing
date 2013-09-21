@@ -167,7 +167,7 @@ class YdStringHelper
         if (strlen($firstLine) > $limit) {
             $firstLine = substr($firstLine, 0, $limit - 2);
         }
-        $icon = l(i(au() . '/icons/comments.png'), 'javascript:void();', array('title' => $contentsWithBr));
+        $icon = CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $contentsWithBr));
         if ($firstLine == $contentsWithBr) {
             $return = $contentsWithBr;
             $return = htmlentities($return);
@@ -186,7 +186,7 @@ class YdStringHelper
      */
     static public function getTextWithIcon($short, $long)
     {
-        return $short . '...&nbsp;' . l(i(au() . '/icons/comments.png'), 'javascript:void();', array('title' => $long));
+        return $short . '...&nbsp;' . CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $long));
     }
 
 

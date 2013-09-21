@@ -91,14 +91,14 @@ class YdReturnUrl extends CApplicationComponent
         }
         if (!$url) {
             // load from session
-            $url = user()->getReturnUrl();
+            $url = Yii::app()->user->getReturnUrl();
         }
         if (!$url) {
             // load from current page
             $url = Yii::app()->request->getUrl();
         }
         // unset the session
-        user()->setReturnUrl(null);
+        Yii::app()->user->setReturnUrl(null);
         return $url;
     }
 
@@ -115,7 +115,7 @@ class YdReturnUrl extends CApplicationComponent
         $url = self::getUrlFromSubmitFields();
         if ($url) {
             // save to session
-            user()->setReturnUrl($url);
+            Yii::app()->user->setReturnUrl($url);
         }
     }
 
@@ -127,7 +127,7 @@ class YdReturnUrl extends CApplicationComponent
      */
     static private function getUrlFromSubmitFields()
     {
-        $url = sf('returnUrl');
+        $url = YdHelper::getSubmittedField('returnUrl');
         if ($url && isset($_GET['returnUrl']) && base64_decode($url)) {
             $url = base64_decode(urldecode($url));
         }

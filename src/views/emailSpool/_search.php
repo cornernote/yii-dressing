@@ -4,18 +4,17 @@
  * @var $emailSpool YdEmailSpool
  */
 
-Helper::searchToggle('emailSpool-grid');
-echo '<div class="search-form hide">';
-
-/** @var ActiveForm $form */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
-	'action' => url($this->route),
-	'type' => 'horizontal',
-	'method' => 'get',
+    'action' => Yii::app()->createUrl($this->route),
+    'type' => 'horizontal',
+    'method' => 'get',
+    'htmlOptions' => array('class' => 'hide'),
 ));
+$form->searchToggle('emailSpool-grid-search', 'emailSpool-grid');
 
 echo '<fieldset>';
-echo '<legend>' . $this->getName() . ' ' .t('Search') . '</legend>';
+echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
 echo $form->textFieldRow($emailSpool, 'id');
 echo $form->textFieldRow($emailSpool, 'status');
 echo $form->textFieldRow($emailSpool, 'model');
@@ -33,8 +32,7 @@ echo $form->textFieldRow($emailSpool, 'deleted');
 echo '</fieldset>';
 
 echo '<div class="form-actions">';
-$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'icon' => 'search white', 'label' => t('Search')));
+$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'icon' => 'search white', 'label' => Yii::t('dressing', 'Search')));
 echo '</div>';
 
 $this->endWidget();
-echo '</div>';

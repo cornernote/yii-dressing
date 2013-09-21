@@ -13,7 +13,7 @@ if ($this->action->id == 'index') {
 // create
 //if ($emailSpool->isNewRecord) {
 //    $this->menu[] = array(
-//        'label' => t('Create'),
+//        'label' => Yii::t('dressing', 'Create'),
 //        'url' => array('/emailSpool/create'),
 //    );
 //    return; // no more links
@@ -21,11 +21,11 @@ if ($this->action->id == 'index') {
 
 // view
 $this->menu[] = array(
-    'label' => t('View'),
+    'label' => Yii::t('dressing', 'View'),
     'url' => $emailSpool->getUrl(),
 );
 
 // others
-foreach ($emailSpool->getDropdownLinkItems(true) as $linkItem) {
+foreach ($emailSpool->getMenuLinks(true) as $linkItem) {
     $this->menu[] = $linkItem;
 }

@@ -17,7 +17,7 @@ class YdEMailHelper
 
         // get recovery temp login link
         $token = Token::model()->add('+1day', 1, $relation);
-        $viewParams['url'] = absoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
+        $viewParams['url'] = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
 
         // spool the email
         self::spool($to, 'user.recover', $viewParams, $relation);
@@ -35,7 +35,7 @@ class YdEMailHelper
 
         // get activation token
         $token = Token::model()->add('+30days', 1, $relation);
-        $viewParams['url'] = absoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
+        $viewParams['url'] = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
 
         // spool the email
         self::spool($to, 'user.welcome', $viewParams, $relation);
@@ -48,12 +48,12 @@ class YdEMailHelper
     {
         $relation = array('model' => 'Error', 'model_id' => 0);
 
-        $url = absoluteUrl('/error/index');
-        $messageString = t('errors have been archived') . ' ' . $url;
+        $url = Yii::app()->createAbsoluteUrl('/error/index');
+        $messageString = Yii::t('dressing', 'errors have been archived') . ' ' . $url;
 
         $message = array(
             'heading' => null,
-            'subject' => t('errors have been archived'),
+            'subject' => Yii::t('dressing', 'errors have been archived'),
             'text' => $messageString,
             'html' => format()->formatNtext($messageString),
         );
@@ -116,13 +116,13 @@ class YdEMailHelper
         $flash = true;
         if (YdSetting::item('debug_email'))
             $flash = true;
-        elseif (!user()->checkAccess('admin'))
+        elseif (!Yii::app()->user->checkAccess('admin'))
             $flash = false;
         elseif (isset($options['flash']))
             $flash = $options['flash'];
         if ($flash && isset(Yii::app()->controller)) {
             $debug = Yii::app()->controller->renderPartial('application.views.email._debug', compact('to', 'message', 'template'), true);
-            user()->addFlash($debug, 'email');
+            Yii::app()->user->addFlash($debug, 'email');
         }
 
         // return the id
@@ -153,7 +153,7 @@ class YdEMailHelper
 
         // add settings to params
         $viewParams['Setting'] = YdSetting::items();
-        $viewParams['Setting']['bu'] = absoluteUrl('/');
+        $viewParams['Setting']['bu'] = Yii::app()->createAbsoluteUrl('/');
 
         // parse template
         $mustache = new Mustache;

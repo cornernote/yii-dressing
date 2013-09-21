@@ -55,14 +55,14 @@ class YdWebController extends YdController
         parent::init();
 
         // ensure the user is an api login
-        if (!user()->isGuest && user()->getState('UserIdentity.api')) {
-            user()->addFlash(t('Please login to the web interface.'));
-            user()->logout();
+        if (!Yii::app()->user->isGuest && Yii::app()->user->getState('UserIdentity.api')) {
+            Yii::app()->user->addFlash(Yii::t('dressing', 'Please login to the web interface.'));
+            Yii::app()->user->logout();
             $this->redirect(Yii::app()->homeUrl);
         }
 
         // set user theme
-        $theme = user()->setting('theme');
+        $theme = Yii::app()->user->setting('theme');
         if ($theme) {
             app()->theme = $theme;
         }
@@ -78,6 +78,17 @@ class YdWebController extends YdController
         // if returnUrl is in submitted data it will be saved in session
         Yii::app()->returnUrl->setUrlFromSubmitFields();
         return parent::beforeAction($action);
+    }
+
+    /**
+     *
+     */
+    protected function registerScripts()
+    {
+        // publish assets
+        Yii::app()->dressing->assetPath = Yii::getPathOfAlias('dressing.assets.yii-dressing');
+        Yii::app()->dressing->assetUrl = Yii::app()->assetManager->publish(Yii::app()->dressing->assetPath, true, -1, YII_DEBUG);
+        Yii::app()->clientScript->registerCSSFile($this->assetPath . '/css/yii-dressing.css');
     }
 
     /**
@@ -113,27 +124,6 @@ class YdWebController extends YdController
     }
 
     /**
-     * @param $message
-     * @param $messageType
-     * @param null $url
-     * @param bool $useCurrentUrl
-     */
-    protected function flashAndRedirect($message, $messageType, $url = null, $useCurrentUrl = false)
-    {
-        user()->addFlash($message, $messageType);
-        if (!isAjax()) {
-            if (!$url) {
-                $url = Yii::app()->returnUrl->getUrl();
-                if ($useCurrentUrl) {
-                    $url = app()->request->url;
-                }
-            }
-            $this->redirect($url);
-        }
-        Yii::app()->end();
-    }
-
-    /**
      * @param $id
      * @param bool|string $model
      * @return ActiveRecord
@@ -146,9 +136,54 @@ class YdWebController extends YdController
         if ($this->loadModel === null) {
             $this->loadModel = CActiveRecord::model($model)->findbyPk($id);
             if ($this->loadModel === null)
-                throw new CHttpException(404, t('The requested page does not exist.'));
+                throw new CHttpException(404, Yii::t('dressing', 'The requested page does not exist.'));
         }
         return $this->loadModel;
+    }
+
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getGridIds($id)
+    {
+        $ids = array();
+        $gridData = array();
+        if (!empty($_REQUEST)) {
+            foreach ($_REQUEST as $k => $v) {
+                if (strpos($k, '-grid_c0') !== false) {
+                    if (is_array($v)) {
+                        $gridData = $v;
+                    }
+
+                }
+            }
+        }
+        if (!empty($gridData)) {
+            foreach ($gridData as $id) {
+                $ids[$id] = $id;
+            }
+        }
+        else {
+            if ($id) {
+                $ids[$id] = $id;
+            }
+        }
+        return $ids;
+    }
+
+    /**
+     * @param null $id
+     * @return string
+     */
+    public function getGridIdHiddenFields($id = null)
+    {
+        $inputs = array();
+        foreach ($this->getGridIds($id) as $id) {
+            $inputs[] = CHtml::hiddenField('hidden-sf-grid_c0[]', $id);
+        }
+        return implode("\n", $inputs);
     }
 
 }

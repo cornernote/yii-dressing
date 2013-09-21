@@ -3,10 +3,10 @@
  * @var $this UserController
  * @var $user YdUser
  */
-$this->pageTitle = $this->pageHeading = $user->getName() . ' - ' . $this->getName() . ' ' . t('View');
+$this->pageTitle = $this->pageHeading = $user->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'View');
 
-$this->breadcrumbs = array();
-$this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.user', array('/user/index'));
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[Yii::t('dressing', 'Users')] = Yii::app()->user->getState('index.user', array('/user/index'));
 $this->breadcrumbs[] = $user->getName();
 
 $this->renderPartial('dressing.views.user._menu', array(
@@ -19,12 +19,12 @@ $attributes[] = 'username';
 $attributes[] = 'name';
 $attributes[] = array(
     'name' => 'email',
-    'value' => l($user->email, 'mailto:' . $user->email),
+    'value' => CHtml::link($user->email, 'mailto:' . $user->email),
     'type' => 'raw',
 );
 $attributes[] = 'phone';
 $attributes[] = array(
-    'label' => t('Roles'),
+    'label' => Yii::t('dressing', 'Roles'),
     'value' => implode(', ', CHtml::listData($user->role, 'id', 'name')),
 );
 $attributes[] = 'created';

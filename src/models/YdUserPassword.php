@@ -54,7 +54,7 @@ class YdUserPassword extends YdFormModel
      */
     public function validateCurrentPassword()
     {
-        $user = User::model()->findByPk((int)user()->id);
+        $user = User::model()->findByPk(Yii::app()->user->id);
         if (!$user || !$user->validatePassword($this->current_password)) {
             $this->addError('current_password', 'Incorrect password.');
         }
@@ -66,9 +66,9 @@ class YdUserPassword extends YdFormModel
     public function attributeLabels()
     {
         return array(
-            'current_password' => t('Current Password'),
-            'password' => t('New Password'),
-            'confirm_password' => t('Confirm Password'),
+            'current_password' => Yii::t('dressing', 'Current Password'),
+            'password' => Yii::t('dressing', 'New Password'),
+            'confirm_password' => Yii::t('dressing', 'Confirm Password'),
         );
     }
 

@@ -48,7 +48,7 @@ class LookupController extends YdWebController
 
         // check for deleted YdLookup
         if ($lookup->deleted) {
-            user()->addFlash('THIS RECORD IS DELETED', 'warning');
+            Yii::app()->user->addFlash('THIS RECORD IS DELETED', 'warning');
         }
 
         $this->render('dressing.views.lookup.view', array(
@@ -81,7 +81,7 @@ class LookupController extends YdWebController
         if (isset($_POST['YdLookup'])) {
             $lookup->attributes = $_POST['YdLookup'];
             if ($lookup->save()) {
-                user()->addFlash('Lookup has been created.', 'success');
+                Yii::app()->user->addFlash('Lookup has been created.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($lookup->getUrl()));
             }
         }
@@ -109,10 +109,9 @@ class LookupController extends YdWebController
         if (isset($_POST['YdLookup'])) {
             $lookup->attributes = $_POST['YdLookup'];
             if ($lookup->save()) {
-                user()->addFlash(t('Lookup has been updated'), 'success');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Lookup has been updated'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($lookup->getUrl()));
             }
-            user()->addFlash(t('Lookup could not be updated'), 'warning');
         }
 
         $this->render('dressing.views.lookup.update', array(
@@ -126,21 +125,20 @@ class LookupController extends YdWebController
      */
     public function actionDelete($id = null)
     {
-        $task = sf('task', 'YdLookup') == 'undelete' ? 'undelete' : 'delete';
-        if (sf('confirm', 'YdLookup')) {
-            $ids = sfGrid($id);
-            foreach ($ids as $id) {
-                $lookup = YdLookup::model()->findByPk($id);
+        $task = YdHelper::getSubmittedField('task', 'YdLookup') == 'undelete' ? 'undelete' : 'delete';
+        if (YdHelper::getSubmittedField('confirm', 'YdLookup')) {
+            foreach ($this->getGridIds($id) as $_id) {
+                $lookup = YdLookup::model()->findByPk($_id);
                 if (!$lookup) {
                     continue;
                 }
                 call_user_func(array($lookup, $task));
-                user()->addFlash(strtr('Lookup :name has been :tasked.', array(
+                Yii::app()->user->addFlash(strtr('Lookup :name has been :tasked.', array(
                     ':name' => $lookup->getName(),
                     ':tasked' => $task . 'd',
                 )), 'success');
             }
-            $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.lookup', array('/lookup/index'))));
+            $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->getState('index.lookup', array('/lookup/index'))));
         }
 
         $this->render('dressing.views.lookup.delete', array(
@@ -193,11 +191,8 @@ class LookupController extends YdWebController
             }
             $lookup->attributes = $_POST['YdLookup'];
             if ($lookup->save()) {
-                user()->addFlash(t('Lookup has been saved.'), 'success');
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Lookup has been saved.'), 'success');
                 $this->redirect(array('lookup/view', 'type' => $type));
-            }
-            else {
-                user()->addFlash(t('Lookup could not be saved.'), 'error');
             }
         }
 

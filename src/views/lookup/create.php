@@ -4,11 +4,11 @@
  * @var $lookup YdLookup
  */
 
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('Create');
+$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'Create');
 
-$this->breadcrumbs = array();
-$this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.lookup', array('/lookup/index'));
-$this->breadcrumbs[] = t('Create');
+$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
+$this->breadcrumbs[Yii::t('dressing', 'Lookups')] = Yii::app()->user->getState('index.lookup', array('/lookup/index'));
+$this->breadcrumbs[] = Yii::t('dressing', 'Create');
 
 $this->renderPartial('dressing.views.lookup._menu', array(
     'lookup' => $lookup,

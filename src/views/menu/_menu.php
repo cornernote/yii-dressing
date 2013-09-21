@@ -13,7 +13,7 @@ if ($this->action->id == 'index') {
 // create
 if ($menu->isNewRecord) {
     $this->menu[] = array(
-        'label' => t('Create'),
+        'label' => Yii::t('dressing', 'Create'),
         'url' => array('/menu/create'),
     );
     return; // no more links
@@ -21,11 +21,11 @@ if ($menu->isNewRecord) {
 
 // view
 $this->menu[] = array(
-    'label' => t('View'),
+    'label' => Yii::t('dressing', 'View'),
     'url' => $menu->getUrl(),
 );
 
 // others
-foreach ($menu->getDropdownLinkItems(true) as $linkItem) {
+foreach ($menu->getMenuLinks(true) as $linkItem) {
     $this->menu[] = $linkItem;
 }

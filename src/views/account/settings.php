@@ -4,14 +4,14 @@
  * @var $form YdActiveForm
  * @var $user YdUser
  */
-$this->pageTitle = $this->pageHeading = t('Account Settings');
-$this->breadcrumbs = array(
-    t('My Account') => array('index'),
-    t('Account Settings'),
-);
+$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Account Settings');
+
+$this->breadcrumbs[Yii::t('dressing', 'My Account')] = array('/account/index');
+$this->breadcrumbs[] = Yii::t('dressing', 'Account Settings');
+
 $this->menu = YdMenu::getItemsFromMenu('User');
 
-/** @var ActiveForm $form */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'account-form',
     //'enableAjaxValidation' => true,
@@ -22,10 +22,10 @@ echo $form->errorSummary($user);
 
 ?>
     <div class="control-group">
-        <?php echo CHtml::label(t('Theme'), 'UserEav_theme', array('class' => 'control-label')); ?>
+        <?php echo CHtml::label(Yii::t('dressing', 'Theme'), 'UserEav_theme', array('class' => 'control-label')); ?>
         <div class="controls">
             <?php
-            echo CHtml::dropDownList('UserEav[theme]', $user->getEavAttribute('theme'), param('themes'));
+            echo CHtml::dropDownList('UserEav[theme]', $user->getEavAttribute('theme'), YdSetting::themes());
             ?>
         </div>
     </div>
@@ -38,7 +38,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     'buttonType' => 'submit',
     'type' => 'primary',
     'icon' => 'ok white',
-    'label' => t('Save'),
+    'label' => Yii::t('dressing', 'Save'),
     'htmlOptions' => array('class' => 'pull-right'),
 ));
 echo '</div>';

@@ -5,8 +5,8 @@
  */
 
 // list
-$this->widget('widgets.ListView', array(
+$this->widget('dressing.widgets.YdListView', array(
     'id' => 'menu-list',
     'dataProvider' => $menu->search(),
-    'itemView' => '_list_view',
+    'itemView' => 'dressing.views.menu._list_view',
 ));

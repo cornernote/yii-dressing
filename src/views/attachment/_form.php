@@ -7,19 +7,19 @@
 
 // quick upload
 if ($attachment->isNewRecord) {
-    echo '<h3>' . t('Multi File Upload') . '</h3>';
-    cs()->registerCssFile(au() . '/swfupload/default.css', 'screen, projection');
+    echo '<h3>' . Yii::t('dressing', 'Multi File Upload') . '</h3>';
+    Yii::app()->clientScript->registerCssFile(Yii::app()->dressing->assetUrl . '/swfupload/default.css', 'screen, projection');
     $time = time();
-    $uploadUrl = url('/attachment/create', array(
+    $uploadUrl = Yii::app()->createUrl('/attachment/create', array(
         'id' => $this->id,
         'model' => $attachment->model,
         'foreign_key' => $attachment->foreign_key,
         'time' => $time,
-        'user_id' => user()->id,
-        'key' => md5('s3creth#sh' . $time . $attachment->model . $attachment->foreign_key . user()->id),
+        'user_id' => Yii::app()->user->id,
+        'key' => md5('s3creth#sh' . $time . $attachment->model . $attachment->foreign_key . Yii::app()->user->id),
     ));
     $this->widget('SwfUpload', array(
-        'jsHandlerUrl' => au() . '/swfupload/handlers.js',
+        'jsHandlerUrl' => Yii::app()->dressing->assetUrl . '/swfupload/handlers.js',
         'postParams' => array(),
         'config' => array(
             'use_query_string' => true,
@@ -36,7 +36,7 @@ if ($attachment->isNewRecord) {
             'upload_complete_handler' => 'js:uploadComplete',
             'custom_settings' => array('upload_target' => 'divFileProgressContainer'),
             'button_placeholder_id' => 'swfupload',
-            'button_image_url' => au() . '/swfupload/images/upload.png',
+            'button_image_url' => Yii::app()->dressing->assetUrl . '/swfupload/images/upload.png',
             'button_width' => 61,
             'button_height' => 22,
             'button_window_mode' => 'js:SWFUpload.WINDOW_MODE.TRANSPARENT',
@@ -49,7 +49,7 @@ if ($attachment->isNewRecord) {
 }
 
 // single upload
-/** @var $form ActiveForm */
+/** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'attachment-form',
     'type' => 'horizontal',
@@ -75,7 +75,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
     'buttonType' => 'submit',
     'type' => 'primary',
     'icon' => 'ok white',
-    'label' => $attachment->isNewRecord ? t('Create') : t('Save'),
+    'label' => $attachment->isNewRecord ? Yii::t('dressing', 'Create') : Yii::t('dressing', 'Save'),
     'htmlOptions' => array('class' => 'pull-right'),
 ));
 echo '</div>';

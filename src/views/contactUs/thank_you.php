@@ -4,9 +4,10 @@
  * @var $contactUs YdContactUs
  */
 
-$this->pageTitle = $this->pageHeading = 'Thank You' ;
+$this->pageTitle = $this->pageHeading = 'Thank You';
 
-$this->breadcrumbs = array();
-?>
+$this->breadcrumbs[$this->getName()] = array('/contactUs/contact');
+$this->breadcrumbs[] = Yii::t('dressing', 'Thank You');
 
-Thank you for your email. We will get back to you as soon as possible.
+echo Yii::t('dressing', 'Thank you for your email.');
+

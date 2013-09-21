@@ -7,6 +7,7 @@
  */
 class YdActiveRecord extends CActiveRecord
 {
+
     /**
      * The attributes that are currently in the database
      *
@@ -155,7 +156,7 @@ class YdActiveRecord extends CActiveRecord
     public function getLink($title = null, $urlAction = 'view', $urlParams = array(), $htmlOptions = array())
     {
         $title = $title ? $title : $this->getName();
-        return l($title, $this->getUrl($urlAction, $urlParams), $htmlOptions);
+        return CHtml::link($title, $this->getUrl($urlAction, $urlParams), $htmlOptions);
     }
 
     /**
@@ -207,5 +208,12 @@ class YdActiveRecord extends CActiveRecord
         return $this->getPrimaryKey();
     }
 
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return Yii::app()->dressing->tableMap[get_class($this)];
+    }
 
 }
