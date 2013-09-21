@@ -109,7 +109,7 @@ class YdWebUser extends CWebUser
      */
     function getUser($id = null)
     {
-        if ($this->_user === null && YdHelper::tableExists('user')) {
+        if ($this->_user === null && YdHelper::tableExists(Yii::app()->dressing->tableMap['YdUser'])) {
             if ($id !== null)
                 $this->_user = YdUser::model()->findByPk($id);
             else

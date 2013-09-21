@@ -250,6 +250,8 @@ class YdMenu extends YdActiveRecord
      */
     static public function getItemsFromMenu($label, $parent_id = 0, $options = array())
     {
+        if (!YdHelper::tableExists(Yii::app()->dressing->tableMap['YdMenu']))
+            return array();
         $menu = self::model()->findByAttributes(array('label' => $label, 'parent_id' => $parent_id));
         if ($menu) {
             return $menu->getItems($options);
@@ -451,7 +453,7 @@ class YdMenu extends YdActiveRecord
      */
     static public function userMenu()
     {
-        if (!YdHelper::tableExists('user'))
+        if (!YdHelper::tableExists(Yii::app()->dressing->tableMap['YdUser']))
             return '';
 
         ob_start();
