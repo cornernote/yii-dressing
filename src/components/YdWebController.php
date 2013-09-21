@@ -76,7 +76,7 @@ class YdWebController extends YdController
     protected function beforeAction($action)
     {
         // if returnUrl is in submitted data it will be saved in session
-        ReturnUrl::setUrlFromSubmitFields();
+        Yii::app()->returnUrl->setUrlFromSubmitFields();
         return parent::beforeAction($action);
     }
 
@@ -123,7 +123,7 @@ class YdWebController extends YdController
         user()->addFlash($message, $messageType);
         if (!isAjax()) {
             if (!$url) {
-                $url = ReturnUrl::getUrl();
+                $url = Yii::app()->returnUrl->getUrl();
                 if ($useCurrentUrl) {
                     $url = app()->request->url;
                 }

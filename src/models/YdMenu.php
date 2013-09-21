@@ -186,9 +186,9 @@ class YdMenu extends YdActiveRecord
             $more = array();
             $more[] = array('label' => t('Log'), 'url' => $this->getUrl('log'));
             if (!$this->deleted)
-                $more[] = array('label' => t('Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => ReturnUrl::getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+                $more[] = array('label' => t('Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
             else
-                $more[] = array('label' => t('Undelete'), 'url' => $this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => ReturnUrl::getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+                $more[] = array('label' => t('Undelete'), 'url' => $this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
             $links[] = array(
                 'label' => t('More'),
                 'items' => $more,
@@ -217,7 +217,7 @@ class YdMenu extends YdActiveRecord
             $param = explode('=', $param);
             if (isset($param[1])) {
                 if ($param[1] == '{returnUrl}') {
-                    $param[1] = ReturnUrl::getLinkValue(true);
+                    $param[1] = Yii::app()->returnUrl->getLinkValue(true);
                 }
                 $urlParams[$param[0]] = $param[1];
             }

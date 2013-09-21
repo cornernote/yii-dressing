@@ -184,7 +184,7 @@ class YdGridView extends TbGridView
             echo CHtml::beginForm(ru(), 'POST', array(
                 'id' => $this->id . '-form',
             ));
-            echo CHtml::hiddenField('returnUrl', ReturnUrl::getFormValue(true));
+            echo CHtml::hiddenField('returnUrl', Yii::app()->returnUrl->getFormValue(true));
         }
 
         parent::run();

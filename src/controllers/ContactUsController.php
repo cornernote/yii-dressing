@@ -83,7 +83,7 @@ class ContactUsController extends YdWebController
             if ($contactUs->save()) {
                 EMailHelper::sendContactEmail($contactUs);
                 user()->addFlash(t('Your message has been sent successfully.'), 'success');
-                $this->redirect(ReturnUrl::getUrl(array('contactUs/thankYou')));
+                $this->redirect(Yii::app()->returnUrl->getUrl(array('contactUs/thankYou')));
             }
             user()->addFlash(t('Could not communicate the message.'), 'warning');
         }

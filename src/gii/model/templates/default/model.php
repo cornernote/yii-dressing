@@ -145,10 +145,10 @@ echo "            \$more[] = array('label' => t('Clear Cache'), 'url' => array('
 echo "            \$more[] = array('label' => t('View Log'), 'url' => \$this->getUrl('log'));\n";
 if (in_array('deleted', CHtml::listData($columns, 'name', 'name')))
     echo "            if (!\$this->deleted)\n    ";
-echo "            \$more[] = array('label' => t('Delete'), 'url' => \$this->getUrl('delete', array('returnUrl' => ReturnUrl::getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
+echo "            \$more[] = array('label' => t('Delete'), 'url' => \$this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
 if (in_array('deleted', CHtml::listData($columns, 'name', 'name'))) {
     echo "            else\n";
-    echo "                \$more[] = array('label' => t('Undelete'), 'url' => \$this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => ReturnUrl::getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
+    echo "                \$more[] = array('label' => t('Undelete'), 'url' => \$this->getUrl('delete', array('task' => 'undelete', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
 }
 echo "            \$links[] = array(\n";
 echo "                'label' => t('More'),\n";

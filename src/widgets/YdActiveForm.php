@@ -37,7 +37,7 @@ class YdActiveForm extends TbActiveForm
         parent::init();
 
         // output the return url
-        echo CHtml::hiddenField('returnUrl', ReturnUrl::getFormValue());
+        echo CHtml::hiddenField('returnUrl', Yii::app()->returnUrl->getFormValue());
 
         // ask to save work
         if ($this->askToSaveWork)

@@ -81,7 +81,7 @@ class MenuController extends YdWebController
             $menu->attributes = $_POST['Menu'];
             if ($menu->save()) {
                 user()->addFlash('Menu has been created.', 'success');
-                $this->redirect(ReturnUrl::getUrl($menu->getUrl()));
+                $this->redirect(Yii::app()->returnUrl->getUrl($menu->getUrl()));
             }
         }
         else {
@@ -110,7 +110,7 @@ class MenuController extends YdWebController
             $menu->attributes = $_POST['Menu'];
             if ($menu->save()) {
                 user()->addFlash(t('Menu has been updated'), 'success');
-                $this->redirect(ReturnUrl::getUrl($menu->getUrl()));
+                $this->redirect(Yii::app()->returnUrl->getUrl($menu->getUrl()));
             }
             user()->addFlash(t('Menu could not be updated'), 'warning');
         }
@@ -140,7 +140,7 @@ class MenuController extends YdWebController
                     ':tasked' => $task . 'd',
                 )), 'success');
             }
-            $this->redirect(ReturnUrl::getUrl(user()->getState('index.menu', array('/menu/index'))));
+            $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.menu', array('/menu/index'))));
         }
 
         $this->render('delete', array(

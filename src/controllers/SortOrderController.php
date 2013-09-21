@@ -61,7 +61,7 @@ class SortOrderController extends YdWebController
         foreach ($sortOrders as $sortOrder) {
             $sortOrder->delete();
         }
-        $this->redirect(ReturnUrl::getUrl());
+        $this->redirect(Yii::app()->returnUrl->getUrl());
     }
 
     /**
@@ -79,7 +79,7 @@ class SortOrderController extends YdWebController
         }
         $sortOrder->sort_order = 9999;
         $sortOrder->save();
-        $this->redirect(ReturnUrl::getUrl());
+        $this->redirect(Yii::app()->returnUrl->getUrl());
     }
 
     /**
@@ -96,7 +96,7 @@ class SortOrderController extends YdWebController
         }
         $sortOrder->sort_order = 1;
         $sortOrder->save();
-        $this->redirect(ReturnUrl::getUrl());
+        $this->redirect(Yii::app()->returnUrl->getUrl());
     }
 
 }

@@ -82,7 +82,7 @@ class LookupController extends YdWebController
             $lookup->attributes = $_POST['Lookup'];
             if ($lookup->save()) {
                 user()->addFlash('Lookup has been created.', 'success');
-                $this->redirect(ReturnUrl::getUrl($lookup->getUrl()));
+                $this->redirect(Yii::app()->returnUrl->getUrl($lookup->getUrl()));
             }
         }
         else {
@@ -110,7 +110,7 @@ class LookupController extends YdWebController
             $lookup->attributes = $_POST['Lookup'];
             if ($lookup->save()) {
                 user()->addFlash(t('Lookup has been updated'), 'success');
-                $this->redirect(ReturnUrl::getUrl($lookup->getUrl()));
+                $this->redirect(Yii::app()->returnUrl->getUrl($lookup->getUrl()));
             }
             user()->addFlash(t('Lookup could not be updated'), 'warning');
         }
@@ -140,7 +140,7 @@ class LookupController extends YdWebController
                     ':tasked' => $task . 'd',
                 )), 'success');
             }
-            $this->redirect(ReturnUrl::getUrl(user()->getState('index.lookup', array('/lookup/index'))));
+            $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.lookup', array('/lookup/index'))));
         }
 
         $this->render('delete', array(

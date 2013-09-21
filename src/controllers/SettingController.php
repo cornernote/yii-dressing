@@ -81,7 +81,7 @@ class SettingController extends YdWebController
 
                 // flash and redirect
                 user()->addFlash(t('Settings have been saved.'), 'success');
-                $this->redirect(ReturnUrl::getUrl(array('/setting/index')));
+                $this->redirect(Yii::app()->returnUrl->getUrl(array('/setting/index')));
             }
 
             // rollback transaction and flash error

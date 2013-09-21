@@ -265,7 +265,7 @@ class AttachmentController extends YdWebController
                 if ($saved) {
                     user()->addFlash('Attachment has been created', 'success');
                     if (!isAjax())
-                        $this->redirect(ReturnUrl::getUrl());
+                        $this->redirect(Yii::app()->returnUrl->getUrl());
                 }
                 else {
                     if (!$attachment->getErrorString()) {
@@ -295,7 +295,7 @@ class AttachmentController extends YdWebController
         if (isset($_POST['Attachment'])) {
             $attachment->attributes = $_POST['Attachment'];
             if ($attachment->save()) {
-                $this->redirect(ReturnUrl::getUrl());
+                $this->redirect(Yii::app()->returnUrl->getUrl());
             }
         }
 
@@ -337,7 +337,7 @@ class AttachmentController extends YdWebController
             $attachment->delete();
         }
         if (!isAjax())
-            $this->redirect(ReturnUrl::getUrl());
+            $this->redirect(Yii::app()->returnUrl->getUrl());
     }
 
     /**
@@ -353,7 +353,7 @@ class AttachmentController extends YdWebController
             $attachment->undelete();
         }
         if (!isAjax())
-            $this->redirect(ReturnUrl::getUrl());
+            $this->redirect(Yii::app()->returnUrl->getUrl());
     }
 
 }

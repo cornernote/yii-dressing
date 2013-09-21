@@ -50,7 +50,7 @@ class ToolController extends YdWebController
         Helper::removeDirectory(app()->getAssetManager()->basePath, false);
         // all done
         user()->addFlash(t('Server cache has been cleared.'), 'success');
-        $this->redirect(ReturnUrl::getUrl());
+        $this->redirect(Yii::app()->returnUrl->getUrl());
     }
 
     /**
@@ -76,7 +76,7 @@ class ToolController extends YdWebController
                 ':id' => $id,
             )), 'success');
         }
-        $this->redirect(ReturnUrl::getUrl());
+        $this->redirect(Yii::app()->returnUrl->getUrl());
     }
 
     /**
@@ -86,7 +86,7 @@ class ToolController extends YdWebController
     {
         Helper::removeDirectory(Yii::app()->getAssetManager()->getBasePath(), false);
         user()->addFlash(t('Assets have been cleared'), 'success');
-        $this->redirect(ReturnUrl::getUrl());
+        $this->redirect(Yii::app()->returnUrl->getUrl());
     }
 
 }

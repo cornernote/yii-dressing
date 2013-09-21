@@ -63,7 +63,7 @@ class AccountController extends YdWebController
             $user->attributes = $_POST['UserLogin'];
             if ($user->validate() && $user->login()) {
                 Yii::app()->cache->delete("login.attempt.{$_SERVER['REMOTE_ADDR']}");
-                $this->redirect(ReturnUrl::getUrl(Yii::app()->user->returnUrl));
+                $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
             }
             // remove all other errors on recaptcha error
             if (isset($user->errors['recaptcha'])) {
@@ -103,7 +103,7 @@ class AccountController extends YdWebController
         if (isset($_POST['UserRegister'])) {
             $user->attributes = $_POST['UserRegister'];
             if ($user->save()) {
-                $this->redirect(ReturnUrl::getUrl(Yii::app()->user->returnUrl));
+                $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
             }
         }
 
@@ -260,7 +260,7 @@ class AccountController extends YdWebController
             $user->attributes = $_POST['User'];
             if ($user->save()) {
                 user()->addFlash('Your account has been saved.', 'success');
-                $this->redirect(ReturnUrl::getUrl());
+                $this->redirect(Yii::app()->returnUrl->getUrl());
             }
             else {
                 user()->addFlash('Your account could not be saved.', 'warning');
@@ -318,7 +318,7 @@ class AccountController extends YdWebController
 
             if ($user->setEavAttributes($_POST['UserEav'], true)) {
                 user()->addFlash('Your settings have been saved.', 'success');
-                $this->redirect(ReturnUrl::getUrl());
+                $this->redirect(Yii::app()->returnUrl->getUrl());
             }
             else {
                 user()->addFlash('Your settings could not be saved.', 'warning');

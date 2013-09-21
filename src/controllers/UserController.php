@@ -90,7 +90,7 @@ class UserController extends YdWebController
                 //$userToRole->role_id = $role->id;
                 //$userToRole->save(false);
                 user()->addFlash('User has been created.', 'success');
-                $this->redirect(ReturnUrl::getUrl($user->getUrl()));
+                $this->redirect(Yii::app()->returnUrl->getUrl($user->getUrl()));
             }
         }
         else {
@@ -119,7 +119,7 @@ class UserController extends YdWebController
             $user->attributes = $_POST['User'];
             if ($user->save()) {
                 user()->addFlash(t('User has been updated'), 'success');
-                $this->redirect(ReturnUrl::getUrl($user->getUrl()));
+                $this->redirect(Yii::app()->returnUrl->getUrl($user->getUrl()));
             }
             user()->addFlash(t('User could not be updated'), 'warning');
         }
@@ -155,7 +155,7 @@ class UserController extends YdWebController
                     ':tasked' => $task . 'd',
                 )), 'success');
             }
-            $this->redirect(ReturnUrl::getUrl(user()->getState('index.user', array('/user/index'))));
+            $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.user', array('/user/index'))));
         }
 
         $this->render('delete', array(

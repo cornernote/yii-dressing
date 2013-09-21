@@ -1,5 +1,5 @@
 <?php
-Yii::import('dressing.behaviours.EEavBehavior');
+Yii::import('dressing.behaviors.EEavBehavior');
 
 /**
  * @package components.behaviors

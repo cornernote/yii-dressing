@@ -12,7 +12,7 @@ class YdReturnUrl
      *
      * @usage
      * in views/your_page.php
-     * CHtml::hiddenField('returnUrl', ReturnUrl::getFormValue());
+     * CHtml::hiddenField('returnUrl', Yii::app()->returnUrl->getFormValue());
      *
      * @static
      * @param bool $currentPage
@@ -35,7 +35,7 @@ class YdReturnUrl
      *
      * @usage
      * in views/your_page.php
-     * CHtml::link('my link', array('test/form', 'returnUrl' => ReturnUrl::getLinkValue(true)));
+     * CHtml::link('my link', array('test/form', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true)));
      *
      * @static
      * @param bool $currentPage
@@ -59,7 +59,7 @@ class YdReturnUrl
      *
      * @usage
      * in views/your_page.php
-     * CHtml::link('my link', array('test/form', 'returnUrl' => ReturnUrl::encodeLinkValue($item->getUrl())));
+     * CHtml::link('my link', array('test/form', 'returnUrl' => Yii::app()->returnUrl->encodeLinkValue($item->getUrl())));
      *
      * @static
      * @param $url
@@ -76,7 +76,7 @@ class YdReturnUrl
      *
      * @usage
      * in YourController::actionYourAction()
-     * $this->redirect(ReturnUrl::getUrl());
+     * $this->redirect(Yii::app()->returnUrl->getUrl());
      *
      * @static
      * @param bool|mixed $altUrl
