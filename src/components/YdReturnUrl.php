@@ -3,7 +3,7 @@
  * Wrapper to maintain state of a Return URL
  *
  */
-class YdReturnUrl
+class YdReturnUrl extends CApplicationComponent
 {
 
     /**
