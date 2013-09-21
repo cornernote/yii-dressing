@@ -26,7 +26,7 @@ class YdPayPalHelper
         $defaults = array(
             // defaults
             'cmd' => '_xclick-subscriptions',
-            'business' => Setting::item('paypal', 'business'),
+            'business' => YdSetting::item('paypal', 'business'),
             'lc' => 'AU',
             'no_note' => 1,
             'no_shipping' => 1,
@@ -56,7 +56,7 @@ class YdPayPalHelper
     public static function getButton($options)
     {
         $options = self::getOptions($options);
-        $button = '<form action="https://www.' . (Setting::item('paypal', 'env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr" method="get">';
+        $button = '<form action="https://www.' . (YdSetting::item('paypal', 'env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr" method="get">';
         foreach ($options as $k => $v) {
             $button .= '<input type="hidden" name="' . $k . '" value="' . $v . '">';
         }
@@ -77,7 +77,7 @@ class YdPayPalHelper
         foreach ($options as $k => $v) {
             $link[] = urlencode($k) . '=' . urlencode($v);
         }
-        return 'https://www.' . (Setting::item('paypal', 'env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr?' . implode('&', $link);
+        return 'https://www.' . (YdSetting::item('paypal', 'env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr?' . implode('&', $link);
     }
 
     /**
@@ -85,7 +85,7 @@ class YdPayPalHelper
      */
     public static function getUnsubscribeLink()
     {
-        return 'https://www.' . (Setting::item('paypal', 'env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr?cmd=_manage-paylist';
+        return 'https://www.' . (YdSetting::item('paypal', 'env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr?cmd=_manage-paylist';
     }
 
 }

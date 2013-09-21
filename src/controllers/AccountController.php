@@ -54,7 +54,7 @@ class AccountController extends WebController
         $attempts = Yii::app()->cache->get("login.attempt.{$_SERVER['REMOTE_ADDR']}");
         if (!$attempts)
             $attempts = 0;
-        $scenario = ($attempts > 3 && Setting::item('recaptcha')) ? 'recaptcha' : '';
+        $scenario = ($attempts > 3 && YdSetting::item('recaptcha')) ? 'recaptcha' : '';
 
         $user = new UserLogin($scenario);
 
@@ -75,13 +75,13 @@ class AccountController extends WebController
             Yii::app()->cache->set("login.attempt.{$_SERVER['REMOTE_ADDR']}", ++$attempts);
         }
         else {
-            $user->remember_me = Setting::item('rememberMe');
+            $user->remember_me = YdSetting::item('rememberMe');
         }
 
         // display the login form
         $this->render('login', array(
             'user' => $user,
-            'recaptcha' => ($attempts >= 3 && Setting::item('recaptcha')) ? true : false,
+            'recaptcha' => ($attempts >= 3 && YdSetting::item('recaptcha')) ? true : false,
         ));
     }
 
@@ -127,7 +127,7 @@ class AccountController extends WebController
         $attempts = Yii::app()->cache->get("recover.attempt.{$_SERVER['REMOTE_ADDR']}");
         if (!$attempts)
             $attempts = 0;
-        $scenario = ($attempts >= 3 && Setting::item('recaptcha')) ? 'recaptcha' : '';
+        $scenario = ($attempts >= 3 && YdSetting::item('recaptcha')) ? 'recaptcha' : '';
 
         $userRecover = new UserRecover($scenario);
         $this->performAjaxValidation($userRecover, 'recover-form');
@@ -156,7 +156,7 @@ class AccountController extends WebController
         // display the recover form
         $this->render('recover', array(
             'user' => $userRecover,
-            'recaptcha' => ($attempts >= 3 && Setting::item('recaptcha')) ? true : false,
+            'recaptcha' => ($attempts >= 3 && YdSetting::item('recaptcha')) ? true : false,
         ));
     }
 

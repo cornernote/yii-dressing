@@ -55,8 +55,8 @@ class YdUserLogin extends FormModel
             array('remember_me', 'boolean'),
         );
         // recaptcha
-        if (Setting::item('recaptcha')) {
-            $rules[] = array('recaptcha', 'validators.ReCaptchaValidator', 'privateKey' => Setting::item('recaptchaPrivate'), 'on' => 'recaptcha');
+        if (YdSetting::item('recaptcha')) {
+            $rules[] = array('recaptcha', 'validators.ReCaptchaValidator', 'privateKey' => YdSetting::item('recaptchaPrivate'), 'on' => 'recaptcha');
         }
         return $rules;
     }

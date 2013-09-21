@@ -31,12 +31,12 @@ class SettingController extends WebController
         // load settings
         /** @var Setting[] $settings */
         $settings = array();
-        $_settings = Setting::model()->findAll();
+        $_settings = YdSetting::model()->findAll();
         foreach ($_settings as $setting) {
             $settings[$setting->key] = $setting;
         }
         // load from items
-        foreach (Setting::items() as $key => $value) {
+        foreach (YdSetting::items() as $key => $value) {
             if (!isset($settings[$key])) {
                 $settings[$key] = new Setting();
                 $settings[$key]->key = $key;
@@ -59,7 +59,7 @@ class SettingController extends WebController
 
             // begin transaction
             $error = false;
-            $transaction = Setting::model()->beginTransaction();
+            $transaction = YdSetting::model()->beginTransaction();
 
             // save settings
             foreach ($_POST['Setting'] as $key => $value) {

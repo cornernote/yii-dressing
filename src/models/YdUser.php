@@ -288,7 +288,7 @@ class YdUser extends ActiveRecord
         if (!$password) {
             return '';
         }
-        return md5($password . Setting::item('hashKey'));
+        return md5($password . YdSetting::item('hashKey'));
     }
 
     /**

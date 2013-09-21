@@ -19,8 +19,8 @@ echo '<h2>' . t('Core Settings') . '</h2>';
 
 echo '<fieldset><legend>' . t('Version Settings') . '</legend>';
 echo $form->textFieldRow($settings['id'], 'value', array('name' => 'Setting[id][value]'));
-echo $form->dropDownListRow($settings['app_version'], 'value', Setting::appVersions(), array('name' => 'Setting[app_version][value]'));
-echo $form->dropDownListRow($settings['yii_version'], 'value', Setting::yiiVersions(), array('name' => 'Setting[yii_version][value]'));
+echo $form->dropDownListRow($settings['app_version'], 'value', YdSetting::appVersions(), array('name' => 'Setting[app_version][value]'));
+echo $form->dropDownListRow($settings['yii_version'], 'value', YdSetting::yiiVersions(), array('name' => 'Setting[yii_version][value]'));
 echo $form->checkBoxRow($settings['yii_lite'], 'value', array('name' => 'Setting[yii_lite][value]'));
 echo '</fieldset>';
 

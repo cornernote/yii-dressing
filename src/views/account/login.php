@@ -27,7 +27,7 @@ if ($recaptcha) {
     $this->widget('widgets.ReCaptcha', array(
         'model' => $user, 'attribute' => 'recaptcha',
         'theme' => 'red', 'language' => 'en_EN',
-        'publicKey' => Setting::item('recaptchaPublic'),
+        'publicKey' => YdSetting::item('recaptchaPublic'),
     ));
     echo CHtml::error($user, 'recaptcha');
 }

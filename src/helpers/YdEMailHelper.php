@@ -59,7 +59,7 @@ class YdEMailHelper
         );
 
         // email the given user
-        $tos = explode(',', Setting::item('error_email'));
+        $tos = explode(',', YdSetting::item('error_email'));
         foreach ($tos as $to) {
             $to = trim($to);
             EmailSpool::model()->spool($to, $message, $relation);
@@ -95,7 +95,7 @@ class YdEMailHelper
         // save the email
         $emailSpool = new EmailSpool;
         $emailSpool->status = 'pending';
-        $emailSpool->from_email = Setting::item('email');
+        $emailSpool->from_email = YdSetting::item('email');
         $emailSpool->from_name = app()->name;
         $emailSpool->to_email = $to_email;
         $emailSpool->to_name = $to_name;
@@ -114,7 +114,7 @@ class YdEMailHelper
 
         // set flash message
         $flash = true;
-        if (Setting::item('debug_email'))
+        if (YdSetting::item('debug_email'))
             $flash = true;
         elseif (!user()->checkAccess('admin'))
             $flash = false;
@@ -152,7 +152,7 @@ class YdEMailHelper
             throw new CException('missing EmailTemplate - ' . $template);
 
         // add settings to params
-        $viewParams['Setting'] = Setting::items();
+        $viewParams['Setting'] = YdSetting::items();
         $viewParams['Setting']['bu'] = absoluteUrl('/');
 
         // parse template

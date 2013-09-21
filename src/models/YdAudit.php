@@ -181,8 +181,8 @@ class YdAudit extends ActiveRecord
         $this->created = date('Y-m-d H:i:s');
         $this->user_id = user()->id;
         $this->link = $this->getCurrentLink();
-        $this->app_version = Setting::item('app_version');
-        $this->yii_version = Setting::item('yii_version');
+        $this->app_version = YdSetting::item('app_version');
+        $this->yii_version = YdSetting::item('yii_version');
         $this->start_time = $_ENV['_start'];
         $this->post = $_POST;
         $this->get = $_GET;
@@ -446,7 +446,7 @@ class YdAudit extends ActiveRecord
      */
     static public function findCurrent()
     {
-        if (!Setting::item('audit')) {
+        if (!YdSetting::item('audit')) {
             return false;
         }
 
@@ -472,7 +472,7 @@ class YdAudit extends ActiveRecord
      */
     static public function findCurrentId()
     {
-        if (!Setting::item('audit')) {
+        if (!YdSetting::item('audit')) {
             return false;
         }
 

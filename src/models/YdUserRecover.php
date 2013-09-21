@@ -41,8 +41,8 @@ class YdUserRecover extends FormModel
             array('username_or_email', 'checkExists'),
         );
         // recaptcha
-        if (Setting::item('recaptcha')) {
-            $rules[] = array('recaptcha', 'validators.ReCaptchaValidator', 'privateKey' => Setting::item('recaptchaPrivate'), 'on' => 'recaptcha');
+        if (YdSetting::item('recaptcha')) {
+            $rules[] = array('recaptcha', 'validators.ReCaptchaValidator', 'privateKey' => YdSetting::item('recaptchaPrivate'), 'on' => 'recaptcha');
         }
         return $rules;
     }
