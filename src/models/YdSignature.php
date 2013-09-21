@@ -31,7 +31,7 @@
  * --- END GenerateProperties ---
  */
 
-class YdSignature extends ActiveRecord
+class YdSignature extends YdActiveRecord
 {
 
     /**
@@ -71,9 +71,9 @@ class YdSignature extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
-            'TimestampBehavior' => 'behaviors.TimestampBehavior',
-            'SoftDeleteBehavior' => 'behaviors.SoftDeleteBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
+            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
         );
     }
 

@@ -30,7 +30,7 @@
  *
  * --- END GenerateProperties ---
  */
-class YdAttachment extends ActiveRecord
+class YdAttachment extends YdActiveRecord
 {
 
     /**
@@ -77,7 +77,7 @@ class YdAttachment extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
         );
     }
 

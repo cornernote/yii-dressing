@@ -5,7 +5,7 @@
  * YdLoginForm is the data structure for keeping
  * user login form data. It is used by the 'login' action of 'SiteController'.
  */
-class YdLoginForm extends CFormModel
+class YdLoginForm extends YdFormModel
 {
 	public $username;
 	public $password;

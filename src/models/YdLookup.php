@@ -30,7 +30,7 @@
  * --- END GenerateProperties ---
  */
 
-class YdLookup extends ActiveRecord
+class YdLookup extends YdActiveRecord
 {
 
     /**
@@ -75,9 +75,9 @@ class YdLookup extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
-            'TimestampBehavior' => 'behaviors.TimestampBehavior',
-            'SoftDeleteBehavior' => 'behaviors.SoftDeleteBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
+            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
         );
     }
 

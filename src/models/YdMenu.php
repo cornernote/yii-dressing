@@ -40,7 +40,7 @@
  * --- END GenerateProperties ---
  */
 
-class YdMenu extends ActiveRecord
+class YdMenu extends YdActiveRecord
 {
 
     /**
@@ -85,9 +85,9 @@ class YdMenu extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
-            'SoftDeleteBehavior' => 'behaviors.SoftDeleteBehavior',
-            'TimestampBehavior' => 'behaviors.TimestampBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
+            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
         );
     }
 

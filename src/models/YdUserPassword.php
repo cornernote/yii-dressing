@@ -10,7 +10,7 @@
  *
  */
 
-class YdUserPassword extends FormModel
+class YdUserPassword extends YdFormModel
 {
     /**
      * @var

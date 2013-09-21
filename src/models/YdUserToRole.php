@@ -22,7 +22,7 @@
  *
  * --- END GenerateProperties ---
  */
-class UserToRole extends ActiveRecord
+class UserToRole extends YdActiveRecord
 {
 
     /**
@@ -50,7 +50,7 @@ class UserToRole extends ActiveRecord
     {
         return array(
             'AuditBehavior' => array(
-                'class' => 'behaviors.AuditBehavior',
+                'class' => 'dressing.behaviors.YdAuditBehavior',
                 'additionalAuditModels' => array(
                     'User' => 'user_id',
                     'Role' => 'role_id',

@@ -33,7 +33,7 @@
  *
  * --- END GenerateProperties ---
  */
-class YdAuditTrail extends ActiveRecord
+class YdAuditTrail extends YdActiveRecord
 {
     /**
      * @var bool

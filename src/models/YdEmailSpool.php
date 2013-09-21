@@ -42,7 +42,7 @@
  *
  * --- END GenerateProperties ---
  */
-class YdEmailSpool extends ActiveRecord
+class YdEmailSpool extends YdActiveRecord
 {
 
     /**
@@ -97,9 +97,9 @@ class YdEmailSpool extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
-            'SoftDeleteBehavior' => 'behaviors.SoftDeleteBehavior',
-            'TimestampBehavior' => 'behaviors.TimestampBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
+            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
         );
     }
 

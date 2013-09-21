@@ -33,7 +33,7 @@
  *
  * --- END GenerateProperties ---
  */
-class YdSetting extends ActiveRecord
+class YdSetting extends YdActiveRecord
 {
 
     /**
@@ -65,7 +65,7 @@ class YdSetting extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
         );
     }
 

@@ -28,7 +28,7 @@
  * --- END GenerateProperties ----
  */
 
-class YdContactUs extends ActiveRecord
+class YdContactUs extends YdActiveRecord
 {
 
     /**
@@ -69,7 +69,7 @@ class YdContactUs extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
         );
     }
 

@@ -27,7 +27,7 @@
  *
  * --- END GenerateProperties ---
  */
-class YdToken extends CActiveRecord
+class YdToken extends YdActiveRecord
 {
 
     /**
@@ -54,7 +54,7 @@ class YdToken extends CActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
         );
     }
 

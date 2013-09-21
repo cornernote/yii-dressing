@@ -52,7 +52,7 @@
  *
  * --- END GenerateProperties ---
  */
-class YdUser extends ActiveRecord
+class YdUser extends YdActiveRecord
 {
 
     /**
@@ -120,11 +120,11 @@ class YdUser extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
-            'SoftDeleteBehavior' => 'behaviors.SoftDeleteBehavior',
-            'TimestampBehavior' => 'behaviors.TimestampBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
+            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
             'EavBehavior' => array(
-                'class' => 'behaviors.EavBehavior',
+                'class' => 'dressing.behaviors.YdEavBehavior',
                 'tableName' => 'user_eav',
             ),
         );

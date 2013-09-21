@@ -25,7 +25,7 @@
  * @package app.model
  * @author Brett O'Donnell <brett@mrphp.com.au>
  */
-class YdSortOrder extends CActiveRecord
+class YdSortOrder extends YdActiveRecord
 {
 
     /**

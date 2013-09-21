@@ -29,7 +29,7 @@
  */
 
 
-class YdEmailTemplate extends ActiveRecord
+class YdEmailTemplate extends YdActiveRecord
 {
     /**
      *
@@ -69,7 +69,7 @@ class YdEmailTemplate extends ActiveRecord
     public function behaviors()
     {
         return array(
-            'AuditBehavior' => 'behaviors.AuditBehavior',
+            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
         );
     }
 

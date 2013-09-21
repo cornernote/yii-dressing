@@ -9,7 +9,7 @@
  * @author Brett O'Donnell <brett@mrphp.com.au>
  *
  */
-class YdUserRecover extends FormModel
+class YdUserRecover extends YdFormModel
 {
     /**
      * @var

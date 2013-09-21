@@ -25,7 +25,7 @@ class YdErrorHandler extends CErrorHandler
         $dir = app()->getRuntimePath() . '/errors';
         if (!file_exists($dir))
             mkdir($dir, 0777, true);
-        $auditId = Audit::findCurrentId();
+        $auditId = YdAudit::findCurrentId();
         if (!$auditId)
             $auditId = uniqid();
         $path = $dir . '/audit-' . $auditId . '.html';
@@ -41,7 +41,7 @@ class YdErrorHandler extends CErrorHandler
         $dir = app()->getRuntimePath() . '/errors';
         if (!file_exists($dir))
             mkdir($dir, 0777, true);
-        $auditId = Audit::findCurrentId();
+        $auditId = YdAudit::findCurrentId();
         if (!$auditId)
             $auditId = uniqid();
         $path = $dir . '/audit-' . $auditId . '.html';

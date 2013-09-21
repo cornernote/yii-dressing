@@ -46,7 +46,7 @@
  *
  * --- END GenerateProperties ---
  */
-class YdAudit extends ActiveRecord
+class YdAudit extends YdActiveRecord
 {
     /**
      * @var bool

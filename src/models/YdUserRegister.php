@@ -6,7 +6,7 @@
  * @package app.model
  * @author Brett O'Donnell <brett@mrphp.com.au>
  */
-class UserRegister extends FormModel
+class UserRegister extends YdFormModel
 {
 
     /**
