@@ -90,9 +90,11 @@ class YdSignatureWidget extends CWidget
      */
     public function registerScripts()
     {
-        cs()->registerCssFile(au() . '/signature-pad/jquery.signaturepad.keyterminal.css');
-        cs()->registerScriptFile(au() . '/signature-pad/jquery.signaturepad.min.js');
-        $this->beginWidget('widgets.JavaScriptWidget', array('position' => CClientScript::POS_END));
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.signature-pad'), false, 1, YII_DEBUG);
+
+        //cs()->registerCssFile($baseUrl . '/jquery.signaturepad.css');
+        cs()->registerScriptFile($baseUrl . '/jquery.signaturepad.min.js');
+        $this->beginWidget('dressing.widgets.YdJavaScriptWidget', array('position' => CClientScript::POS_END));
         if ($this->action == 'form') {
             ?>
             <script type="text/javascript">

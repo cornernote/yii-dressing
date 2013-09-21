@@ -19,8 +19,7 @@ class YdQTip extends CWidget
      */
     public function publishAssets()
     {
-        $basePath = vp() . DS . 'qtip2';
-        $baseUrl = Yii::app()->assetManager->publish($basePath, false, 1, YII_DEBUG);
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.qtip2'), false, 1, YII_DEBUG);
 
         $cs = Yii::app()->clientScript;
         // auto-qtip on <a title="something">link</a>

@@ -56,7 +56,7 @@ class YdSetting extends YdActiveRecord
      */
     public function tableName()
     {
-        return $_ENV['_core']['db']['setting'];
+        return $_ENV['_config']['db']['setting'];
     }
 
     /**
@@ -95,7 +95,7 @@ class YdSetting extends YdActiveRecord
         if (self::$_items) {
             return self::$_items;
         }
-        return self::$_items = $_ENV['_core']['setting'];
+        return self::$_items = $_ENV['_config']['setting'];
     }
 
 

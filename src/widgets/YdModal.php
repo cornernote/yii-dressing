@@ -11,8 +11,7 @@ class YdModal extends CWidget
     // function to publish and register assets on page
     public function publishAssets()
     {
-        $basePath = vp() . DS . 'modal';
-        $baseUrl = Yii::app()->assetManager->publish($basePath, false, 1, YII_DEBUG);
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.modal-responsive-fix'), false, 1, YII_DEBUG);
 
         $cs = Yii::app()->clientScript;
 
@@ -26,47 +25,47 @@ class YdModal extends CWidget
 
     }
 
-	protected function registerScript()
-	{
-		$this->beginWidget('widgets.JavaScriptWidget', array('position' => CClientScript::POS_END));
-		?>
-		<script type="text/javascript">
-			$('.modal').modalResponsiveFix();
-			$('.modal').touchScroll();
-		</script><?php
-		$this->endWidget();
+    protected function registerScript()
+    {
+        $this->beginWidget('dressing.widgets.YdJavaScriptWidget', array('position' => CClientScript::POS_END));
+        ?>
+        <script type="text/javascript">
+            $('.modal').modalResponsiveFix();
+            $('.modal').touchScroll();
+        </script><?php
+        $this->endWidget();
 
-		// Support for AJAX loaded modal window.
-		$this->beginWidget('widgets.JavaScriptWidget', array('position' => CClientScript::POS_END));
-		?>
-		<script type="text/javascript">
-			$('[data-toggle="modal-remote"]').click(function (e) {
-				e.preventDefault();
-				var url = $(this).attr('href');
-				var modalRemote = $('#modal-remote');
+        // Support for AJAX loaded modal window.
+        $this->beginWidget('dressing.widgets.YdJavaScriptWidget', array('position' => CClientScript::POS_END));
+        ?>
+        <script type="text/javascript">
+            $('[data-toggle="modal-remote"]').click(function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                var modalRemote = $('#modal-remote');
 
-				$.ajax({
-					url: url,
-					beforeSend: function (data) {
-						if (!modalRemote.length) modalRemote = $('<div class="modal hide fade" id="modal-remote"></div>');
-						modalRemote.html('<div class="modal-header"><h3><?php echo t('Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>');
-						modalRemote.modalResponsiveFix();
-						modalRemote.touchScroll();
-						modalRemote.modal();
-					},
-					success: function (data) {
-						modalRemote.html(data);
-						$(window).resize();
-						//modalRemote.children('input:text:visible:first').focus();
-						$('#modal-remote input:text:visible:first').focus();
-					},
-					error: function (XMLHttpRequest, textStatus, errorThrown) {
-						modalRemote.children('.modal-header').html('<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button><h3><?php echo t('Error!'); ?></h3>');
-						modalRemote.children('.modal-body').html(XMLHttpRequest.responseText);
-					}
-				});
-			});
-		</script><?php
-		$this->endWidget();
-	}
+                $.ajax({
+                    url: url,
+                    beforeSend: function (data) {
+                        if (!modalRemote.length) modalRemote = $('<div class="modal hide fade" id="modal-remote"></div>');
+                        modalRemote.html('<div class="modal-header"><h3><?php echo t('Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>');
+                        modalRemote.modalResponsiveFix();
+                        modalRemote.touchScroll();
+                        modalRemote.modal();
+                    },
+                    success: function (data) {
+                        modalRemote.html(data);
+                        $(window).resize();
+                        //modalRemote.children('input:text:visible:first').focus();
+                        $('#modal-remote input:text:visible:first').focus();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        modalRemote.children('.modal-header').html('<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button><h3><?php echo t('Error!'); ?></h3>');
+                        modalRemote.children('.modal-body').html(XMLHttpRequest.responseText);
+                    }
+                });
+            });
+        </script><?php
+        $this->endWidget();
+    }
 }

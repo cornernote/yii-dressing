@@ -99,14 +99,14 @@ class YdMenu extends YdActiveRecord
         return array(
             'child' => array(
                 self::HAS_MANY,
-                'Menu',
+                'YdMenu',
                 'parent_id',
                 'condition' => 'child.enabled=1 AND child.deleted IS NULL',
                 'order' => 'sort_order ASC, label ASC',
             ),
             'parent' => array(
                 self::BELONGS_TO,
-                'Menu',
+                'YdMenu',
                 'parent_id',
             ),
         );
@@ -248,10 +248,10 @@ class YdMenu extends YdActiveRecord
      */
     static public function getItemsFromMenu($label, $options = array())
     {
-        if (!Helper::tableExists('menu')) {
+        if (!YdHelper::tableExists('menu')) {
             return array();
         }
-        $menu = Menu::model()->findByAttributes(array('label' => $label));
+        $menu = self::model()->findByAttributes(array('label' => $label));
         if ($menu) {
             return $menu->getItems($options);
         }
@@ -343,7 +343,7 @@ class YdMenu extends YdActiveRecord
 
     /**
      * Get DropDown data, eg
-     * echo $form->dropDownListRow($menu, 'parent_id', Menu::model()->getDropDown())
+     * echo $form->dropDownListRow($menu, 'parent_id', YdMenu::model()->getDropDown())
      *
      * @param int $parent_id
      * @param null $condition
@@ -452,7 +452,7 @@ class YdMenu extends YdActiveRecord
      */
     static public function userMenu()
     {
-        if (!Helper::tableExists('user'))
+        if (!YdHelper::tableExists('user'))
             return '';
 
         ob_start();

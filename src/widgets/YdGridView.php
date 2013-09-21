@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('bootstrap.widgets.TbGridView');
+Yii::import('booster.widgets.TbGridView');
 /**
  *
  */
@@ -98,7 +98,7 @@ class YdGridView extends TbGridView
             Yii::app()->clientScript->registerScriptFile(au() . '/js/jquery.form.js');
             // put the url from the button into the form action
             // handle submit form to capture the response into a modal
-            Yii::app()->controller->beginWidget('widgets.JavaScriptWidget', array('position' => CClientScript::POS_END));
+            Yii::app()->controller->beginWidget('dressing.widgets.TbJavaScriptWidget', array('position' => CClientScript::POS_END));
             ?>
             <script type="text/javascript">
                 var modalRemote = $('#modal-remote');
