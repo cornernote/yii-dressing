@@ -19,6 +19,7 @@ foreach ($this->tableSchema->columns as $column) {
     echo "    'name' => '" . $column->name . "',\n";
     if ($column->autoIncrement) {
         echo "    'class' => 'dressing.widgets.YdDropdownColumn',\n";
+        echo "    'value' => '\$data->getIdString()',\n";
     }
     echo ");\n";
 }
