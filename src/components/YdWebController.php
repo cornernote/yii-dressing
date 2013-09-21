@@ -88,7 +88,10 @@ class YdWebController extends YdController
         // publish assets
         Yii::app()->dressing->assetPath = Yii::getPathOfAlias('dressing.assets.yii-dressing');
         Yii::app()->dressing->assetUrl = Yii::app()->assetManager->publish(Yii::app()->dressing->assetPath, true, -1, YII_DEBUG);
+        // register style
         Yii::app()->clientScript->registerCSSFile($this->assetPath . '/css/yii-dressing.css');
+        // dropdown JS doesn't work on iPad - https://github.com/twitter/bootstrap/issues/2975#issuecomment-6659992
+        Yii::app()->clientScript->registerScript('bootstrap-dropdown-fix', "$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });", CClientScript::POS_END);
     }
 
     /**
