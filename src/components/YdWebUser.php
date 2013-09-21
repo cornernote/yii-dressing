@@ -12,9 +12,9 @@ class YdWebUser extends CWebUser
     const MF_MAX = 100;
 
     /**
-     * @var
+     * @var YdUser
      */
-    private $_model;
+    private $_user;
 
     /**
      * Initializes the application component.
@@ -59,10 +59,9 @@ class YdWebUser extends CWebUser
     {
         $key = $this->getNexMultiFlashKey();
         if ($key === false)
-            Yii::trace("Stack overflow in addFlash", 'application.webuser.addFlash()');
-        else {
+            Yii::trace("Stack overflow in addFlash", 'dressing.YdWebUser.addFlash()');
+        else
             $this->setFlash($key, array($msg, $class));
-        }
     }
 
     /**
@@ -98,7 +97,6 @@ class YdWebUser extends CWebUser
             $key = self::MF_KEY_PREFIX . (string)$i;
             if (!$this->hasFlash($key)) continue;
             list($msg, $class) = $this->getFlash($key);
-            Yii::trace("Echoing multiFlash: $key", 'application.webuser.multiFlash()');
             $output .= "<div class=\"alert alert-$class\">$msg</div>\n";
         }
         return $output;
@@ -113,9 +111,9 @@ class YdWebUser extends CWebUser
     {
         if ($this->_model === null && YdHelper::tableExists('user')) {
             if ($id !== null)
-                $this->_model = User::model()->findByPk($id);
+                $this->_model = YdUser::model()->findByPk($id);
             else
-                $this->_model = User::model()->findByPk(user()->id);
+                $this->_model = YdUser::model()->findByPk(user()->id);
         }
         return $this->_model;
     }
