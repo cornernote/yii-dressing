@@ -2,7 +2,7 @@
 /**
  *
  */
-class YdEmailSpoolCommand extends ConsoleCommand
+class EmailSpoolCommand extends YdConsoleCommand
 {
 
     /**

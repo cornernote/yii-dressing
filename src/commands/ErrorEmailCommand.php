@@ -2,7 +2,7 @@
 /**
  *
  */
-class YdErrorEmailCommand extends ConsoleCommand
+class ErrorEmailCommand extends YdConsoleCommand
 {
 
     /**
