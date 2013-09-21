@@ -19,7 +19,7 @@ class YiiDressing extends CApplicationComponent
         parent::init();
 
         // import classes
-        Yii::import('dressing.components.*');
+        //Yii::import('dressing.components.*');
         Yii::import('dressing.helpers.*');
         Yii::import('dressing.models.*');
     }
