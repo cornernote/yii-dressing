@@ -16,6 +16,11 @@ class YdNavbar extends TbNavbar
      */
     public function run()
     {
+        // fix bootstrap padding on top with responsive views
+        if (Yii::app()->controller->showNavBar) {
+            cs()->registerCSS('fix-navbar-body-padding', 'body{padding-top:60px;} @media (max-width: 979px){ body{padding-top:0;} }');
+        }
+
         $this->htmlOptions['id'] = $this->id;
         $this->brandOptions['id'] = 'brand';
 
@@ -30,12 +35,10 @@ class YdNavbar extends TbNavbar
             echo '</a>';
         }
 
-        foreach ($this->constantItems as $item)
-        {
+        foreach ($this->constantItems as $item) {
             if (is_string($item))
                 echo $item;
-            else
-            {
+            else {
                 if (isset($item['class'])) {
                     $className = $item['class'];
                     unset($item['class']);
@@ -51,12 +54,10 @@ class YdNavbar extends TbNavbar
         if ($this->collapse)
             echo '<div class="nav-collapse">';
 
-        foreach ($this->items as $item)
-        {
+        foreach ($this->items as $item) {
             if (is_string($item))
                 echo $item;
-            else
-            {
+            else {
                 if (isset($item['class'])) {
                     $className = $item['class'];
                     unset($item['class']);
