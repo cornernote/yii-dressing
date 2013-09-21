@@ -18,7 +18,7 @@ echo "\$this->breadcrumbs[] = t(ucfirst(\$task));\n";
 echo "\n";
 echo "\$" . lcfirst($this->modelClass) . " = \$id ? " . $this->modelClass . "::model()->findByPk(\$id) : new " . $this->modelClass . "('search');\n";
 echo "/** @var ActiveForm \$form */\n";
-echo "\$form = \$this->beginWidget('widgets.ActiveForm', array(\n";
+echo "\$form = \$this->beginWidget('dressing.widgets.YdActiveForm', array(\n";
 echo "    'id' => '" . lcfirst($this->modelClass) . "-' . \$task . '-form',\n";
 echo "    'type' => 'horizontal',\n";
 echo "    'action' => array('/" . lcfirst($this->modelClass) . "/delete', 'id' => \$id, 'task' => \$task, 'confirm' => 1),\n";

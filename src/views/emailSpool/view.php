@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this EmailSpoolController
- * @var $emailSpool EmailSpool
+ * @var $emailSpool YdEmailSpool
  */
 $this->pageTitle = $this->pageHeading = $emailSpool->getName() . ' - ' . $this->getName() . ' ' . t('View');
 
@@ -9,7 +9,7 @@ $this->breadcrumbs = array();
 $this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.emailSpool', array('/emailSpool/index'));
 $this->breadcrumbs[] = $emailSpool->getName();
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.emailSpool._menu', array(
     'emailSpool' => $emailSpool,
 ));
 
@@ -34,7 +34,7 @@ $attributes[] = array(
     'type' => 'raw',
 );
 $attributes[] = 'sent';
-$this->widget('widgets.DetailView', array(
+$this->widget('dressing.widgets.YdDetailView', array(
     'data' => $emailSpool,
     'attributes' => $attributes,
 ));

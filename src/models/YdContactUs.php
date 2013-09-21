@@ -74,14 +74,6 @@ class YdContactUs extends YdActiveRecord
     }
 
     /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        return array();
-    }
-
-    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
@@ -102,7 +94,7 @@ class YdContactUs extends YdActiveRecord
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @param array $options
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($options = array())
     {
@@ -121,7 +113,7 @@ class YdContactUs extends YdActiveRecord
         $criteria->compare('created_at', $this->created_at, true);
         $criteria->compare('ip_address', $this->ip_address, true);
 
-        return new ActiveDataProvider($this, CMap::mergeArray(array(
+        return new YdActiveDataProvider($this, CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
     }

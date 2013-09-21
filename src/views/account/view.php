@@ -1,23 +1,21 @@
 <?php
-/* @var $this AccountController */
-?>
-<?php
+/**
+ * @var $this AccountController
+ * @var $user YdUser
+ */
+
 $this->pageTitle = $this->pageHeading = t('My Account');
 $this->breadcrumbs = array(
     t('My Account'),
 );
-$this->menu = Menu::getItemsFromMenu('User');
-?>
+$this->menu = YdMenu::getItemsFromMenu('User');
 
-<fieldset>
-    <legend><?php echo t('User Details') ?></legend>
-    <?php $this->widget('widgets.DetailView', array(
-        'data' => $user,
-        'attributes' => array(
-            'username',
-            'name',
-            'email',
-            'phone',
-        ),
-    )); ?>
-</fieldset>
+$this->widget('dressing.widgets.YdDetailView', array(
+    'data' => $user,
+    'attributes' => array(
+        'username',
+        'name',
+        'email',
+        'phone',
+    ),
+));

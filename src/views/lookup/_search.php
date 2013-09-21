@@ -1,14 +1,14 @@
 <?php
 /**
  * @var $this LookupController
- * @var $lookup Lookup
+ * @var $lookup YdLookup
  */
 
 Helper::searchToggle('lookup-grid');
 echo '<div class="search-form hide">';
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 	'action' => url($this->route),
 	'type' => 'horizontal',
 	'method' => 'get',

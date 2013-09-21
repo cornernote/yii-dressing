@@ -1,14 +1,17 @@
 <?php
 /**
  * @var $this SettingController
- * @var $settings Setting[]
+ * @var $settings YdSetting[]
  */
 
 $this->pageTitle = $this->pageHeading = t('Settings');
-$this->menu = Menu::getItemsFromMenu('System');
+$this->menu = YdMenu::getItemsFromMenu('Settings', YdMenu::MENU_ADMIN);
+
+$this->breadcrumbs[t('Tools')] = array('/tool/index');
+$this->breadcrumbs[] = t('Settings');
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'setting-form',
     'type' => 'horizontal',
 ));
@@ -20,8 +23,8 @@ echo '<h2>' . t('Core Settings') . '</h2>';
 echo '<fieldset><legend>' . t('Version Settings') . '</legend>';
 echo $form->textFieldRow($settings['id'], 'value', array('name' => 'Setting[id][value]'));
 echo $form->dropDownListRow($settings['app_version'], 'value', YdSetting::appVersions(), array('name' => 'Setting[app_version][value]'));
-echo $form->dropDownListRow($settings['yii_version'], 'value', YdSetting::yiiVersions(), array('name' => 'Setting[yii_version][value]'));
-echo $form->checkBoxRow($settings['yii_lite'], 'value', array('name' => 'Setting[yii_lite][value]'));
+//echo $form->dropDownListRow($settings['yii_version'], 'value', YdSetting::yiiVersions(), array('name' => 'Setting[yii_version][value]'));
+//echo $form->checkBoxRow($settings['yii_lite'], 'value', array('name' => 'Setting[yii_lite][value]'));
 echo '</fieldset>';
 
 echo '<fieldset><legend>' . t('Debug Settings') . '</legend>';
@@ -40,7 +43,7 @@ echo '</fieldset>';
 echo '<h2>' . t('App Settings') . '</h2>';
 
 echo '<fieldset><legend>' . t('PHP Settings') . '</legend>';
-echo $form->dropDownListRow($settings['theme'], 'value', param('themes'), array('name' => 'Setting[theme][value]'));
+echo $form->dropDownListRow($settings['theme'], 'value', YdSetting::themes(), array('name' => 'Setting[theme][value]', 'empty' => ''));
 echo $form->textFieldRow($settings['defaultPageSize'], 'value', array('name' => 'Setting[defaultPageSize][value]'));
 echo '</fieldset>';
 
@@ -50,11 +53,11 @@ echo $form->checkBoxRow($settings['rememberMe'], 'value', array('name' => 'Setti
 echo '</fieldset>';
 
 echo '<fieldset><legend>' . t('Company Settings') . '</legend>';
-echo $form->textFieldRow($settings['brand'], 'value', array('name' => 'Setting[brand][value]'));
+//echo $form->textFieldRow($settings['brand'], 'value', array('name' => 'Setting[brand][value]'));
 echo $form->textFieldRow($settings['name'], 'value', array('name' => 'Setting[name][value]'));
-echo $form->textAreaRow($settings['address'], 'value', array('name' => 'Setting[address][value]'));
-echo $form->textFieldRow($settings['phone'], 'value', array('name' => 'Setting[phone][value]'));
-echo $form->textFieldRow($settings['website'], 'value', array('name' => 'Setting[website][value]'));
+//echo $form->textAreaRow($settings['address'], 'value', array('name' => 'Setting[address][value]'));
+//echo $form->textFieldRow($settings['phone'], 'value', array('name' => 'Setting[phone][value]'));
+//echo $form->textFieldRow($settings['website'], 'value', array('name' => 'Setting[website][value]'));
 echo $form->textFieldRow($settings['email'], 'value', array('name' => 'Setting[email][value]'));
 echo '</fieldset>';
 

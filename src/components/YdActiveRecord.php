@@ -77,11 +77,11 @@ class YdActiveRecord extends CActiveRecord
     {
         if ($this->isNewRecord)
             return false;
-        if ($field) 
+        if ($field)
             return $this->getDbAttribute($field) != $this->attributes[$field];
-        foreach ($this->attributes as $k => $v) 
-            if ($this->getDbAttribute($k) != $v) 
-				return true;
+        foreach ($this->attributes as $k => $v)
+            if ($this->getDbAttribute($k) != $v)
+                return true;
         return false;
     }
 
@@ -97,13 +97,24 @@ class YdActiveRecord extends CActiveRecord
     }
 
     /**
-     * The name of this model to be used in links and titles
+     * The name of this model to be used in titles
      *
      * @return string
      */
     public function getName()
     {
         return $this->getIdString();
+    }
+
+
+    /**
+     * The name of this model to be used in links
+     *
+     * @return string
+     */
+    public function getControllerName()
+    {
+        return lcfirst(get_class($this));
     }
 
     /**
@@ -114,7 +125,7 @@ class YdActiveRecord extends CActiveRecord
      */
     public function getIdString()
     {
-        return lcfirst(get_class($this)) . '-' . $this->getPrimaryKeyString();
+        return $this->getControllerName() . '-' . $this->getPrimaryKeyString();
     }
 
     /**
@@ -127,7 +138,7 @@ class YdActiveRecord extends CActiveRecord
     public function getUrl($action = 'view', $params = array())
     {
         return array_merge(array(
-            '/' . lcfirst(get_class($this)) . '/' . $action,
+            '/' . $this->getControllerName() . '/' . $action,
             $this->getPrimaryKeySchemaString() => $this->getPrimaryKeyString(),
         ), (array)$params);
     }

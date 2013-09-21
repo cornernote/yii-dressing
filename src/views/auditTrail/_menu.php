@@ -1,12 +1,12 @@
 <?php
 /**
  * @var $this AuditTrailController
- * @var $auditTrail AuditTrail
+ * @var $auditTrail YdAuditTrail
  */
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = Menu::getItemsFromMenu('System');
+    $this->menu = YdMenu::getItemsFromMenu('System');
     return; // no more links
 }
 

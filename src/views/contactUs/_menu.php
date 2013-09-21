@@ -1,12 +1,12 @@
 <?php
 /**
  * @var $this ContactUsController
- * @var $contactUs ContactUs
+ * @var $contactUs YdContactUs
  */
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = Menu::getItemsFromMenu('Log');
+    $this->menu = YdMenu::getItemsFromMenu('Log');
     return; // no more links
 }
 

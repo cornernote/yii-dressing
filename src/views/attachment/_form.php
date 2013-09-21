@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this AttachmentController
- * @var $attachment Attachment
+ * @var $attachment YdAttachment
  */
 
 
@@ -50,7 +50,7 @@ if ($attachment->isNewRecord) {
 
 // single upload
 /** @var $form ActiveForm */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'attachment-form',
     'type' => 'horizontal',
     //'enableAjaxValidation' => true,

@@ -1,14 +1,14 @@
 <?php
 /**
  * @var $this ContactUsController
- * @var $contactUs ContactUs
+ * @var $contactUs YdContactUs
  */
 
 user()->setState('index.contactUs', ru());
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('List');
 $this->breadcrumbs = array($this->getName() . ' ' . t('List'));
 
-$this->renderPartial('_menu');
+$this->renderPartial('dressing.views.contactUs._menu');
 
 echo '<div class="spacer">';
 
@@ -27,11 +27,11 @@ if (user()->getState('index.contactUs') != url('/contactUs/index')) {
 echo '</div>';
 
 // search
-$this->renderPartial('/contactUs/_search', array(
+$this->renderPartial('dressing.views.contactUs._search', array(
     'contactUs' => $contactUs,
 ));
 
 // grid
-$this->renderPartial('/contactUs/_grid', array(
+$this->renderPartial('dressing.views.contactUs._grid', array(
     'contactUs' => $contactUs,
 ));

@@ -111,7 +111,7 @@ class YdEmailSpool extends YdActiveRecord
         return array(
             'attachment' => array(
                 self::HAS_MANY,
-                'Attachment',
+                'YdAttachment',
                 'model_id',
                 'condition' => 'attachment.model=:model AND deleted IS NULL',
                 'params' => array(':model' => 'EmailSpool'),
@@ -162,7 +162,7 @@ class YdEmailSpool extends YdActiveRecord
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @param array $options
-     * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($options = array())
     {
@@ -180,7 +180,7 @@ class YdEmailSpool extends YdActiveRecord
 
         $criteria->addCondition('t.deleted IS ' . ($this->deleted == 'deleted' ? 'NOT NULL' : 'NULL'));
 
-        return new ActiveDataProvider(get_class($this), CMap::mergeArray(array(
+        return new YdActiveDataProvider(get_class($this), CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
     }

@@ -1,14 +1,14 @@
 <?php
 /**
  * @var $this EmailSpoolController
- * @var $emailSpool EmailSpool
+ * @var $emailSpool YdEmailSpool
  */
 
 Helper::searchToggle('emailSpool-grid');
 echo '<div class="search-form hide">';
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 	'action' => url($this->route),
 	'type' => 'horizontal',
 	'method' => 'get',

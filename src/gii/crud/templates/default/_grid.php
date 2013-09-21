@@ -18,7 +18,7 @@ foreach ($this->tableSchema->columns as $column) {
     echo "\$columns[] = array(\n";
     echo "    'name' => '" . $column->name . "',\n";
     if ($column->autoIncrement) {
-        echo "    'class' => 'widgets.TbDropdownColumn',\n";
+        echo "    'class' => 'dressing.widgets.YdDropdownColumn',\n";
     }
     echo ");\n";
 }
@@ -33,7 +33,7 @@ echo "    'url' => url('/" . lcfirst($this->modelClass) . "/delete'),\n";
 echo ");\n";
 echo "\n";
 echo "// grid\n";
-echo "\$this->widget('widgets.GridView', array(\n";
+echo "\$this->widget('dressing.widgets.YdGridView', array(\n";
 echo "    'id' => '" . lcfirst($this->modelClass) . "-grid',\n";
 echo "    'dataProvider' => \$" . lcfirst($this->modelClass) . "->search(),\n";
 echo "    'filter' => \$" . lcfirst($this->modelClass) . ",\n";

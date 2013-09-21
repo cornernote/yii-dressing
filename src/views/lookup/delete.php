@@ -12,7 +12,7 @@ $this->breadcrumbs[] = t(ucfirst($task));
 
 $lookup = $id ? Lookup::model()->findByPk($id) : new Lookup('search');
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'lookup-' . $task . '-form',
     'type' => 'horizontal',
     'action' => array('/lookup/delete', 'id' => $id, 'task' => $task, 'confirm' => 1),

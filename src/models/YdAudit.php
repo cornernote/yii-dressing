@@ -124,17 +124,17 @@ class YdAudit extends YdActiveRecord
         return array(
             'user' => array(
                 self::BELONGS_TO,
-                'User',
+                'YdUser',
                 'user_id',
             ),
             'auditTrail' => array(
                 self::HAS_MANY,
-                'AuditTrail',
+                'YdAuditTrail',
                 'audit_id',
             ),
             'auditTrailCount' => array(
                 self::STAT,
-                'AuditTrail',
+                'YdAuditTrail',
                 'audit_id',
             ),
         );
@@ -361,7 +361,7 @@ class YdAudit extends YdActiveRecord
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @param array $options
-     * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($options = array())
     {
@@ -413,7 +413,7 @@ class YdAudit extends YdActiveRecord
             }
         }
 
-        return new ActiveDataProvider(get_class($this), CMap::mergeArray(array(
+        return new YdActiveDataProvider(get_class($this), CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
     }

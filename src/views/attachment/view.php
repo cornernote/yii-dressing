@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this AttachmentController
- * @var $attachment Attachment
+ * @var $attachment YdAttachment
  */
 
 $this->pageTitle = $this->pageHeading = $attachment->getName() . ' - ' . $this->getName() . ' ' . t('View');
@@ -10,7 +10,7 @@ $this->breadcrumbs = array();
 $this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.attachment', array('/attachment/index'));
 $this->breadcrumbs[] = $attachment->getName();
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.attachment._menu', array(
     'attachment' => $attachment,
 ));
 
@@ -27,7 +27,7 @@ $attributes[] = 'sort_order';
 $attributes[] = 'created';
 $attributes[] = 'deleted';
 
-$this->widget('widgets.DetailView', array(
+$this->widget('dressing.widgets.YdDetailView', array(
     'data' => $attachment,
     'attributes' => $attributes,
 ));

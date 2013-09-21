@@ -1,13 +1,13 @@
 <?php
 /**
  * @var $this EmailSpoolController
- * @var $emailSpool EmailSpool
+ * @var $emailSpool YdEmailSpool
  */
 
 $columns = array();
 $columns[] = array(
     'name' => 'id',
-    'class' => 'widgets.TbDropdownColumn',
+    'class' => 'dressing.widgets.YdDropdownColumn',
 );
 $columns[] = array(
     'name' => 'model',
@@ -42,7 +42,7 @@ $columns[] = array(
 );
 
 // grid
-$this->widget('widgets.GridView', array(
+$this->widget('dressing.widgets.YdGridView', array(
     'id' => 'emailSpool-grid',
     'dataProvider' => $emailSpool->search(),
     'filter' => $emailSpool,

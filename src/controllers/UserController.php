@@ -30,11 +30,11 @@ class UserController extends YdWebController
      */
     public function actionIndex()
     {
-        $user = new User('search');
-        if (!empty($_GET['User']))
-            $user->attributes = $_GET['User'];
+        $user = new YdUser('search');
+        if (!empty($_GET['YdUser']))
+            $user->attributes = $_GET['YdUser'];
 
-        $this->render('index', array(
+        $this->render('dressing.views.user.index', array(
             'user' => $user,
         ));
     }
@@ -47,14 +47,14 @@ class UserController extends YdWebController
     public function actionView($id)
     {
         /** @var $user User */
-        $user = $this->loadModel($id);
+        $user = $this->loadModel($id, 'YdUser');
 
         // check for deleted user
         if ($user->deleted) {
             user()->addFlash('THIS USER IS DELETED', 'warning');
         }
 
-        $this->render('view', array(
+        $this->render('dressing.views.user.view', array(
             'user' => $user,
         ));
     }
@@ -67,9 +67,9 @@ class UserController extends YdWebController
     public function actionLog($id)
     {
         /** @var $user User */
-        $user = $this->loadModel($id, 'User');
+        $user = $this->loadModel($id, 'YdUser');
 
-        $this->render('log', array(
+        $this->render('dressing.views.user.log', array(
             'user' => $user,
         ));
     }
@@ -79,13 +79,13 @@ class UserController extends YdWebController
      */
     public function actionCreate()
     {
-        $user = new User('create');
+        $user = new YdUser('create');
 
         $this->performAjaxValidation($user, 'user-form');
-        if (isset($_POST['User'])) {
-            $user->attributes = $_POST['User'];
+        if (isset($_POST['YdUser'])) {
+            $user->attributes = $_POST['YdUser'];
             if ($user->save()) {
-                //$userToRole = new UserToRole();
+                //$userToRole = new YdUserToRole();
                 //$userToRole->user_id = $user->id;
                 //$userToRole->role_id = $role->id;
                 //$userToRole->save(false);
@@ -94,12 +94,12 @@ class UserController extends YdWebController
             }
         }
         else {
-            if (isset($_GET['User'])) {
-                $user->attributes = $_GET['User'];
+            if (isset($_GET['YdUser'])) {
+                $user->attributes = $_GET['YdUser'];
             }
         }
 
-        $this->render('create', array(
+        $this->render('dressing.views.user.create', array(
             'user' => $user,
         ));
     }
@@ -111,12 +111,12 @@ class UserController extends YdWebController
      */
     public function actionUpdate($id)
     {
-        /** @var $user User */
-        $user = $this->loadModel($id);
+        /** @var $user YdUser */
+        $user = $this->loadModel($id, 'YdUser');
 
         $this->performAjaxValidation($user, 'user-form');
-        if (isset($_POST['User'])) {
-            $user->attributes = $_POST['User'];
+        if (isset($_POST['YdUser'])) {
+            $user->attributes = $_POST['YdUser'];
             if ($user->save()) {
                 user()->addFlash(t('User has been updated'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($user->getUrl()));
@@ -128,7 +128,7 @@ class UserController extends YdWebController
             $user->password = null;
         }
 
-        $this->render('update', array(
+        $this->render('dressing.views.user.update', array(
             'user' => $user,
         ));
     }
@@ -139,11 +139,11 @@ class UserController extends YdWebController
      */
     public function actionDelete($id = null)
     {
-        $task = sf('task', 'User') == 'undelete' ? 'undelete' : 'delete';
-        if (sf('confirm', 'User')) {
+        $task = sf('task', 'YdUser') == 'undelete' ? 'undelete' : 'delete';
+        if (sf('confirm', 'YdUser')) {
             $ids = sfGrid($id);
             foreach ($ids as $id) {
-                $user = User::model()->findByPk($id);
+                $user = YdUser::model()->findByPk($id);
 
                 // check access
                 if (!$user->checkUserAccess(user()->id)) {
@@ -158,7 +158,7 @@ class UserController extends YdWebController
             $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.user', array('/user/index'))));
         }
 
-        $this->render('delete', array(
+        $this->render('dressing.views.user.delete', array(
             'id' => $id,
             'task' => $task,
         ));

@@ -1,11 +1,11 @@
 <?php
 /**
  * @var $this MenuController
- * @var $menu Menu
+ * @var $menu YdMenu
  */
 
 /** @var $form ActiveForm */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'menu-form',
     'type' => 'horizontal',
     //'enableAjaxValidation' => true,

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $this YdWebController
+ */
+
 $audit = YdAudit::findCurrent();
 if (!$audit) return;
 

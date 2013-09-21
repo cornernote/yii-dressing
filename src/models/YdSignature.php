@@ -78,15 +78,6 @@ class YdSignature extends YdActiveRecord
     }
 
     /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        return array(
-        );
-    }
-
-    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
@@ -105,7 +96,7 @@ class YdSignature extends YdActiveRecord
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @param array $options
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($options = array())
     {
@@ -122,7 +113,7 @@ class YdSignature extends YdActiveRecord
         $criteria->compare('created',$this->created,true);
         $criteria->compare('deleted',$this->deleted,true);
 
-        return new ActiveDataProvider($this, CMap::mergeArray(array(
+        return new YdActiveDataProvider($this, CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
     }

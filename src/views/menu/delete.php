@@ -6,13 +6,14 @@
  */
 
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t(ucfirst($task));
-$this->breadcrumbs = array();
-$this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.menu', array('/menu/index'));
+
+$this->breadcrumbs[t('Tools')] = array('/tool/index');
+$this->breadcrumbs[t('Menus')] = user()->getState('index.menu', array('/menu/index'));
 $this->breadcrumbs[] = t(ucfirst($task));
 
-$menu = $id ? Menu::model()->findByPk($id) : new Menu('search');
+$menu = $id ? YdMenu::model()->findByPk($id) : new YdMenu('search');
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'menu-' . $task . '-form',
     'type' => 'horizontal',
     'action' => array('/menu/delete', 'id' => $id, 'task' => $task, 'confirm' => 1),
@@ -23,7 +24,7 @@ echo $form->errorSummary($menu);
 
 echo '<fieldset>';
 echo '<legend>' . t('Selected Records') . '</legend>';
-$menus = Menu::model()->findAll('t.id IN (' . implode(',', sfGrid($id)) . ')');
+$menus = YdMenu::model()->findAll('t.id IN (' . implode(',', sfGrid($id)) . ')');
 if ($menus) {
     echo '<ul>';
     foreach ($menus as $menu) {

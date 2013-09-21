@@ -71,7 +71,7 @@ class AttachmentController extends YdWebController
             return false;
         }
 
-        $attachment = Attachment::model()->findByPk((int)$_GET['id']);
+        $attachment = YdAttachment::model()->findByPk((int)$_GET['id']);
 
         // allow lookup and company logo
         if (in_array($attachment->model, array('Lookup', 'Company-logo'))) {
@@ -121,8 +121,8 @@ class AttachmentController extends YdWebController
      */
     public function actionPreview($id, $thumb, $dl = null, $cache = null)
     {
-        $attachment = Attachment::model()->findByPk((int)$id);
-        $this->render('preview', array(
+        $attachment = YdAttachment::model()->findByPk((int)$id);
+        $this->render('dressing.views.attachment.preview', array(
             'attachment' => $attachment,
             'thumb' => $thumb,
         ));
@@ -139,7 +139,7 @@ class AttachmentController extends YdWebController
      */
     public function actionView($id, $thumb = null, $dl = null, $cache = null)
     {
-        $attachment = Attachment::model()->findByPk((int)$id);
+        $attachment = YdAttachment::model()->findByPk((int)$id);
         if ($thumb) {
             $size = explode('x', $thumb);
             $thumbFilename = $attachment->getAttachmentPath() . '/' . $attachment->id . '.' . urlencode($thumb) . '.jpg';
@@ -210,22 +210,22 @@ class AttachmentController extends YdWebController
      */
     public function actionCreate()
     {
-        $attachment = new Attachment('create');
+        $attachment = new YdAttachment('create');
 
-        if (isset($_GET['Attachment'])) {
-            $attachment->attributes = $_GET['Attachment'];
+        if (isset($_GET['YdAttachment'])) {
+            $attachment->attributes = $_GET['YdAttachment'];
         }
 
         $this->performAjaxValidation($attachment, 'attachment-form');
-        if (isset($_POST['Attachment']) || isset($_FILES['Filedata'])) {
+        if (isset($_POST['YdAttachment']) || isset($_FILES['Filedata'])) {
 
             // restructure swfupload posted file
             if (isset($_FILES['Filedata'])) {
-                $_POST['Attachment'] = array(
+                $_POST['YdAttachment'] = array(
                     'filename' => $_POST['Filename'],
                     'notes' => '',
                 );
-                $_FILES['Attachment'] = array(
+                $_FILES['YdAttachment'] = array(
                     'name' => array(
                         'filename' => $_FILES['Filedata']['name'],
                     ),
@@ -247,7 +247,7 @@ class AttachmentController extends YdWebController
                 $attachment->created_by = $_GET['user_id'];
                 $attachment->modified_by = $_GET['user_id'];
             }
-            $attachment->attributes = $_POST['Attachment'];
+            $attachment->attributes = $_POST['YdAttachment'];
             $saved = $attachment->save();
 
             if (isset($_FILES['Filedata'])) {
@@ -277,7 +277,7 @@ class AttachmentController extends YdWebController
 
         }
 
-        $this->render('create', array(
+        $this->render('dressing.views.attachment.create', array(
             'attachment' => $attachment,
         ));
     }
@@ -288,18 +288,18 @@ class AttachmentController extends YdWebController
      */
     public function actionUpdate($id)
     {
-        $attachment = $this->loadModel($id);
+        $attachment = $this->loadModel($id, 'YdAttachment');
 
         $this->performAjaxValidation($attachment, 'attachment-form');
 
-        if (isset($_POST['Attachment'])) {
-            $attachment->attributes = $_POST['Attachment'];
+        if (isset($_POST['YdAttachment'])) {
+            $attachment->attributes = $_POST['YdAttachment'];
             if ($attachment->save()) {
                 $this->redirect(Yii::app()->returnUrl->getUrl());
             }
         }
 
-        $this->render('update', array(
+        $this->render('dressing.views.attachment.update', array(
             'attachment' => $attachment,
         ));
     }
@@ -316,7 +316,7 @@ class AttachmentController extends YdWebController
             $attachments = explode(',', $_POST['Order']);
 
             for ($i = 0; $i < sizeof($attachments); $i++) {
-                if ($attachment = Attachment::model()->findbyPk($attachments[$i])) {
+                if ($attachment = YdAttachment::model()->findbyPk($attachments[$i])) {
                     $attachment->weight = $i;
                     $attachment->save();
                 }
@@ -332,7 +332,7 @@ class AttachmentController extends YdWebController
     {
         $ids = sfGrid($id);
         foreach ($ids as $id) {
-            $attachment = Attachment::model()->findByPk($id);
+            $attachment = YdAttachment::model()->findByPk($id);
             user()->addFlash(sprintf('Attachment attachment-%s has been deleted', $id), 'success');
             $attachment->delete();
         }
@@ -348,7 +348,7 @@ class AttachmentController extends YdWebController
     {
         $ids = sfGrid($id);
         foreach ($ids as $id) {
-            $attachment = Attachment::model()->findByPk($id);
+            $attachment = YdAttachment::model()->findByPk($id);
             user()->addFlash(sprintf('Attachment attachment-%s has been undeleted', $id), 'success');
             $attachment->undelete();
         }

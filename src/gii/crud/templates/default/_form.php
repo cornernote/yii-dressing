@@ -11,7 +11,7 @@ echo " * @var \$" . lcfirst($this->modelClass) . " " . $this->modelClass . "\n";
 echo " */\n";
 echo "\n";
 echo "/** @var ActiveForm \$form */\n";
-echo "\$form = \$this->beginWidget('widgets.ActiveForm', array(\n";
+echo "\$form = \$this->beginWidget('dressing.widgets.YdActiveForm', array(\n";
 echo "    'id' => '" . lcfirst($this->modelClass) . "-form',\n";
 echo "    'type' => 'horizontal',\n";
 echo "    //'enableAjaxValidation' => true,\n";

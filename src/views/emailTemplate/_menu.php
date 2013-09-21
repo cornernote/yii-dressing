@@ -1,12 +1,12 @@
 <?php
 /**
  * @var $this EmailTemplateController
- * @var $emailTemplate EmailTemplate
+ * @var $emailTemplate YdEmailTemplate
  */
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = Menu::getItemsFromMenu('System');
+    $this->menu = YdMenu::getItemsFromMenu('System');
     return; // no more links
 }
 

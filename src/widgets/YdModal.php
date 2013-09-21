@@ -19,8 +19,8 @@ class YdModal extends CWidget
 
         // fix modals on mobile devices
         // http://niftylettuce.github.com/twitter-bootstrap-jquery-plugins/
-        $cs->registerScriptFile($baseUrl . '/modal-responsive-fix/touchscroll.js', CClientScript::POS_HEAD, array('order' => 1));
-        $cs->registerScriptFile($baseUrl . '/modal-responsive-fix/modal-responsive-fix.min.js', CClientScript::POS_HEAD, array('order' => 1));
+        $cs->registerScriptFile($baseUrl . '/touchscroll.js', CClientScript::POS_HEAD, array('order' => 1));
+        $cs->registerScriptFile($baseUrl . '/modal-responsive-fix.min.js', CClientScript::POS_HEAD, array('order' => 1));
         $cs->registerCSS('modal-responsive-fix', '.modal-body { -webkit-overflow-scrolling:touch; } body.modal-open{overflow: hidden;} @media (max-width: 767px) {.modal.fade.in {top: 10px !important;}}', '', array('order' => 10));
 
     }

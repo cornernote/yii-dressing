@@ -77,7 +77,7 @@ class YdSignatureWidget extends CWidget
             'value' => '<canvas class="pad" width="600" height="150"></canvas>',
             'type' => 'raw',
         );
-        $this->widget('widgets.DetailView', array(
+        $this->widget('dressing.widgets.YdDetailView', array(
             'data' => $this->signature,
             'attributes' => $attributes,
         ));

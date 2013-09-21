@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this LookupController
- * @var $lookup Lookup
+ * @var $lookup YdLookup
  */
 
 echo '<div class="view">';

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this AccountController
- * @var $user UserLogin
+ * @var $user YdUserLogin
  * @var $recaptcha string
  */
 
@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 );
 
 /* @var $form ActiveForm */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'login-form',
     //'enableAjaxValidation' => false,
     'type' => 'horizontal',

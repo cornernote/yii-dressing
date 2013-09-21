@@ -30,20 +30,20 @@ class EmailSpoolController extends YdWebController
      */
     public function actionIndex()
     {
-        $emailSpool = new EmailSpool('search');
-        $this->render('index', array(
+        $emailSpool = new YdEmailSpool('search');
+        $this->render('dressing.views.emailSpool.index', array(
             'emailSpool' => $emailSpool,
         ));
     }
 
     /**
-     * Displays a particular EmailSpool.
-     * @param integer $id the ID of the EmailSpool to be displayed
+     * Displays a particular YdEmailSpool.
+     * @param integer $id the ID of the YdEmailSpool to be displayed
      */
     public function actionView($id)
     {
-        $emailSpool = $this->loadModel($id);
-        $this->render('view', array(
+        $emailSpool = $this->loadModel($id, 'YdEmailSpool');
+        $this->render('dressing.views.emailSpool.view', array(
             'emailSpool' => $emailSpool,
         ));
     }

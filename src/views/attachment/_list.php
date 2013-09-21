@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this AttachmentController
- * @var $attachment Attachment
+ * @var $attachment YdAttachment
  */
 
 // list

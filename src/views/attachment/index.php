@@ -1,14 +1,14 @@
 <?php
 /**
  * @var $this AttachmentController
- * @var $attachment Attachment
+ * @var $attachment YdAttachment
  */
 
 user()->setState('index.attachment', ru());
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('List');
 $this->breadcrumbs = array($this->getName() . ' ' . t('List'));
 
-$this->menu = Menu::getItemsFromMenu('Main');
+$this->menu = YdMenu::getItemsFromMenu('Main');
 
 echo '<div class="spacer">';
 $this->widget('bootstrap.widgets.TbButton', array(
@@ -33,11 +33,11 @@ if (user()->getState('index.attachment') != url('/attachment/index')) {
 echo '</div>';
 
 // search
-$this->renderPartial('/attachment/_search', array(
+$this->renderPartial('dressing.views.attachment._search', array(
     'attachment' => $attachment,
 ));
 
 // grid
-$this->renderPartial('/attachment/_grid', array(
+$this->renderPartial('dressing.views.attachment._grid', array(
     'attachment' => $attachment,
 ));

@@ -38,14 +38,14 @@ class YdAuditBehavior extends CActiveRecordBehavior
     public function afterSave($event)
     {
         if (!YdSetting::item('audit')) {
-            parent::afterSave($event);;
+            parent::afterSave($event);
         }
 
         $date = date('Y-m-d H:i:s');
         $newAttributes = $this->owner->attributes;
         $oldAttributes = $this->owner->dbAttributes;
         $logModels = $this->getLogModels();
-        $auditId = Audit::findCurrentId();
+        $auditId = YdAudit::findCurrentId();
 
         // insert
         if ($this->owner->isNewRecord) {
@@ -59,7 +59,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
                 // write the logs
                 foreach ($logModels as $logModel) {
                     if (isset($logModel['ignoreFields']) && in_array($name, $logModel['ignoreFields'])) continue;
-                    $log = new AuditTrail;
+                    $log = new YdAuditTrail;
                     $log->old_value = '';
                     $log->new_value = $new;
                     $log->action = 'INSERT';
@@ -90,7 +90,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
                 // write the logs
                 foreach ($logModels as $logModel) {
                     if (isset($logModel['ignoreFields']) && in_array($name, $logModel['ignoreFields'])) continue;
-                    $log = new AuditTrail();
+                    $log = new YdAuditTrail();
                     $log->old_value = $old;
                     $log->new_value = $new;
                     $log->action = 'UPDATE';
@@ -113,18 +113,18 @@ class YdAuditBehavior extends CActiveRecordBehavior
     public function afterDelete($event)
     {
         if (!YdSetting::item('audit')) {
-            parent::afterDelete($event);;
+            parent::afterDelete($event);
         }
 
         $date = date('Y-m-d H:i:s');
         $logModels = $this->getLogModels();
-        $auditId = Audit::findCurrentId();
+        $auditId = YdAudit::findCurrentId();
 
         // delete
         $pk = $this->auditModel->getPrimaryKeyString();
         foreach ($logModels as $logModel) {
             $prefix = isset($logModel['prefix']) ? $logModel['prefix'] . '.' . $pk : '';
-            $log = new AuditTrail;
+            $log = new YdAuditTrail;
             $log->old_value = '';
             $log->new_value = '';
             $log->action = 'DELETE';

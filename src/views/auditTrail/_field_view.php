@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $this AuditTrailController
+ */
+
 echo '<tr>';
 
 echo '<td>';
@@ -31,4 +35,3 @@ if (user()->checkAccess('admin')) {
 }
 
 echo '</tr>';
-?>

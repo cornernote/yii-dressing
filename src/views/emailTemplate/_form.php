@@ -1,11 +1,11 @@
 <?php
 /**
  * @var $this EmailTemplateController
- * @var $emailTemplate EmailTemplate
+ * @var $emailTemplate YdEmailTemplate
  */
 
 /* @var $form ActiveForm */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'emailTemplate-form',
     'enableAjaxValidation' => true,
     'type' => 'horizontal',

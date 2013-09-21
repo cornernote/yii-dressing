@@ -30,8 +30,8 @@ class EmailTemplateController extends YdWebController
      */
     public function actionIndex()
     {
-        $emailTemplate = new EmailTemplate('search');
-        $this->render('index', array(
+        $emailTemplate = new YdEmailTemplate('search');
+        $this->render('dressing.views.emailTemplate.index', array(
             'emailTemplate' => $emailTemplate,
         ));
     }
@@ -42,10 +42,10 @@ class EmailTemplateController extends YdWebController
      */
     public function actionView($id)
     {
-        $emailTemplate = $this->loadModel($id);
+        $emailTemplate = $this->loadModel($id, 'YdEmailTemplate');
 
         // render the page
-        $this->render('view', array(
+        $this->render('dressing.views.emailTemplate.view', array(
             'emailTemplate' => $emailTemplate,
         ));
     }
@@ -56,12 +56,12 @@ class EmailTemplateController extends YdWebController
      */
     public function actionUpdate($id)
     {
-        $emailTemplate = $this->loadModel($id);
+        $emailTemplate = $this->loadModel($id, 'YdEmailTemplate');
         $this->performAjaxValidation($emailTemplate, 'emailTemplate-form');
 
         // handle posted data
-        if (isset($_POST['EmailTemplate'])) {
-            $emailTemplate->attributes = $_POST['EmailTemplate'];
+        if (isset($_POST['YdEmailTemplate'])) {
+            $emailTemplate->attributes = $_POST['YdEmailTemplate'];
             if ($emailTemplate->save()) {
                 $this->flashAndRedirect(t('Email Template has been updated'), 'success');
             }
@@ -72,13 +72,13 @@ class EmailTemplateController extends YdWebController
         }
         else {
             // pre-fill the form with variables from _GET
-            if (isset($_GET['EmailTemplate'])) {
-                $emailTemplate->attributes = $_GET['EmailTemplate'];
+            if (isset($_GET['YdEmailTemplate'])) {
+                $emailTemplate->attributes = $_GET['YdEmailTemplate'];
             }
         }
 
         // render the page
-        $this->render('update', array(
+        $this->render('dressing.views.emailTemplate.update', array(
             'emailTemplate' => $emailTemplate,
         ));
     }

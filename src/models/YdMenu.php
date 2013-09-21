@@ -4,15 +4,15 @@
  *
  * This is the model class for table 'menu'
  *
- * @method Menu with() with()
- * @method Menu find() find($condition, array $params = array())
- * @method Menu[] findAll() findAll($condition = '', array $params = array())
- * @method Menu findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method Menu[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method Menu findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Menu[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Menu findBySql() findBySql($sql, array $params = array())
- * @method Menu[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdMenu with() with()
+ * @method YdMenu find() find($condition, array $params = array())
+ * @method YdMenu[] findAll() findAll($condition = '', array $params = array())
+ * @method YdMenu findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdMenu[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdMenu findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdMenu[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdMenu findBySql() findBySql($sql, array $params = array())
+ * @method YdMenu[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Methods from behavior SoftDeleteBehavior
  * @method undelete() undelete()
@@ -20,8 +20,8 @@
  * @method notdeleteds() notdeleteds()
  *
  * Properties from relation
- * @property Menu[] $child
- * @property Menu $parent
+ * @property YdMenu[] $child
+ * @property YdMenu $parent
  *
  * Properties from table fields
  * @property integer $id
@@ -44,9 +44,22 @@ class YdMenu extends YdActiveRecord
 {
 
     /**
+     *
+     */
+    const MENU_MAIN = 1;
+    /**
+     *
+     */
+    const MENU_USER = 2;
+    /**
+     *
+     */
+    const MENU_ADMIN = 3;
+
+    /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Menu the static model class
+     * @return YdMenu the static model class
      */
     public static function model($className = __CLASS__)
     {
@@ -136,7 +149,7 @@ class YdMenu extends YdActiveRecord
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @param array $options
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($options = array())
     {
@@ -165,7 +178,7 @@ class YdMenu extends YdActiveRecord
         unset($options['defaultOrder']);
 
         // return the DataProvider
-        return new ActiveDataProvider($this, CMap::mergeArray(array(
+        return new YdActiveDataProvider($this, CMap::mergeArray(array(
             'criteria' => $criteria,
             'sort' => array(
                 'defaultOrder' => $defaultOrder,
@@ -230,9 +243,6 @@ class YdMenu extends YdActiveRecord
      */
     public function isActive()
     {
-        if (strpos($this->url, '/index') !== false && !$this->url_params) {
-            return (app()->controller->action->id == 'index');
-        }
         foreach ($this->child as $child) {
             if ($child->isActive()) {
                 return true;
@@ -246,12 +256,12 @@ class YdMenu extends YdActiveRecord
      * @param array $options
      * @return array
      */
-    static public function getItemsFromMenu($label, $options = array())
+    static public function getItemsFromMenu($label, $parent_id = 0, $options = array())
     {
         if (!YdHelper::tableExists('menu')) {
             return array();
         }
-        $menu = self::model()->findByAttributes(array('label' => $label));
+        $menu = self::model()->findByAttributes(array('label' => $label, 'parent_id' => $parent_id));
         if ($menu) {
             return $menu->getItems($options);
         }
@@ -347,7 +357,7 @@ class YdMenu extends YdActiveRecord
      *
      * @param int $parent_id
      * @param null $condition
-     * @return Menu[]
+     * @return YdMenu[]
      */
     public function getDropDown($parent_id = 0, $condition = null)
     {
@@ -374,8 +384,8 @@ class YdMenu extends YdActiveRecord
     }
 
     /**
-     * @param Menu[] $menus
-     * @return Menu[]
+     * @param YdMenu[] $menus
+     * @return YdMenu[]
      */
     public function breadcrumb($menus = array())
     {
@@ -471,6 +481,16 @@ class YdMenu extends YdActiveRecord
             ),
         ));
         return ob_get_clean();
+    }
+
+    /**
+     * The name of this model to be used in links
+     *
+     * @return string
+     */
+    public function getControllerName()
+    {
+        return 'menu';
     }
 
 }

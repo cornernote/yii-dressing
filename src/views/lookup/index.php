@@ -1,14 +1,14 @@
 <?php
 /**
  * @var $this LookupController
- * @var $lookup Lookup
+ * @var $lookup YdLookup
  */
 
 user()->setState('index.lookup', ru());
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('List');
 $this->breadcrumbs = array($this->getName() . ' ' . t('List'));
 
-$this->menu = Menu::getItemsFromMenu('System');
+$this->menu = YdMenu::getItemsFromMenu('System');
 
 echo '<div class="spacer">';
 $this->widget('bootstrap.widgets.TbButton', array(
@@ -33,11 +33,11 @@ if (user()->getState('index.lookup') != url('/lookup/index')) {
 echo '</div>';
 
 // search
-$this->renderPartial('/lookup/_search', array(
+$this->renderPartial('dressing.views.lookup._search', array(
     'lookup' => $lookup,
 ));
 
 // grid
-$this->renderPartial('/lookup/_grid', array(
+$this->renderPartial('dressing.views.lookup._grid', array(
     'lookup' => $lookup,
 ));

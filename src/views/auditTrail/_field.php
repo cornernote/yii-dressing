@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $this AuditTrailController
+ */
+
 $criteria = new CDbCriteria();
 $criteria->condition = 'model=:model AND model_id=:model_id AND field=:field';
 $criteria->params = array(

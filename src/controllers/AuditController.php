@@ -30,12 +30,12 @@ class AuditController extends YdWebController
      */
     public function actionIndex()
     {
-        $audit = new Audit('search');
-        if (!empty($_GET['Audit']))
-            $audit->attributes = $_GET['Audit'];
+        $audit = new YdAudit('search');
+        if (!empty($_GET['YdAudit']))
+            $audit->attributes = $_GET['YdAudit'];
         $urlManager = app()->getUrlManager();
         $urlManager->setUrlFormat('get');
-        $this->render('index', array(
+        $this->render('dressing.views.audit.index', array(
             'audit' => $audit,
         ));
     }
@@ -47,8 +47,8 @@ class AuditController extends YdWebController
      */
     public function actionView($id)
     {
-        $audit = $this->loadModel($id);
-        $this->render('view', array(
+        $audit = $this->loadModel($id, 'YdAudit');
+        $this->render('dressing.views.audit.view', array(
             'audit' => $audit,
         ));
     }
@@ -63,7 +63,7 @@ class AuditController extends YdWebController
     {
         $id = (int)$id;
         $status = (int)$status;
-        $audit = $this->loadModel($id);
+        $audit = $this->loadModel($id, 'YdAudit');
         //$sql = "UPDATE " . Audit::model()->tableName() . " SET preserve = $status WHERE id = $id";
         //app()->db->createCommand($sql)->execute();
         $audit->preserve = $status;

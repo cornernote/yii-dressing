@@ -1,17 +1,17 @@
 <?php
 /**
  * @var $this AccountController
- * @var $user User
+ * @var $user YdUser
  */
 $this->pageTitle = $this->pageHeading = t('Change Password');
 $this->breadcrumbs = array(
     t('My Account') => array('/account/index'),
     t('Change Password'),
 );
-$this->menu = Menu::getItemsFromMenu('User');
+$this->menu = YdMenu::getItemsFromMenu('User');
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'password-form',
     //'enableAjaxValidation' => true,
     'type' => 'horizontal',

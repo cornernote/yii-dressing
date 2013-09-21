@@ -1,18 +1,18 @@
 <?php
 /**
  * @var $this AccountController
- * @var $form ActiveForm
- * @var $user User
+ * @var $form YdActiveForm
+ * @var $user YdUser
  */
 $this->pageTitle = $this->pageHeading = t('Account Settings');
 $this->breadcrumbs = array(
     t('My Account') => array('index'),
     t('Account Settings'),
 );
-$this->menu = Menu::getItemsFromMenu('User');
+$this->menu = YdMenu::getItemsFromMenu('User');
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'account-form',
     //'enableAjaxValidation' => true,
     'type' => 'horizontal',

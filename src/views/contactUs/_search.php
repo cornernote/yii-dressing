@@ -1,14 +1,14 @@
 <?php
 /**
  * @var $this ContactUsController
- * @var $contactUs ContactUs
+ * @var $contactUs YdContactUs
  */
 
 Helper::searchToggle('contactUs-grid');
 echo '<div class="search-form hide">';
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 	'action' => url($this->route),
 	'type' => 'horizontal',
 	'method' => 'get',

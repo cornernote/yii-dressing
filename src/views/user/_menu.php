@@ -1,12 +1,12 @@
 <?php
 /**
  * @var $this UserController
- * @var $user User
+ * @var $user YdUser
  */
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = Menu::getItemsFromMenu('System');
+    $this->menu = YdMenu::getItemsFromMenu('System');
     return; // no more links
 }
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this EmailTemplateController
- * @var $emailTemplate EmailTemplate
+ * @var $emailTemplate YdEmailTemplate
  */
 
 $columns = array();
@@ -14,7 +14,7 @@ if (user()->checkAccess('admin')) {
 
 $columns[] = array(
     'name' => 'name',
-    'value' => '$data->getLink(array("update"))',
+    'value' => '$data->getLink()',
     'type' => 'raw',
 );
 $columns[] = array(
@@ -36,7 +36,7 @@ $columns[] = array(
 );
 
 // grid
-$this->widget('widgets.GridView', array(
+$this->widget('dressing.widgets.YdGridView', array(
     'id' => 'emailTemplate-grid',
     'dataProvider' => $emailTemplate->search(),
     'filter' => $emailTemplate,

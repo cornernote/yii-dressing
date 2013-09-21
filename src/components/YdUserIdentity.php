@@ -17,7 +17,7 @@ class YdUserIdentity extends CUserIdentity
     public function authenticate()
     {
         $username = strtolower($this->username);
-        $user = User::model()->find('(LOWER(username)=? OR LOWER(email)=?) AND web_status=1 AND deleted IS NULL', array(
+        $user = YdUser::model()->find('(LOWER(username)=? OR LOWER(email)=?) AND web_status=1 AND deleted IS NULL', array(
             $username,
             $username,
         ));
@@ -33,15 +33,6 @@ class YdUserIdentity extends CUserIdentity
             }
         }
 
-        Log::model()->add('authenticate', array(
-            'model' => 'UserIdentity',
-            'model_id' => $this->errorCode,
-            'details' => array(
-                'username' => $username,
-                'errorCode' => $this->errorCode,
-            ),
-        ));
-
         // returns true if no error, false if error
         return $this->errorCode == self::ERROR_NONE;
     }
@@ -54,7 +45,7 @@ class YdUserIdentity extends CUserIdentity
     public function authenticateApi()
     {
         $username = strtolower($this->username);
-        $user = User::model()->find('(LOWER(username)=? OR LOWER(email)=?) AND api_status=1 AND deleted IS NULL', array(
+        $user = YdUser::model()->find('(LOWER(username)=? OR LOWER(email)=?) AND api_status=1 AND deleted IS NULL', array(
             $username,
             $username,
         ));
@@ -71,15 +62,6 @@ class YdUserIdentity extends CUserIdentity
             }
         }
 
-        Log::model()->add('authenticateApi', array(
-            'model' => 'UserIdentity',
-            'model_id' => $this->errorCode,
-            'details' => array(
-                'username' => $username,
-                'errorCode' => $this->errorCode,
-            ),
-        ));
-
         // returns true if no error, false if error
         return $this->errorCode == self::ERROR_NONE;
     }
@@ -92,7 +74,7 @@ class YdUserIdentity extends CUserIdentity
     public function authenticateChangeUser()
     {
         $username = strtolower($this->username);
-        $user = User::model()->find('(LOWER(username)=? OR LOWER(email)=?) AND web_status=1 AND deleted IS NULL', array(
+        $user = YdUser::model()->find('(LOWER(username)=? OR LOWER(email)=?) AND web_status=1 AND deleted IS NULL', array(
             $username,
             $username,
         ));
@@ -106,14 +88,7 @@ class YdUserIdentity extends CUserIdentity
             $this->username = $user->username ? $user->username : $user->email;
             $this->errorCode = self::ERROR_NONE;
         }
-        Log::model()->add('authenticateChangeUser', array(
-            'model' => 'UserIdentity',
-            'model_id' => $this->errorCode,
-            'details' => array(
-                'username' => $username,
-                'errorCode' => $this->errorCode,
-            ),
-        ));
+
         // returns true if no error, false if error
         return $this->errorCode == self::ERROR_NONE;
     }

@@ -31,7 +31,7 @@ class YdUserLogin extends YdFormModel
     public $recaptcha;
 
     /**
-     * @var UserIdentity
+     * @var YdUserIdentity
      */
     private $_identity;
 
@@ -83,7 +83,7 @@ class YdUserLogin extends YdFormModel
      */
     public function authenticate($attribute, $params)
     {
-        $this->_identity = new UserIdentity($this->email, $this->password);
+        $this->_identity = new YdUserIdentity($this->email, $this->password);
         if (!$this->_identity->authenticate()) {
             $this->addError('password', 'Incorrect email or password.');
         }
@@ -96,7 +96,7 @@ class YdUserLogin extends YdFormModel
     public function login()
     {
         if ($this->_identity === null) {
-            $this->_identity = new UserIdentity($this->email, $this->password);
+            $this->_identity = new YdUserIdentity($this->email, $this->password);
         }
         if ($this->_identity->authenticate()) {
             $duration = $this->remember_me ? 3600 * 24 * 30 : 0; // 30 days

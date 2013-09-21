@@ -1,13 +1,13 @@
 <?php
 /**
  * @var $this UserController
- * @var $user User
+ * @var $user YdUser
  */
 user()->setState('index.user', ru());
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('List');
 $this->breadcrumbs = array($this->getName() . ' ' . t('List'));
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.user._menu', array(
     'user' => $user,
 ));
 
@@ -21,7 +21,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
 echo ' ';
 $this->widget('bootstrap.widgets.TbButton', array(
     'label' => t('Search'),
-    'htmlOptions' => array('class' => 'search-button'),
+    'htmlOptions' => array('class' => 'user-grid-search'),
     'toggle' => true,
 ));
 if (user()->getState('index.user') != url('/user/index')) {
@@ -34,11 +34,11 @@ if (user()->getState('index.user') != url('/user/index')) {
 echo '</div>';
 
 // search
-$this->renderPartial('/user/_search', array(
+$this->renderPartial('dressing.views.user._search', array(
     'user' => $user,
 ));
 
 // grid
-$this->renderPartial('/user/_grid', array(
+$this->renderPartial('dressing.views.user._grid', array(
     'user' => $user,
 ));

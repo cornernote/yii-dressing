@@ -1,13 +1,13 @@
 <?php
 /**
  * @var $this LookupController
- * @var $lookup Lookup
+ * @var $lookup YdLookup
  */
 
 $columns = array();
 $columns[] = array(
     'name' => 'id',
-    'class' => 'widgets.TbDropdownColumn',
+    'class' => 'dressing.widgets.YdDropdownColumn',
 );
 $columns[] = array(
     'name' => 'name',
@@ -33,7 +33,7 @@ $multiActions[] = array(
 );
 
 // grid
-$this->widget('widgets.GridView', array(
+$this->widget('dressing.widgets.YdGridView', array(
     'id' => 'lookup-grid',
     'dataProvider' => $lookup->search(),
     'filter' => $lookup,

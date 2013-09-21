@@ -6,6 +6,7 @@ Yii::import('bootstrap.widgets.TbActiveForm');
  */
 class YdActiveForm extends TbActiveForm
 {
+
     /**
      * @var ActiveFormModel
      */
@@ -31,7 +32,7 @@ class YdActiveForm extends TbActiveForm
         }
 
         // get a model we can use for this form
-        $this->model = new ActiveFormModel();
+        $this->model = new YdActiveFormModel();
 
         // init the parent (output <form> tag)
         parent::init();
@@ -75,6 +76,24 @@ class YdActiveForm extends TbActiveForm
     public function getSubmitRowClass()
     {
         return Yii::app()->getRequest()->isAjaxRequest ? 'modal-footer' : 'form-actions';
+    }
+
+    /**
+     * @param $buttonId
+     * @param $hiderId
+     */
+    public function searchToggle($buttonClass, $gridId = null)
+    {
+        $script = "$('." . $buttonClass . "').click(function(){ $('#" . $this->id . "').toggle(); });";
+        if ($gridId) {
+            $script .= "
+                $('#" . $this->id . "').submit(function(){
+                    $.fn.yiiGridView.update('" . $gridId . "', {url: $(this).attr('action'),data: $(this).serialize()});
+                    return false;
+                });
+            ";
+        }
+        cs()->registerScript($this->id . '-searchToggle', $script, CClientScript::POS_READY);
     }
 
 }

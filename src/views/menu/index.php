@@ -1,13 +1,15 @@
 <?php
 /**
  * @var $this MenuController
- * @var $menus Menu[]
+ * @var $menus YdMenu[]
  */
 
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('List');
-$this->breadcrumbs = array($this->getName() . ' ' . t('List'));
 
-$this->renderPartial('_menu');
+$this->breadcrumbs[t('Tools')] = array('/tool/index');
+$this->breadcrumbs[] = t('Menus');
+
+$this->renderPartial('dressing.views.menu._menu');
 
 echo '<div class="spacer">';
 $this->widget('bootstrap.widgets.TbButton', array(

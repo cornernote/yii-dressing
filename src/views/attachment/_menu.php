@@ -1,12 +1,12 @@
 <?php
 /**
  * @var $this AttachmentController
- * @var $attachment Attachment
+ * @var $attachment YdAttachment
  */
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = Menu::getItemsFromMenu('Main');
+    $this->menu = YdMenu::getItemsFromMenu('Main');
     return; // no more links
 }
 

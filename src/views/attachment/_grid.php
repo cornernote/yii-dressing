@@ -1,13 +1,13 @@
 <?php
 /**
  * @var $this AttachmentController
- * @var $attachment Attachment
+ * @var $attachment YdAttachment
  */
 
 $columns = array();
 $columns[] = array(
     'name' => 'id',
-    'class' => 'widgets.TbDropdownColumn',
+    'class' => 'dressing.widgets.YdDropdownColumn',
 );
 $columns[] = array(
     'name' => 'model',
@@ -50,7 +50,7 @@ $multiActions[] = array(
 );
 
 // grid
-$this->widget('widgets.GridView', array(
+$this->widget('dressing.widgets.YdGridView', array(
     'id' => 'attachment-grid',
     'dataProvider' => $attachment->search(),
     'filter' => $attachment,

@@ -112,17 +112,17 @@ class YdEmailTemplate extends YdActiveRecord
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @param array $options
-     * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($options = array())
     {
         $criteria = new CDbCriteria;
-        $criteria->compare('t.id', $this->getSearchField('id', 'id'));
+        $criteria->compare('t.id', $this->id);
         $criteria->compare('t.name', $this->name, true);
 
         $criteria->addCondition('t.deleted IS ' . ($this->deleted == 'deleted' ? 'NOT NULL' : 'NULL'));
 
-        return new ActiveDataProvider(get_class($this), CMap::mergeArray(array(
+        return new YdActiveDataProvider(get_class($this), CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
     }

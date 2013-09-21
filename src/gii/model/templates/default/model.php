@@ -107,7 +107,7 @@ echo "\n";
 echo "    /**\n";
 echo "     * Retrieves a list of models based on the current search/filter conditions.\n";
 echo "     * @param array \$options\n";
-echo "     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.\n";
+echo "     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.\n";
 echo "     */\n";
 echo "    public function search(\$options = array())\n";
 echo "    {\n";
@@ -125,7 +125,7 @@ foreach ($columns as $name => $column) {
     }
 }
 echo "\n";
-echo "        return new ActiveDataProvider(\$this, CMap::mergeArray(array(\n";
+echo "        return new YdActiveDataProvider(\$this, CMap::mergeArray(array(\n";
 echo "            'criteria' => \$criteria,\n";
 echo "        ), \$options));\n";
 echo "    }\n";
@@ -135,7 +135,7 @@ echo "     * Retrieves a list of links to be used in menus.\n";
 echo "     * @param bool \$extra\n";
 echo "     * @return array\n";
 echo "     */\n";
-echo "    public function getDropdownLinkItems(\$extra = false)\n";
+echo "    public function getMenuLinks(\$extra = false)\n";
 echo "    {\n";
 echo "        \$links = array();\n";
 echo "        \$links[] = array('label' => t('Update'), 'url' => \$this->getUrl('update'));\n";

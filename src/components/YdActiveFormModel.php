@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ActiveFormModel provides a model for ActiveForm when you don't have a model
+ * YdActiveFormModel provides a model for ActiveForm when you don't have a model
  *
  * @package app.model
  * @author Zain <zain@mrphp.com.au>
  * @author Brett O'Donnell <brett@mrphp.com.au>
  */
-class YdActiveFormModel extends FormModel
+class YdActiveFormModel extends YdFormModel
 {
 
     private $_attributes = array();

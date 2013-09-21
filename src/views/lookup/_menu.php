@@ -1,12 +1,12 @@
 <?php
 /**
  * @var $this LookupController
- * @var $lookup Lookup
+ * @var $lookup YdLookup
  */
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = Menu::getItemsFromMenu('System');
+    $this->menu = YdMenu::getItemsFromMenu('System');
     return; // no more links
 }
 

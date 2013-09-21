@@ -1,11 +1,11 @@
 <?php
 /**
  * @var $this UserController
- * @var $user User
+ * @var $user YdUser
  */
 
 /** @var $form ActiveForm */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'user-form',
     //'enableAjaxValidation' => true,
     'type' => 'horizontal',

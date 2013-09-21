@@ -1,12 +1,12 @@
 <?php
 /**
  * @var $this EmailSpoolController
- * @var $emailSpool EmailSpool
+ * @var $emailSpool YdEmailSpool
  */
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = Menu::getItemsFromMenu('Log');
+    $this->menu = YdMenu::getItemsFromMenu('Log');
     return; // no more links
 }
 

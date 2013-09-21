@@ -1,11 +1,11 @@
 <?php
 /**
  * @var $this ContactUsController
- * @var $contactUs ContactUs
+ * @var $contactUs YdContactUs
  */
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'contactUs-form',
     'type' => 'vertical',
     //'enableAjaxValidation' => true,

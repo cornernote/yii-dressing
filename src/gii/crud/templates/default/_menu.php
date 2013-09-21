@@ -12,7 +12,7 @@ echo " */\n";
 echo "\n";
 echo "// index\n";
 echo "if (\$this->action->id == 'index') {\n";
-echo "    \$this->menu = Menu::getItemsFromMenu('Main');\n";
+echo "    \$this->menu = YdMenu::getItemsFromMenu('Main');\n";
 echo "    return; // no more links\n";
 echo "}\n";
 echo "\n";

@@ -86,12 +86,12 @@ class YdUser extends YdActiveRecord
         return array(
             'role' => array(
                 self::MANY_MANY,
-                'Role',
+                'YdRole',
                 'user_to_role(user_id, role_id)',
             ),
             'userToRole' => array(
                 self::HAS_MANY,
-                'UserToRole',
+                'YdUserToRole',
                 'user_id',
             ),
         );
@@ -178,7 +178,7 @@ class YdUser extends YdActiveRecord
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @param array $options
-     * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($options = array())
     {
@@ -215,7 +215,7 @@ class YdUser extends YdActiveRecord
             $criteria->addCondition('t.deleted IS NULL');
         }
 
-        return new ActiveDataProvider($this, CMap::mergeArray(array(
+        return new YdActiveDataProvider($this, CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
     }
@@ -231,7 +231,7 @@ class YdUser extends YdActiveRecord
         if (!$plain || !$encrypted) {
             return false;
         }
-        $ph = new PasswordHash(8, false);
+        $ph = new YdPasswordHash(8, false);
         return $ph->CheckPassword($plain, $encrypted);
     }
 
@@ -241,7 +241,7 @@ class YdUser extends YdActiveRecord
      */
     public function hashPassword($plain)
     {
-        $ph = new PasswordHash(8, false);
+        $ph = new YdPasswordHash(8, false);
         return $ph->HashPassword($plain);
     }
 

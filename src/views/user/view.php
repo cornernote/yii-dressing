@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this UserController
- * @var $user User
+ * @var $user YdUser
  */
 $this->pageTitle = $this->pageHeading = $user->getName() . ' - ' . $this->getName() . ' ' . t('View');
 
@@ -9,7 +9,7 @@ $this->breadcrumbs = array();
 $this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.user', array('/user/index'));
 $this->breadcrumbs[] = $user->getName();
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.user._menu', array(
     'user' => $user,
 ));
 
@@ -28,7 +28,7 @@ $attributes[] = array(
     'value' => implode(', ', CHtml::listData($user->role, 'id', 'name')),
 );
 $attributes[] = 'created';
-$this->widget('widgets.DetailView', array(
+$this->widget('dressing.widgets.YdDetailView', array(
     'data' => $user,
     'attributes' => $attributes,
 ));

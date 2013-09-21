@@ -1,12 +1,12 @@
 <?php
 /**
  * @var $this MenuController
- * @var $menu Menu
+ * @var $menu YdMenu
  */
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = Menu::getItemsFromMenu('System');
+    $this->menu = YdMenu::getItemsFromMenu('Settings', YdMenu::MENU_ADMIN);
     return; // no more links
 }
 

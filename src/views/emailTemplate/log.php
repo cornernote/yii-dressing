@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this EmailTemplateController
- * @var $emailTemplate EmailTemplate
+ * @var $emailTemplate YdEmailTemplate
  */
 
 $this->pageTitle = $this->pageHeading = $emailTemplate->getName() . ' - ' . $this->getName() . ' ' . t('Log');
@@ -11,9 +11,9 @@ $this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index
 $this->breadcrumbs[$emailTemplate->getName()] = $emailTemplate->getLink();
 $this->breadcrumbs[] = t('Log');
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.emailTemplate._menu', array(
     'emailTemplate' => $emailTemplate,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('dressing.views.auditTrail._log', array(
     'model' => $emailTemplate,
 ));

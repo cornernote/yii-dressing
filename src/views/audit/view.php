@@ -1,15 +1,15 @@
 <?php
 /**
  * @var $this AuditController
- * @var $audit Audit
+ * @var $audit YdAudit
  */
 $this->pageTitle = $this->pageHeading = $audit->getName() . ' - ' . $this->getName() . ' ' . t('View');
 
-$this->breadcrumbs = array();
-$this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.audit', array('/audit/index'));
+$this->breadcrumbs[t('Tools')] = array('/tool/index');
+$this->breadcrumbs[t('Audits')] = user()->getState('index.audit', array('/audit/index'));
 $this->breadcrumbs[] = $audit->getName();
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.audit._menu', array(
     'audit' => $audit,
 ));
 
@@ -74,7 +74,7 @@ $this->renderPartial('_menu', array(
         );
 
 
-        $this->widget('widgets.DetailView', array(
+        $this->widget('dressing.widgets.YdDetailView', array(
             'data' => $audit,
             'attributes' => $attributes,
         ));
@@ -89,7 +89,7 @@ $this->renderPartial('_menu', array(
             $auditTrail->attributes = $_GET['AuditTrail'];
         }
         $auditTrail->audit_id = $audit->id;
-        $this->renderPartial('/auditTrail/_grid', array(
+        $this->renderPartial('dressing.views.auditTrail._grid', array(
             'auditTrail' => $auditTrail,
         ));
         ?>
@@ -98,7 +98,7 @@ $this->renderPartial('_menu', array(
     <fieldset>
         <legend><?php echo t('Version Settings') ?></legend>
         <?php
-        $this->widget('widgets.DetailView', array(
+        $this->widget('dressing.widgets.YdDetailView', array(
             'data' => $audit,
             'attributes' => array(
                 array(
@@ -115,7 +115,7 @@ $this->renderPartial('_menu', array(
     <fieldset>
         <legend><?php echo t('Page Variables') ?></legend>
         <?php
-        $this->widget('widgets.DetailView', array(
+        $this->widget('dressing.widgets.YdDetailView', array(
             'data' => $audit,
             'attributes' => array(
                 array(
@@ -147,7 +147,7 @@ $this->renderPartial('_menu', array(
             <a href='javascript:void(0)'
                onclick="$('#show_session_detail').hide('hide');$('#show_session').show();">Hide</a>
             <?php
-            $this->widget('widgets.DetailView', array(
+            $this->widget('dressing.widgets.YdDetailView', array(
                 'data' => $audit,
                 'attributes' => array(
                     array(
@@ -175,7 +175,7 @@ $this->renderPartial('_menu', array(
             <a href='javascript:void(0)'
                onclick="$('#show_server_detail').hide('hide');$('#show_server').show();">Hide</a>
             <?php
-            $this->widget('widgets.DetailView', array(
+            $this->widget('dressing.widgets.YdDetailView', array(
                 'data' => $audit,
                 'attributes' => array(
                     array(

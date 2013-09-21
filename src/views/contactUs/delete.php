@@ -11,8 +11,9 @@ $this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index
 $this->breadcrumbs[] = t(ucfirst($task));
 
 $contactUs = $id ? ContactUs::model()->findByPk($id) : new ContactUs('search');
+
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'contactUs-' . $task . '-form',
     'type' => 'horizontal',
     'action' => array('/contactUs/delete', 'id' => $id, 'task' => $task, 'confirm' => 1),

@@ -30,11 +30,11 @@ class ContactUsController extends YdWebController
      */
     public function actionIndex()
     {
-        $contactUs = new ContactUs('search');
-        if (!empty($_GET['ContactUs']))
-            $contactUs->attributes = $_GET['ContactUs'];
+        $contactUs = new YdContactUs('search');
+        if (!empty($_GET['YdContactUs']))
+            $contactUs->attributes = $_GET['YdContactUs'];
 
-        $this->render('index', array(
+        $this->render('dressing.views.contactUs.index', array(
             'contactUs' => $contactUs,
         ));
     }
@@ -45,10 +45,10 @@ class ContactUsController extends YdWebController
      */
     public function actionView($id)
     {
-        /** @var $contactUs ContactUs */
-        $contactUs = $this->loadModel($id);
+        /** @var $contactUs YdContactUs */
+        $contactUs = $this->loadModel($id, 'YdContactUs');
 
-        $this->render('view', array(
+        $this->render('dressing.views.contactUs.view', array(
             'contactUs' => $contactUs,
         ));
     }
@@ -59,10 +59,10 @@ class ContactUsController extends YdWebController
      */
     public function actionLog($id)
     {
-        /** @var $contactUs ContactUs */
-        $contactUs = $this->loadModel($id);
+        /** @var $contactUs YdContactUs */
+        $contactUs = $this->loadModel($id, 'YdContactUs');
 
-        $this->render('log', array(
+        $this->render('dressing.views.contactUs.log', array(
             'contactUs' => $contactUs,
         ));
     }
@@ -72,11 +72,11 @@ class ContactUsController extends YdWebController
      */
     public function actionContact()
     {
-        $contactUs = new ContactUs('create');
+        $contactUs = new YdContactUs('create');
 
         $this->performAjaxValidation($contactUs, 'contactUs-form');
-        if (isset($_POST['ContactUs'])) {
-            $contactUs->attributes = $_POST['ContactUs'];
+        if (isset($_POST['YdContactUs'])) {
+            $contactUs->attributes = $_POST['YdContactUs'];
             $contactUs->created_at = date('Y-m-d H:i:s');
             $contactUs->ip_address = si($_SERVER, 'REMOTE_ADDR');
             $contactUs->message = format()->formatNtext($contactUs->message);
@@ -88,19 +88,26 @@ class ContactUsController extends YdWebController
             user()->addFlash(t('Could not communicate the message.'), 'warning');
         }
         else {
-            if (isset($_GET['ContactUs'])) {
-                $contactUs->attributes = $_GET['ContactUs'];
+            if (isset($_GET['YdContactUs'])) {
+                $contactUs->attributes = $_GET['YdContactUs'];
             }
         }
 
-        $this->render('contact', array(
+        $this->render('dressing.views.contactUs.contact', array(
             'contactUs' => $contactUs,
         ));
     }
-    public function actionThankYou()
+
+    /**
+     * @param $id
+     */
+    public function actionThankYou($id)
     {
-        $this->render('thank_you', array(
-            //'contactUs' => $contactUs,
+        /** @var $contactUs YdContactUs */
+        $contactUs = $this->loadModel($id, 'YdContactUs');
+
+        $this->render('dressing.views.contactUs.thank_you', array(
+            'contactUs' => $contactUs,
         ));
     }
 

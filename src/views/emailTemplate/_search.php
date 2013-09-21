@@ -1,14 +1,14 @@
 <?php
 /**
  * @var $this EmailTemplateController
- * @var $emailTemplate EmailTemplate
+ * @var $emailTemplate YdEmailTemplate
  */
 
 Helper::searchToggle('emailTemplate-grid');
 echo '<div class="search-form hide">';
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 	'action' => url($this->route),
 	'type' => 'horizontal',
 	'method' => 'get',

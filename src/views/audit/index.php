@@ -1,10 +1,13 @@
 <?php
 /**
  * @var $this AuditController
- * @var $audit Audit
+ * @var $audit YdAudit
  */
 user()->setState('index.audit', ru());
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . t('List');
-$this->breadcrumbs = array($this->getName() . ' ' . t('List'));
-$this->renderPartial('_menu');
-$this->renderPartial('/audit/_grid', array('audit' => $audit));
+$this->pageTitle = $this->pageHeading = t('Audits');
+
+$this->breadcrumbs[t('Tools')] = array('/tool/index');
+$this->breadcrumbs[] = t('Audits');
+
+$this->renderPartial('dressing.views.audit._menu');
+$this->renderPartial('dressing.views.audit._grid', array('audit' => $audit));

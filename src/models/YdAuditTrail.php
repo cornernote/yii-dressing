@@ -16,8 +16,8 @@
  * @method AuditTrail[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from relation
- * @property User $user
- * @property Audit $audit
+ * @property YdUser $user
+ * @property YdAudit $audit
  *
  * Properties from table fields
  * @property integer $id
@@ -66,12 +66,12 @@ class YdAuditTrail extends YdActiveRecord
         return array(
             'user' => array(
                 self::BELONGS_TO,
-                'User',
+                'YdUser',
                 'user_id',
             ),
             'audit' => array(
                 self::BELONGS_TO,
-                'Audit',
+                'YdAudit',
                 'audit_id',
             ),
         );
@@ -110,7 +110,7 @@ class YdAuditTrail extends YdActiveRecord
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @param array $options
-     * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search($options = array())
     {
@@ -127,7 +127,7 @@ class YdAuditTrail extends YdActiveRecord
         $criteria->compare('audit_id', $this->audit_id);
         $criteria->mergeWith($this->getDbCriteria());
 
-        return new ActiveDataProvider(get_class($this), CMap::mergeArray(array(
+        return new YdActiveDataProvider(get_class($this), CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
     }

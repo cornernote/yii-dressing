@@ -38,7 +38,7 @@ class SettingController extends YdWebController
         // load from items
         foreach (YdSetting::items() as $key => $value) {
             if (!isset($settings[$key])) {
-                $settings[$key] = new Setting();
+                $settings[$key] = new YdSetting();
                 $settings[$key]->key = $key;
                 $settings[$key]->value = $value;
                 $settings[$key]->save(false);
@@ -47,7 +47,7 @@ class SettingController extends YdWebController
         // load from params
         foreach (Yii::app()->params as $key => $value) {
             if (is_scalar($value) && !isset($settings[$key])) {
-                $settings[$key] = new Setting();
+                $settings[$key] = new YdSetting();
                 $settings[$key]->key = $key;
                 $settings[$key]->value = $value;
                 $settings[$key]->save(false);
@@ -55,14 +55,14 @@ class SettingController extends YdWebController
         }
 
         // handle posted data
-        if (isset($_POST['Setting'])) {
+        if (isset($_POST['YdSetting'])) {
 
             // begin transaction
             $error = false;
             $transaction = YdSetting::model()->beginTransaction();
 
             // save settings
-            foreach ($_POST['Setting'] as $key => $value) {
+            foreach ($_POST['YdSetting'] as $key => $value) {
                 $value = isset($value['value']) ? $value['value'] : 0;
                 $settings[$key]->value = $value;
                 if (!$settings[$key]->save()) {
@@ -90,7 +90,7 @@ class SettingController extends YdWebController
 
         }
 
-        $this->render('index', array(
+        $this->render('dressing.views.setting.index', array(
             'settings' => $settings,
         ));
     }

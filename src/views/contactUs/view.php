@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this ContactUsController
- * @var $contactUs ContactUs
+ * @var $contactUs YdContactUs
  */
 
 $this->pageTitle = $this->pageHeading = $contactUs->getName() . ' - ' . $this->getName() . ' ' . t('View');
@@ -10,7 +10,7 @@ $this->breadcrumbs = array();
 $this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index.contactUs', array('/contactUs/index'));
 $this->breadcrumbs[] = $contactUs->getName();
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.contactUs._menu', array(
     'contactUs' => $contactUs,
 ));
 
@@ -44,7 +44,7 @@ $attributes[] = array(
     'name' => 'ip_address',
 );
 
-$this->widget('widgets.DetailView', array(
+$this->widget('dressing.widgets.YdDetailView', array(
     'data' => $contactUs,
     'attributes' => $attributes,
 ));

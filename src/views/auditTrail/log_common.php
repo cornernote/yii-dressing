@@ -1,10 +1,12 @@
-<?
-/* @var $model ActiveRecord */
+<?php
+/**
+ * @var $this AuditTrailController
+ */
 ?>
 <fieldset>
     <legend><?php echo t('Time Stamps') ?></legend>
     <?php
-    $this->widget('widgets.DetailView', array(
+    $this->widget('dressing.widgets.YdDetailView', array(
         'data' => $model,
         'attributes' => array(
             array(
@@ -21,19 +23,6 @@
                 'value' => $model->deleted ? User::model()->findUsername($model->deleted_by) . ' at ' . date(YdSetting::item('dateTimeFormat'), strtotime($model->deleted)) . ' (' . Time::ago($model->deleted) . ')' : '',
                 'visible' => $model->deleted ? true : false,
             ),
-
-            // TODO ask Zain what this is... ?  do we need it ?
-            // commented it out for now
-            //array(
-            //    'label' => 'Audit',
-            //    'value' => l(t('Related Audits'),
-            //        url('/audit/index', array(
-            //            'Audit[model]' => 'team',
-            //            'Audit[model_id]' => $model->id,
-            //        ))
-            //    ),
-            //    'type' => 'raw',
-            //),
         ),
     ));
     ?>
@@ -41,5 +30,5 @@
 
 <fieldset>
     <legend><?php echo t('Log') ?></legend>
-    <?php $this->renderPartial('/auditTrail/_log', array('model' => $model)); ?>
+    <?php $this->renderPartial('dressing.views.auditTrail._log', array('model' => $model)); ?>
 </fieldset>

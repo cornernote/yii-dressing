@@ -12,7 +12,7 @@ $this->breadcrumbs[] = t(ucfirst($action));
 
 $emailTemplate = $id ? EmailTemplate::model()->findByPk($id) : new EmailTemplate('search');
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'emailTemplate-' . $action . '-form',
     'type' => 'horizontal',
     'action' => array('/emailTemplate/' . $action, 'id' => $id),

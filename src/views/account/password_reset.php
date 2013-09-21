@@ -2,7 +2,7 @@
 /**
  * @var $this AccountController
  * @var $form ActiveForm
- * @var $user User
+ * @var $user YdUser
  */
 $this->pageTitle = $this->pageHeading = t('Set Password');
 $this->breadcrumbs = array(
@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 );
 
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'password-form',
     //'enableAjaxValidation' => true,
     'type' => 'horizontal',

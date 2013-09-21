@@ -1,13 +1,14 @@
 <?php
 /**
  * @var $this UserController
- * @var $user User
+ * @var $user YdUser
  */
 
 $columns = array();
 $columns[] = array(
 	'name' => 'id',
-	'class' => 'widgets.TbDropdownColumn',
+	'class' => 'dressing.widgets.YdDropdownColumn',
+    'value' => '$data->getIdString()',
 );
 
 $columns[] = array(
@@ -24,7 +25,7 @@ if (!$user->role_id) {
     $columns[] = array(
         'name' => 'role_id',
         'value' => 'implode(", ",CHtml::listData($data->role,"id","name"))',
-        'filter' => CHtml::listData(Role::model()->findAll(), 'id', 'name'),
+        'filter' => CHtml::listData(YdRole::model()->findAll(), 'id', 'name'),
         'type' => 'raw',
     );
 }
@@ -38,7 +39,7 @@ $multiActions[] = array(
 );
 
 // grid
-$this->widget('widgets.GridView', array(
+$this->widget('dressing.widgets.YdGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $user->search(),
     'filter' => $user,

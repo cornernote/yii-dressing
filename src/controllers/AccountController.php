@@ -34,8 +34,8 @@ class AccountController extends YdWebController
      */
     public function actionIndex()
     {
-        $user = $this->loadModel(user()->id, 'User');
-        $this->render('view', array(
+        $user = $this->loadModel(user()->id, 'YdUser');
+        $this->render('dressing.views.account.view', array(
             'user' => $user,
         ));
     }
@@ -56,11 +56,11 @@ class AccountController extends YdWebController
             $attempts = 0;
         $scenario = ($attempts > 3 && YdSetting::item('recaptcha')) ? 'recaptcha' : '';
 
-        $user = new UserLogin($scenario);
+        $user = new YdUserLogin($scenario);
 
         // collect user input data
-        if (isset($_POST['UserLogin'])) {
-            $user->attributes = $_POST['UserLogin'];
+        if (isset($_POST['YdUserLogin'])) {
+            $user->attributes = $_POST['YdUserLogin'];
             if ($user->validate() && $user->login()) {
                 Yii::app()->cache->delete("login.attempt.{$_SERVER['REMOTE_ADDR']}");
                 $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
@@ -79,7 +79,7 @@ class AccountController extends YdWebController
         }
 
         // display the login form
-        $this->render('login', array(
+        $this->render('dressing.views.account.login', array(
             'user' => $user,
             'recaptcha' => ($attempts >= 3 && YdSetting::item('recaptcha')) ? true : false,
         ));
@@ -96,7 +96,7 @@ class AccountController extends YdWebController
             $this->redirect(Yii::app()->homeUrl);
         }
 
-        $user = new UserRegister();
+        $user = new YdUserRegister();
         $this->performAjaxValidation($user, 'register-form');
 
         // collect user input data
@@ -108,7 +108,7 @@ class AccountController extends YdWebController
         }
 
         // display the register form
-        $this->render('register', array(
+        $this->render('dressing.views.account.register', array(
             'user' => $user,
         ));
     }
@@ -129,7 +129,7 @@ class AccountController extends YdWebController
             $attempts = 0;
         $scenario = ($attempts >= 3 && YdSetting::item('recaptcha')) ? 'recaptcha' : '';
 
-        $userRecover = new UserRecover($scenario);
+        $userRecover = new YdUserRecover($scenario);
         $this->performAjaxValidation($userRecover, 'recover-form');
 
         // collect user input data
@@ -154,7 +154,7 @@ class AccountController extends YdWebController
 
         }
         // display the recover form
-        $this->render('recover', array(
+        $this->render('dressing.views.account.recover', array(
             'user' => $userRecover,
             'recaptcha' => ($attempts >= 3 && YdSetting::item('recaptcha')) ? true : false,
         ));
@@ -174,7 +174,7 @@ class AccountController extends YdWebController
 
         // redirect if they are not allowed to view this page
         $valid = true;
-        $user = User::model()->findByPk($id);
+        $user = YdUser::model()->findByPk($id);
         if (!$user) {
             $valid = false;
         }
@@ -193,7 +193,7 @@ class AccountController extends YdWebController
             $this->redirect(array('/account/recover'));
         }
 
-        $userPassword = new UserPassword('recover');
+        $userPassword = new YdUserPassword('recover');
         $this->performAjaxValidation($userPassword, 'password-form');
         if (isset($_POST['UserPassword'])) {
             $userPassword->attributes = $_POST['UserPassword'];
@@ -204,7 +204,7 @@ class AccountController extends YdWebController
                     user()->addFlash(t('Your password could not be saved.'), 'error');
                 }
 
-                $identity = new UserIdentity($user->email, $userPassword->password);
+                $identity = new YdUserIdentity($user->email, $userPassword->password);
                 if ($identity->authenticate()) {
                     user()->login($identity);
                 }
@@ -233,7 +233,7 @@ class AccountController extends YdWebController
                 user()->addFlash(t('Your password could not be saved.'), 'warning');
             }
         }
-        $this->render('password_reset', array('user' => $userPassword));
+        $this->render('dressing.views.account.password_reset', array('user' => $userPassword));
     }
 
     /**
@@ -251,7 +251,7 @@ class AccountController extends YdWebController
      */
     public function actionUpdate()
     {
-        $user = $this->loadModel(user()->id, 'User');
+        $user = $this->loadModel(user()->id, 'YdUser');
         $user->scenario = 'account';
 
         $this->performAjaxValidation($user, 'account-form');
@@ -267,7 +267,7 @@ class AccountController extends YdWebController
             }
         }
 
-        $this->render('update', array(
+        $this->render('dressing.views.account.update', array(
             'user' => $user,
         ));
     }
@@ -278,8 +278,8 @@ class AccountController extends YdWebController
     public function actionPassword()
     {
         /**@var $user User * */
-        $user = $this->loadModel(user()->id, 'User');
-        $userPassword = new UserPassword('password');
+        $user = $this->loadModel(user()->id, 'YdUser');
+        $userPassword = new YdUserPassword('password');
         $this->performAjaxValidation($userPassword, 'password-form');
         if (isset($_POST['UserPassword'])) {
             $userPassword->attributes = $_POST['UserPassword'];
@@ -294,7 +294,7 @@ class AccountController extends YdWebController
                 user()->addFlash('Your password could not be saved.', 'warning');
             }
         }
-        $this->render('password', array('user' => $userPassword));
+        $this->render('dressing.views.account.password', array('user' => $userPassword));
 
     }
 
@@ -304,7 +304,7 @@ class AccountController extends YdWebController
     public function actionSettings()
     {
         /** @var $user User */
-        $user = $this->loadModel(user()->id, 'User');
+        $user = $this->loadModel(user()->id, 'YdUser');
 
         if (isset($_POST['UserEav'])) {
 
@@ -325,7 +325,7 @@ class AccountController extends YdWebController
             }
         }
 
-        $this->render('settings', array(
+        $this->render('dressing.views.account.settings', array(
             'user' => $user,
         ));
     }

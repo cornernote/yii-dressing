@@ -1,9 +1,14 @@
 <?php
+/**
+ * @var $this AuditTrailController
+ * @var $auditTrail YdAuditTrail
+ */
+
 $columns = array();
 if ($this->id != 'user') {
     $columns[] = array(
         'name' => 'user_id',
-        'value' => '$data->user?$data->audit->getLink():null',
+        'value' => '$data->user?$data->user->getLink():null',
         'type' => 'raw',
     );
 }
@@ -47,7 +52,7 @@ $columns[] = array(
 );
 
 // grid
-$this->widget('widgets.GridView', array(
+$this->widget('dressing.widgets.YdGridView', array(
     'id' => 'auditTrail-grid',
     'dataProvider' => $auditTrail->search(),
     'filter' => $auditTrail,

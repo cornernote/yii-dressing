@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this EmailTemplateController
- * @var $emailTemplate EmailTemplate
+ * @var $emailTemplate YdEmailTemplate
  */
 $this->pageTitle = $this->pageHeading = $emailTemplate->getName() . ' - ' . $this->getName() . ' ' . t('Update');
 
@@ -10,9 +10,9 @@ $this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index
 $this->breadcrumbs[$emailTemplate->getName()] = $emailTemplate->getLink();
 $this->breadcrumbs[] = t('Update');
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.emailTemplate._menu', array(
     'emailTemplate' => $emailTemplate,
 ));
-$this->renderPartial('_form', array(
+$this->renderPartial('dressing.views.emailTemplate._form', array(
     'emailTemplate' => $emailTemplate,
 ));

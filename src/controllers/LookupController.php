@@ -28,11 +28,11 @@ class LookupController extends YdWebController
      */
     public function actionIndex()
     {
-        $lookup = new Lookup('search');
-        if (!empty($_GET['Lookup']))
-            $lookup->attributes = $_GET['Lookup'];
+        $lookup = new YdLookup('search');
+        if (!empty($_GET['YdLookup']))
+            $lookup->attributes = $_GET['YdLookup'];
 
-        $this->render('index', array(
+        $this->render('dressing.views.lookup.index', array(
             'lookup' => $lookup,
         ));
     }
@@ -43,15 +43,15 @@ class LookupController extends YdWebController
      */
     public function actionView($id)
     {
-        /** @var $lookup Lookup */
-        $lookup = $this->loadModel($id);
+        /** @var $lookup YdLookup */
+        $lookup = $this->loadModel($id, 'YdLookup');
 
-        // check for deleted Lookup
+        // check for deleted YdLookup
         if ($lookup->deleted) {
             user()->addFlash('THIS RECORD IS DELETED', 'warning');
         }
 
-        $this->render('view', array(
+        $this->render('dressing.views.lookup.view', array(
             'lookup' => $lookup,
         ));
     }
@@ -62,10 +62,10 @@ class LookupController extends YdWebController
      */
     public function actionLog($id)
     {
-        /** @var $lookup Lookup */
-        $lookup = $this->loadModel($id);
+        /** @var $lookup YdLookup */
+        $lookup = $this->loadModel($id, 'YdLookup');
 
-        $this->render('log', array(
+        $this->render('dressing.views.lookup.log', array(
             'lookup' => $lookup,
         ));
     }
@@ -75,23 +75,23 @@ class LookupController extends YdWebController
      */
     public function actionCreate()
     {
-        $lookup = new Lookup('create');
+        $lookup = new YdLookup('create');
 
         $this->performAjaxValidation($lookup, 'lookup-form');
-        if (isset($_POST['Lookup'])) {
-            $lookup->attributes = $_POST['Lookup'];
+        if (isset($_POST['YdLookup'])) {
+            $lookup->attributes = $_POST['YdLookup'];
             if ($lookup->save()) {
                 user()->addFlash('Lookup has been created.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($lookup->getUrl()));
             }
         }
         else {
-            if (isset($_GET['Lookup'])) {
-                $lookup->attributes = $_GET['Lookup'];
+            if (isset($_GET['YdLookup'])) {
+                $lookup->attributes = $_GET['YdLookup'];
             }
         }
 
-        $this->render('create', array(
+        $this->render('dressing.views.lookup.create', array(
             'lookup' => $lookup,
         ));
     }
@@ -102,12 +102,12 @@ class LookupController extends YdWebController
      */
     public function actionUpdate($id)
     {
-        /** @var $lookup Lookup */
-        $lookup = $this->loadModel($id);
+        /** @var $lookup YdLookup */
+        $lookup = $this->loadModel($id, 'YdLookup');
 
         $this->performAjaxValidation($lookup, 'lookup-form');
-        if (isset($_POST['Lookup'])) {
-            $lookup->attributes = $_POST['Lookup'];
+        if (isset($_POST['YdLookup'])) {
+            $lookup->attributes = $_POST['YdLookup'];
             if ($lookup->save()) {
                 user()->addFlash(t('Lookup has been updated'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($lookup->getUrl()));
@@ -115,7 +115,7 @@ class LookupController extends YdWebController
             user()->addFlash(t('Lookup could not be updated'), 'warning');
         }
 
-        $this->render('update', array(
+        $this->render('dressing.views.lookup.update', array(
             'lookup' => $lookup,
         ));
     }
@@ -126,11 +126,11 @@ class LookupController extends YdWebController
      */
     public function actionDelete($id = null)
     {
-        $task = sf('task', 'Lookup') == 'undelete' ? 'undelete' : 'delete';
-        if (sf('confirm', 'Lookup')) {
+        $task = sf('task', 'YdLookup') == 'undelete' ? 'undelete' : 'delete';
+        if (sf('confirm', 'YdLookup')) {
             $ids = sfGrid($id);
             foreach ($ids as $id) {
-                $lookup = Lookup::model()->findByPk($id);
+                $lookup = YdLookup::model()->findByPk($id);
                 if (!$lookup) {
                     continue;
                 }
@@ -143,7 +143,7 @@ class LookupController extends YdWebController
             $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.lookup', array('/lookup/index'))));
         }
 
-        $this->render('delete', array(
+        $this->render('dressing.views.lookup.delete', array(
             'id' => $id,
             'task' => $task,
         ));
@@ -157,7 +157,7 @@ class LookupController extends YdWebController
         if (isset($_POST['Order'])) {
             $lookups = explode(',', $_POST['Order']);
             foreach ($lookups as $k => $lookup_id) {
-                if ($lookup = Lookup::model()->findbyPk($lookup_id)) {
+                if ($lookup = YdLookup::model()->findbyPk($lookup_id)) {
                     $lookup->position = $k;
                     $lookup->save(false);
                 }
@@ -173,10 +173,10 @@ class LookupController extends YdWebController
     public function actionType($type, $id = null)
     {
         // get types
-        $types = Lookup::model()->types;
+        $types = YdLookup::model()->types;
 
         // get lookups for sortable
-        $lookups = Lookup::model()->findAll(array(
+        $lookups = YdLookup::model()->findAll(array(
             'condition' => 'type=:type AND deleted IS NULL',
             'params' => array(
                 ':type' => $type,
@@ -185,13 +185,13 @@ class LookupController extends YdWebController
         ));
 
         // get lookup for form
-        $lookup = $id ? $this->loadModel($id) : new Lookup;
+        $lookup = $id ? $this->loadModel($id, 'YdLookup') : new YdLookup;
         $this->performAjaxValidation($lookup, 'lookup-form');
-        if (isset($_POST['Lookup'])) {
+        if (isset($_POST['YdLookup'])) {
             if (!$id) {
                 $lookup->type = $type;
             }
-            $lookup->attributes = $_POST['Lookup'];
+            $lookup->attributes = $_POST['YdLookup'];
             if ($lookup->save()) {
                 user()->addFlash(t('Lookup has been saved.'), 'success');
                 $this->redirect(array('lookup/view', 'type' => $type));
@@ -202,7 +202,7 @@ class LookupController extends YdWebController
         }
 
         // render view
-        $this->render('view', array(
+        $this->render('dressing.views.lookup.view', array(
             'types' => $types,
             'type' => $type,
             'lookups' => $lookups,

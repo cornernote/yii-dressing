@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this MenuController
- * @var $menu Menu
+ * @var $menu YdMenu
  */
 
 // list

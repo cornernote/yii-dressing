@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this ContactUsController
- * @var $contactUs ContactUs
+ * @var $contactUs YdContactUs
  */
 
 $this->pageTitle = $this->pageHeading = 'Thank You' ;

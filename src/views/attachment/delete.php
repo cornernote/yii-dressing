@@ -12,7 +12,7 @@ $this->breadcrumbs[] = t(ucfirst($task));
 
 $attachment = $id ? Attachment::model()->findByPk($id) : new Attachment('search');
 /** @var ActiveForm $form */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'attachment-' . $task . '-form',
     'type' => 'horizontal',
     'action' => array('/attachment/delete', 'id' => $id, 'task' => $task, 'confirm', 1),

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this AccountController
- * @var $user UserRegister
+ * @var $user YdUserRegister
  */
 $this->pageTitle = $this->pageHeading = t('Sign Up');
 $this->breadcrumbs = array(
@@ -9,7 +9,7 @@ $this->breadcrumbs = array(
 );
 
 /* @var $form ActiveForm */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'register-form',
     //'enableAjaxValidation' => true,
     'type' => 'horizontal',

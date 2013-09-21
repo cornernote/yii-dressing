@@ -1,17 +1,17 @@
 <?php
 /**
  * @var $this AccountController
- * @var $user User
+ * @var $user YdUser
  */
 $this->pageTitle = $this->pageHeading = t('Update Account');
 $this->breadcrumbs = array(
     t('My Account') => array('index'),
     t('Update Account'),
 );
-$this->menu = Menu::getItemsFromMenu('User');
+$this->menu = YdMenu::getItemsFromMenu('User');
 
 /* @var $form ActiveForm */
-$form = $this->beginWidget('widgets.ActiveForm', array(
+$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'account-form',
     //'enableAjaxValidation' => true,
     'type' => 'horizontal',

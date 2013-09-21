@@ -1,13 +1,13 @@
 <?php
 /**
  * @var $this ContactUsController
- * @var $contactUs ContactUs
+ * @var $contactUs YdContactUs
  */
 
 $columns = array();
 $columns[] = array(
     'name' => 'id',
-    'class' => 'widgets.TbDropdownColumn',
+    'class' => 'dressing.widgets.YdDropdownColumn',
 );
 $columns[] = array(
     'name' => 'name',
@@ -44,7 +44,7 @@ $multiActions[] = array(
 );
 
 // grid
-$this->widget('widgets.GridView', array(
+$this->widget('dressing.widgets.YdGridView', array(
     'id' => 'contactUs-grid',
     'dataProvider' => $contactUs->search(),
     'filter' => $contactUs,

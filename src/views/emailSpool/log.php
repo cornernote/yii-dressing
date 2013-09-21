@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this EmailSpoolController
- * @var $emailSpool EmailSpool
+ * @var $emailSpool YdEmailSpool
  */
 
 $this->pageTitle = $this->pageHeading = $emailSpool->getName() . ' - ' . $this->getName() . ' ' . t('Log');
@@ -11,9 +11,9 @@ $this->breadcrumbs[$this->getName() . ' ' . t('List')] = user()->getState('index
 $this->breadcrumbs[$emailSpool->getName()] = $emailSpool->getLink();
 $this->breadcrumbs[] = t('Log');
 
-$this->renderPartial('_menu', array(
+$this->renderPartial('dressing.views.emailSpool._menu', array(
     'emailSpool' => $emailSpool,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('dressing.views.auditTrail._log', array(
     'model' => $emailSpool,
 ));

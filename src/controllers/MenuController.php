@@ -30,8 +30,8 @@ class MenuController extends YdWebController
     {
         $criteria = new CDbCriteria();
         $criteria->compare('t.parent_id', 0);
-        $menus = Menu::model()->findAll($criteria);
-        $this->render('index', array(
+        $menus = YdMenu::model()->findAll($criteria);
+        $this->render('dressing.views.menu.index', array(
             'menus' => $menus,
         ));
     }
@@ -42,15 +42,15 @@ class MenuController extends YdWebController
      */
     public function actionView($id)
     {
-        /** @var $menu Menu */
-        $menu = $this->loadModel($id);
+        /** @var $menu YdMenu */
+        $menu = $this->loadModel($id, 'YdMenu');
 
-        // check for deleted Menu
+        // check for deleted YdMenu
         if ($menu->deleted) {
             user()->addFlash('THIS RECORD IS DELETED', 'warning');
         }
 
-        $this->render('view', array(
+        $this->render('dressing.views.menu.view', array(
             'menu' => $menu,
         ));
     }
@@ -61,10 +61,10 @@ class MenuController extends YdWebController
      */
     public function actionLog($id)
     {
-        /** @var $menu Menu */
-        $menu = $this->loadModel($id);
+        /** @var $menu YdMenu */
+        $menu = $this->loadModel($id, 'YdMenu');
 
-        $this->render('log', array(
+        $this->render('dressing.views.menu.log', array(
             'menu' => $menu,
         ));
     }
@@ -74,11 +74,11 @@ class MenuController extends YdWebController
      */
     public function actionCreate()
     {
-        $menu = new Menu('create');
+        $menu = new YdMenu('create');
 
         $this->performAjaxValidation($menu, 'menu-form');
-        if (isset($_POST['Menu'])) {
-            $menu->attributes = $_POST['Menu'];
+        if (isset($_POST['YdMenu'])) {
+            $menu->attributes = $_POST['YdMenu'];
             if ($menu->save()) {
                 user()->addFlash('Menu has been created.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($menu->getUrl()));
@@ -86,12 +86,12 @@ class MenuController extends YdWebController
         }
         else {
             $menu->enabled = 1;
-            if (isset($_GET['Menu'])) {
-                $menu->attributes = $_GET['Menu'];
+            if (isset($_GET['YdMenu'])) {
+                $menu->attributes = $_GET['YdMenu'];
             }
         }
 
-        $this->render('create', array(
+        $this->render('dressing.views.menu.create', array(
             'menu' => $menu,
         ));
     }
@@ -102,12 +102,12 @@ class MenuController extends YdWebController
      */
     public function actionUpdate($id)
     {
-        /** @var $menu Menu */
-        $menu = $this->loadModel($id);
+        /** @var $menu YdMenu */
+        $menu = $this->loadModel($id, 'YdMenu');
 
         $this->performAjaxValidation($menu, 'menu-form');
-        if (isset($_POST['Menu'])) {
-            $menu->attributes = $_POST['Menu'];
+        if (isset($_POST['YdMenu'])) {
+            $menu->attributes = $_POST['YdMenu'];
             if ($menu->save()) {
                 user()->addFlash(t('Menu has been updated'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($menu->getUrl()));
@@ -115,7 +115,7 @@ class MenuController extends YdWebController
             user()->addFlash(t('Menu could not be updated'), 'warning');
         }
 
-        $this->render('update', array(
+        $this->render('dressing.views.menu.update', array(
             'menu' => $menu,
         ));
     }
@@ -126,11 +126,11 @@ class MenuController extends YdWebController
      */
     public function actionDelete($id = null)
     {
-        $task = sf('task', 'Menu') == 'undelete' ? 'undelete' : 'delete';
-        if (sf('confirm', 'Menu')) {
+        $task = sf('task', 'YdMenu') == 'undelete' ? 'undelete' : 'delete';
+        if (sf('confirm', 'YdMenu')) {
             $ids = sfGrid($id);
             foreach ($ids as $id) {
-                $menu = Menu::model()->findByPk($id);
+                $menu = YdMenu::model()->findByPk($id);
                 if (!$menu) {
                     continue;
                 }
@@ -143,7 +143,7 @@ class MenuController extends YdWebController
             $this->redirect(Yii::app()->returnUrl->getUrl(user()->getState('index.menu', array('/menu/index'))));
         }
 
-        $this->render('delete', array(
+        $this->render('dressing.views.menu.delete', array(
             'id' => $id,
             'task' => $task,
         ));
@@ -157,7 +157,7 @@ class MenuController extends YdWebController
         if (isset($_POST['Order'])) {
             $menus = explode(',', $_POST['Order']);
             foreach ($menus as $k => $menu_id) {
-                if ($menu = Menu::model()->findbyPk($menu_id)) {
+                if ($menu = YdMenu::model()->findbyPk($menu_id)) {
                     $menu->sort_order = $k;
                     $menu->save(false);
                 }
