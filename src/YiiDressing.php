@@ -13,19 +13,24 @@ class YiiDressing extends CApplicationComponent
 {
 
     /**
-     * @var string Path to the assets
+     * @var bool
      */
-    public $assetPath;
+    public $enableCdn = false;
 
     /**
-     * @var string Url to the assets
+     * @var bool
      */
-    public $assetUrl;
+    public $minify = false;
 
     /**
      * @var array
      */
     public $tableMap = array();
+
+    /**
+     * @var string Url to the assets
+     */
+    private $_assetUrl;
 
     /**
      *
@@ -59,6 +64,29 @@ class YiiDressing extends CApplicationComponent
             'YdUserToRole' => 'user_to_role',
         ));
 
+        $this->registerScripts();
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getAssetsUrl()
+    {
+        if ($this->_assetUrl)
+            return $this->_assetUrl;
+        return $this->_assetUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets'), true, -1, YII_DEBUG);
+    }
+
+    /**
+     *
+     */
+    public function registerScripts()
+    {
+        // register style
+        Yii::app()->clientScript->registerCSSFile(Yii::app()->dressing->assetUrl . '/yii-dressing/css/yii-dressing.css');
+        // dropdown JS doesn't work on iPad - https://github.com/twitter/bootstrap/issues/2975#issuecomment-6659992
+        Yii::app()->clientScript->registerScript('bootstrap-dropdown-fix', "$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });", CClientScript::POS_END);
     }
 
 }
