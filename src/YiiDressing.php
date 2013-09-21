@@ -84,7 +84,7 @@ class YiiDressing extends CApplicationComponent
     public function registerScripts()
     {
         // register style
-        Yii::app()->clientScript->registerCSSFile(Yii::app()->dressing->assetUrl . '/yii-dressing/css/yii-dressing.css');
+        Yii::app()->clientScript->registerCSSFile($this->assetUrl . '/yii-dressing/css/yii-dressing.css');
         // dropdown JS doesn't work on iPad - https://github.com/twitter/bootstrap/issues/2975#issuecomment-6659992
         Yii::app()->clientScript->registerScript('bootstrap-dropdown-fix', "$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });", CClientScript::POS_END);
     }

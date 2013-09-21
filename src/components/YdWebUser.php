@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @property User $user
+ * @property YdUser $user
  * @property integer $id
  * @property bool $api
  */
@@ -14,7 +14,7 @@ class YdWebUser extends CWebUser
     /**
      * @var YdUser
      */
-    private $_user;
+    private $_userModel;
 
     /**
      * Initializes the application component.
@@ -105,17 +105,17 @@ class YdWebUser extends CWebUser
     /**
      * Load user model
      * @param null $id
-     * @return User
+     * @return YdUser
      */
     function getUser($id = null)
     {
-        if ($this->_user === null && YdHelper::tableExists(Yii::app()->dressing->tableMap['YdUser'])) {
+        if ($this->_userModel === null && YdHelper::tableExists(Yii::app()->dressing->tableMap['YdUser'])) {
             if ($id !== null)
-                $this->_user = YdUser::model()->findByPk($id);
+                $this->_userModel = YdUser::model()->findByPk($id);
             else
-                $this->_user = YdUser::model()->findByPk(Yii::app()->user->id);
+                $this->_userModel = YdUser::model()->findByPk(Yii::app()->user->id);
         }
-        return $this->_user;
+        return $this->_userModel;
     }
 
     /**
