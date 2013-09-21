@@ -6,7 +6,7 @@
  * @package app.controller
  * @author Brett O'Donnell <brett@mrphp.com.au>
  */
-class ErrorController extends WebController
+class ErrorController extends YdWebController
 {
 
     /**

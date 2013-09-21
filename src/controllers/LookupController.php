@@ -5,7 +5,7 @@
  * @package app.controller
  * @author Brett O'Donnell <brett@mrphp.com.au>
  */
-class LookupController extends WebController
+class LookupController extends YdWebController
 {
 
     /**

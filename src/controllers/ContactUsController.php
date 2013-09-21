@@ -2,7 +2,7 @@
 /**
  *
  */
-class ContactUsController extends WebController
+class ContactUsController extends YdWebController
 {
 
     /**

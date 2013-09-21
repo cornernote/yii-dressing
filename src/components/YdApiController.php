@@ -2,7 +2,7 @@
 /**
  *
  */
-class YdApiController extends Controller
+class YdApiController extends YdController
 {
     /**
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',

@@ -6,7 +6,7 @@
  * @package app.controller
  * @author Brett O'Donnell <brett@mrphp.com.au>
  */
-class AttachmentController extends WebController
+class AttachmentController extends YdWebController
 {
 
     /**

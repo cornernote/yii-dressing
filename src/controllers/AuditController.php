@@ -6,7 +6,7 @@
  * @package app.controller
  * @author Brett O'Donnell <brett@mrphp.com.au>
  */
-class AuditController extends WebController
+class AuditController extends YdWebController
 {
 
     /**
