@@ -127,4 +127,12 @@ class YdEmailTemplate extends YdActiveRecord
         ), $options));
     }
 
+    /**
+     * @return string
+     */
+    public function getControllerName()
+    {
+        return 'emailTemplate';
+    }
+
 }
