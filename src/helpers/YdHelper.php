@@ -58,12 +58,13 @@ class YdHelper
 
     /**
      * @param $table
+     * @param CDbConnection $db
      * @return bool
      */
-    public static function tableExists($table)
+    public static function tableExists($table, $db = null)
     {
-        return (Yii::app()->getDb()->createCommand("SHOW TABLES LIKE '" . $table . "'")->queryScalar() == $table);
+        $db = $db ? $db : Yii::app()->getDb();
+        return ($db->createCommand("SHOW TABLES LIKE '" . $table . "'")->queryScalar() == $table);
     }
-
 
 }
