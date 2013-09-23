@@ -2,5 +2,5 @@
 
 class FormGenerator extends CCodeGenerator
 {
-    public $codeModel = 'application.modules.gii.generators.form.FormCode';
+    public $codeModel = 'dressing.gii.form.FormCode';
 }
