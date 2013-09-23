@@ -3,7 +3,7 @@
 /**
  * Class YdGeneratePropertiesAction
  *
- * @property WebController $controller
+ * @property YdWebController $controller
  */
 class YdGeneratePropertiesAction extends CAction
 {
@@ -96,7 +96,7 @@ class YdGeneratePropertiesAction extends CAction
             $firstPos = strpos($fileContents, $begin);
             $lastPos = strpos($fileContents, $end);
             if ($firstPos && $lastPos && ($lastPos > $firstPos)) {
-                $oldDoc = $this->getBetweenString($fileContents, $begin, $end, false, false);
+                $oldDoc = YdStringHelper::getBetweenString($fileContents, $begin, $end, false, false);
                 if ($contents != $oldDoc) {
                     file_put_contents($fileName, str_replace($oldDoc, $contents, $fileContents));
                     $message = 'overwrote file: ' . realpath($fileName);
@@ -163,8 +163,8 @@ class YdGeneratePropertiesAction extends CAction
                     $header = true;
                 }
 
-                $methodReturn = StringHelper::getTypeFromDocComment($className, $methodName, 'return');
-                $paramTypes = StringHelper::getDocComment($className, $methodName, 'param');
+                $methodReturn = $this->getTypeFromDocComment($className, $methodName, 'return');
+                $paramTypes = $this->getDocComment($className, $methodName, 'param');
                 $methodReturn = $methodReturn ? current($methodReturn) . ' ' : '';
                 $property = " * @method $methodReturn$methodName() $methodName(";
                 $r = new ReflectionMethod($className, $methodName);
@@ -176,9 +176,9 @@ class YdGeneratePropertiesAction extends CAction
                     $type = current($paramTypes);
                     $filterType = '';
                     if ($type && strpos($type, '$')) {
-                        $typeString = $this->getBetweenString($type, false, '$');
+                        $typeString = YdStringHelper::getBetweenString($type, false, '$');
                         $typeString = trim($typeString);
-                        $filterType = StringHelper::filterDocType($typeString);
+                        $filterType = $this->filterDocType($typeString);
                         $filterType = $filterType ? trim($filterType) . ' ' : '';
                     }
                     next($paramTypes);
@@ -242,44 +242,106 @@ class YdGeneratePropertiesAction extends CAction
     }
 
     /**
-     * @param $contents
-     * @param $start
-     * @param $end
-     * @param bool $removeStart
-     * @param bool $removeEnd
-     * @return string
+     * @param $class
+     * @param $method
+     * @param string $tag
+     * @return array|string
      */
-    private function getBetweenString($contents, $start, $end, $removeStart = true, $removeEnd = true)
+    public static function getDocComment($class, $method, $tag = '')
     {
-        if ($start) {
-            $startPos = strpos($contents, $start);
-        }
-        else {
-            $startPos = 0;
+        $reflection = new ReflectionMethod($class, $method);
+        $comment = $reflection->getDocComment();
+        if (!$tag) {
+            return $comment;
         }
 
-        if ($startPos === false) {
-            return false;
+        $matches = array();
+        preg_match_all("/" . $tag . " (.*)(\\r\\n|\\r|\\n)/U", $comment, $matches);
+
+        $returns = array();
+        foreach ($matches[1] as $match) {
+            $match = explode(' ', $match);
+            $type = $match[0];
+            $name = isset($match[1]) ? $match[1] : '';
+            if (strpos($type, '$') === 0) {
+                $name_ = $name;
+                $name = $type;
+                $type = $name_;
+            }
+            if (strpos($name, '$') !== 0) {
+                $name = '';
+            }
+            $returns[] = trim($type . ' ' . $name);
         }
-        if ($end) {
-            $endPos = strpos($contents, $end, $startPos);
-            if ($endPos === false) {
-                $endPos = $endPos = strlen($contents);
+
+        return $returns;
+    }
+
+    /**
+     * @static
+     * @param $class
+     * @param $method
+     * @param $tag
+     * @return array
+     */
+    public static function getTypeFromDocComment($class, $method, $tag)
+    {
+        $types = $this->getDocComment($class, $method, $tag);
+        $returnTypes = array();
+        foreach ($types as $k => $type) {
+            $filteredType = $this->filterDocType($type);
+            if ($filteredType) {
+                $returnTypes[$k] = trim($filteredType);
             }
         }
+        return $returnTypes;
+
+    }
+
+    /**
+     * @static
+     * @param $type
+     * @return mixed|string
+     */
+    public function filterDocType($type)
+    {
+        $ignoreTypes = array('void', 'mixed', 'null');
+        $replace = array(
+            'bool' => 'boolean',
+            'integer' => 'int',
+        );
+        $filteredType = '';
+        if (strpos($type, '|') !== false) {
+            $multiType = explode('|', $type);
+            $multiTypeSafe = array();
+            foreach ($multiType as $singleType) {
+                if (!in_array($singleType, $ignoreTypes)) {
+                    if (isset($replace[$singleType])) {
+                        $singleType = $replace[$singleType];
+                    }
+                    $multiTypeSafe[] = $singleType;
+                }
+            }
+            $filteredType = implode('|', $multiTypeSafe);
+        }
         else {
-            $endPos = strlen($contents);
+            if (!in_array($type, $ignoreTypes)) {
+                $filteredType = $type;
+                if (isset($replace[$type])) {
+                    $filteredType = $replace[$type];
+                }
+            }
+        }
+        if ($filteredType) {
+            $filteredType = str_replace('-', ' ', $filteredType);
+            $filteredType = trim($filteredType);
+            if (strpos($type, ' ')) {
+                $filteredType = YdStringHelper::getBetweenString($type, false, ' ');
+            }
         }
 
-        if ($removeStart) {
-            $startPos += strlen($start);
-        }
-        $len = $endPos - $startPos;
-        if (!$removeEnd && $end && $endPos) {
-            $len = $len + strlen($end);
-        }
-        $subString = substr($contents, $startPos, $len);
-        return $subString;
+        return $filteredType;
+
     }
 
 }
