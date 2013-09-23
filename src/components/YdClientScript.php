@@ -47,10 +47,9 @@ class YdClientScript extends CClientScript
      * Registers a CSS file
      * @param string $url URL of the CSS file
      * @param string $media media that the CSS file should be applied to. If empty, it means all media types.
-     * @param array $options
      * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
-    public function registerCssFile($url, $media = '', $options = array())
+    public function registerCssFile($url, $media = '')
     {
         // do not load these scripts on ajax
         $ignoreAjax = array(
@@ -78,12 +77,20 @@ class YdClientScript extends CClientScript
                     return $this;
             }
         }
-
-        $options = array_merge(array(
-            'order' => 0,
-        ), $options);
-        $this->cssFilesOrder[$url] = $options['order'];
         return parent::registerCssFile($url, $media);
+    }
+
+    /**
+     * Registers a CSS file
+     * @param string $url URL of the CSS file
+     * @param string $media media that the CSS file should be applied to. If empty, it means all media types.
+     * @param int $order
+     * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     */
+    public function registerCssFileOrder($url, $media = '', $order = 0)
+    {
+        $this->cssFilesOrder[$url] = $order;
+        return $this->registerCssFile($url, $media);
     }
 
     /**
@@ -100,6 +107,19 @@ class YdClientScript extends CClientScript
         ), $options);
         $this->cssOrder[$id] = $options['order'];
         return parent::registerCss($id, $css, $media);
+    }
+
+    /**
+     * @param string $id
+     * @param string $css
+     * @param string $media
+     * @param int $order
+     * @return ClientScript
+     */
+    public function registerCssOrder($id, $css, $media = '', $order = 0)
+    {
+        $this->cssOrder[$id] = $order;
+        return $this->registerCss($id, $css, $media);
     }
 
     /**
@@ -176,10 +196,9 @@ class YdClientScript extends CClientScript
      * <li>CClientScript::POS_BEGIN : the script is inserted at the beginning of the body section.</li>
      * <li>CClientScript::POS_END : the script is inserted at the end of the body section.</li>
      * </ul>
-     * @param array $options
      * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
-    public function registerScriptFile($url, $position = self::POS_HEAD, $options = array())
+    public function registerScriptFile($url, $position = self::POS_HEAD)
     {
         // do not load these scripts on ajax
         $ignoreAjax = array(
@@ -196,13 +215,27 @@ class YdClientScript extends CClientScript
                     return $this;
             }
         }
-        $options = array_merge(array(
-            'order' => 0,
-        ), $options);
+        return parent::registerScriptFile($url, $position);
+    }
+
+    /**
+     * Registers a javascript file.
+     * @param string $url URL of the javascript file
+     * @param int|null $position the position of the JavaScript code. Valid values include the following:
+     * <ul>
+     * <li>CClientScript::POS_HEAD : the script is inserted in the head section right before the title element.</li>
+     * <li>CClientScript::POS_BEGIN : the script is inserted at the beginning of the body section.</li>
+     * <li>CClientScript::POS_END : the script is inserted at the end of the body section.</li>
+     * </ul>
+     * @param int $order
+     * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     */
+    public function registerScriptFileOrder($url, $position = self::POS_HEAD, $order = 0)
+    {
         if ($position === null)
             $position = $this->defaultScriptFilePosition;
-        $this->scriptFilesOrder[$position][$url] = $options['order'];
-        return parent::registerScriptFile($url, $position);
+        $this->scriptFilesOrder[$position][$url] = $order;
+        return $this->registerScriptFile($url, $position);
     }
 
     /**
@@ -217,18 +250,34 @@ class YdClientScript extends CClientScript
      * <li>CClientScript::POS_LOAD : the script is inserted in the window.onload() function.</li>
      * <li>CClientScript::POS_READY : the script is inserted in the jQuery's ready function.</li>
      * </ul>
-     * @param array $options
      * @return CClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
-    public function registerScript($id, $script, $position = null, $options = array())
+    public function registerScript($id, $script, $position = null)
     {
-        $options = array_merge(array(
-            'order' => 0,
-        ), $options);
+        return parent::registerScript($id, $script, $position);
+    }
+
+    /**
+     * Registers a piece of javascript code.
+     * @param string $id ID that uniquely identifies this piece of JavaScript code
+     * @param string $script the javascript code
+     * @param integer $position the position of the JavaScript code. Valid values include the following:
+     * <ul>
+     * <li>CClientScript::POS_HEAD : the script is inserted in the head section right before the title element.</li>
+     * <li>CClientScript::POS_BEGIN : the script is inserted at the beginning of the body section.</li>
+     * <li>CClientScript::POS_END : the script is inserted at the end of the body section.</li>
+     * <li>CClientScript::POS_LOAD : the script is inserted in the window.onload() function.</li>
+     * <li>CClientScript::POS_READY : the script is inserted in the jQuery's ready function.</li>
+     * </ul>
+     * @param int $order
+     * @return CClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     */
+    public function registerScriptOrder($id, $script, $position = null, $order = 0)
+    {
         if ($position === null)
             $position = $this->defaultScriptPosition;
-        $this->scriptsOrder[$position][$id] = $options['order'];
-        return parent::registerScript($id, $script, $position);
+        $this->scriptsOrder[$position][$id] = $order;
+        return $this->registerScript($id, $script, $position);
     }
 
     /**
@@ -267,7 +316,6 @@ class YdClientScript extends CClientScript
         if ($length == 0) {
             return true;
         }
-
         return (substr($haystack, -$length) === $needle);
     }
 
