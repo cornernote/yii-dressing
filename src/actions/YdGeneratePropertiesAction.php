@@ -247,7 +247,7 @@ class YdGeneratePropertiesAction extends CAction
      * @param string $tag
      * @return array|string
      */
-    public static function getDocComment($class, $method, $tag = '')
+    public function getDocComment($class, $method, $tag = '')
     {
         $reflection = new ReflectionMethod($class, $method);
         $comment = $reflection->getDocComment();
@@ -278,13 +278,12 @@ class YdGeneratePropertiesAction extends CAction
     }
 
     /**
-     * @static
      * @param $class
      * @param $method
      * @param $tag
      * @return array
      */
-    public static function getTypeFromDocComment($class, $method, $tag)
+    public function getTypeFromDocComment($class, $method, $tag)
     {
         $types = $this->getDocComment($class, $method, $tag);
         $returnTypes = array();
@@ -299,7 +298,6 @@ class YdGeneratePropertiesAction extends CAction
     }
 
     /**
-     * @static
      * @param $type
      * @return mixed|string
      */
