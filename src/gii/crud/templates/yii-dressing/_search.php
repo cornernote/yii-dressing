@@ -15,6 +15,7 @@ echo "\$form = \$this->beginWidget('dressing.widgets.YdActiveForm', array(\n";
 //echo "	'action' => Yii::app()->createUrl(\$this->route),\n";
 echo "	'type' => 'horizontal',\n";
 echo "	'method' => 'get',\n";
+echo "	'htmlOptions' => array('class' => 'hide'),\n";
 echo "));\n";
 echo "\$form->searchToggle('" . lcfirst($this->modelClass) . "-grid-search', '" . lcfirst($this->modelClass) . "-grid');\n";
 echo "\n";
