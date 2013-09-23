@@ -70,12 +70,12 @@ echo "     */\n";
 echo "    public function behaviors()\n";
 echo "    {\n";
 echo "        return array(\n";
-echo "            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',\n";
+echo "            'AuditBehavior' => 'behaviors.AuditBehavior',\n";
 if (in_array('created', CHtml::listData($columns, 'name', 'name')) || in_array('updated', CHtml::listData($columns, 'name', 'name'))) {
-    echo "            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',\n";
+    echo "            'TimestampBehavior' => 'behaviors.TimestampBehavior',\n";
 }
 if (in_array('deleted', CHtml::listData($columns, 'name', 'name'))) {
-    echo "            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',\n";
+    echo "            'SoftDeleteBehavior' => 'behaviors.SoftDeleteBehavior',\n";
 }
 echo "        );\n";
 echo "    }\n";

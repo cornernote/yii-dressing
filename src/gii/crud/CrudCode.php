@@ -21,7 +21,7 @@ class CrudCode extends CCodeModel
     /**
      * @var string
      */
-    public $baseControllerClass = 'WebController';
+    public $baseControllerClass = 'YdWebController';
 
     /**
      * @var

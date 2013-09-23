@@ -205,22 +205,23 @@ echo "    }\n";
 echo "\n";
 
 // sort
-echo "    /**\n";
-echo "     * Handles the ordering of lookups.\n";
-echo "     */\n";
-echo "    public function actionSortOrder()\n";
-echo "    {\n";
-echo "        if (isset($_POST['Order'])) {\n";
-echo "            foreach (explode(',', $_POST['Order']) as $k => $id) {\n";
-echo "                if ($" . lcfirst($this->modelClass) . " = " . $this->modelClass . "::model()->findbyPk($id)) {\n";
-echo "                    $" . lcfirst($this->modelClass) . "->sort_order = $k;\n";
-echo "                    $" . lcfirst($this->modelClass) . "->save(false);\n";
-echo "                }\n";
-echo "            }\n";
-echo "        }\n";
-echo "    }\n";
-echo "\n";
-
+if (isset($this->tableSchema->columns['sort_order'])) {
+    echo "    /**\n";
+    echo "     * Handles the ordering of lookups.\n";
+    echo "     */\n";
+    echo "    public function actionSortOrder()\n";
+    echo "    {\n";
+    echo "        if (isset(\$_POST['Order'])) {\n";
+    echo "            foreach (explode(',', \$_POST['Order']) as \$k => \$id) {\n";
+    echo "                if ($" . lcfirst($this->modelClass) . " = " . $this->modelClass . "::model()->findbyPk(\$id)) {\n";
+    echo "                    $" . lcfirst($this->modelClass) . "->sort_order = \$k;\n";
+    echo "                    $" . lcfirst($this->modelClass) . "->save(false);\n";
+    echo "                }\n";
+    echo "            }\n";
+    echo "        }\n";
+    echo "    }\n";
+    echo "\n";
+}
 
 // end class
 echo "}\n";

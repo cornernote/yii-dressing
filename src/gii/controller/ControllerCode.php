@@ -12,7 +12,7 @@ class ControllerCode extends CCodeModel
     /**
      * @var string
      */
-    public $baseClass = 'WebController';
+    public $baseClass = 'YdWebController';
     /**
      * @var string
      */
