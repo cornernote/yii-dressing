@@ -227,7 +227,7 @@ class YdGeneratePropertiesAction extends CAction
         foreach ($this->model->tableSchema->columns as $column) {
             $type = $column->type;
             if (($column->dbType == 'datetime') || ($column->dbType == 'date')) {
-                $type = $column->dbType;
+                $type = 'string'; // $column->dbType;
             }
             if (strpos($column->dbType, 'decimal') !== false) {
                 $type = 'number';
