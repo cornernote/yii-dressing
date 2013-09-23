@@ -30,7 +30,7 @@ echo "// multi actions\n";
 echo "\$multiActions = array();\n";
 echo "\$multiActions[] = array(\n";
 echo "    'name' => Yii::t('app', 'Delete'),\n";
-echo "    'url' => Yii::app()->createUrl('/" . lcfirst($this->modelClass) . "/delete'),\n";
+echo "    'url' => Yii::app()->createUrl('/" . lcfirst($this->modelClass) . "/delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))),\n";
 echo ");\n";
 echo "\n";
 echo "// grid\n";
