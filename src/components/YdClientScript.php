@@ -157,10 +157,10 @@ class YdClientScript extends CClientScript
         $this->cssFiles = $this->reorderScriptSet($this->cssFiles, $this->cssFilesOrder);
         $this->css = $this->reorderScriptSet($this->css, $this->cssOrder);
         if (isset($this->scriptFiles[self::POS_END])) {
-            $this->scriptFiles[self::POS_END] = $this->reorderScriptSet($this->scriptFiles[self::POS_END], $this->scriptFilesOrder[self::POS_END]);
+            $this->scriptFiles[self::POS_END] = $this->reorderScriptSet($this->scriptFiles[self::POS_END], isset($this->scriptFilesOrder[self::POS_END]) ? $this->scriptFilesOrder[self::POS_END] : array());
         }
         if (isset($this->scripts[self::POS_READY])) {
-            $this->scripts[self::POS_READY] = $this->reorderScriptSet($this->scripts[self::POS_READY], $this->scriptsOrder[self::POS_READY]);
+            $this->scripts[self::POS_READY] = $this->reorderScriptSet($this->scripts[self::POS_READY], isset($this->scriptsOrder[self::POS_READY]) ? $this->scriptsOrder[self::POS_READY] : array());
         }
     }
 
