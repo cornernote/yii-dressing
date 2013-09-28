@@ -47,7 +47,7 @@ class YdClientScript extends CClientScript
      * Registers a CSS file
      * @param string $url URL of the CSS file
      * @param string $media media that the CSS file should be applied to. If empty, it means all media types.
-     * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     * @return YdClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
     public function registerCssFile($url, $media = '')
     {
@@ -85,7 +85,7 @@ class YdClientScript extends CClientScript
      * @param string $url URL of the CSS file
      * @param string $media media that the CSS file should be applied to. If empty, it means all media types.
      * @param int $order
-     * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     * @return YdClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
     public function registerCssFileOrder($url, $media = '', $order = 0)
     {
@@ -98,7 +98,7 @@ class YdClientScript extends CClientScript
      * @param string $css
      * @param string $media
      * @param array $options
-     * @return ClientScript
+     * @return YdClientScript
      */
     public function registerCss($id, $css, $media = '', $options = array())
     {
@@ -114,7 +114,7 @@ class YdClientScript extends CClientScript
      * @param string $css
      * @param string $media
      * @param int $order
-     * @return ClientScript
+     * @return YdClientScript
      */
     public function registerCssOrder($id, $css, $media = '', $order = 0)
     {
@@ -187,6 +187,7 @@ class YdClientScript extends CClientScript
         return $files;
     }
 
+
     /**
      * Registers a javascript file.
      * @param string $url URL of the javascript file
@@ -196,9 +197,10 @@ class YdClientScript extends CClientScript
      * <li>CClientScript::POS_BEGIN : the script is inserted at the beginning of the body section.</li>
      * <li>CClientScript::POS_END : the script is inserted at the end of the body section.</li>
      * </ul>
-     * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     * @param array $htmlOptions
+     * @return YdClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
-    public function registerScriptFile($url, $position = self::POS_HEAD)
+    public function registerScriptFile($url,$position=null,array $htmlOptions=array())
     {
         // do not load these scripts on ajax
         $ignoreAjax = array(
@@ -215,8 +217,9 @@ class YdClientScript extends CClientScript
                     return $this;
             }
         }
-        return parent::registerScriptFile($url, $position);
+        return parent::registerScriptFile($url, $position, $htmlOptions);
     }
+
 
     /**
      * Registers a javascript file.
@@ -228,7 +231,7 @@ class YdClientScript extends CClientScript
      * <li>CClientScript::POS_END : the script is inserted at the end of the body section.</li>
      * </ul>
      * @param int $order
-     * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     * @return YdClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
     public function registerScriptFileOrder($url, $position = self::POS_HEAD, $order = 0)
     {
@@ -250,11 +253,12 @@ class YdClientScript extends CClientScript
      * <li>CClientScript::POS_LOAD : the script is inserted in the window.onload() function.</li>
      * <li>CClientScript::POS_READY : the script is inserted in the jQuery's ready function.</li>
      * </ul>
+     * @param array $htmlOptions
      * @return CClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
-    public function registerScript($id, $script, $position = null)
+    public function registerScript($id,$script,$position=null,array $htmlOptions=array())
     {
-        return parent::registerScript($id, $script, $position);
+        return parent::registerScript($id, $script, $position ,$htmlOptions);
     }
 
     /**
@@ -284,7 +288,7 @@ class YdClientScript extends CClientScript
      * Registers a script package that is listed in {@link packages}.
      * @param string $name the name of the script package.
      * @param array $options
-     * @return ClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
+     * @return YdClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      * @see renderCoreScript
      */
     public function registerCoreScript($name, $options = array())
