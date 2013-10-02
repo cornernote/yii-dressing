@@ -3,6 +3,7 @@
  * YdAuditBehavior
  *
  * @property YdActiveRecord $owner
+ * @property YdActiveRecord $auditModel
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -12,10 +13,6 @@
  */
 class YdAuditBehavior extends CActiveRecordBehavior
 {
-    /**
-     * @var YdActiveRecord
-     */
-    public $auditModel;
 
     /**
      * @var array
@@ -34,6 +31,11 @@ class YdAuditBehavior extends CActiveRecordBehavior
         'insert' => array('modified', 'modified_by', 'deleted', 'deleted_by'),
         'update' => array('created', 'created_by', 'modified'),
     );
+
+    /**
+     * @var YdActiveRecord
+     */
+    private $_auditModel;
 
     /**
      * @param CModelEvent $event
@@ -61,20 +63,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
                 $new = trim($new);
                 if (!$new) continue;
 
-                // write the logs
+                // prepare the logs
                 foreach ($auditModels as $auditModel) {
                     if (isset($auditModel['ignoreFields']) && in_array($name, $auditModel['ignoreFields'])) continue;
-                    //$auditTrail = new YdAuditTrail;
-                    //$auditTrail->old_value = '';
-                    //$auditTrail->new_value = $new;
-                    //$auditTrail->action = 'INSERT';
-                    //$auditTrail->model = $auditModel['model'];
-                    //$auditTrail->model_id = $auditModel['model_id'];
-                    //$auditTrail->field = $auditModel['prefix'] . $name;
-                    //$auditTrail->created = $date;
-                    //$auditTrail->user_id = Yii::app()->user ? Yii::app()->user->id : 0;
-                    //$auditTrail->audit_id = $auditId;
-                    //$auditTrail->save(false);
                     $auditTrails[] = array(
                         'old_value' => '',
                         'new_value' => $new,
@@ -103,20 +94,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
                 if (in_array($new, $this->ignoreValues)) $new = '';
                 if ($new == $old) continue;
 
-                // write the logs
+                // prepare the logs
                 foreach ($auditModels as $auditModel) {
                     if (isset($auditModel['ignoreFields']) && in_array($name, $auditModel['ignoreFields'])) continue;
-                    //$auditTrail = new YdAuditTrail();
-                    //$auditTrail->old_value = $old;
-                    //$auditTrail->new_value = $new;
-                    //$auditTrail->action = 'UPDATE';
-                    //$auditTrail->model = $auditModel['model'];
-                    //$auditTrail->model_id = $auditModel['model_id'];
-                    //$auditTrail->field = $auditModel['prefix'] . $name;
-                    //$auditTrail->created = $date;
-                    //$auditTrail->user_id = Yii::app()->user ? Yii::app()->user->id : 0;
-                    //$auditTrail->audit_id = $auditId;
-                    //$auditTrail->save(false);
                     $auditTrails[] = array(
                         'old_value' => $old,
                         'new_value' => $new,
@@ -155,21 +135,10 @@ class YdAuditBehavior extends CActiveRecordBehavior
         $userId = Yii::app()->user ? Yii::app()->user->id : 0;
         $auditTrails = array();
 
-        // delete
+        // prepare the logs
         $pk = $this->auditModel->getPrimaryKeyString();
         foreach ($auditModels as $auditModel) {
             $prefix = isset($auditModel['prefix']) ? $auditModel['prefix'] . '.' . $pk : '';
-            //$auditTrail = new YdAuditTrail;
-            //$auditTrail->old_value = '';
-            //$auditTrail->new_value = '';
-            //$auditTrail->action = 'DELETE';
-            //$auditTrail->model = $auditModel['model'];
-            //$auditTrail->model_id = $auditModel['model_id'];
-            //$auditTrail->field = $prefix . '*';
-            //$auditTrail->created = $date;
-            //$auditTrail->user_id = Yii::app()->user ? Yii::app()->user->id : 0;
-            //$auditTrail->audit_id = $auditId;
-            //$auditTrail->save(false);
             $auditTrails[] = array(
                 'old_value' => '',
                 'new_value' => '',
@@ -192,14 +161,15 @@ class YdAuditBehavior extends CActiveRecordBehavior
     }
 
     /**
-     * @return string
+     * @return array
      */
-    protected function fieldPrefix()
+    protected function getAuditModel()
     {
-        if (get_class($this->owner) != get_class($this->auditModel)) {
-            return get_class($this->owner) . '.';
-        }
-        return '';
+        if ($this->_auditModel)
+            return $this->_auditModel;
+        if (method_exists($this->owner, 'getAuditModel'))
+            return $this->auditModel = call_user_func(array($this->owner, 'getAuditModel'));
+        return $this->auditModel = $this->owner;
     }
 
     /**
@@ -207,15 +177,6 @@ class YdAuditBehavior extends CActiveRecordBehavior
      */
     protected function getAuditModels()
     {
-        if ($this->auditModel === null) {
-            if (method_exists($this->owner, 'getAuditModel')) {
-                $this->auditModel = call_user_func(array($this->owner, 'getAuditModel'));
-            }
-            else {
-                $this->auditModel = $this->owner;
-            }
-        }
-
         $auditModels = array();
 
         // get log models
@@ -238,6 +199,17 @@ class YdAuditBehavior extends CActiveRecordBehavior
         }
 
         return $auditModels;
+    }
+
+    /**
+     * @return string
+     */
+    protected function fieldPrefix()
+    {
+        if (get_class($this->owner) != get_class($this->auditModel)) {
+            return get_class($this->owner) . '.';
+        }
+        return '';
     }
 
 }
