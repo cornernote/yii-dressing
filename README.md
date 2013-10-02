@@ -52,4 +52,6 @@ php composer update
 
 ## Usage
 
-... coming soon ...
+Check out Yii Skeleton to see a basic app using some of the features of Yii Dressing:
+
+https://github.com/cornernote/yii-skeleton
