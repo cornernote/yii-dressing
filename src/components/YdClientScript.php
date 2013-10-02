@@ -200,7 +200,7 @@ class YdClientScript extends CClientScript
      * @param array $htmlOptions
      * @return YdClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
-    public function registerScriptFile($url,$position=null,array $htmlOptions=array())
+    public function registerScriptFile($url, $position = null, array $htmlOptions = array())
     {
         // do not load these scripts on ajax
         $ignoreAjax = array(
@@ -256,9 +256,9 @@ class YdClientScript extends CClientScript
      * @param array $htmlOptions
      * @return CClientScript the CClientScript object itself (to support method chaining, available since version 1.1.5).
      */
-    public function registerScript($id,$script,$position=null,array $htmlOptions=array())
+    public function registerScript($id, $script, $position = null, array $htmlOptions = array())
     {
-        return parent::registerScript($id, $script, $position ,$htmlOptions);
+        return parent::registerScript($id, $script, $position, $htmlOptions);
     }
 
     /**
