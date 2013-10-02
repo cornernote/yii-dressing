@@ -58,9 +58,13 @@ echo "     */\n";
 echo "    public function rules()\n";
 echo "    {\n";
 echo "        \$rules = array();\n";
+echo "        if (\$this->scenario == 'search') {\n";
+echo "        }\n";
+echo "        if (in_array(\$this->scenario, array('create', 'update'))) {\n";
 foreach ($rules as $rule) {
     echo "        \$rules[] = " . $rule . ";\n";
 }
+echo "        }\n";
 echo "        return \$rules;\n";
 echo "    }\n";
 echo "\n";
