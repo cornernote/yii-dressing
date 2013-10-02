@@ -1,14 +1,35 @@
 <?php
+/**
+ * Class YdJavaScriptWidget
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
+ */
 class YdJavaScriptWidget extends CWidget
 {
+    /**
+     * @var
+     */
     public $id;
+    /**
+     * @var
+     */
     public $position;
 
+    /**
+     *
+     */
     public function init()
     {
         ob_start();
     }
 
+    /**
+     *
+     */
     public function run()
     {
         // get id

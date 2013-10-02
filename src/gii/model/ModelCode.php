@@ -1,13 +1,43 @@
 <?php
 
+/**
+ * Class ModelCode
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
+ */
 class ModelCode extends CCodeModel
 {
+    /**
+     * @var string
+     */
     public $connectionId = 'db';
+    /**
+     * @var
+     */
     public $tablePrefix;
+    /**
+     * @var
+     */
     public $tableName;
+    /**
+     * @var
+     */
     public $modelClass;
+    /**
+     * @var string
+     */
     public $modelPath = 'application.models';
+    /**
+     * @var string
+     */
     public $baseClass = 'YdActiveRecord';
+    /**
+     * @var bool
+     */
     public $buildRelations = true;
 
     /**
@@ -16,6 +46,9 @@ class ModelCode extends CCodeModel
      */
     protected $relations;
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return array_merge(parent::rules(), array(
@@ -32,6 +65,9 @@ class ModelCode extends CCodeModel
         ));
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), array(
@@ -45,6 +81,9 @@ class ModelCode extends CCodeModel
         ));
     }
 
+    /**
+     * @return array
+     */
     public function requiredTemplates()
     {
         return array(
@@ -52,6 +91,9 @@ class ModelCode extends CCodeModel
         );
     }
 
+    /**
+     * @throws CHttpException
+     */
     public function init()
     {
         if (Yii::app()->{$this->connectionId} === null)
@@ -60,6 +102,9 @@ class ModelCode extends CCodeModel
         parent::init();
     }
 
+    /**
+     *
+     */
     public function prepare()
     {
         if (($pos = strrpos($this->tableName, '.')) !== false) {
@@ -105,6 +150,10 @@ class ModelCode extends CCodeModel
         }
     }
 
+    /**
+     * @param $attribute
+     * @param $params
+     */
     public function validateTableName($attribute, $params)
     {
         if ($this->hasErrors())
@@ -152,6 +201,10 @@ class ModelCode extends CCodeModel
      * @param CDbTableSchema $table the table schema object
      * @return string the invalid table column name. Null if no error.
      */
+    /**
+     * @param $table
+     * @return string
+     */
     public function checkColumns($table)
     {
         foreach ($table->columns as $column) {
@@ -160,12 +213,20 @@ class ModelCode extends CCodeModel
         }
     }
 
+    /**
+     * @param $attribute
+     * @param $params
+     */
     public function validateModelPath($attribute, $params)
     {
         if (Yii::getPathOfAlias($this->modelPath) === false)
             $this->addError('modelPath', 'Model Path must be a valid path alias.');
     }
 
+    /**
+     * @param $attribute
+     * @param $params
+     */
     public function validateBaseClass($attribute, $params)
     {
         $class = @Yii::import($this->baseClass, true);
@@ -175,12 +236,20 @@ class ModelCode extends CCodeModel
             $this->addError('baseClass', "'{$this->model}' must extend from CActiveRecord.");
     }
 
+    /**
+     * @param $tableName
+     * @return mixed
+     */
     public function getTableSchema($tableName)
     {
         $connection = Yii::app()->{$this->connectionId};
         return $connection->getSchema()->getTable($tableName, $connection->schemaCachingDuration !== 0);
     }
 
+    /**
+     * @param $table
+     * @return array
+     */
     public function generateLabels($table)
     {
         $labels = array();
@@ -196,6 +265,10 @@ class ModelCode extends CCodeModel
         return $labels;
     }
 
+    /**
+     * @param $table
+     * @return array
+     */
     public function generateRules($table)
     {
         $rules = array();
@@ -235,11 +308,20 @@ class ModelCode extends CCodeModel
         return $rules;
     }
 
+    /**
+     * @param $className
+     * @return array
+     */
     public function getRelations($className)
     {
         return isset($this->relations[$className]) ? $this->relations[$className] : array();
     }
 
+    /**
+     * @param $tableName
+     * @param bool $addBrackets
+     * @return string
+     */
     protected function removePrefix($tableName, $addBrackets = true)
     {
         if ($addBrackets && Yii::app()->{$this->connectionId}->tablePrefix == '')
@@ -265,6 +347,9 @@ class ModelCode extends CCodeModel
         return $tableName;
     }
 
+    /**
+     * @return array
+     */
     protected function generateRelations()
     {
         if (!$this->buildRelations)
@@ -339,6 +424,10 @@ class ModelCode extends CCodeModel
             && $table->foreignKeys[$pk[0]][0] !== $table->foreignKeys[$pk[1]][0]); // and the foreign keys point different tables
     }
 
+    /**
+     * @param $tableName
+     * @return string
+     */
     protected function generateClassName($tableName)
     {
         if ($this->tableName === $tableName || ($pos = strrpos($this->tableName, '.')) !== false && substr($this->tableName, $pos + 1) === $tableName)
@@ -385,6 +474,10 @@ class ModelCode extends CCodeModel
         return $name;
     }
 
+    /**
+     * @param $attribute
+     * @param $params
+     */
     public function validateConnectionId($attribute, $params)
     {
         if (Yii::app()->hasComponent($this->connectionId) === false || !(Yii::app()->getComponent($this->connectionId) instanceof CDbConnection))

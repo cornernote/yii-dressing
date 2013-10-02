@@ -1,14 +1,41 @@
 <?php
 
+/**
+ * Class FormCode
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
+ */
 class FormCode extends CCodeModel
 {
+    /**
+     * @var
+     */
     public $model;
+    /**
+     * @var string
+     */
     public $viewPath = 'application.views';
+    /**
+     * @var
+     */
     public $viewName;
+    /**
+     * @var
+     */
     public $scenario;
 
+    /**
+     * @var
+     */
     private $_modelClass;
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return array_merge(parent::rules(), array(
@@ -23,6 +50,9 @@ class FormCode extends CCodeModel
         ));
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), array(
@@ -33,6 +63,9 @@ class FormCode extends CCodeModel
         ));
     }
 
+    /**
+     * @return array
+     */
     public function requiredTemplates()
     {
         return array(
@@ -41,6 +74,9 @@ class FormCode extends CCodeModel
         );
     }
 
+    /**
+     * @return string
+     */
     public function successMessage()
     {
         $output = <<<EOD
@@ -51,6 +87,10 @@ EOD;
         return $output . highlight_string($code, true);
     }
 
+    /**
+     * @param $attribute
+     * @param $params
+     */
     public function validateModel($attribute, $params)
     {
         if ($this->hasErrors('model'))
@@ -64,6 +104,10 @@ EOD;
             $this->_modelClass = $class;
     }
 
+    /**
+     * @param $attribute
+     * @param $params
+     */
     public function validateViewPath($attribute, $params)
     {
         if ($this->hasErrors('viewPath'))
@@ -72,6 +116,9 @@ EOD;
             $this->addError('viewPath', 'View Path must be a valid path alias.');
     }
 
+    /**
+     *
+     */
     public function prepare()
     {
         $templatePath = $this->templatePath;
@@ -81,11 +128,17 @@ EOD;
         );
     }
 
+    /**
+     * @return mixed
+     */
     public function getModelClass()
     {
         return $this->_modelClass;
     }
 
+    /**
+     * @return mixed
+     */
     public function getModelAttributes()
     {
         $model = new $this->_modelClass($this->scenario);

@@ -1,7 +1,13 @@
 <?php
 /**
  * @var $data array
- * @var $errorHandler ErrorHandler
+ * @var $errorHandler YdErrorHandler
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
  */
 ?><!DOCTYPE html PUBLIC
     "-//W3C//DTD XHTML 1.0 Transitional//EN"

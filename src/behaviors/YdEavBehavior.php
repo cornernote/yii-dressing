@@ -3,8 +3,14 @@ Yii::import('dressing.behaviors.EEavBehavior');
 
 /**
  * @package components.behaviors
- * @property ActiveRecord $owner
- * @method ActiveRecord getOwner() getOwner()
+ * @property YdActiveRecord $owner
+ * @method YdActiveRecord getOwner() getOwner()
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
  */
 class YdEavBehavior extends EEavBehavior
 {

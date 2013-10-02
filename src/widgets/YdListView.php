@@ -1,9 +1,24 @@
 <?php
 Yii::import('zii.widgets.CListView');
+/**
+ * Class YdListView
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
+ */
 class YdListView extends CListView
 {
+    /**
+     * @var string
+     */
     public $template = "{items}\n{summary}\n{pager}{pageSelect}";
 
+    /**
+     * @var array
+     */
     public $pager = array(
         'header' => '',
         'maxButtonCount' => 5,
@@ -13,11 +28,17 @@ class YdListView extends CListView
         'lastPageLabel' => '&gt;&gt;',
     );
 
+    /**
+     *
+     */
     public function registerClientScript()
     {
         parent::registerClientScript();
     }
 
+    /**
+     *
+     */
     public function renderPageSelect()
     {
         // TODO page selection is not currently working in ListView

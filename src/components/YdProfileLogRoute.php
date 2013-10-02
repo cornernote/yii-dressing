@@ -1,10 +1,12 @@
 <?php
 /**
- * ProfileLogRoute class file.
+ * Class YdProfileLogRoute
  *
- */
-
-/**
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
  */
 class YdProfileLogRoute extends CProfileLogRoute
 {
@@ -12,12 +14,12 @@ class YdProfileLogRoute extends CProfileLogRoute
     /**
      * Displays the summary report of the profiling result.
      * @param array $logs list of logs
+     * @throws CException
      */
     protected function displaySummary($logs)
     {
         $stack = array();
-        foreach ($logs as $log)
-        {
+        foreach ($logs as $log) {
             if ($log[1] !== CLogger::LEVEL_PROFILE)
                 continue;
             $message = $log[0];
@@ -43,8 +45,7 @@ class YdProfileLogRoute extends CProfileLogRoute
         }
 
         $now = microtime(true);
-        while (($last = array_pop($stack)) !== null)
-        {
+        while (($last = array_pop($stack)) !== null) {
             $delta = $now - $last[3];
             $token = $this->groupByToken ? $last[0] : $last[2];
             if (isset($results[$token]))
@@ -67,6 +68,10 @@ class YdProfileLogRoute extends CProfileLogRoute
     }
 
 
+    /**
+     * @param $sql
+     * @return mixed
+     */
     protected function cleanupSql($sql)
     {
         $strip = array(

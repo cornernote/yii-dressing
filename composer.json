@@ -2,8 +2,8 @@
     "name": "mrphp/yii-dressing",
     "description": "Toolkit for Yii framework",
     "type": "library",
-    "license": "MIT",
-    "keywords": ["yii"],
+    "license": "GPL3",
+    "keywords": ["yii","mrphp"],
     "homepage": "http://yiidressing.mrphp.com.au/",
     "authors": [
         {
@@ -12,7 +12,8 @@
             "homepage": "http://about.me/cornernote"
         },
         {
-            "name": "Zain ul abidin"
+            "name": "Zain ul abidin",
+            "email": "zainengineer@gmail.com"
         }
     ],
     "support": {

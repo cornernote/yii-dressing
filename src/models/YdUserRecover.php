@@ -5,9 +5,11 @@
  * UserRecover is the data structure for keeping user recover form data.
  * It is used by the 'recover' action of 'UserController'.
  *
- * @package app.model
- * @author Brett O'Donnell <brett@mrphp.com.au>
- *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
  */
 class YdUserRecover extends YdFormModel
 {

@@ -1,14 +1,29 @@
 <?php
 
+/**
+ * Class YdModal
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
+ */
 class YdModal extends CWidget
 {
     // function to init the widget
+    /**
+     *
+     */
     public function init()
     {
         $this->publishAssets();
     }
 
     // function to publish and register assets on page
+    /**
+     *
+     */
     public function publishAssets()
     {
         $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.modal-responsive-fix'), false, 1, YII_DEBUG);
@@ -25,6 +40,9 @@ class YdModal extends CWidget
 
     }
 
+    /**
+     *
+     */
     protected function registerScript()
     {
         $this->beginWidget('dressing.widgets.YdJavaScriptWidget', array('position' => CClientScript::POS_END));

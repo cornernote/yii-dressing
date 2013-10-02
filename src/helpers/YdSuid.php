@@ -9,6 +9,12 @@
  *
  * KNOWN LIMITS
  * encode cannot be larger than 99999999999999
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
  */
 class YdSuid
 {
@@ -50,6 +56,44 @@ class YdSuid
             $id = bcadd($id, bcmul($value, bcpow(34, ($len - $i - 1))));
         }
         return $id;
+    }
+
+    /**
+     * @param $id int
+     * @return string
+     */
+    public static function encode2($id)
+    {
+        return self::hash2($id, 8) . dechex($id);
+    }
+
+    /**
+     * @param $id string
+     * @return int
+     */
+    public static function decode2($id)
+    {
+        $md5_8 = substr($id, 0, 8);
+        $real_id = hexdec(substr($id, 8));
+        return ($md5_8 == self::hash2($real_id, 8)) ? $real_id : 0;
+    }
+
+    /**
+     * @param $str
+     * @param $len
+     * @return string
+     */
+    private static function hash2($str, $len)
+    {
+        return substr(md5($str . self::salt2()), 0, $len);
+    }
+
+    /**
+     * @return string
+     */
+    private static function salt2()
+    {
+        return 'IZVUNauCONTROL';
     }
 
 }

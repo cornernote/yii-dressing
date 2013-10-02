@@ -1,4 +1,13 @@
 <?php
+/**
+ * Class YdCsv
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @link https://github.com/cornernote/yii-dressing
+ * @license http://www.gnu.org/copyleft/gpl.html
+ */
 class YdCsv
 {
     /*
@@ -16,6 +25,12 @@ class YdCsv
 
 
      */
+    /**
+     * @param $dataElement
+     * @param string $delimiter
+     * @param string $enclosure
+     * @return mixed
+     */
     static function escapeCSVElement($dataElement, $delimiter = ",", $enclosure = "\"")
     {
 
@@ -24,6 +39,12 @@ class YdCsv
         return $dataElement;
     }
 
+    /**
+     * @param $dataArray
+     * @param string $delimiter
+     * @param string $enclosure
+     * @return string
+     */
     static function getCVsString($dataArray, $delimiter = ",", $enclosure = "\"")
     {
         // Write a line to a file
@@ -63,6 +84,10 @@ class YdCsv
         return $string;
     }
 
+    /**
+     * @param $cvsString
+     * @param string $filename
+     */
     static function sendCSVInHeader($cvsString, $filename = "csvreport.csv")
     {
         header("Content-Type: application/vnd.ms-excel");
@@ -73,6 +98,10 @@ class YdCsv
         echo $cvsString;
     }
 
+    /**
+     * @param $rows
+     * @return array
+     */
     static function putCaptionsOnCSVArray($rows)
     {
         if ($rows) {
@@ -96,6 +125,12 @@ class YdCsv
 
     }
 
+    /**
+     * @param $keyValueArray
+     * @param string $delimiter
+     * @param string $enclosure
+     * @param string $filename
+     */
     static function outputCSVFromKeyValueArray($keyValueArray, $delimiter = ",", $enclosure = "\"", $filename = "csvreport.csv")
     {
         $arrayWithCaptions = self::putCaptionsOnCSVArray($keyValueArray);
@@ -105,6 +140,11 @@ class YdCsv
 
     //echo "<br/> result is $result <br/>";
 
+    /**
+     * @param $fileName
+     * @param string $delimiter
+     * @return array
+     */
     static function csvToArray($fileName, $delimiter = ",")
     {
         $handle = fopen($fileName, "r");
