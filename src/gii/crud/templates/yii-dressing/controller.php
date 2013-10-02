@@ -92,27 +92,11 @@ echo "\n";
 if (in_array('deleted', CHtml::listData($this->tableSchema->columns, 'name', 'name'))) {
     echo "        // check for deleted " . $this->modelClass . "\n";
     echo "        if (\$" . lcfirst($this->modelClass) . "->deleted) {\n";
-    echo "            Yii::app()->user->addFlash('THIS RECORD IS DELETED', 'warning');\n";
+    echo "            Yii::app()->user->addFlash(Yii::t('app', '" . $this->modelClass . " is deleted!'), 'warning');\n";
     echo "        }\n";
     echo "\n";
 }
 echo "        \$this->render('view', array(\n";
-echo "            '" . lcfirst($this->modelClass) . "' => \$" . lcfirst($this->modelClass) . ",\n";
-echo "        ));\n";
-echo "    }\n";
-echo "\n";
-
-// log
-echo "    /**\n";
-echo "     * Log\n";
-echo "     * @param \$id\n";
-echo "     */\n";
-echo "    public function actionLog(\$id)\n";
-echo "    {\n";
-echo "        /** @var \$" . lcfirst($this->modelClass) . " " . $this->modelClass . " */\n";
-echo "        \$" . lcfirst($this->modelClass) . " = \$this->loadModel(\$id);\n";
-echo "\n";
-echo "        \$this->render('log', array(\n";
 echo "            '" . lcfirst($this->modelClass) . "' => \$" . lcfirst($this->modelClass) . ",\n";
 echo "        ));\n";
 echo "    }\n";
@@ -133,7 +117,7 @@ echo "            if (\$" . lcfirst($this->modelClass) . "->save()) {\n";
 echo "                Yii::app()->user->addFlash(strtr('" . $this->modelClass . " :name has been created.', array(':name' => \$" . lcfirst($this->modelClass) . "->getName())), 'success');\n";
 echo "                \$this->redirect(Yii::app()->returnUrl->getUrl(\$" . lcfirst($this->modelClass) . "->getUrl()));\n";
 echo "            }\n";
-echo "            Yii::app()->user->addFlash(Yii::t('app', '" . $this->modelClass . " could not be created.'), 'warning');\n";
+echo "            //Yii::app()->user->addFlash(Yii::t('app', '" . $this->modelClass . " could not be created.'), 'warning');\n";
 echo "        }\n";
 echo "        else {\n";
 echo "            if (isset(\$_GET['" . $this->modelClass . "'])) {\n";
@@ -164,7 +148,7 @@ echo "            if (\$" . lcfirst($this->modelClass) . "->save()) {\n";
 echo "                Yii::app()->user->addFlash(strtr('" . $this->modelClass . " :name has been updated.', array(':name' => \$" . lcfirst($this->modelClass) . "->getName())), 'success');\n";
 echo "                \$this->redirect(Yii::app()->returnUrl->getUrl(\$" . lcfirst($this->modelClass) . "->getUrl()));\n";
 echo "            }\n";
-echo "            Yii::app()->user->addFlash(Yii::t('app', '" . $this->modelClass . " could not be updated.'), 'warning');\n";
+echo "            //Yii::app()->user->addFlash(Yii::t('app', '" . $this->modelClass . " could not be updated.'), 'warning');\n";
 echo "        }\n";
 echo "\n";
 echo "        \$this->render('update', array(\n";
