@@ -10,7 +10,8 @@
  *
  * @version 0.5
  */
-class EEavBehavior extends CActiveRecordBehavior {
+class EEavBehavior extends CActiveRecordBehavior
+{
     /**
      * @access public
      * @var string name of the table where data is stored. Required to be set on init behavior.
@@ -100,7 +101,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @access protected
      * @return mixed
      */
-    protected function getModelId() {
+    protected function getModelId()
+    {
         return $this->getOwner()->{$this->getModelTableFk()};
     }
 
@@ -109,7 +111,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @access protected
      * @return string
      */
-    protected function getCacheKey() {
+    protected function getCacheKey()
+    {
         return __CLASS__ . $this->tableName . $this->attributesPrefix . $this->getOwner()->tableName() . $this->getModelId();
     }
 
@@ -118,7 +121,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param string owner model FK name.
      * @return void
      */
-    public function setModelTableFk($modelTableFk) {
+    public function setModelTableFk($modelTableFk)
+    {
         if (is_string($modelTableFk) && !empty($modelTableFk)) {
             $this->modelTableFk = $modelTableFk;
         }
@@ -130,12 +134,13 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @throws CException
      * @return string
      */
-    protected function getModelTableFk() {
+    protected function getModelTableFk()
+    {
         // Check required property modelTableFk.
         if (empty($this->modelTableFk) || !$this->getOwner()->hasAttribute($this->modelTableFk)) {
             // If property modelTableFk not set, trying to get a primary key from model table.
             $this->modelTableFk = $this->getOwner()->getTableSchema()->primaryKey;
-            if(!is_string($this->modelTableFk)) {
+            if (!is_string($this->modelTableFk)) {
                 throw new CException(Yii::t('yiiext', 'Table "{table}" does not have a primary key defined.',
                     array('{table}' => $this->getOwner()->getTableSchema())));
             }
@@ -149,7 +154,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param string attribute key
      * @return string
      */
-    protected function stripPrefix($attribute) {
+    protected function stripPrefix($attribute)
+    {
         // Remove prefix if exists.
         if (!empty($this->attributesPrefix) && strpos($attribute, $this->attributesPrefix) === 0) {
             $attribute = substr($attribute, strlen($this->attributesPrefix));
@@ -162,7 +168,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param array safe attributes.
      * @return void
      */
-    public function setSafeAttributes($safeAttributes) {
+    public function setSafeAttributes($safeAttributes)
+    {
         $this->safeAttributes->copyFrom($safeAttributes);
     }
 
@@ -171,7 +178,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @access protected
      * @return array
      */
-    protected function getSafeAttributesArray() {
+    protected function getSafeAttributesArray()
+    {
         return $this->safeAttributes->count() == 0 ? $this->attributes->keys : $this->safeAttributes->toArray();
     }
 
@@ -180,7 +188,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param string attribute key
      * @return boolean
      */
-    protected function hasSafeAttribute($attribute) {
+    protected function hasSafeAttribute($attribute)
+    {
         if ($this->safeAttributes->count() > 0) {
             return $this->safeAttributes->contains($attribute);
         }
@@ -190,7 +199,8 @@ class EEavBehavior extends CActiveRecordBehavior {
     /**
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         // Prepare attributes collection.
         $this->attributes = new CAttributeCollection;
         $this->attributes->caseSensitive = TRUE;
@@ -205,7 +215,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param CComponent
      * @return void
      */
-    public function attach($owner) {
+    public function attach($owner)
+    {
         // Check required property tableName.
         if (!is_string($this->tableName) || empty($this->tableName)) {
             throw new CException(Yii::t('yii', 'Property "{class}.{property}" is not defined.',
@@ -234,7 +245,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param CEvent
      * @return void
      */
-    public function afterSave($event) {
+    public function afterSave($event)
+    {
         // TODO afterSave не срабатывает если модель не была изменена
 
         // Save changed attributes.
@@ -249,7 +261,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param CEvent
      * @return void
      */
-    public function afterDelete($event) {
+    public function afterDelete($event)
+    {
         // Delete all attributes.
         $this->deleteEavAttributes(array(), TRUE);
         // Call parent method for convenience.
@@ -260,7 +273,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param CEvent
      * @return void
      */
-    public function afterFind($event) {
+    public function afterFind($event)
+    {
         // Load attributes for model.
         if ($this->preload) {
             $this->loadEavAttributes($this->getSafeAttributesArray());
@@ -273,7 +287,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param array attributes key for save.
      * @return CActiveRecord
      */
-    public function saveEavAttributes($attributes) {
+    public function saveEavAttributes($attributes)
+    {
         // Delete old attributes values from DB.
         $this->getDeleteCommand($attributes)->execute();
         // Process each attributes.
@@ -309,7 +324,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param array attributes key for load.
      * @return CActiveRecord
      */
-    public function loadEavAttributes($attributes) {
+    public function loadEavAttributes($attributes)
+    {
         // If exists cache, return it.
         $data = $this->cache->get($this->getCacheKey());
         if ($data !== FALSE) {
@@ -318,7 +334,7 @@ class EEavBehavior extends CActiveRecordBehavior {
         }
         // Query DB.
         $data = $this->getLoadEavAttributesCommand($attributes)->query();
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $attribute = $this->stripPrefix($row[$this->attributeField]);
             $value = $row[$this->valueField];
             // Check if value exists.
@@ -338,7 +354,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param boolean whether auto save attributes.
      * @return CActiveRecord
      */
-    public function deleteEavAttributes($attributes = array(), $save = FALSE) {
+    public function deleteEavAttributes($attributes = array(), $save = FALSE)
+    {
         // If not set attributes for deleting, delete all.
         if (empty($attributes)) {
             $attributes = $this->attributes->keys;
@@ -361,7 +378,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param boolean whether auto save attributes.
      * @return CActiveRecord
      */
-    public function setEavAttributes($attributes, $save = FALSE) {
+    public function setEavAttributes($attributes, $save = FALSE)
+    {
         foreach ($attributes as $attribute => $value) {
             $this->attributes->add($attribute, $value);
             $this->changedAttributes->add($attribute);
@@ -380,7 +398,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param boolean whether auto save attributes.
      * @return CActiveRecord
      */
-    public function setEavAttribute($attribute, $value, $save = FALSE) {
+    public function setEavAttribute($attribute, $value, $save = FALSE)
+    {
         return $this->setEavAttributes(array($attribute => $value), $save);
     }
 
@@ -388,7 +407,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param array attributes key for get.
      * @return array
      */
-    public function getEavAttributes($attributes = array()) {
+    public function getEavAttributes($attributes = array())
+    {
         // Get all attributes if not specified.
         if (empty($attributes)) {
             $attributes = $this->getSafeAttributesArray();
@@ -424,7 +444,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param string attribute for get.
      * @return mixed
      */
-    public function getEavAttribute($attribute) {
+    public function getEavAttribute($attribute)
+    {
         $values = $this->getEavAttributes(array($attribute));
         return $this->attributes->itemAt($attribute);
     }
@@ -434,7 +455,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param array attributes values or key for filter models.
      * @return CActiveRecord
      */
-    public function withEavAttributes($attributes = array()) {
+    public function withEavAttributes($attributes = array())
+    {
         // If not set attributes, search models with anything attributes exists.
         if (empty($attributes)) {
             $attributes = $this->getSafeAttributesArray();
@@ -453,7 +475,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param  $value
      * @return CDbCommand
      */
-    protected function getSaveEavAttributeCommand($attribute, $value) {
+    protected function getSaveEavAttributeCommand($attribute, $value)
+    {
         $data = array(
             $this->entityField => $this->getModelId(),
             $this->attributeField => $attribute,
@@ -469,7 +492,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param  $attributes
      * @return CDbCommand
      */
-    protected function getLoadEavAttributesCommand($attributes) {
+    protected function getLoadEavAttributesCommand($attributes)
+    {
         return $this->getOwner()
             ->getCommandBuilder()
             ->createFindCommand($this->tableName, $this->getLoadEavAttributesCriteria($attributes));
@@ -480,7 +504,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param  $attributes
      * @return CDbCommand
      */
-    protected function getDeleteCommand($attributes = array()) {
+    protected function getDeleteCommand($attributes = array())
+    {
         return $this->getOwner()
             ->getCommandBuilder()
             ->createDeleteCommand($this->tableName, $this->getDeleteEavAttributesCriteria($attributes));
@@ -491,7 +516,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param  $attributes
      * @return CDbCriteria
      */
-    protected function getLoadEavAttributesCriteria($attributes = array()) {
+    protected function getLoadEavAttributesCriteria($attributes = array())
+    {
         $criteria = new CDbCriteria;
         $criteria->addCondition("{$this->entityField} = {$this->getModelId()}");
         if (!empty($attributes)) {
@@ -505,7 +531,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param  $attributes
      * @return CDbCriteria
      */
-    protected function getDeleteEavAttributesCriteria($attributes = array()) {
+    protected function getDeleteEavAttributesCriteria($attributes = array())
+    {
         return $this->getLoadEavAttributesCriteria($attributes);
     }
 
@@ -514,7 +541,8 @@ class EEavBehavior extends CActiveRecordBehavior {
      * @param  $attributes
      * @return CDbCriteria
      */
-    protected function getFindByEavAttributesCriteria($attributes){
+    protected function getFindByEavAttributesCriteria($attributes)
+    {
         $criteria = new CDbCriteria();
         $pk = $this->getModelTableFk();
 
@@ -528,9 +556,9 @@ class EEavBehavior extends CActiveRecordBehavior {
                 foreach ($values as $value) {
                     $value = $conn->quoteValue($value);
                     $criteria->join .= "\nJOIN {$this->tableName} eavb$i"
-                                    .  "\nON t.{$pk} = eavb$i.{$this->entityField}"
-                                    .  "\nAND eavb$i.{$this->attributeField} = $attribute"
-                                    .  "\nAND eavb$i.{$this->valueField} = $value";
+                        . "\nON t.{$pk} = eavb$i.{$this->entityField}"
+                        . "\nAND eavb$i.{$this->attributeField} = $attribute"
+                        . "\nAND eavb$i.{$this->valueField} = $value";
                     $i++;
                 }
             }
@@ -538,8 +566,8 @@ class EEavBehavior extends CActiveRecordBehavior {
             elseif (is_int($attribute)) {
                 $values = $conn->quoteValue($values);
                 $criteria->join .= "\nJOIN {$this->tableName} eavb$i"
-                                .  "\nON t.{$pk} = eavb$i.{$this->entityField}"
-                                .  "\nAND eavb$i.{$this->attributeField} = $values";
+                    . "\nON t.{$pk} = eavb$i.{$this->entityField}"
+                    . "\nAND eavb$i.{$this->attributeField} = $values";
                 $i++;
             }
         }

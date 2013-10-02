@@ -81,7 +81,7 @@ class YdCacheBehavior extends CActiveRecordBehavior
     private function getCacheKeyPrefix($removeOldKey = false)
     {
         $key = 'getCacheKeyPrefix.' . get_class($this->owner) . '.' . $this->owner->getPrimaryKeyString();
-		$prefix = $removeOldKey ? false : Yii::app()->cache->get($key);
+        $prefix = $removeOldKey ? false : Yii::app()->cache->get($key);
         if (!$prefix) {
             $prefix = uniqid();
             Yii::app()->cache->set($key, $prefix);
@@ -103,10 +103,10 @@ class YdCacheBehavior extends CActiveRecordBehavior
      */
     public function beforeDelete($event)
     {
-		// touch to allow afterDelete() to clearCache()
+        // touch to allow afterDelete() to clearCache()
         foreach ($this->cacheRelations as $cacheRelation)
             $this->owner->$cacheRelation;
-		parent::beforeDelete($event);
+        parent::beforeDelete($event);
     }
 
     /**
@@ -115,8 +115,8 @@ class YdCacheBehavior extends CActiveRecordBehavior
     public function afterDelete($event)
     {
         $this->clearCache();
-		parent::afterDelete($event);
+        parent::afterDelete($event);
     }
-	
+
 
 }

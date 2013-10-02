@@ -33,7 +33,7 @@ class YdUserSignup extends YdFormModel
     public $remember_me;
 
     /**
-     * @var UserIdentity
+     * @var YdUserIdentity
      */
     private $_identity;
 
