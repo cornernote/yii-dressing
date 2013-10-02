@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'attachment'
  *
- * @method Attachment with() with()
- * @method Attachment find() find($condition, array $params = array())
- * @method Attachment[] findAll() findAll($condition = '', array $params = array())
- * @method Attachment findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method Attachment[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method Attachment findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Attachment[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Attachment findBySql() findBySql($sql, array $params = array())
- * @method Attachment[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdAttachment with() with()
+ * @method YdAttachment find() find($condition, array $params = array())
+ * @method YdAttachment[] findAll() findAll($condition = '', array $params = array())
+ * @method YdAttachment findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdAttachment[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdAttachment findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdAttachment[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdAttachment findBySql() findBySql($sql, array $params = array())
+ * @method YdAttachment[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from table fields
  * @property integer $id
@@ -56,7 +56,7 @@ class YdAttachment extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return Attachment the static model class
+     * @return YdAttachment the static model class
      */
     public static function model($className = __CLASS__)
     {

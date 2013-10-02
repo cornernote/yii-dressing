@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'email_spool'
  *
- * @method EmailSpool with() with()
- * @method EmailSpool find() find($condition, array $params = array())
- * @method EmailSpool[] findAll() findAll($condition = '', array $params = array())
- * @method EmailSpool findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method EmailSpool[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method EmailSpool findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method EmailSpool[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method EmailSpool findBySql() findBySql($sql, array $params = array())
- * @method EmailSpool[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdEmailSpool with() with()
+ * @method YdEmailSpool find() find($condition, array $params = array())
+ * @method YdEmailSpool[] findAll() findAll($condition = '', array $params = array())
+ * @method YdEmailSpool findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdEmailSpool[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdEmailSpool findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdEmailSpool[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdEmailSpool findBySql() findBySql($sql, array $params = array())
+ * @method YdEmailSpool[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Methods from behavior SoftDeleteBehavior
  * @method undelete() undelete()
@@ -21,7 +21,7 @@
  * @method notdeleteds() notdeleteds()
  *
  * Properties from relation
- * @property Attachment[] $attachment
+ * @property YdAttachment[] $attachment
  *
  * Properties from table fields
  * @property integer $id
@@ -53,7 +53,7 @@ class YdEmailSpool extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return EmailSpool the static model class
+     * @return YdEmailSpool the static model class
      */
     public static function model($className = __CLASS__)
     {

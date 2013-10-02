@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'user_to_role'
  *
- * @method UserToRole with() with()
- * @method UserToRole find() find($condition, array $params = array())
- * @method UserToRole[] findAll() findAll($condition = '', array $params = array())
- * @method UserToRole findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method UserToRole[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method UserToRole findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method UserToRole[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method UserToRole findBySql() findBySql($sql, array $params = array())
- * @method UserToRole[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdUserToRole with() with()
+ * @method YdUserToRole find() find($condition, array $params = array())
+ * @method YdUserToRole[] findAll() findAll($condition = '', array $params = array())
+ * @method YdUserToRole findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdUserToRole[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdUserToRole findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdUserToRole[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdUserToRole findBySql() findBySql($sql, array $params = array())
+ * @method YdUserToRole[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from table fields
  * @property string $id
@@ -28,7 +28,7 @@ class YdUserToRole extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return UserToRole the static model class
+     * @return YdUserToRole the static model class
      */
     public static function model($className = __CLASS__)
     {

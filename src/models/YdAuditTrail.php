@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'audit_trail'
  *
- * @method AuditTrail with() with()
- * @method AuditTrail find() find($condition, array $params = array())
- * @method AuditTrail[] findAll() findAll($condition = '', array $params = array())
- * @method AuditTrail findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method AuditTrail[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method AuditTrail findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method AuditTrail[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method AuditTrail findBySql() findBySql($sql, array $params = array())
- * @method AuditTrail[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdAuditTrail with() with()
+ * @method YdAuditTrail find() find($condition, array $params = array())
+ * @method YdAuditTrail[] findAll() findAll($condition = '', array $params = array())
+ * @method YdAuditTrail findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdAuditTrail[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdAuditTrail findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdAuditTrail[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdAuditTrail findBySql() findBySql($sql, array $params = array())
+ * @method YdAuditTrail[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from relation
  * @property YdUser $user
@@ -39,7 +39,7 @@ class YdAuditTrail extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return AuditTrail the static model class
+     * @return YdAuditTrail the static model class
      */
     public static function model($className = __CLASS__)
     {

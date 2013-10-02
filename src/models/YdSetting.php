@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'setting'
  *
- * @method Setting with() with()
- * @method Setting find() find($condition, array $params = array())
- * @method Setting[] findAll() findAll($condition = '', array $params = array())
- * @method Setting findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method Setting[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method Setting findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Setting[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Setting findBySql() findBySql($sql, array $params = array())
- * @method Setting[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdSetting with() with()
+ * @method YdSetting find() find($condition, array $params = array())
+ * @method YdSetting[] findAll() findAll($condition = '', array $params = array())
+ * @method YdSetting findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdSetting[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdSetting findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdSetting[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdSetting findBySql() findBySql($sql, array $params = array())
+ * @method YdSetting[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Methods from behavior EavBehavior
  * @method CActiveRecord loadEavAttributes() loadEavAttributes(array $attributes)
@@ -44,7 +44,7 @@ class YdSetting extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return Setting the static model class
+     * @return YdSetting the static model class
      */
     public static function model($className = __CLASS__)
     {

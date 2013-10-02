@@ -4,15 +4,15 @@
  *
  * This is the model class for table 'lookup'
  *
- * @method Lookup with() with()
- * @method Lookup find() find($condition, array $params = array())
- * @method Lookup[] findAll() findAll($condition = '', array $params = array())
- * @method Lookup findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method Lookup[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method Lookup findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Lookup[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Lookup findBySql() findBySql($sql, array $params = array())
- * @method Lookup[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdLookup with() with()
+ * @method YdLookup find() find($condition, array $params = array())
+ * @method YdLookup[] findAll() findAll($condition = '', array $params = array())
+ * @method YdLookup findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdLookup[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdLookup findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdLookup[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdLookup findBySql() findBySql($sql, array $params = array())
+ * @method YdLookup[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Methods from behavior SoftDeleteBehavior
  * @method undelete() undelete()
@@ -41,7 +41,7 @@ class YdLookup extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Lookup the static model class
+     * @return YdLookup the static model class
      */
     public static function model($className = __CLASS__)
     {

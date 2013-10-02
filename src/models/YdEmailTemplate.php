@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'email_template'
  *
- * @method EmailTemplate with() with()
- * @method EmailTemplate find() find($condition, array $params = array())
- * @method EmailTemplate[] findAll() findAll($condition = '', array $params = array())
- * @method EmailTemplate findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method EmailTemplate[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method EmailTemplate findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method EmailTemplate[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method EmailTemplate findBySql() findBySql($sql, array $params = array())
- * @method EmailTemplate[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdEmailTemplate with() with()
+ * @method YdEmailTemplate find() find($condition, array $params = array())
+ * @method YdEmailTemplate[] findAll() findAll($condition = '', array $params = array())
+ * @method YdEmailTemplate findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdEmailTemplate[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdEmailTemplate findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdEmailTemplate[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdEmailTemplate findBySql() findBySql($sql, array $params = array())
+ * @method YdEmailTemplate[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from table fields
  * @property integer $id
@@ -35,7 +35,7 @@ class YdEmailTemplate extends YdActiveRecord
      *
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return EmailTemplate the static model class
+     * @return YdEmailTemplate the static model class
      */
     public static function model($className = __CLASS__)
     {

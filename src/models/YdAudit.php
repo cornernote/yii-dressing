@@ -87,7 +87,7 @@ class YdAudit extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return Audit the static model class
+     * @return YdAudit the static model class
      */
     public static function model($className = __CLASS__)
     {

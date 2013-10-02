@@ -4,15 +4,15 @@
  *
  * This is the model class for table 'contact_us'
  *
- * @method ContactUs with() with()
- * @method ContactUs find() find($condition, array $params = array())
- * @method ContactUs[] findAll() findAll($condition = '', array $params = array())
- * @method ContactUs findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method ContactUs[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method ContactUs findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method ContactUs[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method ContactUs findBySql() findBySql($sql, array $params = array())
- * @method ContactUs[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdContactUs with() with()
+ * @method YdContactUs find() find($condition, array $params = array())
+ * @method YdContactUs[] findAll() findAll($condition = '', array $params = array())
+ * @method YdContactUs findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdContactUs[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdContactUs findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdContactUs[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdContactUs findBySql() findBySql($sql, array $params = array())
+ * @method YdContactUs[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from table fields
  * @property integer $id
@@ -34,7 +34,7 @@ class YdContactUs extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return ContactUs the static model class
+     * @return YdContactUs the static model class
      */
     public static function model($className = __CLASS__)
     {

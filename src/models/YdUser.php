@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'user'
  *
- * @method User with() with()
- * @method User find() find($condition, array $params = array())
- * @method User[] findAll() findAll($condition = '', array $params = array())
- * @method User findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method User[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method User findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method User[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method User findBySql() findBySql($sql, array $params = array())
- * @method User[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdUser with() with()
+ * @method YdUser find() find($condition, array $params = array())
+ * @method YdUser[] findAll() findAll($condition = '', array $params = array())
+ * @method YdUser findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdUser[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdUser findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdUser[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdUser findBySql() findBySql($sql, array $params = array())
+ * @method YdUser[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Methods from behavior SoftDeleteBehavior
  * @method undelete() undelete()
@@ -33,8 +33,8 @@
  * @method CActiveRecord withEavAttributes() withEavAttributes($attributes = array())
  *
  * Properties from relation
- * @property Role[] $role
- * @property UserToRole[] $userToRole
+ * @property YdRole[] $role
+ * @property YdUserToRole[] $userToRole
  *
  * Properties from table fields
  * @property string $id
@@ -63,7 +63,7 @@ class YdUser extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return User the static model class
+     * @return YdUser the static model class
      */
     public static function model($className = __CLASS__)
     {

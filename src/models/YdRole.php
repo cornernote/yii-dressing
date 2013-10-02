@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'role'
  *
- * @method Role with() with()
- * @method Role find() find($condition, array $params = array())
- * @method Role[] findAll() findAll($condition = '', array $params = array())
- * @method Role findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method Role[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method Role findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Role[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Role findBySql() findBySql($sql, array $params = array())
- * @method Role[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdRole with() with()
+ * @method YdRole find() find($condition, array $params = array())
+ * @method YdRole[] findAll() findAll($condition = '', array $params = array())
+ * @method YdRole findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdRole[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdRole findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdRole[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdRole findBySql() findBySql($sql, array $params = array())
+ * @method YdRole[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from table fields
  * @property string $id
@@ -32,7 +32,7 @@ class YdRole extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return Role the static model class
+     * @return YdRole the static model class
      */
     public static function model($className = __CLASS__)
     {

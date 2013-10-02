@@ -5,15 +5,15 @@
  *
  * This is the model class for table 'token'
  *
- * @method Token with() with()
- * @method Token find() find($condition, array $params = array())
- * @method Token[] findAll() findAll($condition = '', array $params = array())
- * @method Token findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method Token[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method Token findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Token[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method Token findBySql() findBySql($sql, array $params = array())
- * @method Token[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdToken with() with()
+ * @method YdToken find() find($condition, array $params = array())
+ * @method YdToken[] findAll() findAll($condition = '', array $params = array())
+ * @method YdToken findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdToken[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdToken findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdToken[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdToken findBySql() findBySql($sql, array $params = array())
+ * @method YdToken[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Properties from table fields
  * @property integer $id
@@ -33,7 +33,7 @@ class YdToken extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className
-     * @return Token the static model class
+     * @return YdToken the static model class
      */
     public static function model($className = __CLASS__)
     {
@@ -69,10 +69,10 @@ class YdToken extends YdActiveRecord
     public function add($expires, $uses_allowed, $relation)
     {
         $plain = md5($this->hashToken(uniqid(true)));
-        $token = new Token();
+        $token = new YdToken();
         $token->uses_allowed = $uses_allowed;
         $token->uses_remaining = $uses_allowed;
-        $token->expires = Time::datetime($expires);
+        $token->expires = YdTime::datetime($expires);
         $token->model = !empty($relation['model']) ? $relation['model'] : '';
         $token->model_id = !empty($relation['model_id']) ? $relation['model_id'] : '';
         $token->token = $this->hashToken($plain);
@@ -85,7 +85,7 @@ class YdToken extends YdActiveRecord
      * @param $model
      * @param $model_id
      * @param $plain
-     * @return Token
+     * @return YdToken
      */
     public function checkToken($model, $model_id, $plain)
     {
@@ -145,7 +145,7 @@ class YdToken extends YdActiveRecord
         if (!$plain || !$encrypted) {
             return false;
         }
-        $ph = new PasswordHash(8, false);
+        $ph = new YdPasswordHash(8, false);
         return $ph->CheckPassword($plain, $encrypted);
     }
 
@@ -155,7 +155,7 @@ class YdToken extends YdActiveRecord
      */
     public function hashToken($plain)
     {
-        $ph = new PasswordHash(8, false);
+        $ph = new YdPasswordHash(8, false);
         return $ph->HashPassword($plain);
     }
 
