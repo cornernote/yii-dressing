@@ -40,12 +40,12 @@ install composer
 curl -sS https://getcomposer.org/installer | php
 ```
 
-install packages, edit `composer.json` then
+install packages
 ```
 php composer install
 ```
 
-update packages to latest versions, edit `composer.json` then
+update packages to latest versions
 ```
 php composer update
 ```
