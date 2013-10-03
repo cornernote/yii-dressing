@@ -62,7 +62,7 @@ class SettingController extends YdWebController
 
             // begin transaction
             $error = false;
-            $transaction = YdSetting::model()->beginTransaction();
+            $transaction = YdSetting::model()->getDbConnection()->beginTransaction();
 
             // save settings
             foreach ($_POST['YdSetting'] as $key => $value) {
@@ -78,7 +78,7 @@ class SettingController extends YdWebController
                 $transaction->commit();
 
                 // clear cache
-                Yii::app()->cache()->flush();
+                Yii::app()->cache->flush();
 
                 // flash and redirect
                 Yii::app()->user->addFlash(Yii::t('dressing', 'Settings have been saved.'), 'success');
