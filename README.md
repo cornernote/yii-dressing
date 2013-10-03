@@ -42,12 +42,12 @@ curl -sS https://getcomposer.org/installer | php
 
 install packages
 ```
-php composer install
+php composer.phar install
 ```
 
 update packages to latest versions
 ```
-php composer update
+php composer.phar update
 ```
 
 ## Usage
