@@ -36,6 +36,11 @@ class YdWebController extends YdController
     /**
      * @var
      */
+    public $pageSubheading;
+
+    /**
+     * @var
+     */
     public $pageIcon;
 
     /**
