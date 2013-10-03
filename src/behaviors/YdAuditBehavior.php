@@ -169,7 +169,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
             return $this->_auditModel;
         if (method_exists($this->owner, 'getAuditModel'))
             return $this->auditModel = call_user_func(array($this->owner, 'getAuditModel'));
-        return $this->auditModel = $this->owner;
+        return $this->_auditModel = $this->owner;
     }
 
     /**
