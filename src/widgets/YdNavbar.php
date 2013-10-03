@@ -22,11 +22,6 @@ class YdNavbar extends TbNavbar
      */
     public function run()
     {
-        // fix bootstrap padding on top with responsive views
-        if (Yii::app()->controller->showNavBar) {
-            Yii::app()->clientScript->registerCSS('fix-navbar-body-padding', 'body{padding-top:60px;} @media (max-width: 979px){ body{padding-top:0;} }');
-        }
-
         $this->htmlOptions['id'] = $this->id;
         $this->brandOptions['id'] = 'brand';
 

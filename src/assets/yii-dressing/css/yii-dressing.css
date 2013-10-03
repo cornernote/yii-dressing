@@ -44,6 +44,16 @@
     Navbar Menu
 *********************/
 
+body {
+    padding-top: 60px;
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0;
+    }
+}
+
 #navbar .nav li:hover ul,
 #navbar .navbutton:hover ul {
     display: block;
