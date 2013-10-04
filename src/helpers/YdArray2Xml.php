@@ -29,6 +29,8 @@
  * Usage:
  *       $xml = Array2XML::createXML('root_node_name', $php_array);
  *       echo $xml->saveXML();
+ *
+ * @package dressing.helpers
  */
 
 class YdArray2Xml

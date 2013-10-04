@@ -42,8 +42,8 @@
  * ReCaptchaValidator should be used together with {@link ReCaptcha}.
  *
  * @author MetaYii
- * @package application.extensions.recaptcha
- * @since 1.1
+ *
+ * @package dressing.validators
  */
 class YdReCaptchaValidator extends CValidator
 {

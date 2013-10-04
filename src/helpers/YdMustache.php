@@ -11,6 +11,8 @@
  * This is very, very rad.
  *
  * @author Justin Hileman {@link http://justinhileman.com}
+ *
+ * @package dressing.helpers
  */
 class YdMustache {
 

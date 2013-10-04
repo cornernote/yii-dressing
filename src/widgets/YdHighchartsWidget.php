@@ -66,6 +66,8 @@
  * is shown in many of the examples on the Highcharts website. This value is
  * automatically populated with the id of the widget's container element. If you
  * wish to use a different container, feel free to specify a custom value.
+ *
+ * @package dressing.widgets
  */
 class YdHighchartsWidget extends CWidget
 {

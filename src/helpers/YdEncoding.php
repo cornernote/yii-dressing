@@ -30,11 +30,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 /**
  * @author   "Sebastián Grignoli" <grignoli@framework2.com.ar>
- * @package  Encoding
  * @version  1.2
  * @link     https://github.com/neitanod/forceutf8
  * @example  https://github.com/neitanod/forceutf8
  * @license  Revised BSD
+ *
+ * @package dressing.helpers
   */
 
 //namespace ForceUTF8;

@@ -6,6 +6,8 @@
  * @link http://www.haxtech.se
  * @copyright Copyright 2010 Haxtech
  * @license GNU GPL
+ *
+ * @package dressing.helpers
  */
 class YdSwiftMailer
 {

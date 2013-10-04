@@ -5,16 +5,17 @@
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
- * @copyright 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Mr PHP
  * @link https://github.com/cornernote/yii-dressing
  * @license http://www.gnu.org/copyleft/gpl.html
+ *
+ * @package dressing.components
  */
 class YdClientScript extends CClientScript
 {
 
     /**
      * @var array the registered CSS files (CSS URL=>media type).
-     * @since 1.0.4
      */
     protected $cssFiles = array();
     /**
@@ -32,7 +33,6 @@ class YdClientScript extends CClientScript
     protected $cssOrder = array();
     /**
      * @var array the registered JavaScript files (position, key => URL)
-     * @since 1.0.4
      */
     protected $scriptFiles = array();
     /**
@@ -41,7 +41,6 @@ class YdClientScript extends CClientScript
     protected $scriptFilesOrder = array();
     /**
      * @var array the registered JavaScript code blocks (position, key => code)
-     * @since 1.0.5
      */
     public $scripts = array();
     /**

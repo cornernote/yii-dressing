@@ -16,6 +16,8 @@
  *
  * Usage:
  *       $array = XML2Array::createArray($xml);
+ *
+ * @package dressing.helpers
  */
 
 class YdXml2Array
