@@ -1,6 +1,6 @@
 <?php
 
-Yii::import('zii.widgets.grid.CGridColumn');
+Yii::import('zii.widgets.grid.CDataColumn');
 
 /**
  * ItemPriceFieldColumn
