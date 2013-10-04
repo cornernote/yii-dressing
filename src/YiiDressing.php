@@ -38,6 +38,15 @@ class YiiDressing extends CApplicationComponent
     private $_assetsUrl;
 
     /**
+     * @return string
+     */
+	public static function getVersion()
+	{
+		return 'dev';
+		//return '0.0.1';
+	}
+	
+    /**
      *
      */
     public function init()
