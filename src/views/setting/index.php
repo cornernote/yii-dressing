@@ -46,6 +46,13 @@ echo $form->textFieldRow($settings['memory_limit'], 'value', array('name' => 'Yd
 echo $form->textFieldRow($settings['time_limit'], 'value', array('name' => 'YdSetting[time_limit][value]', 'labelOptions' => array('for' => 'YdSetting_time_limit_value')));
 echo '</fieldset>';
 
+echo '<fieldset><legend>' . Yii::t('dressing', 'Path Settings') . '</legend>';
+echo $form->textFieldRow($settings['script_path'], 'value', array('name' => 'Setting[script_path][value]'));
+echo $form->textFieldRow($settings['script_url'], 'value', array('name' => 'Setting[script_url][value]'));
+echo $form->textFieldRow($settings['server_name'], 'value', array('name' => 'Setting[server_name][value]'));
+echo '</fieldset>';
+
+
 echo '<h2>' . Yii::t('dressing', 'App Settings') . '</h2>';
 
 echo '<fieldset><legend>' . Yii::t('dressing', 'PHP Settings') . '</legend>';
