@@ -92,6 +92,12 @@ class SettingController extends YdWebController
             Yii::app()->user->addFlash(Yii::t('dressing', 'Settings could not be saved.'), 'error');
 
         }
+        // no data posted
+        else {
+            $settings['script_path']->value = $settings['script_path']->value ? $settings['script_path']->value : dirname($_SERVER['SCRIPT_FILENAME']);
+            $settings['script_url']->value = $settings['script_url']->value ? $settings['script_url']->value : dirname($_SERVER['SCRIPT_NAME']);
+            $settings['server_name']->value = $settings['server_name']->value ? $settings['server_name']->value : $_SERVER['SERVER_NAME'];
+        }
 
         $this->render('dressing.views.setting.index', array(
             'settings' => $settings,
