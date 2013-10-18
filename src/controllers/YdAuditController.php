@@ -11,7 +11,7 @@
  *
  * @package dressing.controllers
  */
-class AuditController extends YdWebController
+class YdAuditController extends YdWebController
 {
 
     /**

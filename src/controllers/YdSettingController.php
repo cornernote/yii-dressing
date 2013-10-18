@@ -11,7 +11,7 @@
  *
  * @package dressing.controllers
  */
-class SettingController extends YdWebController
+class YdSettingController extends YdWebController
 {
 
     /**

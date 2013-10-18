@@ -10,7 +10,7 @@
  *
  * @package dressing.controllers
  */
-class ContactUsController extends YdWebController
+class YdContactUsController extends YdWebController
 {
 
     /**

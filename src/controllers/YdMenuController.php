@@ -10,7 +10,7 @@
  *
  * @package dressing.controllers
  */
-class MenuController extends YdWebController
+class YdMenuController extends YdWebController
 {
 
     /**

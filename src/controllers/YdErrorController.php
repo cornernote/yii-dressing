@@ -11,7 +11,7 @@
  *
  * @package dressing.controllers
  */
-class ErrorController extends YdWebController
+class YdErrorController extends YdWebController
 {
 
     /**

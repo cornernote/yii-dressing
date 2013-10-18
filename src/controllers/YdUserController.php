@@ -11,7 +11,7 @@
  *
  * @package dressing.controllers
  */
-class UserController extends YdWebController
+class YdUserController extends YdWebController
 {
 
     /**

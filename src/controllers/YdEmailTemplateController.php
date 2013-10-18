@@ -11,7 +11,7 @@
  *
  * @package dressing.controllers
  */
-class EmailTemplateController extends YdWebController
+class YdEmailTemplateController extends YdWebController
 {
 
     /**

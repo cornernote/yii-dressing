@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AuditTrailController
+ * EmailSpoolController
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -11,7 +11,7 @@
  *
  * @package dressing.controllers
  */
-class AuditTrailController extends YdWebController
+class YdEmailSpoolController extends YdWebController
 {
 
     /**
@@ -23,7 +23,7 @@ class AuditTrailController extends YdWebController
     {
         return array(
             array('allow',
-                'actions' => array('index'),
+                'actions' => array('index', 'view'),
                 'roles' => array('admin'),
             ),
             array('deny', 'users' => array('*')),
@@ -31,13 +31,25 @@ class AuditTrailController extends YdWebController
     }
 
     /**
-     * Lists all AuditTrails.
+     * Lists all emailSpools.
      */
     public function actionIndex()
     {
-        $auditTrail = new YdAuditTrail('search');
-        $this->render('dressing.views.auditTrail.index', array(
-            'auditTrail' => $auditTrail,
+        $emailSpool = new YdEmailSpool('search');
+        $this->render('dressing.views.emailSpool.index', array(
+            'emailSpool' => $emailSpool,
+        ));
+    }
+
+    /**
+     * Displays a particular YdEmailSpool.
+     * @param integer $id the ID of the YdEmailSpool to be displayed
+     */
+    public function actionView($id)
+    {
+        $emailSpool = $this->loadModel($id, 'YdEmailSpool');
+        $this->render('dressing.views.emailSpool.view', array(
+            'emailSpool' => $emailSpool,
         ));
     }
 

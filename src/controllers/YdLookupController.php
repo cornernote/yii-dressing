@@ -10,7 +10,7 @@
  *
  * @package dressing.controllers
  */
-class LookupController extends YdWebController
+class YdLookupController extends YdWebController
 {
 
     /**

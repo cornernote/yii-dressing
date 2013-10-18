@@ -10,7 +10,7 @@
  *
  * @package dressing.controllers
  */
-class RoleController extends YdWebController
+class YdRoleController extends YdWebController
 {
 
     /**
