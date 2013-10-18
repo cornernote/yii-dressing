@@ -22,6 +22,7 @@ class YdDropdownColumn extends CDataColumn
     {
         $this->type = 'raw';
         $this->htmlOptions['nowrap'] = 'nowrap';
+        $this->htmlOptions['class'] = isset($this->htmlOptions['class']) ? $this->htmlOptions['class'] . ' dropdown-column' : 'dropdown-column';
     }
 
     /**

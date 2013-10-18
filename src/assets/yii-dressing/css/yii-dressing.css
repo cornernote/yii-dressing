@@ -437,3 +437,12 @@ ul.ui-sortable, ul.ui-sortable li {
     border-radius: 4px;
     line-height: inherit;
 }
+
+/*********************
+    Search
+*********************/
+
+.dropdown-column .btn-group, .dropdown-column .btn-group .btn:first-child {
+    width: 85%;
+    text-align: left;
+}
