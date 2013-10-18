@@ -49,7 +49,7 @@ class YdEavBehavior extends EEavBehavior
     protected function getSaveEavAttributeCommand($attribute, $value)
     {
         if ($this->getOwner()->asa('AuditBehavior')) {
-            $auditId = Audit::findCurrentId();
+            $auditId = YdAudit::findCurrentId();
             try {
                 $userid = Yii::app()->user->id;
             } catch (Exception $e) { //If we have no user object, this must be a command line program
@@ -60,7 +60,7 @@ class YdEavBehavior extends EEavBehavior
 
             // log in the audit trail
             if ($old != $new) {
-                $log = new AuditTrail();
+                $log = new YdAuditTrail();
                 $log->old_value = $old;
                 $log->new_value = $new;
                 $log->action = 'EAV SAVE';

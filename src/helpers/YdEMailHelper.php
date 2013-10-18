@@ -70,7 +70,7 @@ class YdEMailHelper
         $tos = explode(',', YdSetting::item('error_email'));
         foreach ($tos as $to) {
             $to = trim($to);
-            EmailSpool::model()->spool($to, $message, $relation);
+            YdEmailSpool::model()->spool($to, $message, $relation);
         }
     }
 
@@ -101,7 +101,7 @@ class YdEMailHelper
         }
 
         // save the email
-        $emailSpool = new EmailSpool;
+        $emailSpool = new YdEmailSpool;
         $emailSpool->status = 'pending';
         $emailSpool->from_email = YdSetting::item('email');
         $emailSpool->from_name = app()->name;
@@ -150,12 +150,12 @@ class YdEMailHelper
     static public function renderEmailTemplate($template, $viewParams = array())
     {
         // load layout
-        $emailLayout = EmailTemplate::model()->findByAttributes(array('name' => 'layout.default'));
+        $emailLayout = YdEmailTemplate::model()->findByAttributes(array('name' => 'layout.default'));
         if (!$emailLayout)
             throw new CException('missing EmailTemplate - layout.default');
 
         // load template
-        $emailTemplate = EmailTemplate::model()->findByAttributes(array('name' => $template));
+        $emailTemplate = YdEmailTemplate::model()->findByAttributes(array('name' => $template));
         if (!$emailTemplate)
             throw new CException('missing EmailTemplate - ' . $template);
 
@@ -164,7 +164,7 @@ class YdEMailHelper
         $viewParams['Setting']['bu'] = Yii::app()->createAbsoluteUrl('/');
 
         // parse template
-        $mustache = new Mustache;
+        $mustache = new YdMustache();
         $fields = array('message_title', 'message_subject', 'message_html', 'message_text');
         $templates = array();
         foreach ($fields as $field) {
