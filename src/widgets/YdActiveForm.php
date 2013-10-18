@@ -23,6 +23,11 @@ class YdActiveForm extends TbActiveForm
     /**
      * @var
      */
+    public $returnUrl;
+
+    /**
+     * @var
+     */
     public $askToSaveWork;
 
     /**
@@ -46,7 +51,9 @@ class YdActiveForm extends TbActiveForm
         parent::init();
 
         // output the return url
-        echo CHtml::hiddenField('returnUrl', Yii::app()->returnUrl->getFormValue());
+        if ($this->returnUrl !== false) {
+            echo CHtml::hiddenField('returnUrl', $this->returnUrl ? $this->returnUrl : Yii::app()->returnUrl->getFormValue());
+        }
 
         // ask to save work
         if ($this->askToSaveWork)
