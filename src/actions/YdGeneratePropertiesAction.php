@@ -76,7 +76,7 @@ class YdGeneratePropertiesAction extends CAction
         $modelList = array();
         foreach ($pathList as $path) {
             $modelName = basename($path, '.php');
-            @$model = new $modelName;
+            $model = new $modelName;
             if ($model && is_subclass_of($model, 'CActiveRecord')) {
                 $modelList[] = array('label' => $modelName, 'url' => array('/tool/generateProperties', 'modelName' => $modelName));
             }
