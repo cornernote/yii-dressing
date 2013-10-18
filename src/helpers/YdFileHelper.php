@@ -20,7 +20,7 @@ class YdFileHelper extends CFileHelper
      * @return string
      * @throws CException
      */
-    public static function createDirectory($dir, $mode = 0777, $recursive = true)
+    public static function createDirectory($dir, $mode = 0755, $recursive = true)
     {
         if (file_exists($dir)) {
             return $dir;
