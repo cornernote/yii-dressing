@@ -74,7 +74,8 @@ class YdClientScript extends CClientScript
             'bootstrap-notify.css',
             'bootstrap-notify.min.css',
             'jquery.qtip.css',
-            'style.css',
+            'app.css',
+            'yii-dressing.css',
         );
         if (app()->request->isAjaxRequest) {
             foreach ($ignoreAjax as $ignore) {
