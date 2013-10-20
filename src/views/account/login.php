@@ -29,7 +29,7 @@ echo $form->checkBoxRow($user, 'remember_me');
 
 if ($recaptcha) {
     echo CHtml::activeLabel($user, 'recaptcha');
-    $this->widget('widgets.ReCaptcha', array(
+    $this->widget('dressing.widgets.YdReCaptcha', array(
         'model' => $user, 'attribute' => 'recaptcha',
         'theme' => 'red', 'language' => 'en_EN',
         'publicKey' => YdSetting::item('recaptchaPublic'),

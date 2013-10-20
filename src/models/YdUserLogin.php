@@ -61,7 +61,7 @@ class YdUserLogin extends YdFormModel
         );
         // recaptcha
         if (YdSetting::item('recaptcha')) {
-            $rules[] = array('recaptcha', 'validators.ReCaptchaValidator', 'privateKey' => YdSetting::item('recaptchaPrivate'), 'on' => 'recaptcha');
+            $rules[] = array('recaptcha', 'dressing.validators.YdReCaptchaValidator', 'privateKey' => YdSetting::item('recaptchaPrivate'), 'on' => 'recaptcha');
         }
         return $rules;
     }
