@@ -85,8 +85,11 @@ class YiiDressing extends CApplicationComponent
             'YdUserToRole' => 'user_to_role',
         ));
 
-        $this->addPackages();
-        $this->registerScripts();
+        // add packages and register scripts
+        if (!YdHelper::isCli()) {
+            $this->addPackages();
+            $this->registerScripts();
+        }
     }
 
     /**
@@ -121,8 +124,6 @@ class YiiDressing extends CApplicationComponent
      */
     public function registerScripts()
     {
-        if (YdHelper::isCli())
-            return;
         // register style
         Yii::app()->clientScript->registerCSSFile($this->getAssetsUrl() . '/yii-dressing/css/yii-dressing.css');
         // dropdown JS doesn't work on iPad - https://github.com/twitter/bootstrap/issues/2975#issuecomment-6659992

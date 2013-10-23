@@ -24,6 +24,21 @@ class YdConsoleCommand extends CConsoleCommand
     private $timer;
 
     /**
+     * @param string $class
+     * @return ErrorEmailCommand
+     */
+
+    /**
+     * Returns the static instance of the specified CC class. The object returned is a static instance of the CC class.
+     * It is provided for invoking class-level methods (something similar to static class methods.)
+     *
+     * EVERY derived CC class must override this method as follows:
+     * <pre>
+     * public static function instance($class=__CLASS__) {
+     *     return parent::instance($class);
+     * }
+     * </pre>
+     *
      * @static
      * @param string $class
      * @return ConsoleCommand
@@ -42,8 +57,8 @@ class YdConsoleCommand extends CConsoleCommand
     public function init()
     {
         $this->timer = microtime(true);
-        Yii::app()->getRequest()->setBaseUrl(Setting::item('script_url'));
-        $_SERVER['SERVER_NAME'] = Setting::item('server_name');
+        Yii::app()->getRequest()->setBaseUrl(YdSetting::item('script_url'));
+        $_SERVER['SERVER_NAME'] = YdSetting::item('server_name');
         parent::init();
     }
 
