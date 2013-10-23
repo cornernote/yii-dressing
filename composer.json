@@ -22,12 +22,12 @@
         "source": "https://github.com/cornernote/yii-dressing"
     },
     "require": {
-        "php":">=5.3.0"
-		"mrphp/php-recaptcha": "dev-master",
-		"swiftmailer/swiftmailer": "v5.0.2",
+        "mrphp/php-recaptcha": "dev-master",
+        "swiftmailer/swiftmailer": "v5.0.2",
         "phpunit/phpunit": "3.7.*",
-		"clevertech/yii-booster": "dev-master",
-        "yiisoft/yii": "1.1.14-rc"
+        "clevertech/yii-booster": "dev-master",
+        "yiisoft/yii": "1.1.14",
+        "php":">=5.3.0"
     },
     "minimum-stability": "dev"
 }
