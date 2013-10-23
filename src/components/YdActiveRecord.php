@@ -218,6 +218,8 @@ class YdActiveRecord extends CActiveRecord
      */
     public function tableName()
     {
+        if (empty(Yii::app()->dressing->tableMap[get_class($this)]))
+            throw new CException(Yii::t('dressing', 'Table not found in YiiDressing::tableMap for class :class.', array(':class' => get_class($this))));
         return Yii::app()->dressing->tableMap[get_class($this)];
     }
 

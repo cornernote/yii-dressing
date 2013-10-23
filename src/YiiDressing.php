@@ -65,9 +65,6 @@ class YiiDressing extends CApplicationComponent
         Yii::import('dressing.helpers.*');
         Yii::import('dressing.models.*');
 
-        // start the audit
-        YdAudit::findCurrent();
-
         // map tables
         $this->tableMap = array_merge($this->tableMap, array(
             'YdAttachment' => 'attachment',
