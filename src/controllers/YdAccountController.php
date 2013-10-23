@@ -105,8 +105,8 @@ class YdAccountController extends YdWebController
         $this->performAjaxValidation($user, 'signup-form');
 
         // collect user input data
-        if (isset($_POST['UserSignup'])) {
-            $user->attributes = $_POST['UserSignup'];
+        if (isset($_POST['YdUserSignup'])) {
+            $user->attributes = $_POST['YdUserSignup'];
             if ($user->save()) {
                 $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
             }
@@ -138,8 +138,8 @@ class YdAccountController extends YdWebController
         $this->performAjaxValidation($userRecover, 'recover-form');
 
         // collect user input data
-        if (isset($_POST['UserRecover'])) {
-            $userRecover->attributes = $_POST['UserRecover'];
+        if (isset($_POST['YdUserRecover'])) {
+            $userRecover->attributes = $_POST['YdUserRecover'];
 
             if ($userRecover->validate()) {
                 $user = User::model()->findbyPk($userRecover->user_id);
@@ -200,8 +200,8 @@ class YdAccountController extends YdWebController
 
         $userPassword = new YdUserPassword('recover');
         $this->performAjaxValidation($userPassword, 'password-form');
-        if (isset($_POST['UserPassword'])) {
-            $userPassword->attributes = $_POST['UserPassword'];
+        if (isset($_POST['YdUserPassword'])) {
+            $userPassword->attributes = $_POST['YdUserPassword'];
             if ($userPassword->validate()) {
 
                 $user->password = $user->hashPassword($userPassword->password);
@@ -260,14 +260,11 @@ class YdAccountController extends YdWebController
 
         $this->performAjaxValidation($user, 'account-form');
 
-        if (isset($_POST['User'])) {
-            $user->attributes = $_POST['User'];
+        if (isset($_POST['YdUser'])) {
+            $user->attributes = $_POST['YdUser'];
             if ($user->save()) {
                 Yii::app()->user->addFlash('Your account has been saved.', 'success');
-                $this->redirect(Yii::app()->returnUrl->getUrl());
-            }
-            else {
-                Yii::app()->user->addFlash('Your account could not be saved.', 'warning');
+                $this->redirect(Yii::app()->returnUrl->getUrl(array('/account/index')));
             }
         }
 
@@ -285,17 +282,14 @@ class YdAccountController extends YdWebController
         $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
         $userPassword = new YdUserPassword('password');
         $this->performAjaxValidation($userPassword, 'password-form');
-        if (isset($_POST['UserPassword'])) {
-            $userPassword->attributes = $_POST['UserPassword'];
+        if (isset($_POST['YdUserPassword'])) {
+            $userPassword->attributes = $_POST['YdUserPassword'];
             if ($userPassword->validate()) {
                 $user->password = $user->hashPassword($userPassword->password);
                 if ($user->save(false)) {
                     Yii::app()->user->addFlash('Your password has been saved.', 'success');
                     $this->redirect(array('/account/index'));
                 }
-            }
-            else {
-                Yii::app()->user->addFlash('Your password could not be saved.', 'warning');
             }
         }
         $this->render('dressing.views.account.password', array('user' => $userPassword));
@@ -310,17 +304,17 @@ class YdAccountController extends YdWebController
         /** @var $user User */
         $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
 
-        if (isset($_POST['UserEav'])) {
+        if (isset($_POST['YdUserEav'])) {
 
             // check access
             $notAllowed = array();
             foreach ($notAllowed as $_notAllowed) {
-                if (isset($_POST['UserEav'][$_notAllowed])) {
-                    unset($_POST['UserEav'][$_notAllowed]);
+                if (isset($_POST['YdUserEav'][$_notAllowed])) {
+                    unset($_POST['YdUserEav'][$_notAllowed]);
                 }
             }
 
-            if ($user->setEavAttributes($_POST['UserEav'], true)) {
+            if ($user->setEavAttributes($_POST['YdUserEav'], true)) {
                 Yii::app()->user->addFlash('Your settings have been saved.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl());
             }

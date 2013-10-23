@@ -29,7 +29,7 @@ class YdDatePicker extends CJuiDatePicker
             'changeYear' => true,
             'showOn' => 'both', // button | focus | both
         );
-        if (Helper::isMobileBrowser()) {
+        if (YdHelper::isMobileBrowser()) {
             $options['showOn'] = 'button';
             $options['onClose'] = 'js:function(dateText, inst){$(this).attr("disabled", false);}';
             $options['beforeShow'] = 'js:function(input, inst){$(this).attr("disabled", true);}';
