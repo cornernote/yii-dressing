@@ -35,6 +35,11 @@ class YiiDressing extends CApplicationComponent
     public $tableMap = array();
 
     /**
+     * @var array
+     */
+    public $packages = array();
+
+    /**
      * @var string Url to the assets
      */
     private $_assetsUrl;
@@ -42,12 +47,12 @@ class YiiDressing extends CApplicationComponent
     /**
      * @return string
      */
-	public static function getVersion()
-	{
-		return 'dev';
-		//return '0.0.1';
-	}
-	
+    public static function getVersion()
+    {
+        return 'dev';
+        //return '0.0.1';
+    }
+
     /**
      *
      */
@@ -80,8 +85,25 @@ class YiiDressing extends CApplicationComponent
             'YdUserToRole' => 'user_to_role',
         ));
 
+        $this->addPackages();
         $this->registerScripts();
+    }
 
+    /**
+     * @return string
+     */
+    public function addPackages()
+    {
+        $packages = require(Yii::getPathOfAlias('dressing') . '/packages.php');
+
+        $this->packages = CMap::mergeArray(
+            $packages,
+            $this->packages
+        );
+
+        foreach ($this->packages as $name => $definition) {
+            Yii::app()->clientScript->addPackage($name, $definition);
+        }
     }
 
     /**

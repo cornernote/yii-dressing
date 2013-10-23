@@ -13,10 +13,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html
  */
 return array(
-    'datepicker' => array(
+    'signature-pad' => array(
         'depends' => array('jquery'),
-        'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.1.3/' : $this->getAssetsUrl().'/font-awesome/',
-        'css' => array($this->minify ? 'css/bootstrap-datepicker.min.css' : 'css/bootstrap-datepicker.css'),
-        'js' => array($this->minify ? 'js/bootstrap-datepicker.min.js' : 'js/bootstrap-datepicker.js')
+        'baseUrl' => $this->getAssetsUrl() . '/signature-pad/',
+        'css' => array($this->minify ? 'jquery.signaturepad.yii-dressing.min.css' : 'jquery.signaturepad.yii-dressing.css'),
+        'js' => array($this->minify ? 'jquery.signaturepad.min.js' : 'jquery.signaturepad.js')
     ),
 );
