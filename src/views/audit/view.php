@@ -90,9 +90,9 @@ $this->renderPartial('dressing.views.audit._menu', array(
     <fieldset>
         <legend><?php echo Yii::t('dressing', 'Audit Trail') ?></legend>
         <?php
-        $auditTrail = new AuditTrail('search');
-        if (isset($_GET['AuditTrail'])) {
-            $auditTrail->attributes = $_GET['AuditTrail'];
+        $auditTrail = new YdAuditTrail('search');
+        if (isset($_GET['YdAuditTrail'])) {
+            $auditTrail->attributes = $_GET['YdAuditTrail'];
         }
         $auditTrail->audit_id = $audit->id;
         $this->renderPartial('dressing.views.auditTrail._grid', array(

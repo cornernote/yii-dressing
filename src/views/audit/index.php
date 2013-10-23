@@ -16,4 +16,28 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Audits');
 
 $this->renderPartial('dressing.views.audit._menu');
-$this->renderPartial('dressing.views.audit._grid', array('audit' => $audit));
+
+echo '<div class="spacer">';
+$this->widget('bootstrap.widgets.TbButton', array(
+    'label' => Yii::t('dressing', 'Search'),
+    'htmlOptions' => array('class' => 'audit-grid-search'),
+    'toggle' => true,
+));
+if (Yii::app()->user->getState('index.audit') != Yii::app()->createUrl('/audit/index')) {
+    echo ' ';
+    $this->widget('bootstrap.widgets.TbButton', array(
+        'label' => Yii::t('dressing', 'Reset Filters'),
+        'url' => array('/audit/index'),
+    ));
+}
+echo '</div>';
+
+// search
+$this->renderPartial('dressing.views.audit._search', array(
+    'audit' => $audit,
+));
+
+// grid
+$this->renderPartial('dressing.views.audit._grid', array(
+    'audit' => $audit
+));

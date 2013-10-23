@@ -33,8 +33,6 @@
  * @property string $cookie
  * @property string $referrer
  * @property string $redirect
- * @property string $app_version
- * @property string $yii_version
  * @property integer $audit_trail_count
  * @property number $start_time
  * @property number $end_time
@@ -108,7 +106,7 @@ class YdAudit extends YdActiveRecord
     public function rules()
     {
         return array(
-            array('id, user_id, link, ip, created, app_version, yii_version, audit_trail_count, total_time, memory_usage, memory_peak, model, model_id', 'safe', 'on' => 'search'),
+            array('id, user_id, link, ip, created, audit_trail_count, total_time, memory_usage, memory_peak, model, model_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -177,8 +175,6 @@ class YdAudit extends YdActiveRecord
         $this->created = date('Y-m-d H:i:s');
         $this->user_id = Yii::app()->user->id;
         $this->link = $this->getCurrentLink();
-        $this->app_version = YdSetting::item('app_version');
-        $this->yii_version = YdSetting::item('yii_version');
         $this->start_time = $_ENV['_start'];
         $this->post = $_POST;
         $this->get = $_GET;
@@ -372,26 +368,8 @@ class YdAudit extends YdActiveRecord
         }
 
         $criteria->compare('t.user_id', $this->user_id);
-        if (YdHelper::getSubmittedField('limit') != 'ignore') {
-            $date = date('Y-m-d', strtotime('-15 days'));
-            $criteria->compare('t.created', ' > ' . $date);
-            $criteria->compare('t.user_id', '<> ""');
-
-            // ignore system users
-            //$lcdUserCriteria = new CDbCriteria();
-            //$lcdUserCriteria->compare('u2r.role_id', Role::ROLE_LCD, true);
-            //$lcdUserCriteria->join .= ' LEFT JOIN user_to_role u2r ON u2r.user_id=t.id AND u2r.role_id=:role_id';
-            //$lcdUserCriteria->params[':role_id'] = Role::ROLE_LCD;
-            //$lcdUsers = User::model()->findAll($lcdUserCriteria);
-            //foreach ($lcdUsers as $lcdUser) {
-            //    $criteria->addCondition('t.user_id != ' . $lcdUser->id);
-            //}
-        }
         $criteria->compare('t.created', $this->created);
         $criteria->compare('t.link', $this->link, true);
-
-        $criteria->compare('t.app_version', $this->app_version);
-        $criteria->compare('t.yii_version', $this->yii_version);
         $criteria->compare('t.audit_trail_count', $this->audit_trail_count);
         $criteria->compare('t.total_time', $this->total_time);
         $criteria->compare('t.memory_usage', $this->memory_usage);
@@ -412,29 +390,6 @@ class YdAudit extends YdActiveRecord
         return new YdActiveDataProvider(get_class($this), CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
-    }
-
-    /**
-     * @return string
-     */
-    public function showYiiVersion()
-    {
-        $startPos = strpos($this->yii_version, 'yii-');
-        $endPos = strpos($this->yii_version, '.r', $startPos);
-        $len = $endPos - $startPos;
-        $shortVersion = substr($this->yii_version, $startPos, $len);
-        $shortVersion = substr($shortVersion, 4);
-        $icon = CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $this->yii_version));
-        return $icon . '&nbsp;' . $shortVersion;
-    }
-
-
-    /**
-     * @return bool|string
-     */
-    public function showAppVersion()
-    {
-        return CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $this->app_version));
     }
 
     /**
@@ -480,6 +435,14 @@ class YdAudit extends YdActiveRecord
             return $audit->id;
         }
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getControllerName()
+    {
+        return 'audit';
     }
 
 

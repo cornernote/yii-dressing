@@ -22,9 +22,8 @@ $form->searchToggle('audit-grid-search', 'audit-grid');
 
 echo '<fieldset>';
 echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
-echo $form->textFieldRow($audit, 'name');
-echo $form->textFieldRow($audit, 'email', array('size' => 60, 'maxlength' => 255));
-echo $form->dropDownListRow($audit, 'role', CHtml::listData(YdRole::model()->findAll(), 'id', 'name'), array('empty' => ''));
+echo $form->textFieldRow($audit, 'model');
+echo $form->textFieldRow($audit, 'model_id');
 echo '</fieldset>';
 
 echo '<div class="form-actions">';

@@ -54,7 +54,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
         $auditModels = $this->getAuditModels();
         $auditId = YdAudit::findCurrentId();
         $auditTrails = array();
-        $userId = Yii::app()->user ? Yii::app()->user->id : 0;
+        $userId = Yii::app()->user && Yii::app()->user->id ? Yii::app()->user->id : 0;
 
         // insert
         if ($this->owner->isNewRecord) {
@@ -134,7 +134,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
         $date = date('Y-m-d H:i:s');
         $auditModels = $this->getAuditModels();
         $auditId = YdAudit::findCurrentId();
-        $userId = Yii::app()->user ? Yii::app()->user->id : 0;
+        $userId = Yii::app()->user && Yii::app()->user->id ? Yii::app()->user->id : 0;
         $auditTrails = array();
 
         // prepare the logs
