@@ -141,4 +141,15 @@ class YdEavBehavior extends EEavBehavior
         return $criteria;
     }
 
+    /**
+     * @param array attributes key for delete.
+     * @param boolean whether auto save attributes.
+     * @return CActiveRecord
+     */
+    public function deleteEavAttributes($attributes = array(), $save = FALSE)
+    {
+        parent::deleteEavAttributes($attributes, $save);
+        $this->cache->delete($this->getCacheKey());
+    }
+
 }
