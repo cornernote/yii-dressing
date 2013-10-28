@@ -12,6 +12,10 @@
    Layout
 *********************/
 
+.clear {
+    clear: both;
+}
+
 .spacer {
     margin-bottom: 20px;
 }
