@@ -43,6 +43,11 @@ class YdWebController extends YdController
     /**
      * @var
      */
+    public $ajaxHeading;
+
+    /**
+     * @var
+     */
     public $pageIcon;
 
     /**
