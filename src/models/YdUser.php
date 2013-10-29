@@ -41,7 +41,8 @@
  * @property string $email
  * @property string $username
  * @property string $password
- * @property string $name
+ * @property string $first_name
+ * @property string $last_name
  * @property string $phone
  * @property string $fax
  * @property integer $web_status
@@ -107,7 +108,8 @@ class YdUser extends YdActiveRecord
             'email' => Yii::t('dressing', 'Email'),
             'username' => Yii::t('dressing', 'Username'),
             'password' => Yii::t('dressing', 'Password'),
-            'name' => Yii::t('dressing', 'Name'),
+            'first_name' => Yii::t('dressing', 'First Name'),
+            'last_name' => Yii::t('dressing', 'Last Name'),
             'role_id' => Yii::t('dressing', 'Roles'),
             'web_status' => Yii::t('dressing', 'Web Login'),
         );
@@ -138,7 +140,7 @@ class YdUser extends YdActiveRecord
 
         // search
         if ($this->scenario == 'search') {
-            $rules[] = array('id, role_id, username, email, name, web_status, api_status, created, deleted', 'safe', 'on' => 'search');
+            $rules[] = array('id, role_id, username, email, first_name, last_name, web_status, api_status, created, deleted', 'safe', 'on' => 'search');
         }
 
         // create/update/account
@@ -154,9 +156,11 @@ class YdUser extends YdActiveRecord
             $rules[] = array('username', 'length', 'max' => 255);
             $rules[] = array('username', 'unique', 'criteria' => array('condition' => 'deleted IS NULL'));
 
-            // name
-            $rules[] = array('name', 'required');
-            $rules[] = array('name', 'length', 'max' => 255);
+            // first_name
+            $rules[] = array('first_name', 'length', 'max' => 255);
+
+            // last_name
+            $rules[] = array('last_name', 'length', 'max' => 255);
 
             // phone
             $rules[] = array('phone', 'length', 'max' => 255);
@@ -185,7 +189,8 @@ class YdUser extends YdActiveRecord
         $criteria->compare('t.id', $this->id);
         $criteria->compare('t.email', $this->email, true);
         $criteria->compare('t.username', $this->username, true);
-        $criteria->compare('t.name', $this->name, true);
+        $criteria->compare('t.first_name', $this->first_name, true);
+        $criteria->compare('t.last_name', $this->last_name, true);
         $criteria->compare('t.created', $this->created);
 
         if ($this->web_status === 0 || $this->web_status === '0') {
@@ -291,18 +296,6 @@ class YdUser extends YdActiveRecord
     }
 
     /**
-     * @return array
-     */
-    public function getEmailTemplateParams()
-    {
-        $params = array();
-        $params['User__id'] = $this->id;
-        $params['User__name'] = $this->name;
-        $params['User__email'] = $this->email;
-        return $params;
-    }
-
-    /**
      * @param $attribute
      * @param $params
      */
@@ -373,4 +366,13 @@ class YdUser extends YdActiveRecord
         }
         return $links;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->last_name . ' ' . $this->last_name;
+    }
+
 }

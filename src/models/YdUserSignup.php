@@ -22,12 +22,27 @@ class YdUserSignup extends YdFormModel
     /**
      * @var
      */
+    public $username;
+
+    /**
+     * @var
+     */
     public $password;
 
     /**
      * @var
      */
-    public $name;
+    public $confirm_password;
+
+    /**
+     * @var
+     */
+    public $first_name;
+
+    /**
+     * @var
+     */
+    public $last_name;
 
     /**
      * @var
@@ -50,16 +65,25 @@ class YdUserSignup extends YdFormModel
         $rules = array();
 
         // required
-        $rules[] = array('name, email, password', 'required');
+        $rules[] = array('username, email, password, confirm_password', 'required');
+
+        // first_name
+        $rules[] = array('first_name', 'length', 'max' => 255);
+
+        // last_name
+        $rules[] = array('last_name', 'length', 'max' => 255);
 
         // email
         $rules[] = array('email', 'length', 'max' => 255);
         $rules[] = array('email', 'email');
         $rules[] = array('email', 'unique', 'className' => 'User', 'criteria' => array('condition' => 't.deleted IS NULL'));
 
-        // name
-        $rules[] = array('name', 'required');
-        $rules[] = array('name', 'length', 'max' => 255);
+        // username
+        $rules[] = array('username', 'length', 'max' => 255);
+        $rules[] = array('username', 'unique', 'className' => 'User', 'criteria' => array('condition' => 't.deleted IS NULL'));
+
+        // confirm_password
+        $rules[] = array('confirm_password', 'compare', 'compareAttribute' => 'password');
 
         return $rules;
     }
@@ -71,7 +95,9 @@ class YdUserSignup extends YdFormModel
     public function attributeLabels()
     {
         return array(
-            'name' => t('Company'),
+            'username' => t('Username'),
+            'first_name' => t('First Name'),
+            'last_name' => t('Last Name'),
             'email' => t('Email'),
             'password' => t('Password'),
         );
@@ -88,7 +114,9 @@ class YdUserSignup extends YdFormModel
 
         // create user
         $user = new User();
-        $user->name = $this->name;
+        $user->username = $this->username;
+        $user->first_name = $this->first_name;
+        $user->last_name = $this->last_name;
         $user->email = $this->email;
         $user->password = $user->hashPassword($this->password);
         $user->web_status = 1;

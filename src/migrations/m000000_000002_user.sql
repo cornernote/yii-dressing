@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `fax` varchar(255) NOT NULL,
   `web_status` int(11) NOT NULL,
@@ -20,8 +21,10 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   KEY `username` (`username`),
   KEY `email` (`email`),
-  KEY `created` (`created`,`deleted`),
-  KEY `name` (`name`)
+  KEY `created` (`created`),
+  KEY `deleted` (`deleted`),
+  KEY `first_name` (`first_name`)
+  KEY `last_name` (`last_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 CREATE TABLE IF NOT EXISTS `user_eav` (

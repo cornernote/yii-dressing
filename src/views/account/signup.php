@@ -21,8 +21,15 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);
+
 echo $form->textFieldRow($user, 'email');
+echo $form->textFieldRow($user, 'first_name');
+echo $form->textFieldRow($user, 'last_name');
+
+echo $form->textFieldRow($user, 'username');
 echo $form->passwordFieldRow($user, 'password');
+echo $form->passwordFieldRow($user, 'confirm_password');
+
 echo $form->endModalWrap();
 
 echo '<div class="' . $form->getSubmitRowClass() . '">';
