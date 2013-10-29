@@ -21,7 +21,7 @@
         "wiki": "https://github.com/cornernote/yii-dressing/wiki",
         "source": "https://github.com/cornernote/yii-dressing"
     },
-    "require-dev": {
+    "require": {
         "phpunit/phpunit": "3.7.*",
 		"yiisoft/yii": "1.1.14",
 		"mrphp/php-recaptcha": "dev-master",
