@@ -32,7 +32,7 @@ if ($recaptcha) {
     $this->widget('dressing.widgets.YdReCaptcha', array(
         'model' => $user, 'attribute' => 'recaptcha',
         'theme' => 'red', 'language' => 'en_EN',
-        'publicKey' => YdSetting::item('recaptchaPublic'),
+        'publicKey' => YdConfig::setting('recaptchaPublic'),
     ));
     echo CHtml::error($user, 'recaptcha');
 }

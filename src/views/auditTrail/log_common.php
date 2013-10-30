@@ -17,16 +17,16 @@
         'attributes' => array(
             array(
                 'name' => 'created',
-                'value' => User::model()->findUsername($model->created_by) . ' at ' . date(YdSetting::item('dateTimeFormat'), strtotime($model->created)) . ' (' . Time::ago($model->created) . ')',
+                'value' => User::model()->findUsername($model->created_by) . ' at ' . date(YdConfig::setting('dateTimeFormat'), strtotime($model->created)) . ' (' . Time::ago($model->created) . ')',
                 'type' => 'raw',
             ),
             array(
                 'name' => 'modified',
-                'value' => User::model()->findUsername($model->modified_by) . ' at ' . date(YdSetting::item('dateTimeFormat'), strtotime($model->modified)) . ' (' . Time::ago($model->modified) . ')',
+                'value' => User::model()->findUsername($model->modified_by) . ' at ' . date(YdConfig::setting('dateTimeFormat'), strtotime($model->modified)) . ' (' . Time::ago($model->modified) . ')',
             ),
             array(
                 'name' => 'deleted',
-                'value' => $model->deleted ? User::model()->findUsername($model->deleted_by) . ' at ' . date(YdSetting::item('dateTimeFormat'), strtotime($model->deleted)) . ' (' . Time::ago($model->deleted) . ')' : '',
+                'value' => $model->deleted ? User::model()->findUsername($model->deleted_by) . ' at ' . date(YdConfig::setting('dateTimeFormat'), strtotime($model->deleted)) . ' (' . Time::ago($model->deleted) . ')' : '',
                 'visible' => $model->deleted ? true : false,
             ),
         ),

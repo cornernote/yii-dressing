@@ -397,7 +397,7 @@ class YdAudit extends YdActiveRecord
      */
     static public function findCurrent()
     {
-        if (!YdSetting::item('audit')) {
+        if (!YdConfig::setting('audit')) {
             return false;
         }
 
@@ -423,7 +423,7 @@ class YdAudit extends YdActiveRecord
      */
     static public function findCurrentId()
     {
-        if (!YdSetting::item('audit')) {
+        if (!YdConfig::setting('audit')) {
             return false;
         }
 

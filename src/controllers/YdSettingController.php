@@ -40,8 +40,8 @@ class YdSettingController extends YdWebController
         foreach ($_settings as $setting) {
             $settings[$setting->key] = $setting;
         }
-        // load from items
-        foreach (YdSetting::items() as $key => $value) {
+//        // load from items
+        foreach (self::$_settings() as $key => $value) {
             if (!isset($settings[$key])) {
                 $settings[$key] = new YdSetting();
                 $settings[$key]->key = $key;

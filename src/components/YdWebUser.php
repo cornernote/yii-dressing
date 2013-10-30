@@ -138,7 +138,7 @@ class YdWebUser extends CWebUser
         }
         $setting = $this->user->getEavAttribute($name);
         if (!$setting) {
-            $setting = YdSetting::item($name);
+            $setting = YdConfig::setting($name);
         }
         return $setting;
     }

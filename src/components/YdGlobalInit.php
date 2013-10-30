@@ -12,32 +12,11 @@ class YdGlobalInit extends CApplicationComponent
 {
 
     /**
-     * @var
-     */
-    public $timezone;
-
-    /**
-     * @var
-     */
-    public $timeLimit;
-
-    /**
-     * @var
-     */
-    public $memoryLimit;
-
-    /**
      *
      */
     public function init()
     {
         parent::init();
-
-        // set default php settings
-        date_default_timezone_set($this->timezone);
-        set_time_limit($this->timeLimit);
-        ini_set('max_execution_time', $this->timeLimit);
-        ini_set('memory_limit', $this->memoryLimit);
 
         // start the audit
         YdAudit::findCurrent();

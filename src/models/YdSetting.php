@@ -45,11 +45,6 @@ class YdSetting extends YdActiveRecord
 {
 
     /**
-     * @var array
-     */
-    static private $_items = array();
-
-    /**
      * Returns the static model of the specified AR class.
      * @param string $className
      * @return YdSetting the static model class
@@ -69,34 +64,6 @@ class YdSetting extends YdActiveRecord
         );
     }
 
-    /**
-     * @static
-     * @param string $name
-     * @return string
-     */
-    public static function item($name)
-    {
-        if (isset(self::$_items[$name])) {
-            return self::$_items[$name];
-        }
-        $items = self::items();
-        if (isset($items[$name])) {
-            return $items[$name];
-        }
-        return isset(Yii::app()->params[$name]) ? Yii::app()->params[$name] : false;
-    }
-
-    /**
-     * @static
-     * @return array
-     */
-    public static function items()
-    {
-        if (self::$_items) {
-            return self::$_items;
-        }
-        return self::$_items = $_ENV['_config']['setting'];
-    }
 
 
     /**
