@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this MenuController
- * @var $menu YdMenu
+ * @var $menu YdSiteMenu
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -12,7 +12,7 @@
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = YdMenu::getItemsFromMenu('Settings', YdMenu::MENU_ADMIN);
+    $this->menu = YdSiteMenu::getItemsFromMenu('Settings', YdSiteMenu::MENU_ADMIN);
     return; // no more links
 }
 

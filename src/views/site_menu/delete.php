@@ -17,7 +17,7 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Menus')] = Yii::app()->user->getState('index.menu', array('/menu/index'));
 $this->breadcrumbs[] = Yii::t('dressing', ucfirst($task));
 
-$menu = $id ? YdMenu::model()->findByPk($id) : new YdMenu('search');
+$menu = $id ? YdSiteMenu::model()->findByPk($id) : new YdSiteMenu('search');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'menu-' . $task . '-form',
@@ -30,7 +30,7 @@ echo $form->errorSummary($menu);
 
 echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
-$menus = YdMenu::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
+$menus = YdSiteMenu::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
 if ($menus) {
     echo '<ul>';
     foreach ($menus as $menu) {

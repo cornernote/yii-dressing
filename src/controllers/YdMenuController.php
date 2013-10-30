@@ -10,7 +10,7 @@
  *
  * @package dressing.controllers
  */
-class YdMenuController extends YdWebController
+class YdSiteMenuController extends YdWebController
 {
 
     /**
@@ -35,7 +35,7 @@ class YdMenuController extends YdWebController
     {
         $criteria = new CDbCriteria();
         $criteria->compare('t.parent_id', 0);
-        $menus = YdMenu::model()->findAll($criteria);
+        $menus = YdSiteMenu::model()->findAll($criteria);
         $this->render('dressing.views.menu.index', array(
             'menus' => $menus,
         ));
@@ -47,10 +47,10 @@ class YdMenuController extends YdWebController
      */
     public function actionView($id)
     {
-        /** @var $menu YdMenu */
-        $menu = $this->loadModel($id, 'YdMenu');
+        /** @var $menu YdSiteMenu */
+        $menu = $this->loadModel($id, 'YdSiteMenu');
 
-        // check for deleted YdMenu
+        // check for deleted YdSiteMenu
         if ($menu->deleted) {
             Yii::app()->user->addFlash('THIS RECORD IS DELETED', 'warning');
         }
@@ -66,8 +66,8 @@ class YdMenuController extends YdWebController
      */
     public function actionLog($id)
     {
-        /** @var $menu YdMenu */
-        $menu = $this->loadModel($id, 'YdMenu');
+        /** @var $menu YdSiteMenu */
+        $menu = $this->loadModel($id, 'YdSiteMenu');
 
         $this->render('dressing.views.menu.log', array(
             'menu' => $menu,
@@ -79,11 +79,11 @@ class YdMenuController extends YdWebController
      */
     public function actionCreate()
     {
-        $menu = new YdMenu('create');
+        $menu = new YdSiteMenu('create');
 
         $this->performAjaxValidation($menu, 'menu-form');
-        if (isset($_POST['YdMenu'])) {
-            $menu->attributes = $_POST['YdMenu'];
+        if (isset($_POST['YdSiteMenu'])) {
+            $menu->attributes = $_POST['YdSiteMenu'];
             if ($menu->save()) {
                 Yii::app()->user->addFlash('Menu has been created.', 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($menu->getUrl()));
@@ -91,8 +91,8 @@ class YdMenuController extends YdWebController
         }
         else {
             $menu->enabled = 1;
-            if (isset($_GET['YdMenu'])) {
-                $menu->attributes = $_GET['YdMenu'];
+            if (isset($_GET['YdSiteMenu'])) {
+                $menu->attributes = $_GET['YdSiteMenu'];
             }
         }
 
@@ -107,12 +107,12 @@ class YdMenuController extends YdWebController
      */
     public function actionUpdate($id)
     {
-        /** @var $menu YdMenu */
-        $menu = $this->loadModel($id, 'YdMenu');
+        /** @var $menu YdSiteMenu */
+        $menu = $this->loadModel($id, 'YdSiteMenu');
 
         $this->performAjaxValidation($menu, 'menu-form');
-        if (isset($_POST['YdMenu'])) {
-            $menu->attributes = $_POST['YdMenu'];
+        if (isset($_POST['YdSiteMenu'])) {
+            $menu->attributes = $_POST['YdSiteMenu'];
             if ($menu->save()) {
                 Yii::app()->user->addFlash(Yii::t('dressing', 'Menu has been updated'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl($menu->getUrl()));
@@ -130,10 +130,10 @@ class YdMenuController extends YdWebController
      */
     public function actionDelete($id = null)
     {
-        $task = YdHelper::getSubmittedField('task', 'YdMenu') == 'undelete' ? 'undelete' : 'delete';
-        if (YdHelper::getSubmittedField('confirm', 'YdMenu')) {
+        $task = YdHelper::getSubmittedField('task', 'YdSiteMenu') == 'undelete' ? 'undelete' : 'delete';
+        if (YdHelper::getSubmittedField('confirm', 'YdSiteMenu')) {
             foreach ($this->getGridIds($id) as $_id) {
-                $menu = YdMenu::model()->findByPk($_id);
+                $menu = YdSiteMenu::model()->findByPk($_id);
                 if (!$menu) {
                     continue;
                 }
@@ -160,7 +160,7 @@ class YdMenuController extends YdWebController
         if (isset($_POST['Order'])) {
             $menus = explode(',', $_POST['Order']);
             foreach ($menus as $k => $menu_id) {
-                if ($menu = YdMenu::model()->findbyPk($menu_id)) {
+                if ($menu = YdSiteMenu::model()->findbyPk($menu_id)) {
                     $menu->sort_order = $k;
                     $menu->save(false);
                 }

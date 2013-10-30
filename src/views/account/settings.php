@@ -15,7 +15,7 @@ $this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Account Settings');
 $this->breadcrumbs[Yii::t('dressing', 'My Account')] = array('/account/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Account Settings');
 
-$this->menu = YdMenu::getItemsFromMenu('User');
+$this->menu = YdSiteMenu::getItemsFromMenu('User');
 
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(

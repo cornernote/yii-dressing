@@ -14,7 +14,7 @@ $this->pageTitle = $this->pageHeading = Yii::t('dressing', 'My Account');
 
 $this->breadcrumbs[] = Yii::t('dressing', 'My Account');
 
-$this->menu = YdMenu::getItemsFromMenu('User');
+$this->menu = YdSiteMenu::getItemsFromMenu('User');
 
 $this->widget('dressing.widgets.YdDetailView', array(
     'data' => $user,

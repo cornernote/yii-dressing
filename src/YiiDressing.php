@@ -74,7 +74,7 @@ class YiiDressing extends CApplicationComponent
             'YdEmailSpool' => 'email_spool',
             'YdEmailTemplate' => 'email_template',
             'YdLookup' => 'lookup',
-            'YdMenu' => 'menu',
+            'YdSiteMenu' => 'site_menu',
             'YdRole' => 'role',
             'YdSetting' => 'setting',
             'YdToken' => 'token',

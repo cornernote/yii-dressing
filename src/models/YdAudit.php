@@ -408,7 +408,7 @@ class YdAudit extends YdActiveRecord
 
         // create new Audit
         self::$_audit = new YdAudit();
-        //cache not working so it could not get schema for audits
+        // cache not working so it could not get schema for audits
         if (!self::$_audit->attributes) {
             return false;
         }

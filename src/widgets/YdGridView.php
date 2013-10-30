@@ -51,6 +51,11 @@ class YdGridView extends TbGridView
     public $selectableRows = 1000;
 
     /**
+     * @var array
+     */
+    public $pager = array('class' => 'dressing.widgets.YdPager');
+
+    /**
      *
      */
     public function init()
@@ -103,7 +108,7 @@ class YdGridView extends TbGridView
         parent::registerClientScript();
 
         if ($this->multiActions || $this->gridActions || $this->gridButtons) {
-            Yii::app()->clientScript->registerScriptFile(Yii::app()->dressing->getAssetsUrl() . '/js/jquery.form.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->dressing->getAssetsUrl() . '/jquery-form/jquery.form.js');
             // put the url from the button into the form action
             // handle submit form to capture the response into a modal
             Yii::app()->controller->beginWidget('dressing.widgets.YdJavaScriptWidget', array('position' => CClientScript::POS_END));
@@ -308,6 +313,7 @@ class YdGridView extends TbGridView
         }
     }
 
+
     /**
      * Renders the pager.
      */
@@ -320,7 +326,7 @@ class YdGridView extends TbGridView
         $class = 'CLinkPager';
         if (is_string($this->pager))
             $class = $this->pager;
-        else if (is_array($this->pager)) {
+        elseif (is_array($this->pager)) {
             $pager = $this->pager;
             if (isset($pager['class'])) {
                 $class = $pager['class'];
@@ -337,5 +343,6 @@ class YdGridView extends TbGridView
         else
             $this->widget($class, $pager);
     }
+
 
 }

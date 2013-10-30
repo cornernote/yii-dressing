@@ -12,7 +12,7 @@
 
 // index
 if ($this->action->id == 'index') {
-    $this->menu = YdMenu::getItemsFromMenu('Manage', YdMenu::MENU_ADMIN);
+    $this->menu = YdSiteMenu::getItemsFromMenu('Manage', YdSiteMenu::MENU_ADMIN);
     return; // no more links
 }
 

@@ -11,7 +11,7 @@
  */
 
 $this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Settings');
-$this->menu = YdMenu::getItemsFromMenu('Settings', YdMenu::MENU_ADMIN);
+$this->menu = YdSiteMenu::getItemsFromMenu('Settings', YdSiteMenu::MENU_ADMIN);
 
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Settings');

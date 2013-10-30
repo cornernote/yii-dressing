@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `menu` (
+CREATE TABLE IF NOT EXISTS `site_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL,
   `label` varchar(255) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   KEY `fk_menu_item_menu_item1` (`parent_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-INSERT INTO `menu` (`id`, `parent_id`, `label`, `icon`, `url`, `url_params`, `target`, `access_role`, `sort_order`, `enabled`, `created`, `deleted`) VALUES
+INSERT INTO `site_menu` (`id`, `parent_id`, `label`, `icon`, `url`, `url_params`, `target`, `access_role`, `sort_order`, `enabled`, `created`, `deleted`) VALUES
 (1, 0, 'Main', '', '', '', '', NULL, 0, 1, NOW(), NULL),
 (2, 0, 'User', '', '', '', '', '@', 0, 1, NOW(), NULL),
 (3, 0, 'Admin', '', '', '', '', 'admin', 0, 1, NOW(), NULL),

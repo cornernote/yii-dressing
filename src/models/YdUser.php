@@ -372,7 +372,7 @@ class YdUser extends YdActiveRecord
      */
     public function getName()
     {
-        return $this->last_name . ' ' . $this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this MenuController
- * @var $menu YdMenu
+ * @var $menu YdSiteMenu
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

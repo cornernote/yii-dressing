@@ -4,15 +4,15 @@
  *
  * This is the model class for table 'menu'
  *
- * @method YdMenu with() with()
- * @method YdMenu find() find($condition, array $params = array())
- * @method YdMenu[] findAll() findAll($condition = '', array $params = array())
- * @method YdMenu findByPk() findByPk($pk, $condition = '', array $params = array())
- * @method YdMenu[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
- * @method YdMenu findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
- * @method YdMenu[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
- * @method YdMenu findBySql() findBySql($sql, array $params = array())
- * @method YdMenu[] findAllBySql() findAllBySql($sql, array $params = array())
+ * @method YdSiteMenu with() with()
+ * @method YdSiteMenu find() find($condition, array $params = array())
+ * @method YdSiteMenu[] findAll() findAll($condition = '', array $params = array())
+ * @method YdSiteMenu findByPk() findByPk($pk, $condition = '', array $params = array())
+ * @method YdSiteMenu[] findAllByPk() findAllByPk($pk, $condition = '', array $params = array())
+ * @method YdSiteMenu findByAttributes() findByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdSiteMenu[] findAllByAttributes() findAllByAttributes(array $attributes, $condition = '', array $params = array())
+ * @method YdSiteMenu findBySql() findBySql($sql, array $params = array())
+ * @method YdSiteMenu[] findAllBySql() findAllBySql($sql, array $params = array())
  *
  * Methods from behavior SoftDeleteBehavior
  * @method undelete() undelete()
@@ -20,8 +20,8 @@
  * @method notdeleteds() notdeleteds()
  *
  * Properties from relation
- * @property YdMenu[] $child
- * @property YdMenu $parent
+ * @property YdSiteMenu[] $child
+ * @property YdSiteMenu $parent
  *
  * Properties from table fields
  * @property integer $id
@@ -48,7 +48,7 @@
  * @package dressing.models
  */
 
-class YdMenu extends YdActiveRecord
+class YdSiteMenu extends YdActiveRecord
 {
 
     /**
@@ -67,7 +67,7 @@ class YdMenu extends YdActiveRecord
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return YdMenu the static model class
+     * @return YdSiteMenu the static model class
      */
     public static function model($className = __CLASS__)
     {
@@ -112,14 +112,14 @@ class YdMenu extends YdActiveRecord
         return array(
             'child' => array(
                 self::HAS_MANY,
-                'YdMenu',
+                'YdSiteMenu',
                 'parent_id',
                 'condition' => 'child.enabled=1 AND child.deleted IS NULL',
                 'order' => 'sort_order ASC, label ASC',
             ),
             'parent' => array(
                 self::BELONGS_TO,
-                'YdMenu',
+                'YdSiteMenu',
                 'parent_id',
             ),
         );
@@ -258,7 +258,7 @@ class YdMenu extends YdActiveRecord
      */
     static public function getItemsFromMenu($label, $parent_id = 0, $options = array())
     {
-        if (!YdHelper::tableExists(Yii::app()->dressing->tableMap['YdMenu']))
+        if (!YdHelper::tableExists(Yii::app()->dressing->tableMap['YdSiteMenu']))
             return array();
         $menu = self::model()->findByAttributes(array('label' => $label, 'parent_id' => $parent_id));
         if ($menu) {
@@ -352,11 +352,11 @@ class YdMenu extends YdActiveRecord
 
     /**
      * Get DropDown data, eg
-     * echo $form->dropDownListRow($menu, 'parent_id', YdMenu::model()->getDropDown())
+     * echo $form->dropDownListRow($menu, 'parent_id', YdSiteMenu::model()->getDropDown())
      *
      * @param int $parent_id
      * @param null $condition
-     * @return YdMenu[]
+     * @return YdSiteMenu[]
      */
     public function getDropDown($parent_id = 0, $condition = null)
     {
@@ -383,8 +383,8 @@ class YdMenu extends YdActiveRecord
     }
 
     /**
-     * @param YdMenu[] $menus
-     * @return YdMenu[]
+     * @param YdSiteMenu[] $menus
+     * @return YdSiteMenu[]
      */
     public function breadcrumb($menus = array())
     {
