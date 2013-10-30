@@ -10,22 +10,32 @@
  */
 
 // start the timer
-$_ENV['_start'] = microtime(true);
-
-// define directory separator shortcut
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+defined('APP_START') or define('APP_START', microtime(true));
 
 // ensure cli is being called
 if (substr(php_sapi_name(), 0, 3) != 'cli') {
     trigger_error('This script needs to be run from a CLI.', E_USER_ERROR);
 }
 
-// include Yiic
-require_once(dirname($_SERVER['SCRIPT_FILENAME']) . DS . 'vendor' . DS . 'yiisoft' . DS . 'yii' . DS . 'framework' . DS . 'yii.php');
-
 // include config
 require_once(dirname($_SERVER['SCRIPT_FILENAME']) . DS . 'vendor' . DS . 'mrphp' . DS . 'yii-dressing' . DS . 'src' . DS . 'components' . DS . 'YdConfig.php');
 $config = YdConfig::instance(array('appPath' => dirname($_SERVER['SCRIPT_FILENAME']) . DS . 'app'))->getCliConfig();
 
+// include Yiic
+require_once(dirname($_SERVER['SCRIPT_FILENAME']) . DS . 'vendor' . DS . 'yiisoft' . DS . 'yii' . DS . 'framework' . DS . 'yii.php');
+
+// fix for fcgi
+defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
+
+// create the app
+$app = Yii::createConsoleApplication($config);
+$app->commandRunner->addCommands(YII_PATH . '/cli/commands');
+$env = @getenv('YII_CONSOLE_COMMANDS');
+if (!empty($env))
+    $app->commandRunner->addCommands($env);
+
+// record the audit
+YdAudit::findCurrent();
+
 // run the Yii CLI app (Yii-Haw!)
-require_once(dirname($_SERVER['SCRIPT_FILENAME']) . DS . 'vendor' . DS . 'yiisoft' . DS . 'yii' . DS . 'framework' . DS . 'yiic.php');
+$app->run();

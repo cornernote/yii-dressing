@@ -114,7 +114,7 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'db.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(
+        return self::mergeArray(array(
             'host' => 'localhost',
             'user' => 'root',
             'pass' => '',
@@ -200,7 +200,7 @@ class YdConfig
             'setting' => 'dressing.controllers.YdSettingController',
             'user' => 'dressing.controllers.YdUserController',
         );
-        return CMap::mergeArray($this->getMainConfig(), $config, $local);
+        return self::mergeArray($this->getMainConfig(), $config, $local);
     }
 
     /**
@@ -224,7 +224,7 @@ class YdConfig
         $config['commandMap']['emailSpool'] = 'dressing.commands.EmailSpoolCommand';
         $config['commandMap']['errorEmail'] = 'dressing.commands.ErrorEmailCommand';
 
-        return CMap::mergeArray($this->getMainConfig(), $config, $local);
+        return self::mergeArray($this->getMainConfig(), $config, $local);
     }
 
     /**
@@ -234,7 +234,7 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'main.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(
+        return self::mergeArray(array(
 
             // yii settings
             'id' => $this->setting('id'),
@@ -264,16 +264,13 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'components.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(
+        return self::mergeArray(array(
             'widgetFactory' => array(
                 'widgets' => array(
                     'TbMenu' => array(
                         'activateParents' => true,
                     ),
                 ),
-            ),
-            'globalInit' => array(
-                'class' => 'dressing.components.YdGlobalInit',
             ),
             'dressing' => array(
                 'class' => 'dressing.YiiDressing',
@@ -348,7 +345,7 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'modules.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(
+        return self::mergeArray(array(
             'gii' => array(
                 'class' => 'system.gii.GiiModule',
                 'password' => '123456',
@@ -367,11 +364,10 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'import.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(
+        return self::mergeArray(array(
             'log',
             'dressing',
             'fatalErrorCatch',
-            'globalInit',
         ), $local);
     }
 
@@ -382,7 +378,7 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'import.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(
+        return self::mergeArray(array(
             'application.commands.*',
             'application.models.*',
             'application.components.*',
@@ -396,7 +392,7 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'aliases.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(
+        return self::mergeArray(array(
             'core' => $this->setting('path'),
             'vendor' => dirname($this->appPath) . DS . 'vendor',
             'dressing' => dirname($this->appPath) . DS . 'vendor' . DS . 'mrphp' . DS . 'yii-dressing' . DS . 'src',
@@ -411,7 +407,7 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'params.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(), $local);
+        return self::mergeArray(array(), $local);
     }
 
     /**
@@ -421,7 +417,7 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'settings.php';
         $local = file_exists($file) ? require($file) : array();
-        return CMap::mergeArray(array(
+        return self::mergeArray(array(
             'id' => 'app',
             'name' => 'App',
             'language' => 'en',
@@ -480,4 +476,35 @@ class YdConfig
         return self::$_settings;
     }
 
+    /**
+     * Merges two or more arrays into one recursively.
+     * If each array has an element with the same string key value, the latter
+     * will overwrite the former (different from array_merge_recursive).
+     * Recursive merging will be conducted if both arrays have an element of array
+     * type and are having the same key.
+     * For integer-keyed elements, the elements from the latter array will
+     * be appended to the former array.
+     * @param array $a array to be merged to
+     * @param array $b array to be merged from. You can specify additional
+     * arrays via third argument, fourth argument etc.
+     * @return array the merged array (the original arrays are not changed.)
+     * @see mergeWith
+     */
+    public static function mergeArray($a, $b)
+    {
+        $args = func_get_args();
+        $res = array_shift($args);
+        while (!empty($args)) {
+            $next = array_shift($args);
+            foreach ($next as $k => $v) {
+                if (is_integer($k))
+                    isset($res[$k]) ? $res[] = $v : $res[$k] = $v;
+                elseif (is_array($v) && isset($res[$k]) && is_array($res[$k]))
+                    $res[$k] = self::mergeArray($res[$k], $v);
+                else
+                    $res[$k] = $v;
+            }
+        }
+        return $res;
+    }
 }

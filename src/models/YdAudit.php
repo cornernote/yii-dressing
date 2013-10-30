@@ -171,6 +171,9 @@ class YdAudit extends YdActiveRecord
      */
     public function recordAudit()
     {
+        if (!defined('APP_START')) {
+            die;
+        }
         $start = defined('APP_START') ? APP_START : microtime(true);
 
         // get info
