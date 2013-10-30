@@ -171,11 +171,13 @@ class YdAudit extends YdActiveRecord
      */
     public function recordAudit()
     {
+        $start = defined('APP_START') ? APP_START : microtime(true);
+
         // get info
         $this->created = date('Y-m-d H:i:s');
         $this->user_id = Yii::app()->user->id;
         $this->link = $this->getCurrentLink();
-        $this->start_time = $_ENV['_start'];
+        $this->start_time = $start;
         $this->post = $_POST;
         $this->get = $_GET;
         $this->files = $_FILES;
@@ -426,7 +428,6 @@ class YdAudit extends YdActiveRecord
         if (!YdConfig::setting('audit')) {
             return false;
         }
-
         if (self::$_audit) {
             return self::$_audit->id;
         }
