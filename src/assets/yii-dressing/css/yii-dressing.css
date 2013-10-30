@@ -20,15 +20,15 @@
     margin-bottom: 20px;
 }
 
-.text-center {
+.text-center, table th.text-center, .table td.text-center {
     text-align: center;
 }
 
-.text-left {
+.text-left, table th.text-left, .table td.text-left {
     text-align: left;
 }
 
-.text-right {
+.text-right, table th.text-right, .table td.text-right {
     text-align: right;
 }
 
@@ -89,6 +89,33 @@ body {
     position: absolute;
     top: -6px;
     right: 10px;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle,
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus {
+    color: #fff;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.navbar .nav > li > a {
+    -webkit-transition: all .2s linear 0s;
+    -moz-transition: all .2s linear 0s;
+    -ms-transition: all .2s linear 0s;
+    -o-transition: all .2s linear 0s;
+    transition: all .2s linear 0s;
+}
+
+.navbar .nav > li > a:hover {
+    -moz-transform: translateY(-5px);
+    -webkit-transform: translateY(-5px);
+    -o-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    transform: translateY(-5px);
 }
 
 /*********************
@@ -244,6 +271,7 @@ table.table thead tr a {
 table.table thead tr a {
     color: #fff;
     text-decoration: underline;
+    font-weight: bold;
 }
 
 table.table thead tr a:hover {
@@ -279,6 +307,14 @@ table.table-striped tbody tr:nth-child(odd) td, table.table-striped tbody tr:nth
 /*********************
    Grids
 *********************/
+
+.grid-view table tbody tr:hover td, .grid-view table tbody tr:hover th {
+    background: #e7ebfc;
+}
+
+.grid-view table.items tr.selected td {
+    background: none repeat scroll 0 0 #c7d8fc;
+}
 
 .grid-view, .list-view {
     padding-top: 0;
@@ -320,6 +356,10 @@ table.table-striped tbody tr:nth-child(odd) td, table.table-striped tbody tr:nth
     cursor: pointer;
 }
 
+.grid-view .page-size {
+    width: 120px;
+}
+
 .multi-checkbox-table, .grid-view {
     clear: both;
 }
@@ -340,6 +380,10 @@ table.table-striped tbody tr:nth-child(odd) td, table.table-striped tbody tr:nth
 .pagination a:hover {
     color: #333;
     background: #e7ebfc;
+}
+
+.pagination i {
+    line-height: 0;
 }
 
 /*********************
