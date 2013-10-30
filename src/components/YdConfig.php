@@ -219,7 +219,7 @@ class YdConfig
             'migrationPath' => 'application.migrations',
             'migrationTable' => 'migration',
             'connectionID' => 'db',
-            'templateFile' => 'application.migrations.templates.migrate_template',
+            'templateFile' => 'dressing.migrations.templates.migrate_template',
         );
         $config['commandMap']['emailSpool'] = 'dressing.commands.EmailSpoolCommand';
         $config['commandMap']['errorEmail'] = 'dressing.commands.ErrorEmailCommand';
