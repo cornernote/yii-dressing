@@ -394,6 +394,7 @@ class YdConfig
         $local = file_exists($file) ? require($file) : array();
         return self::mergeArray(array(
             'core' => $this->setting('path'),
+            'public' => dirname($this->appPath) . DS . 'public',
             'vendor' => dirname($this->appPath) . DS . 'vendor',
             'dressing' => dirname($this->appPath) . DS . 'vendor' . DS . 'mrphp' . DS . 'yii-dressing' . DS . 'src',
             'bootstrap' => dirname($this->appPath) . DS . 'vendor' . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src',

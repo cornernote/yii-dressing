@@ -57,8 +57,8 @@ class YdConsoleCommand extends CConsoleCommand
     public function init()
     {
         $this->timer = microtime(true);
-        Yii::app()->getRequest()->setBaseUrl(YdConfig::setting('script_url'));
-        $_SERVER['SERVER_NAME'] = YdConfig::setting('server_name');
+        Yii::app()->getRequest()->setBaseUrl(YdConfig::setting('scriptUrl'));
+        $_SERVER['SERVER_NAME'] = YdConfig::setting('serverName');
         parent::init();
     }
 
