@@ -23,12 +23,16 @@ class YdReturnUrl extends CApplicationComponent
      *
      * @static
      * @param bool $currentPage
+     * @param bool $encode
      * @return null|string
      */
-    static public function getFormValue($currentPage = false)
+    static public function getFormValue($currentPage = false, $encode = false)
     {
         if ($currentPage) {
             $url = Yii::app()->request->getUrl();
+            if ($encode) {
+                $url = self::urlEncode($url);
+            }
         }
         else {
             $url = self::getUrlFromSubmitFields();
@@ -74,8 +78,7 @@ class YdReturnUrl extends CApplicationComponent
      */
     static public function encodeLinkValue($url)
     {
-        // base64 encode so seo urls dont break
-        return urlencode(base64_encode($url));
+        return self::urlEncode($url);
     }
 
     /**
@@ -136,9 +139,29 @@ class YdReturnUrl extends CApplicationComponent
     {
         $url = YdHelper::getSubmittedField('returnUrl');
         if ($url && isset($_GET['returnUrl']) && base64_decode($url)) {
-            $url = base64_decode(urldecode($url));
+            $url = self::urlDecode($url);
         }
         return $url;
+    }
+
+    /**
+     * @param $input
+     * @return string
+     */
+    static private function urlEncode($input)
+    {
+        $key = uniqid();
+        cache()->set('ReturnUrl.' . $key, $input);
+        return $key;
+    }
+
+    /**
+     * @param $key
+     * @return string
+     */
+    static private function urlDecode($key)
+    {
+        return cache()->get('ReturnUrl.' . $key);
     }
 
 }
