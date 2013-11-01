@@ -21,21 +21,70 @@ class YdListView extends CListView
     /**
      * @var array
      */
-    public $pager = array(
-        'header' => '',
-        'maxButtonCount' => 5,
-        'prevPageLabel' => '&lt;',
-        'nextPageLabel' => '&gt;',
-        'firstPageLabel' => '&lt;&lt;',
-        'lastPageLabel' => '&gt;&gt;',
-    );
+    public $pager = array('class' => 'dressing.widgets.YdPager');
 
     /**
      *
      */
-    public function registerClientScript()
+    public function init()
     {
-        parent::registerClientScript();
+        // pager labels
+        if (!isset($this->pager['firstPageLabel']))
+            $this->pager['firstPageLabel'] = '<i class="icon-fast-backward"></i>';
+        if (!isset($this->pager['lastPageLabel']))
+            $this->pager['lastPageLabel'] = '<i class="icon-fast-forward"></i>';
+        if (!isset($this->pager['nextPageLabel']))
+            $this->pager['nextPageLabel'] = '<i class="icon-forward"></i>';
+        if (!isset($this->pager['prevPageLabel']))
+            $this->pager['prevPageLabel'] = '<i class="icon-backward"></i>';
+        if (!isset($this->pager['maxButtonCount']))
+            $this->pager['maxButtonCount'] = 5;
+        if (!isset($this->pager['displayFirstAndLast']))
+            $this->pager['displayFirstAndLast'] = true;
+
+        // userPageSize drop down changed
+        $this->setUserPageSize();
+
+        // set pagination
+        $this->dataProvider->setPagination($this->getPagination());
+
+        parent::init();
+    }
+
+    /**
+     * @return CPagination
+     */
+    public function getPagination()
+    {
+        $pagination = $this->dataProvider ? $this->dataProvider->getPagination() : new CPagination();
+        $pagination->pageSize = $this->getUserPageSize();
+        return $pagination;
+    }
+
+    /**
+     * @return bool
+     */
+    private function getUserPageSize()
+    {
+        $key = 'userPageSize.' . str_replace('-', '_', $this->id);
+        $size = Yii::app()->user->getState($key, YdConfig::setting('defaultPageSize'));
+        if (!$size) {
+            $size = YdConfig::setting('defaultPageSize');
+        }
+        return $size;
+    }
+
+    /**
+     *
+     */
+    private function setUserPageSize()
+    {
+        if (isset($_GET['userPageSize'])) {
+            foreach ($_GET['userPageSize'] as $type => $size) {
+                Yii::app()->user->setState('userPageSize.' . $type, (int)$size);
+            }
+            unset($_GET['userPageSize']);
+        }
     }
 
     /**
