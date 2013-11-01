@@ -97,7 +97,7 @@ class YdSignatureWidget extends CWidget
             $methodChain = ".regenerate('" . $this->signature->signature . "')";
         }
 
-        cs()->registerPackage('signature-pad');
+        Yii::app()->clientScript->registerPackage('signature-pad');
         Yii::app()->clientScript->registerScript('signature-pad', '$(".signature-pad").signaturePad(' . $options . ')' . $methodChain . ';', CClientScript::POS_READY);
     }
 
