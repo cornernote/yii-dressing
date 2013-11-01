@@ -12,6 +12,9 @@
  */
 class YdActiveDataProvider extends CActiveDataProvider
 {
+    /**
+     * @return CSort
+     */
     public function getSort()
     {
         if (($sort = parent::getSort()) !== false) {
