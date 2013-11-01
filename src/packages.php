@@ -19,4 +19,13 @@ return array(
         'css' => array($this->minify ? 'jquery.signaturepad.yii-dressing.min.css' : 'jquery.signaturepad.yii-dressing.css'),
         'js' => array($this->minify ? 'jquery.signaturepad.min.js' : 'jquery.signaturepad.js')
     ),
+    'jquery-cluetip' => array(
+        'depends' => array('jquery'),
+        'baseUrl' => $this->getAssetsUrl() . '/jquery-cluetip/',
+        'css' => array('jquery.cluetip.css'),
+        'js' => array(
+			'lib/jquery.hoverIntent.js',
+			$this->minify ? 'jquery.cluetip.min.js' : 'jquery.cluetip.js',
+		)
+    ),
 );
