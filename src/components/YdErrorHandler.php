@@ -33,10 +33,7 @@ class YdErrorHandler extends CErrorHandler
         $dir = app()->getRuntimePath() . '/errors';
         if (!file_exists($dir))
             mkdir($dir, 0777, true);
-        $auditId = YdAudit::findCurrentId();
-        if (!$auditId)
-            $auditId = uniqid();
-        $path = $dir . '/audit-' . $auditId . '.html';
+        $path = $dir . '/audit-' . $this->getAuditId() . '.html';
         file_put_contents($path, $errorMessage);
     }
 
@@ -49,10 +46,7 @@ class YdErrorHandler extends CErrorHandler
         $dir = app()->getRuntimePath() . '/errors';
         if (!file_exists($dir))
             mkdir($dir, 0777, true);
-        $auditId = YdAudit::findCurrentId();
-        if (!$auditId)
-            $auditId = uniqid();
-        $path = $dir . '/audit-' . $auditId . '.html';
+        $path = $dir . '/audit-' . $this->getAuditId() . '.html';
         file_put_contents($path, $errorMessage);
     }
 
@@ -177,6 +171,22 @@ class YdErrorHandler extends CErrorHandler
             app()->displayException($exception);
         }
         return ob_get_clean();
+    }
+
+    /**
+     * Note:
+     * Without Yii::$enableIncludePath=false this triggers a fatal error trying to
+     * include YdAudit when you try to set Yii::app()->theme in a console app
+     * @link https://code.google.com/p/yii/issues/detail?id=2745#c6
+     */
+    private function getAuditId()
+    {
+        $enableIncludePath = Yii::$enableIncludePath;
+        if (Yii::$enableIncludePath)
+            Yii::$enableIncludePath = false;
+        $auditId = class_exists('YdAudit') ? YdAudit::findCurrentId() : false;
+        Yii::$enableIncludePath = $enableIncludePath;
+        return $auditId ? $auditId : uniqid();
     }
 
 }
