@@ -102,7 +102,7 @@ class YdConfig
 
         // set default php settings
         date_default_timezone_set($this->setting('timezone'));
-        set_time_limit($this->setting('timeLimit'));
+        set_time_limit(self::isCli() ? 0 : $this->setting('timeLimit'));
         ini_set('max_execution_time', $this->setting('timeLimit'));
         ini_set('memory_limit', $this->setting('memoryLimit'));
     }
@@ -523,4 +523,13 @@ class YdConfig
         }
         return $res;
     }
+
+    /**
+     * @return bool
+     */
+    public static function isCli()
+    {
+        return (substr(php_sapi_name(), 0, 3) == 'cli');
+    }
+
 }
