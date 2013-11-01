@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   KEY `email` (`email`),
   KEY `created` (`created`),
   KEY `deleted` (`deleted`),
-  KEY `first_name` (`first_name`)
+  KEY `first_name` (`first_name`),
   KEY `last_name` (`last_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS `user_to_role` (
   KEY `role_id` (`role_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `user` (`id`, `email`, `username`, `password`, `name`, `phone`, `fax`, `web_status`, `api_status`, `api_key`, `created`, `deleted`) VALUES
-(1, 'admin@localhost', 'admin', '$2a$08$b.5MVtbgKv4Dvf/M3AFKKuga4pxptFOsmu7gkN.QOH5yvws6Ks03i', 'admin', '', '', 1, 0, '', NOW(), NULL);
+INSERT INTO `user` (`id`, `email`, `username`, `password`, `first_name`, `last_name`, `phone`, `fax`, `web_status`, `api_status`, `api_key`, `created`, `deleted`) VALUES
+(1, 'admin@localhost', 'admin', '$2a$08$b.5MVtbgKv4Dvf/M3AFKKuga4pxptFOsmu7gkN.QOH5yvws6Ks03i', 'admin', 'admin', '', '', 1, 0, '', NOW(), NULL);
 
 INSERT INTO `role` (`id`, `name`) VALUES
 (1, 'admin');
