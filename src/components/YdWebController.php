@@ -56,6 +56,11 @@ class YdWebController extends YdController
     public $showNavBar = true;
 
     /**
+     * @var bool
+     */
+    public $isModal = false;
+
+    /**
      * @return mixed
      */
     public function getName()
@@ -83,6 +88,9 @@ class YdWebController extends YdController
         if ($theme) {
             app()->theme = $theme;
         }
+
+        // decide if this is a modal
+        $this->isModal = Yii::app()->getRequest()->isAjaxRequest;
     }
 
     /**
