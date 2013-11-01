@@ -111,17 +111,30 @@ class YdConfig
     /**
      * @return array
      */
+    private function loadConfig($name, $config)
+    {
+        $file = $this->appPath . DS . 'config' . DS . $name . '.php';
+        $app = file_exists($file) ? require($file) : array();
+
+        $file = $this->appPath . DS . 'config' . DS . $name . '.local.php';
+        $local = file_exists($file) ? require($file) : array();
+
+        return self::mergeArray($config, $local, $app);
+    }
+
+    /**
+     * @return array
+     */
     public function getDbConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'db.php';
-        $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(
+        $config = array(
             'host' => 'localhost',
             'user' => 'root',
             'pass' => '',
             'name' => 'test',
             'setting' => 'setting',
-        ), $local);
+        );
+        return $this->loadConfig('db', $config);
     }
 
     /**
@@ -129,9 +142,6 @@ class YdConfig
      */
     public function getWebConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'web.php';
-        $local = file_exists($file) ? require($file) : array();
-
         $config = array();
 
         // web only preloads
@@ -201,7 +211,8 @@ class YdConfig
             'setting' => 'dressing.controllers.YdSettingController',
             'user' => 'dressing.controllers.YdUserController',
         );
-        return self::mergeArray($this->getMainConfig(), $config, $local);
+
+        return $this->loadConfig('web', self::mergeArray($this->getMainConfig(), $config));
     }
 
     /**
@@ -209,9 +220,6 @@ class YdConfig
      */
     public function getCliConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'cli.php';
-        $local = file_exists($file) ? require($file) : array();
-
         $config = array();
 
         // command map
@@ -225,7 +233,7 @@ class YdConfig
         $config['commandMap']['emailSpool'] = 'dressing.commands.EmailSpoolCommand';
         $config['commandMap']['errorEmail'] = 'dressing.commands.ErrorEmailCommand';
 
-        return self::mergeArray($this->getMainConfig(), $config, $local);
+        return $this->loadConfig('cli', self::mergeArray($this->getMainConfig(), $config));
     }
 
     /**
@@ -233,9 +241,7 @@ class YdConfig
      */
     public function getMainConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'main.php';
-        $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(
+        $config = array(
 
             // yii settings
             'id' => $this->setting('id'),
@@ -255,7 +261,8 @@ class YdConfig
             'components' => $this->getComponentsConfig(),
             'preload' => $this->getPreloadConfig(),
 
-        ), $local);
+        );
+        return $this->loadConfig('main', $config);
     }
 
     /**
@@ -263,9 +270,7 @@ class YdConfig
      */
     public function getComponentsConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'components.php';
-        $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(
+        $config = array(
             'widgetFactory' => array(
                 'widgets' => array(
                     'TbMenu' => array(
@@ -343,7 +348,8 @@ class YdConfig
             'swiftMailer' => array(
                 'class' => 'application.extensions.swiftMailer.SwiftMailer',
             ),
-        ), $local);
+        );
+        return $this->loadConfig('components', $config);
     }
 
     /**
@@ -351,9 +357,6 @@ class YdConfig
      */
     public function getModulesConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'modules.php';
-        $local = file_exists($file) ? require($file) : array();
-
         $config = array();
 
         if (YII_DEBUG) {
@@ -367,7 +370,7 @@ class YdConfig
             );
         }
 
-        return self::mergeArray($config, $local);
+        return $this->loadConfig('modules', $config);
     }
 
     /**
@@ -375,13 +378,12 @@ class YdConfig
      */
     public function getPreloadConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'import.php';
-        $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(
+        $config = array(
             'log',
             'dressing',
             'fatalErrorCatch',
-        ), $local);
+        );
+        return $this->loadConfig('preload', $config);
     }
 
     /**
@@ -389,13 +391,12 @@ class YdConfig
      */
     public function getImportConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'import.php';
-        $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(
+        $config = array(
             'application.commands.*',
             'application.models.*',
             'application.components.*',
-        ), $local);
+        );
+        return $this->loadConfig('import', $config);
     }
 
     /**
@@ -403,15 +404,14 @@ class YdConfig
      */
     public function getAliasesConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'aliases.php';
-        $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(
+        $config = array(
             'core' => $this->setting('path'),
             'public' => dirname($this->appPath) . DS . 'public',
             'vendor' => dirname($this->appPath) . DS . 'vendor',
             'dressing' => dirname($this->appPath) . DS . 'vendor' . DS . 'mrphp' . DS . 'yii-dressing' . DS . 'src',
             'bootstrap' => dirname($this->appPath) . DS . 'vendor' . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src',
-        ), $local);
+        );
+        return $this->loadConfig('aliases', $config);
     }
 
     /**
@@ -419,10 +419,8 @@ class YdConfig
      */
     public function getParamsConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'params.php';
-        $local = file_exists($file) ? require($file) : array();
         $config = array();
-        return self::mergeArray($config, $local);
+        return $this->loadConfig('params', $config);
     }
 
     /**
@@ -430,9 +428,7 @@ class YdConfig
      */
     public function getSettingsConfig()
     {
-        $file = $this->appPath . DS . 'config' . DS . 'settings.php';
-        $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(
+        $config = array(
             'id' => 'app',
             'name' => 'App',
             'brand' => 'App',
@@ -468,7 +464,8 @@ class YdConfig
             'scriptPath' => '',
             'scriptUrl' => '',
             'audit' => false,
-        ), $local);
+        );
+        return $this->loadConfig('settings', $config);
     }
 
     /**
