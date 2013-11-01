@@ -50,8 +50,8 @@ $this->widget('bootstrap.widgets.TbButton', array(
 ));
 echo ' ';
 $this->widget('bootstrap.widgets.TbButton', array(
-    'label' => Yii::t('dressing', 'Register New Account'),
-    'url' => array('/account/register'),
+    'label' => Yii::t('dressing', 'Sign Up'),
+    'url' => array('/account/signup'),
 ));
 echo '</div>';
 $this->endWidget();
