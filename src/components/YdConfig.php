@@ -345,16 +345,21 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'modules.php';
         $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(
-            'gii' => array(
+
+        $config = array();
+
+        if (YII_DEBUG) {
+            $config['gii'] = array(
                 'class' => 'system.gii.GiiModule',
                 'password' => '123456',
                 'generatorPaths' => array(
                     'dressing.gii',
                 ),
                 'ipFilters' => array('127.0.0.1'),
-            ),
-        ), $local);
+            );
+        }
+
+        return self::mergeArray($config, $local);
     }
 
     /**
