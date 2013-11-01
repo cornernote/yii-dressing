@@ -119,7 +119,7 @@ class YdConfig
         $file = $this->appPath . DS . 'config' . DS . $name . '.local.php';
         $local = file_exists($file) ? require($file) : array();
 
-        return self::mergeArray($config, $local, $app);
+        return self::mergeArray($config, $app, $local);
     }
 
     /**
