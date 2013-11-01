@@ -315,6 +315,9 @@ class YdConfig
             'cacheDb' => array(
                 'class' => 'CDbCache',
             ),
+            'cacheApc' => array(
+                'class' => 'CApcCache',
+            ),
             'cache' => array(
                 'class' => 'CMemCache',
                 'keyPrefix' => $this->setting('id') . '.',
@@ -331,6 +334,10 @@ class YdConfig
             ),
             'clientScript' => array(
                 'class' => 'YdClientScript',
+            ),
+            'session' => array(
+                'class' => 'CCacheHttpSession',
+                'cacheID' => 'cacheApc',
             ),
             'swiftMailer' => array(
                 'class' => 'application.extensions.swiftMailer.SwiftMailer',
@@ -413,7 +420,8 @@ class YdConfig
     {
         $file = $this->appPath . DS . 'config' . DS . 'params.php';
         $local = file_exists($file) ? require($file) : array();
-        return self::mergeArray(array(), $local);
+        $config = array();
+        return self::mergeArray($config, $local);
     }
 
     /**
@@ -426,6 +434,7 @@ class YdConfig
         return self::mergeArray(array(
             'id' => 'app',
             'name' => 'App',
+            'brand' => 'App',
             'language' => 'en',
             'charset' => 'utf-8',
             'timezone' => 'GMT',
@@ -435,6 +444,8 @@ class YdConfig
             'debugLevels' => 'error,warning',
             'timeLimit' => 60,
             'memoryLimit' => '128M',
+            'email' => 'webmaster@localhost',
+            'website' => 'localhost',
             'dateFormat' => 'Y-m-d',
             'dateFormatLong' => 'Y-m-d',
             'timeFormat' => 'H:i:s',
@@ -450,8 +461,7 @@ class YdConfig
             'hashKey' => 'abc123',
             'landingYoutube' => 'dR9qPq-yVBY',
             'landingYoutubeTitle' => 'Manage Your Master Key Systems Online',
-            'mission' => 'Manage business security key systems including keys, locks, customers and key holder access. Login from the office or home computers, or on the road using your phone or tablet!',
-            'email' => 'webmaster@localhost',
+            'mission' => 'Become an awesome PHP Yii Library!',
             'errorEmail' => 'webmaster@localhost',
             'serverName' => '',
             'scriptPath' => '',
