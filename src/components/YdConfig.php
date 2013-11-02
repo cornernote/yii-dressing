@@ -346,7 +346,7 @@ class YdConfig
                 'cacheID' => 'cacheApc',
             ),
             'swiftMailer' => array(
-                'class' => 'application.extensions.swiftMailer.SwiftMailer',
+                'class' => 'dressing.extensions.swiftMailer.SwiftMailer',
             ),
         );
         return $this->loadConfig('components', $config);
