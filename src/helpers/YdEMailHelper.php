@@ -1,6 +1,6 @@
 <?php
 /**
- * YdEMailHelper
+ * YdEmailHelper
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -10,7 +10,7 @@
  *
  * @package dressing.helpers
  */
-class YdEMailHelper
+class YdEmailHelper
 {
 
     /**
@@ -24,7 +24,7 @@ class YdEMailHelper
         $relation = array('model' => 'User', 'model_id' => $user->id, 'type' => 'UserRecover');
 
         // get recovery temp login link
-        $token = Token::model()->add('+1day', 1, $relation);
+        $token = YdToken::model()->add('+1day', 1, $relation);
         $viewParams['url'] = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
 
         // spool the email
@@ -42,7 +42,7 @@ class YdEMailHelper
         $relation = array('model' => 'User', 'model_id' => $user->id, 'type' => 'UserWelcome');
 
         // get activation token
-        $token = Token::model()->add('+30days', 1, $relation);
+        $token = YdToken::model()->add('+30days', 1, $relation);
         $viewParams['url'] = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
 
         // spool the email

@@ -76,11 +76,11 @@ class YdUserSignup extends YdFormModel
         // email
         $rules[] = array('email', 'length', 'max' => 255);
         $rules[] = array('email', 'email');
-        $rules[] = array('email', 'unique', 'className' => 'User', 'criteria' => array('condition' => 't.deleted IS NULL'));
+        $rules[] = array('email', 'unique', 'className' => 'YdUser', 'criteria' => array('condition' => 't.deleted IS NULL'));
 
         // username
         $rules[] = array('username', 'length', 'max' => 255);
-        $rules[] = array('username', 'unique', 'className' => 'User', 'criteria' => array('condition' => 't.deleted IS NULL'));
+        $rules[] = array('username', 'unique', 'className' => 'YdUser', 'criteria' => array('condition' => 't.deleted IS NULL'));
 
         // confirm_password
         $rules[] = array('confirm_password', 'compare', 'compareAttribute' => 'password');
@@ -113,7 +113,7 @@ class YdUserSignup extends YdFormModel
         }
 
         // create user
-        $user = new User();
+        $user = new YdUser();
         $user->username = $this->username;
         $user->first_name = $this->first_name;
         $user->last_name = $this->last_name;
@@ -123,7 +123,7 @@ class YdUserSignup extends YdFormModel
         if (!$user->save()) {
             return false;
         }
-        email()->sendWelcomeEmail($user);
+        YdEMailHelper::sendUserWelcome($user);
 
         // login
         $this->login();
@@ -138,7 +138,7 @@ class YdUserSignup extends YdFormModel
     public function login()
     {
         if ($this->_identity === null) {
-            $this->_identity = new UserIdentity($this->email, $this->password);
+            $this->_identity = new YdUserIdentity($this->email, $this->password);
         }
         if ($this->_identity->authenticate()) {
             $duration = $this->remember_me ? 3600 * 24 * 30 : 0; // 30 days
