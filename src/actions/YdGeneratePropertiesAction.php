@@ -127,6 +127,10 @@ class YdGeneratePropertiesAction extends CAction
     public function getModelProperties()
     {
         $properties = array();
+        
+        Yii::app()->db->getSchema()->refresh();
+        $this->model->refreshMetaData();
+        $this->model->refresh();
 
         // intro
         $properties[] = " *";
