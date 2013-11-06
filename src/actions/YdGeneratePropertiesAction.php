@@ -76,6 +76,10 @@ class YdGeneratePropertiesAction extends CAction
         $modelList = array();
         foreach ($pathList as $path) {
             $modelName = basename($path, '.php');
+            if (strpos($modelName,'.')!==false){
+                echo "<br/> there is dot in modelName [$modelName] probably a version conflict file <br/>\r\n";
+                continue;
+            }
             $model = new $modelName;
             if ($model && is_subclass_of($model, 'CActiveRecord')) {
                 $modelList[] = array('label' => $modelName, 'url' => array('/tool/generateProperties', 'modelName' => $modelName));
@@ -127,6 +131,10 @@ class YdGeneratePropertiesAction extends CAction
     public function getModelProperties()
     {
         $properties = array();
+        
+        Yii::app()->db->getSchema()->refresh();
+        $this->model->refreshMetaData();
+        $this->model->refresh();
 
         // intro
         $properties[] = " *";
