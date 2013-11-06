@@ -294,7 +294,7 @@ class YdConfig
                             'toolbar_Basic' => array(
                                 array('Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About'),
                             ),
-                            'toolbar_Dressing' => array(
+                            'toolbar_DressingFull' => array(
                                 array('name' => 'tools', 'items' => array('Source', 'Maximize', 'ShowBlocks')),
                                 array('name' => 'clipboard', 'items' => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo')),
                                 array('name' => 'basicstyles', 'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')),
@@ -303,7 +303,10 @@ class YdConfig
                                 array('name' => 'insert', 'items' => array('Image', 'Table', 'HorizontalRule', 'SpecialChar')),
                                 array('name' => 'styles', 'items' => array('Format')),
                             ),
-                            'toolbar' => 'Custom',
+                            'toolbar_DressingBasic' => array(
+                                array('Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'),
+                            ),
+                            'toolbar' => 'DressingFull',
                         ),
                     )
                 ),
