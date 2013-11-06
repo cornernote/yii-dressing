@@ -53,6 +53,11 @@ class YdGridView extends TbGridView
     /**
      * @var array
      */
+    public $pageSizeOptions = array(10, 100, 1000);
+
+    /**
+     * @var array
+     */
     public $pager = array('class' => 'dressing.widgets.YdPager');
 
     /**
@@ -224,11 +229,10 @@ class YdGridView extends TbGridView
     public function renderPageSelect()
     {
         $label = Yii::t('dressing', 'per page');
-        $options = array(
-            10 => '10 ' . $label,
-            100 => '100 ' . $label,
-            1000 => '1000 ' . $label,
-        );
+        $options = array();
+        foreach ($this->pageSizeOptions as $option) {
+            $options[$option] = $option . ' ' . $label;
+        }
         echo CHtml::dropDownList("userPageSize[{$this->id}]", $this->getUserPageSize(), $options, array(
             'onchange' => "$.fn.yiiGridView.update('{$this->id}',{data:{userPageSize:{" . str_replace('-', '_', $this->id) . ":$(this).val()}}})",
             'class' => 'page-size',
