@@ -72,7 +72,17 @@
 class YdHighchartsWidget extends CWidget
 {
 
+    /**
+     * @var string highcharts|highstock
+     */
+    public $mode = 'highcharts';
+    /**
+     * @var array
+     */
     public $options = array();
+    /**
+     * @var array
+     */
     public $htmlOptions = array();
 
     /**
@@ -94,10 +104,17 @@ class YdHighchartsWidget extends CWidget
         }
 
         // merge options with default values
-        $defaultOptions = array('chart' => array('renderTo' => $id), 'exporting' => array('enabled' => true));
+        $defaultOptions = array(
+//            'chart' => array(
+//                'renderTo' => $id,
+//            ),
+//            'exporting' => array(
+//                'enabled' => true,
+//            )
+        );
         $this->options = CMap::mergeArray($defaultOptions, $this->options);
         $jsOptions = $this->encode($this->options);
-        $this->registerScripts(__CLASS__ . '#' . $id, "var chart = new Highcharts.Chart($jsOptions);");
+        $this->registerScripts(__CLASS__ . '#' . $id, $jsOptions);
     }
 
     /**
@@ -106,26 +123,40 @@ class YdHighchartsWidget extends CWidget
      * @param $id string the id of the script to be inserted into the page
      * @param $embeddedScript string the embedded script to be inserted into the page
      */
-    protected function registerScripts($id, $embeddedScript)
+    protected function registerScripts($id, $jsOptions)
     {
-
-        $basePath = Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'highcharts' . DIRECTORY_SEPARATOR . 'highcharts';
+        $basePath = Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'mrphp' . DIRECTORY_SEPARATOR . 'js-highcharts' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . $this->mode;
         $baseUrl = Yii::app()->assetManager->publish($basePath, true, 1, YII_DEBUG);
-        $scriptFile = YII_DEBUG ? '/highcharts.src.js' : '/highcharts.js';
+        $scriptFile = YII_DEBUG ? '/' . $this->mode . '.src.js' : '/' . $this->mode . 'highcharts.js';
 
         $cs = Yii::app()->clientScript;
         $cs->registerCoreScript('jquery');
         $cs->registerScriptFile($baseUrl . $scriptFile);
 
         // register exporting module if enabled via the 'exporting' option
-        if ($this->options['exporting']['enabled']) {
+        if (!empty($this->options['exporting']['enabled'])) {
             $scriptFile = YII_DEBUG ? 'exporting.src.js' : 'exporting.js';
             $cs->registerScriptFile($baseUrl . '/modules/' . $scriptFile);
         }
-        $cs->registerScript($id, $embeddedScript);
+
+        // register the script
+        $js = "$('#" . $this->htmlOptions['id'] . "').highcharts";
+        if ($this->mode == 'highstock') {
+            $js .= "('StockChart', $jsOptions);";
+        }
+        else {
+            $js .= "($jsOptions);";
+        }
+        $cs->registerScript($id, $js);
     }
 
 
+    /**
+     * @param array $input
+     * @param array $funcs
+     * @param int $level
+     * @return array|mixed|string
+     */
     function encode($input = array(), $funcs = array(), $level = 0)
     {
         foreach ($input as $key => $value) {
