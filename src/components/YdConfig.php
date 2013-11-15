@@ -58,14 +58,14 @@ class YdConfig
     /**
      * @param $name
      * @return mixed
-     * @throws CException
+     * @throws Exception
      */
     public function __get($name)
     {
         $getter = 'get' . $name;
         if (method_exists($this, $getter))
             return $this->$getter();
-        throw new CException(Yii::t('yii', 'Property "{class}.{property}" is not defined.', array('{class}' => get_class($this), '{property}' => $name)));
+        throw new Exception(strtr('Property "{class}.{property}" is not defined.', array('{class}' => get_class($this), '{property}' => $name)));
     }
 
     /**
