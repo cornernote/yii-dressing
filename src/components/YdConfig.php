@@ -42,6 +42,7 @@ class YdConfig
 
     /**
      * @param array $config
+     * @throws Exception
      */
     public function __construct($config = array())
     {
@@ -109,6 +110,8 @@ class YdConfig
     }
 
     /**
+     * @param $name
+     * @param $config
      * @return array
      */
     private function loadConfig($name, $config)
