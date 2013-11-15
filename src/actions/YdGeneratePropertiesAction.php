@@ -134,7 +134,7 @@ class YdGeneratePropertiesAction extends CAction
         
         Yii::app()->db->getSchema()->refresh();
         $this->model->refreshMetaData();
-        $this->model->refresh();
+        //$this->model->refresh(); // caused an error on many_to_many tables
 
         // intro
         $properties[] = " *";
