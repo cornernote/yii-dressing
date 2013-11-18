@@ -36,7 +36,7 @@ class YdFileHelper extends CFileHelper
      * @param $dir
      * @param $removeSelf
      */
-    public static function removeDirectory($dir, $removeSelf)
+    public static function removeDirectory($dir, $removeSelf = true)
     {
         if (is_dir($dir)) {
             $objects = scandir($dir);

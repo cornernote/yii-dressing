@@ -121,6 +121,15 @@ class YdStringHelper
      * @param $string
      * @return mixed
      */
+    public static function serialize($string)
+    {
+        return serialize($string);
+    }
+
+    /**
+     * @param $string
+     * @return mixed
+     */
     public static function unserialize($string)
     {
         if (self::isSerialized($string)) {
