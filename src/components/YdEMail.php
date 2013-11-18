@@ -18,17 +18,22 @@ class YdEmail extends CApplicationComponent
      */
     public function sendUserRecover($user)
     {
-        // setup email variables
-        $to = array($user->email => $user->name);
-        $viewParams = array('User' => $user);
-        $relation = array('model' => 'User', 'model_id' => $user->id, 'type' => 'UserRecover');
-
         // get recovery temp login link
         $token = YdToken::model()->add('+1day', 1, $relation);
-        $viewParams['url'] = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
+        $url = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
 
-        // spool the email
-        $this->spool($to, 'user.recover', $viewParams, $relation);
+        // save EmailSpool
+        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('UserRecover', array(
+            'User' => $user,
+            'url' => $url,
+        )));
+        $emailSpool->to_email = $user->email;
+        $emailSpool->to_name = $user->name;
+        $emailSpool->from_email = YdConfig::setting('email');
+        $emailSpool->from_name = app()->name;
+        $emailSpool->model = 'User';
+        $emailSpool->model_id = $user->id;
+        $emailSpool->save(false);
     }
 
     /**
@@ -36,17 +41,22 @@ class YdEmail extends CApplicationComponent
      */
     public function sendUserWelcome($user)
     {
-        // setup email variables
-        $to = array($user->email => $user->name);
-        $viewParams = array('User' => $user);
-        $relation = array('model' => 'User', 'model_id' => $user->id, 'type' => 'UserWelcome');
-
         // get activation token
         $token = YdToken::model()->add('+30days', 1, $relation);
-        $viewParams['url'] = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
+        $url = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
 
-        // spool the email
-        $this->spool($to, 'user.welcome', $viewParams, $relation);
+        // save EmailSpool
+        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('UserWelcome', array(
+            'User' => $user,
+            'url' => $url,
+        )));
+        $emailSpool->to_email = $user->email;
+        $emailSpool->to_name = $user->name;
+        $emailSpool->from_email = YdConfig::setting('email');
+        $emailSpool->from_name = app()->name;
+        $emailSpool->model = 'User';
+        $emailSpool->model_id = $user->id;
+        $emailSpool->save(false);
     }
 
     /**
@@ -54,92 +64,40 @@ class YdEmail extends CApplicationComponent
      */
     public function sendError($count)
     {
-        $relation = array('model' => 'Error', 'model_id' => 0);
-
         $url = Yii::app()->createAbsoluteUrl('/error/index');
         $messageString = Yii::t('dressing', 'errors have been archived') . ' ' . $url;
 
-        $message = array(
-            'heading' => null,
-            'subject' => Yii::t('dressing', 'errors have been archived'),
-            'text' => $messageString,
-            'html' => format()->formatNtext($messageString),
-        );
-
-        // email the given user
-        $tos = explode(',', YdConfig::setting('error_email'));
-        foreach ($tos as $to) {
-            $to = trim($to);
-            YdEmailSpool::model()->spool($to, $message, $relation);
+        // save EmailSpool
+        foreach (explode(',', YdConfig::setting('error_email')) as $to) {
+            $emailSpool = $this->getEmailSpool(array(
+                'message_subject' => Yii::t('dressing', 'errors have been archived'),
+                'message_text' => $messageString,
+                'message_html' => format()->formatNtext($messageString),
+            ));
+            $emailSpool->to_email = trim($to);
+            //$emailSpool->to_name = $user->name;
+            $emailSpool->from_email = YdConfig::setting('email');
+            $emailSpool->from_name = app()->name;
+            //$emailSpool->model = 'User';
+            //$emailSpool->model_id = $user->id;
+            $emailSpool->save(false);
         }
     }
 
     /**
-     * Spool (save) an email
-     * @param $to string|array
-     * @param $template
-     * @param array $viewParams
-     * @param array $relation
-     * @throws CException
-     * @return bool|integer
+     * @param array $message
+     * @return YdEmailSpool
      */
-    public function spool($to, $template, $viewParams = array(), $relation = array())
+    public function getEmailSpool($message)
     {
-        // generate the message
-        $message = $this->renderEmailTemplate($template, $viewParams);
-
-        // format the to_name/to_email
-        $to_email = $to_name = '';
-        if (!is_array($to)) {
-            $to = array($to => '');
-        }
-        foreach ($to as $to_email => $to_name)
-            break;
-        if (!$to_email) {
-            $to_email = $to_name;
-            $to_name = '';
-        }
-
-        // save the email
         $emailSpool = new YdEmailSpool;
         $emailSpool->status = 'pending';
-        $emailSpool->from_email = YdConfig::setting('email');
-        $emailSpool->from_name = app()->name;
-        $emailSpool->to_email = $to_email;
-        $emailSpool->to_name = $to_name;
+        $emailSpool->template = vd($message['template']);
         $emailSpool->message_subject = $message['message_subject'];
         $emailSpool->message_text = $message['message_text'];
         $emailSpool->message_html = $message['message_html'];
-        if (isset($relation['model'])) {
-            $emailSpool->model = $relation['model'];
-            if (isset($relation['model_id'])) {
-                $emailSpool->model_id = $relation['model_id'];
-            }
-        }
-        if (isset($relation['type'])) {
-            $emailSpool->type = $relation['type'];
-        }
-
-        // set flash message
-        $flash = true;
-        if (YdConfig::setting('debug_email'))
-            $flash = true;
-        elseif (!Yii::app()->user->checkAccess('admin'))
-            $flash = false;
-        elseif (isset($options['flash']))
-            $flash = $options['flash'];
-        if ($flash && isset(Yii::app()->controller)) {
-            $debug = Yii::app()->controller->renderPartial('application.views.email._debug', compact('to', 'message', 'template'), true);
-            Yii::app()->user->addFlash($debug, 'email');
-        }
-
-        // return the id
-        if ($emailSpool->save()) {
-            return $emailSpool->id;
-        }
-        throw new CException('could not save email spool because ' . $emailSpool->getErrorString());
+        return $emailSpool;
     }
-
 
     /**
      * @param $template string
@@ -166,14 +124,30 @@ class YdEmail extends CApplicationComponent
         // parse template
         $mustache = new YdMustache();
         $fields = array('message_title', 'message_subject', 'message_html', 'message_text');
-        $templates = array();
+        $message = array('template' => $template);
         foreach ($fields as $field) {
             $viewParams['contents'] = $mustache->render($emailTemplate->$field, $viewParams);
-            $viewParams[$field] = $templates[$field] = $mustache->render($emailLayout->$field, $viewParams);
+            $viewParams[$field] = $message[$field] = $mustache->render($emailLayout->$field, $viewParams);
             unset($viewParams['contents']);
         }
 
-        return $templates;
+        return $message;
+    }
+
+    /**
+     * @param $emailSpool
+     */
+    public function userFlash($emailSpool)
+    {
+        if (!YdConfig::setting('debug_email'))
+            return;
+        if (!Yii::app()->user->checkAccess('admin'))
+            return;
+        if (!isset(Yii::app()->controller))
+            return;
+
+        $debug = Yii::app()->controller->renderPartial('application.views.email._debug', $emailSpool, true);
+        Yii::app()->user->addFlash($debug, 'email');
     }
 
 }
