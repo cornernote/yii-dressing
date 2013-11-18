@@ -169,7 +169,7 @@ class YdEmail extends CApplicationComponent
      * Find pending emails and attempt to deliver them
      * @param bool $mailinator
      */
-    public static function processSpool($mailinator = false)
+    public function processSpool($mailinator = false)
     {
         // find all the spooled emails
         $spools = YdEmailSpool::model()->findAll(array(
