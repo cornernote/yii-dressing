@@ -30,7 +30,7 @@ class YdEmail extends CApplicationComponent
         $emailSpool = $this->getEmailSpool(array(
             'message_subject' => $subject,
             'message_text' => $message_text,
-            'message_html' => format()->formatNtext($message_text),
+            'message_html' => Yii::app()->format->formatNtext($message_text),
         ));
         $emailSpool->status = $filename ? 'attaching' : 'pending';
         $emailSpool->from_email = YdConfig::setting('email');
