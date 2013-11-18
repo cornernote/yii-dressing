@@ -47,7 +47,7 @@ class YdCsv
      * @param string $enclosure
      * @return string
      */
-    static function getCVsString($dataArray, $delimiter = ",", $enclosure = "\"")
+    static function getCSVString($dataArray, $delimiter = ",", $enclosure = "\"")
     {
         // Write a line to a file
         // $filePointer = the file resource to write to
