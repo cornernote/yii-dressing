@@ -30,7 +30,7 @@ class EmailSpoolCommand extends YdConsoleCommand
         // short loop
         set_time_limit(60 * 60);
         for ($i = 0; $i < 60 * 5; $i++) {
-            EmailSpool::spool(true);
+            Yii::app()->email->processSpool($mailinator = true);
             sleep(10);
         }
     }
@@ -43,7 +43,7 @@ class EmailSpoolCommand extends YdConsoleCommand
         // long loop
         set_time_limit(60 * 60 * 24);
         for ($i = 0; $i < 60 * 60; $i++) {
-            EmailSpool::spool();
+            Yii::app()->email->processSpool();
             sleep(1);
         }
     }

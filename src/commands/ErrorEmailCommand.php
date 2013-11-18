@@ -36,7 +36,9 @@ class ErrorEmailCommand extends YdConsoleCommand
             $archived++;
         }
         if ($archived) {
-            email()->sendError($archived);
+            foreach (explode(',', YdConfig::setting('error_email')) as $to) {
+                Yii::app()->email->sendEmail(trim($to), Yii::t('dressing', 'errors have been archived'), Yii::app()->createAbsoluteUrl('/error/index'));
+            }
         }
     }
 
