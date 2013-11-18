@@ -8,10 +8,47 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license http://www.gnu.org/copyleft/gpl.html
  *
- * @package dressing.helpers
+ * @package dressing.components
  */
 class YdEmail extends CApplicationComponent
 {
+
+    /**
+     * Allows sending a quick email.
+     *
+     * Eg:
+     * Yii::app()->email->sendEmail('webmaster@localhost', 'test', 'hello world');
+     *
+     * @param $to_email
+     * @param $subject
+     * @param $message
+     * @param $filename
+     * @return bool|int
+     */
+    public function sendEmail($to_email, $subject, $message, $filename = null)
+    {
+        $emailSpool = $this->getEmailSpool(array(
+            'message_subject' => $subject,
+            'message_text' => $message,
+            'message_html' => nl2br($message),
+        ));
+        $emailSpool->status = $filename ? 'attaching' : 'pending';
+        $emailSpool->from_email = 'helpdesk@factoryfast.com.au';
+        $emailSpool->from_name = 'FactoryFast.com.au Helpdesk';
+        $emailSpool->to_email = $to_email;
+        $emailSpool->save(false);
+
+        if ($filename) {
+            $attachment = new YdAttachment();
+            $attachment->model = 'EmailSpool';
+            $attachment->model_id = $emailSpool->id;
+            $attachment->filename = $filename;
+            $attachment->handleFileUpload = false;
+
+            $emailSpool->status = 'pending';
+            $emailSpool->save(false);
+        }
+    }
 
     /**
      * @param $user User
