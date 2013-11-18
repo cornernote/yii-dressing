@@ -64,6 +64,7 @@ class YdEmail extends CApplicationComponent
             'User' => $user,
             'url' => $url,
         )));
+        $emailSpool->priority = 10;
         $emailSpool->to_email = $user->email;
         $emailSpool->to_name = $user->name;
         $emailSpool->from_email = YdConfig::setting('email');
@@ -87,6 +88,7 @@ class YdEmail extends CApplicationComponent
             'User' => $user,
             'url' => $url,
         )));
+        $emailSpool->priority = 5;
         $emailSpool->to_email = $user->email;
         $emailSpool->to_name = $user->name;
         $emailSpool->from_email = YdConfig::setting('email');
