@@ -206,5 +206,21 @@ class YdStringHelper
         return $short . '...&nbsp;' . CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $long));
     }
 
+    /**
+     * @param int $length
+     * @return string
+     */
+    static public function randomWord($length = 7)
+    {
+        srand((double)microtime() * 1000000);
+        $j = 0;
+        $code = '';
+        while ($j <= $length) {
+            $num = rand() % 33;
+            $code .= substr("abcdefghijkmnopqrstuvwxyz", $num, 1);
+            $j++;
+        }
+        return $code;
+    }
 
 }
