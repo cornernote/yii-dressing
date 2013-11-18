@@ -1,6 +1,6 @@
 <?php
 /**
- * YdEmailHelper
+ * YdEmail
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -10,13 +10,13 @@
  *
  * @package dressing.helpers
  */
-class YdEmailHelper
+class YdEmail extends CApplicationComponent
 {
 
     /**
      * @param $user User
      */
-    static public function sendUserRecover($user)
+    public function sendUserRecover($user)
     {
         // setup email variables
         $to = array($user->email => $user->name);
@@ -28,13 +28,13 @@ class YdEmailHelper
         $viewParams['url'] = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
 
         // spool the email
-        self::spool($to, 'user.recover', $viewParams, $relation);
+        $this->spool($to, 'user.recover', $viewParams, $relation);
     }
 
     /**
      * @param $user User
      */
-    static public function sendUserWelcome($user)
+    public function sendUserWelcome($user)
     {
         // setup email variables
         $to = array($user->email => $user->name);
@@ -46,13 +46,13 @@ class YdEmailHelper
         $viewParams['url'] = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
 
         // spool the email
-        self::spool($to, 'user.welcome', $viewParams, $relation);
+        $this->spool($to, 'user.welcome', $viewParams, $relation);
     }
 
     /**
      * @param $count int
      */
-    static public function sendError($count)
+    public function sendError($count)
     {
         $relation = array('model' => 'Error', 'model_id' => 0);
 
@@ -83,10 +83,10 @@ class YdEmailHelper
      * @throws CException
      * @return bool|integer
      */
-    static public function spool($to, $template, $viewParams = array(), $relation = array())
+    public function spool($to, $template, $viewParams = array(), $relation = array())
     {
         // generate the message
-        $message = self::renderEmailTemplate($template, $viewParams);
+        $message = $this->renderEmailTemplate($template, $viewParams);
 
         // format the to_name/to_email
         $to_email = $to_name = '';
@@ -147,7 +147,7 @@ class YdEmailHelper
      * @throws CException
      * @return array
      */
-    static public function renderEmailTemplate($template, $viewParams = array())
+    public function renderEmailTemplate($template, $viewParams = array())
     {
         // load layout
         $emailLayout = YdEmailTemplate::model()->findByAttributes(array('name' => 'layout.default'));

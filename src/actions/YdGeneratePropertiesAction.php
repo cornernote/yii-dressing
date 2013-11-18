@@ -76,7 +76,7 @@ class YdGeneratePropertiesAction extends CAction
         $modelList = array();
         foreach ($pathList as $path) {
             $modelName = basename($path, '.php');
-            if (strpos($modelName,'.')!==false){
+            if (strpos($modelName, '.') !== false) {
                 echo "<br/> there is dot in modelName [$modelName] probably a version conflict file <br/>\r\n";
                 continue;
             }
@@ -99,6 +99,9 @@ class YdGeneratePropertiesAction extends CAction
 
         $message = '';
         $fileName = Yii::getPathOfAlias("application.models") . '/' . $this->modelName . '.php';
+        if (!file_exists($fileName)) {
+            $fileName = Yii::getPathOfAlias("application.models.cre") . '/' . $this->modelName . '.php';
+        }
         if (file_exists($fileName)) {
             $fileContents = file_get_contents($fileName);
             $fileContents = strtr($fileContents, array(
@@ -131,7 +134,7 @@ class YdGeneratePropertiesAction extends CAction
     public function getModelProperties()
     {
         $properties = array();
-        
+
         Yii::app()->db->getSchema()->refresh();
         $this->model->refreshMetaData();
         //$this->model->refresh(); // caused an error on many_to_many tables

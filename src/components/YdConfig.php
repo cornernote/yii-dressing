@@ -381,6 +381,9 @@ class YdConfig
                 'class' => 'CCacheHttpSession',
                 'cacheID' => 'cacheApc',
             ),
+            'email' => array(
+                'class' => 'dressing.components.YdEmail',
+            ),
             'swiftMailer' => array(
                 'class' => 'dressing.extensions.swiftMailer.SwiftMailer',
             ),
