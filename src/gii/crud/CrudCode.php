@@ -16,7 +16,7 @@
 class CrudCode extends CCodeModel
 {
     /**
-     * @var
+     * @var YdActiveRecord
      */
     public $model;
     /**

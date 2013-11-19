@@ -1,7 +1,6 @@
 <?php
 /**
- * @var $this MenuController
- * @var $menus YdSiteMenu[]
+ * @var $this YdSiteMenuController
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -13,7 +12,7 @@
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Menus');
+$this->breadcrumbs[] = Yii::t('dressing', 'Site Menus');
 
 $this->renderPartial('dressing.views.siteMenu._menu');
 
@@ -26,13 +25,6 @@ $this->widget('bootstrap.widgets.TbButton', array(
 ));
 echo '</div>';
 
-$items = array();
-foreach ($menus as $menu) {
-    $items[] = array('label' => $menu->getName(), 'url' => $menu->getUrl());
-}
-
-$this->widget('bootstrap.widgets.TbMenu', array(
-    'type' => 'pills', // '', 'tabs', 'pills' (or 'list')
-    'stacked' => true, // whether this is a stacked menu
-    'items' => $items,
+$this->widget('zii.widgets.CMenu', array(
+    'items' => YdSiteMenu::getTree(),
 ));

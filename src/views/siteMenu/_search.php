@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this MenuController
+ * @var $this YdSiteMenuController
  * @var $menu YdSiteMenu
  *
  * @author Brett O'Donnell <cornernote@gmail.com>

@@ -71,6 +71,21 @@ echo "    //    );\n";
 echo "    //}\n";
 echo "\n";
 
+// beforeFilter
+echo "    /**\n";
+echo "     * @param string $view the view to be rendered\n";
+echo "     * @return bool\n";
+echo "     */\n";
+echo "    public function beforeRender($view)\n";
+echo "    {\n";
+echo "        \$this->breadcrumbs = array();\n";
+echo "        if (\$view != 'index') {\n";
+echo "            \$this->breadcrumbs[Yii::t('app', \$this->getName(true))] = user()->getState('index." . lcfirst($this->modelClass) . "', array('/" . lcfirst($this->modelClass) . "/index'));\n";
+echo "        }\n";
+echo "        return parent::beforeRender($view);\n";
+echo "    }\n";
+echo "\n";
+
 // index
 echo "    /**\n";
 echo "     * Index\n";
@@ -173,10 +188,10 @@ echo "     */\n";
 echo "    public function actionDelete(\$id = null)\n";
 echo "    {\n";
 echo "        \$task = YdHelper::getSubmittedField('task', '" . $this->modelClass . "')=='undelete' ? 'undelete' : 'delete';\n";
+echo "        \$ids = \$this->getGridIds(\$id);\n";
 echo "        if (YdHelper::getSubmittedField('confirm', '" . $this->modelClass . "')) {\n";
-echo "            \$ids = \$this->getGridIds(\$id);\n";
-echo "            foreach (\$ids as \$id) {\n";
-echo "                \$" . lcfirst($this->modelClass) . " = " . $this->modelClass . "::model()->findByPk(\$id);\n";
+echo "            foreach (\$ids as \$_id) {\n";
+echo "                \$" . lcfirst($this->modelClass) . " = " . $this->modelClass . "::model()->findByPk(\$_id);\n";
 echo "                if (!\$" . lcfirst($this->modelClass) . ") {\n";
 echo "                    continue;\n";
 echo "                }\n";
@@ -190,7 +205,7 @@ echo "            \$this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->use
 echo "        }\n";
 echo "\n";
 echo "        \$this->render('delete', array(\n";
-echo "            'id' => \$id,\n";
+echo "            'ids' => \$ids,\n";
 echo "            'task' => \$task,\n";
 echo "        ));\n";
 echo "    }\n";

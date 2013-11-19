@@ -63,9 +63,9 @@ class YdWebController extends YdController
     /**
      * @return mixed
      */
-    public function getName()
+    public function getName($plural = false)
     {
-        return ucwords(trim(strtolower(str_replace(array('-', '_', '.'), ' ', preg_replace('/(?<![A-Z])[A-Z]/', ' \0', str_replace('Controller', '', get_class($this)))))));
+        return ucwords(trim(strtolower(str_replace(array('-', '_', '.'), ' ', preg_replace('/(?<![A-Z])[A-Z]/', ' \0', str_replace('Controller', '', get_class($this))))))) . ($plural ? 's' : '');
     }
 
     /**
@@ -170,14 +170,15 @@ class YdWebController extends YdController
     }
 
     /**
-     * @param $id
+     * @param $ids
      * @return array
      */
-    public function getGridIds($id)
+    public function getGridIds($ids = null)
     {
-        $ids = array();
-        if ($id)
-            $ids[] = array($id => $id);
+        if (!$ids)
+            $ids = array();
+        if (!is_array($ids))
+            $ids = explode(',', $ids);
         foreach ($_REQUEST as $k => $v) {
             if (strpos($k, '-grid_c0') === false || !is_array($v))
                 continue;
@@ -186,19 +187,6 @@ class YdWebController extends YdController
             }
         }
         return $ids;
-    }
-
-    /**
-     * @param null $id
-     * @return string
-     */
-    public function getGridIdHiddenFields($id = null)
-    {
-        $inputs = array();
-        foreach ($this->getGridIds($id) as $_id) {
-            $inputs[] = CHtml::hiddenField('hidden-sf-grid_c0[]', $_id);
-        }
-        return implode("\n", $inputs);
     }
 
 }

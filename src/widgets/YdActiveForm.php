@@ -111,4 +111,18 @@ class YdActiveForm extends TbActiveForm
         Yii::app()->clientScript->registerScript($this->id . '-searchToggle', $script, CClientScript::POS_READY);
     }
 
+
+    /**
+     * @param null $id
+     * @return string
+     */
+    public function getGridIdHiddenFields($ids)
+    {
+        $inputs = array();
+        foreach ($ids as $id) {
+            $inputs[] = CHtml::hiddenField('hidden-sf-grid_c0[]', $id);
+        }
+        return implode("\n", $inputs);
+    }
+
 }

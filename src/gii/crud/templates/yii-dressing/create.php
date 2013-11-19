@@ -17,8 +17,6 @@ echo " * @var \$" . lcfirst($this->modelClass) . " " . $this->modelClass . "\n";
 echo " */\n";
 echo "\n";
 echo "\$this->pageTitle = \$this->pageHeading = \$this->getName() . ' ' . Yii::t('app', 'Create');\n";
-echo "\n";
-echo "\$this->breadcrumbs[\$this->getName() . ' ' . Yii::t('app', 'List')] = Yii::app()->user->getState('index." . lcfirst($this->modelClass) . "', array('/" . lcfirst($this->modelClass) . "/index'));\n";
 echo "\$this->breadcrumbs[] = Yii::t('app', 'Create');\n";
 echo "\n";
 echo "\$this->renderPartial('_menu', array(\n";

@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this MenuController
+ * @var $this YdSiteMenuController
  * @var $menu YdSiteMenu
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -13,7 +13,7 @@
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'Create');
 
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Menus')] = Yii::app()->user->getState('index.menu', array('/menu/index'));
+$this->breadcrumbs[Yii::t('dressing', 'Site Menus')] = Yii::app()->user->getState('index.siteMenu', array('/siteMenu/index'));
 $this->breadcrumbs[] = Yii::t('dressing', 'Create');
 
 $this->renderPartial('dressing.views.menu._menu', array(

@@ -187,6 +187,16 @@ class YdSiteMenu extends YdActiveRecord
     }
 
     /**
+     * The name of this model to be used in links
+     *
+     * @return string
+     */
+    public function getControllerName()
+    {
+        return 'siteMenu';
+    }
+
+    /**
      * Retrieves a list of links to be used in grid and menus.
      * @param bool $extra
      * @return array
@@ -483,13 +493,43 @@ class YdSiteMenu extends YdActiveRecord
     }
 
     /**
-     * The name of this model to be used in links
+     * Get tree data for SiteMenu, eg
+     * $this->widget('zii.widgets.CMenu', array('items' => YdSiteMenu::getTree()));
      *
-     * @return string
+     * @param int $parent_id
+     * @return array
      */
-    public function getControllerName()
+    static public function getTree($parent_id = 0)
     {
-        return 'menu';
+        $items = array();
+        $sql = 'SELECT id FROM ' . self::model()->tableName() . ' WHERE parent_id=' . (int)$parent_id . ' AND enabled=1';
+        foreach (Yii::app()->db->createCommand($sql)->queryColumn() as $id) {
+            $items[] = self::model()->findByPk($id)->getListed();
+        }
+        return $items;
+    }
+
+    /**
+     * Get tree data for this SiteMenu, eg
+     * $this->widget('zii.widgets.CMenu', array('items' => array($siteMenu->getListed())));
+     *
+     * @return array
+     */
+    public function getListed()
+    {
+        $subitems = array();
+        if ($this->child) foreach ($this->child as $child) {
+            $item = $child->getListed();
+            if ($item)
+                $subitems[] = $item;
+        }
+        $return = array(
+            'label' => $this->name,
+            'url' => array('/siteMenu/view', 'id' => $this->id),
+        );
+        if ($subitems != array())
+            $return = array_merge($return, array('items' => $subitems));
+        return $return;
     }
 
 }

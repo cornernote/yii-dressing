@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this MenuController
+ * @var $this YdSiteMenuController
  * @var $id int
  * @var $task string
  *
@@ -14,7 +14,7 @@
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
 
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Menus')] = Yii::app()->user->getState('index.menu', array('/menu/index'));
+$this->breadcrumbs[Yii::t('dressing', 'Site Menus')] = Yii::app()->user->getState('index.siteMenu', array('/siteMenu/index'));
 $this->breadcrumbs[] = Yii::t('dressing', ucfirst($task));
 
 $menu = $id ? YdSiteMenu::model()->findByPk($id) : new YdSiteMenu('search');
