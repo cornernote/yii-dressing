@@ -15,7 +15,7 @@ echo "<?php\n";
 echo "/**\n";
 echo " * " . $this->controllerClass . "\n";
 echo " *\n";
-echo " * @method " . $this->modelClass . " loadModel() loadModel($id, $model = null)\n";
+echo " * @method " . $this->modelClass . " loadModel() loadModel(\$id, \$model = null)\n";
 echo " */\n";
 echo "class " . $this->controllerClass . " extends " . $this->baseControllerClass . "\n";
 echo "{\n";

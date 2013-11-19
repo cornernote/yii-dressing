@@ -57,7 +57,7 @@ class YdUserPassword extends YdFormModel
      */
     public function validateCurrentPassword()
     {
-        $user = User::model()->findByPk(Yii::app()->user->id);
+        $user = YdUser::model()->findByPk(Yii::app()->user->id);
         if (!$user || !$user->validatePassword($this->current_password)) {
             $this->addError('current_password', 'Incorrect password.');
         }
