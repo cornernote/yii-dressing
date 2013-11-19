@@ -163,25 +163,13 @@ class YdWebController extends YdController
     public function getGridIds($id)
     {
         $ids = array();
-        $gridData = array();
-        if (!empty($_REQUEST)) {
-            foreach ($_REQUEST as $k => $v) {
-                if (strpos($k, '-grid_c0') !== false) {
-                    if (is_array($v)) {
-                        $gridData = $v;
-                    }
-
-                }
-            }
-        }
-        if (!empty($gridData)) {
-            foreach ($gridData as $id) {
-                $ids[$id] = $id;
-            }
-        }
-        else {
-            if ($id) {
-                $ids[$id] = $id;
+        if ($id)
+            $ids[] = array($id => $id);
+        foreach ($_REQUEST as $k => $v) {
+            if (strpos($k, '-grid_c0') === false || !is_array($v))
+                continue;
+            foreach ($v as $vv) {
+                $ids[$vv] = $vv;
             }
         }
         return $ids;
@@ -194,8 +182,8 @@ class YdWebController extends YdController
     public function getGridIdHiddenFields($id = null)
     {
         $inputs = array();
-        foreach ($this->getGridIds($id) as $id) {
-            $inputs[] = CHtml::hiddenField('hidden-sf-grid_c0[]', $id);
+        foreach ($this->getGridIds($id) as $_id) {
+            $inputs[] = CHtml::hiddenField('hidden-sf-grid_c0[]', $_id);
         }
         return implode("\n", $inputs);
     }
