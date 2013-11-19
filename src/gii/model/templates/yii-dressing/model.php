@@ -65,10 +65,11 @@ echo "    public function rules()\n";
 echo "    {\n";
 echo "        \$rules = array();\n";
 echo "        if (\$this->scenario == 'search') {\n";
+echo "            \$rules[] = array('" . implode(', ', array_keys($columns)) . "', 'safe');\n";
 echo "        }\n";
 echo "        if (in_array(\$this->scenario, array('create', 'update'))) {\n";
 foreach ($rules as $rule) {
-    echo "        \$rules[] = " . $rule . ";\n";
+    echo "            \$rules[] = " . $rule . ";\n";
 }
 echo "        }\n";
 echo "        return \$rules;\n";
