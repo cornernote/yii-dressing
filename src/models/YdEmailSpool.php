@@ -30,6 +30,7 @@
  * @property integer $model_id
  * @property string $template
  * @property string $priority
+ * @property string $email_transport_id
  * @property string $to_name
  * @property string $to_email
  * @property string $from_email

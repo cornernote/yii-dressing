@@ -23,7 +23,6 @@ class YdEmail extends CApplicationComponent
      * @param $subject
      * @param $message_text
      * @param $filename
-     * @return bool|int
      */
     public function sendEmail($to_email, $subject, $message_text, $filename = null)
     {
@@ -119,12 +118,12 @@ class YdEmail extends CApplicationComponent
      * @throws CException
      * @return array
      */
-    public function renderEmailTemplate($template, $viewParams = array())
+    public function renderEmailTemplate($template, $viewParams = array(), $layout = 'layout.default')
     {
         // load layout
-        $emailLayout = YdEmailTemplate::model()->findByAttributes(array('name' => 'layout.default'));
+        $emailLayout = YdEmailTemplate::model()->findByAttributes(array('name' => $layout));
         if (!$emailLayout)
-            throw new CException('missing EmailTemplate - layout.default');
+            throw new CException('missing EmailTemplate - ' . $layout);
 
         // load template
         $emailTemplate = YdEmailTemplate::model()->findByAttributes(array('name' => $template));
