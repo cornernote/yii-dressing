@@ -155,6 +155,19 @@ class YdWebController extends YdController
         return $this->loadModel;
     }
 
+    /**
+     * @param $message
+     * @param $messageType
+     * @param null $url
+     */
+    protected function flashRedirect($message, $messageType = 'info', $url = null)
+    {
+        Yii::app()->user->addFlash($message, $messageType);
+        if (!Yii::app()->request->isAjaxRequest) {
+            $this->redirect($url ? $url : Yii::app()->returnUrl->getUrl());
+        }
+        Yii::app()->end();
+    }
 
     /**
      * @param $id
