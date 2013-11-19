@@ -145,7 +145,7 @@ class YdActiveRecord extends CActiveRecord
     {
         return array_merge(array(
             '/' . $this->getControllerName() . '/' . $action,
-            $this->getPrimaryKeySchemaString() => $this->getPrimaryKeyString(),
+            'id' => $this->getPrimaryKeyString(),
         ), (array)$params);
     }
 
