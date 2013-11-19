@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AccountController
+ * @var $this YdAccountController
  * @var $form YdActiveForm
  * @var $user YdUser
  *

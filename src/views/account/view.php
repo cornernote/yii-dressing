@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AccountController
+ * @var $this YdAccountController
  * @var $user YdUser
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
