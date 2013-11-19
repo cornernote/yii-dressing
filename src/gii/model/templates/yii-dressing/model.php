@@ -69,7 +69,7 @@ echo "            \$rules[] = array('" . implode(', ', array_keys($columns)) . "
 echo "        }\n";
 echo "        if (in_array(\$this->scenario, array('create', 'update'))) {\n";
 foreach ($rules as $rule) {
-    echo "            \$rules[] = " . $rule . ";\n";
+    echo "            //\$rules[] = " . $rule . ";\n";
 }
 echo "        }\n";
 echo "        return \$rules;\n";
