@@ -115,10 +115,9 @@ class YdPasswordHash {
 		if ($id != '$P$' && $id != '$H$')
 			return $output;
 
-        // PHP notice - Uninitialized string offset: 3
-		//$count_log2 = strpos($this->itoa64, $setting[3]);
-		//if ($count_log2 < 7 || $count_log2 > 30)
-		//	return $output;
+		$count_log2 = strpos($this->itoa64, $setting[3]);
+		if ($count_log2 < 7 || $count_log2 > 30)
+			return $output;
 
 		$count = 1 << $count_log2;
 
