@@ -209,7 +209,7 @@ class YdConfig
             'emailTemplate' => 'dressing.controllers.YdEmailTemplateController',
             'error' => 'dressing.controllers.YdErrorController',
             'lookup' => 'dressing.controllers.YdLookupController',
-            'menu' => 'dressing.controllers.YdSiteMenuController',
+            'siteMenu' => 'dressing.controllers.YdSiteMenuController',
             'role' => 'dressing.controllers.YdRoleController',
             'setting' => 'dressing.controllers.YdSettingController',
             'user' => 'dressing.controllers.YdUserController',

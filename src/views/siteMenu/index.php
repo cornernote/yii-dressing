@@ -15,7 +15,7 @@ $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressin
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Menus');
 
-$this->renderPartial('dressing.views.menu._menu');
+$this->renderPartial('dressing.views.siteMenu._menu');
 
 echo '<div class="spacer">';
 $this->widget('bootstrap.widgets.TbButton', array(
