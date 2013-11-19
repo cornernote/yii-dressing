@@ -118,7 +118,7 @@ class YdAudit extends YdActiveRecord
         return array(
             'user' => array(
                 self::BELONGS_TO,
-                'YdUser',
+                Config::setting('audit_user_model'),
                 'user_id',
             ),
             'auditTrail' => array(
@@ -399,7 +399,7 @@ class YdAudit extends YdActiveRecord
      */
     static public function findCurrent()
     {
-        if (!YdConfig::setting('audit')) {
+        if (!Config::setting('audit')) {
             return false;
         }
 
@@ -425,7 +425,7 @@ class YdAudit extends YdActiveRecord
      */
     static public function findCurrentId()
     {
-        if (!YdConfig::setting('audit')) {
+        if (!Config::setting('audit')) {
             return false;
         }
         if (self::$_audit) {

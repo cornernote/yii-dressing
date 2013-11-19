@@ -9,8 +9,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license http://www.gnu.org/copyleft/gpl.html
  */
-$this->pageTitle = Yii::t('dressing', 'Errors');
-$this->pageHeading = Yii::t('dressing', 'Errors');
+$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Errors');
 
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Errors');
@@ -35,8 +34,8 @@ $this->breadcrumbs[] = Yii::t('dressing', 'Errors');
         if (strpos($error, 'archive/') !== false) {
             $errorLink = array('/error/view', 'error' => str_replace('archive/', '', $error), 'archive' => 1);
         }
-        if ($auditId && is_numeric($auditId) && Helper::tableExists(Yii::app()->dressing->tableMap['YdAudit'])) {
-            $audit = Audit::model()->findByPk($auditId);
+        if ($auditId && is_numeric($auditId) && YdHelper::tableExists(Yii::app()->dressing->tableMap['YdAudit'])) {
+            $audit = YdAudit::model()->findByPk($auditId);
             if ($audit) {
                 $auditLink = $audit->getLink();
                 $auditCreated = $audit->created;

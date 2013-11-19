@@ -16,7 +16,7 @@ echo " * @var \$this " . $this->controllerClass . "\n";
 echo " * @var \$" . lcfirst($this->modelClass) . " " . $this->modelClass . "\n";
 echo " */\n";
 echo "\n";
-echo "\$this->pageTitle = \$this->pageHeading = \$" . lcfirst($this->modelClass) . "->getName() . ' - ' . \$this->getName();\n";
+echo "\$this->pageTitle = \$this->pageHeading = \$" . lcfirst($this->modelClass) . "->getName();\n";
 echo "\$this->breadcrumbs[] = \$" . lcfirst($this->modelClass) . "->getName();\n";
 echo "\n";
 echo "\$this->renderPartial('_menu', array(\n";

@@ -62,7 +62,7 @@ class YdAuditTrail extends YdActiveRecord
         return array(
             'user' => array(
                 self::BELONGS_TO,
-                'YdUser',
+                Config::setting('audit_user_model'),
                 'user_id',
             ),
             'audit' => array(

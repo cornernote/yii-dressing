@@ -19,7 +19,8 @@ if (substr(php_sapi_name(), 0, 3) == 'cli') {
 
 // include config
 require_once(dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . DS . 'vendor' . DS . 'mrphp' . DS . 'yii-dressing' . DS . 'src' . DS . 'components' . DS . 'YdConfig.php');
-$config = YdConfig::instance(array('appPath' => dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . DS . 'app'))->getWebConfig();
+require_once(dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . DS . 'app' . DS . 'components' . DS . 'Config.php');
+$config = Config::instance(array('appPath' => dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . DS . 'app'))->getWebConfig();
 
 // include Yii
 require_once(dirname(dirname($_SERVER['SCRIPT_FILENAME'])) . DS . 'vendor' . DS . 'yiisoft' . DS . 'yii' . DS . 'framework' . DS . 'yii.php');

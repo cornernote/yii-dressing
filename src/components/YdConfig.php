@@ -75,8 +75,8 @@ class YdConfig
     {
         // load settings
         self::$_settings = $this->getSettingsConfig();
-        $_config_db = mysql_connect($this->dbConfig['host'], $this->dbConfig['user'], $this->dbConfig['pass']);
-        if ($_config_db && mysql_select_db($this->dbConfig['name'], $_config_db)) {
+        $_config_db = mysql_connect($this->dbConfig['default']['host'], $this->dbConfig['default']['user'], $this->dbConfig['default']['pass']);
+        if ($_config_db && mysql_select_db($this->dbConfig['default']['name'], $_config_db)) {
             mysql_set_charset('utf8', $_config_db);
             $settingTable = isset($settingTable) ? $settingTable : 'setting'; // decide which table to use
             $q = mysql_query("SELECT * FROM {$settingTable}", $_config_db);
@@ -103,10 +103,10 @@ class YdConfig
 
         // set default php settings
         date_default_timezone_set($this->setting('timezone'));
-        $timeLimit = self::isCli() ? 0 : $this->setting('timeLimit');
-        set_time_limit($timeLimit);
-        ini_set('max_execution_time', $timeLimit);
-        ini_set('memory_limit', $this->setting('memoryLimit'));
+        $time_limit = self::isCli() ? 0 : $this->setting('time_limit');
+        set_time_limit($time_limit);
+        ini_set('max_execution_time', $time_limit);
+        ini_set('memory_limit', $this->setting('memory_limit'));
     }
 
     /**
@@ -114,7 +114,7 @@ class YdConfig
      * @param $config
      * @return array
      */
-    private function loadConfig($name, $config)
+    protected function loadConfig($name, $config)
     {
         $file = $this->appPath . DS . 'config' . DS . $name . '.php';
         $app = file_exists($file) ? require($file) : array();
@@ -131,11 +131,13 @@ class YdConfig
     public function getDbConfig()
     {
         $config = array(
-            'host' => 'localhost',
-            'user' => 'root',
-            'pass' => '',
-            'name' => 'test',
-            'setting' => 'setting',
+            'default' => array(
+                'host' => 'localhost',
+                'user' => 'root',
+                'pass' => '',
+                'name' => 'test',
+                'setting' => 'setting',
+            ),
         );
         return $this->loadConfig('db', $config);
     }
@@ -151,8 +153,8 @@ class YdConfig
         $config['preload'][] = 'bootstrap';
 
         // enable database profiling
-        $config['components']['db']['enableProfiling'] = $this->setting('debugDb');
-        $config['components']['db']['enableParamLogging'] = $this->setting('debugDb');
+        $config['components']['db']['enableProfiling'] = $this->setting('debug_db');
+        $config['components']['db']['enableParamLogging'] = $this->setting('debug_db');
 
         // log routes
         $config['components']['log']['routes'] = array();
@@ -160,10 +162,10 @@ class YdConfig
             // debug, web log route
             $config['components']['log']['routes'][] = array(
                 'class' => 'CWebLogRoute',
-                'levels' => $this->setting('debugLevels'),
+                'levels' => $this->setting('debug_levels'),
                 //'levels' => 'trace, info, error, warning, profile',
             );
-            if ($this->setting('debugDb')) {
+            if ($this->setting('debug_db')) {
                 $config['components']['log']['routes'][] = array(
                     'class' => 'YdProfileLogRoute',
                     'levels' => 'profile',
@@ -174,7 +176,7 @@ class YdConfig
             // no debug, file log route
             $config['components']['log']['routes'][] = array(
                 'class' => 'CFileLogRoute',
-                'levels' => $this->setting('debugLevels'),
+                'levels' => $this->setting('debug_levels'),
             );
         }
 
@@ -317,7 +319,7 @@ class YdConfig
             'dressing' => array(
                 'class' => 'dressing.YiiDressing',
                 'tableMap' => array(
-                    'YdSetting' => $this->dbConfig['setting'],
+                    'YdSetting' => $this->dbConfig['default']['setting'],
                 ),
             ),
             'errorHandler' => array(
@@ -344,10 +346,10 @@ class YdConfig
                 'showScriptName' => false,
             ),
             'db' => array(
-                'connectionString' => "mysql:host={$this->dbConfig['host']};dbname={$this->dbConfig['name']}",
+                'connectionString' => "mysql:host={$this->dbConfig['default']['host']};dbname={$this->dbConfig['default']['name']}",
                 'emulatePrepare' => true,
-                'username' => $this->dbConfig['user'],
-                'password' => $this->dbConfig['pass'],
+                'username' => $this->dbConfig['default']['user'],
+                'password' => $this->dbConfig['default']['pass'],
                 'charset' => 'utf8',
                 'schemaCachingDuration' => 3600,
             ),
@@ -476,33 +478,34 @@ class YdConfig
             'timezone' => 'GMT',
             'theme' => null,
             'debug' => true,
-            'debugDb' => false,
-            'debugLevels' => 'error,warning',
-            'timeLimit' => 60,
-            'memoryLimit' => '128M',
+            'debug_db' => false,
+            'debug_levels' => 'error,warning',
+            'time_limit' => 60,
+            'memory_limit' => '128M',
             'email' => 'webmaster@localhost',
             'website' => 'localhost',
-            'dateFormat' => 'Y-m-d',
-            'dateFormatLong' => 'Y-m-d',
-            'timeFormat' => 'H:i:s',
-            'timeFormatLong' => 'H:i:s',
-            'dateTimeFormat' => 'Y-m-d H:i:s',
-            'dateTimeFormatLong' => 'Y-m-d H:i:s',
-            'allowAutoLogin' => true,
-            'rememberMe' => true,
-            'defaultPageSize' => '10',
+            'date_format' => 'Y-m-d',
+            'date_format_long' => 'Y-m-d',
+            'time_format' => 'H:i:s',
+            'time_format_long' => 'H:i:s',
+            'datetime_format' => 'Y-m-d H:i:s',
+            'datetime_format_long' => 'Y-m-d H:i:s',
+            'allow_auto_login' => true,
+            'allow_remember_me' => true,
+            'default_page_size' => '10',
             'recaptcha' => false,
-            'recaptchaPrivate' => '6LeBItQSAAAAALA4_G05e_-fG5yH_-xqQIN8AfTD',
-            'recaptchaPublic' => '6LeBItQSAAAAAG_umhiD0vyxXbDFbVMPA0kxZUF6',
-            'hashKey' => 'abc123',
-            'landingYoutube' => 'dR9qPq-yVBY',
-            'landingYoutubeTitle' => 'Manage Your Master Key Systems Online',
+            'recaptcha_private' => '6LeBItQSAAAAALA4_G05e_-fG5yH_-xqQIN8AfTD',
+            'recaptcha_public' => '6LeBItQSAAAAAG_umhiD0vyxXbDFbVMPA0kxZUF6',
+            'hash_key' => 'abc123',
+            'landing_youtube' => 'dR9qPq-yVBY',
+            'landing_youtube_title' => 'Manage Your Master Key Systems Online',
             'mission' => 'Become an awesome PHP Yii Library!',
-            'errorEmail' => 'webmaster@localhost',
-            'serverName' => '',
-            'scriptPath' => '',
-            'scriptUrl' => '',
+            'error_email' => 'webmaster@localhost',
+            'server_name' => '',
+            'script_path' => '',
+            'script_url' => '',
             'audit' => false,
+            'audit_user_model' => 'YdUser',
         );
         return $this->loadConfig('settings', $config);
     }

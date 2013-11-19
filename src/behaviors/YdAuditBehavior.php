@@ -44,7 +44,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
      */
     public function afterSave($event)
     {
-        if (!YdConfig::setting('audit')) {
+        if (!Config::setting('audit')) {
             parent::afterSave($event);
         }
 
@@ -127,7 +127,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
      */
     public function afterDelete($event)
     {
-        if (!YdConfig::setting('audit')) {
+        if (!Config::setting('audit')) {
             parent::afterDelete($event);
         }
 

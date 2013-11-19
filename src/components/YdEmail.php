@@ -32,7 +32,7 @@ class YdEmail extends CApplicationComponent
             'message_html' => Yii::app()->format->formatNtext($message_text),
         ));
         $emailSpool->status = $filename ? 'attaching' : 'pending';
-        $emailSpool->from_email = YdConfig::setting('email');
+        $emailSpool->from_email = Config::setting('email');
         $emailSpool->from_name = app()->name;
         $emailSpool->to_email = $to_email;
         $emailSpool->save(false);
@@ -66,7 +66,7 @@ class YdEmail extends CApplicationComponent
         $emailSpool->priority = 10;
         $emailSpool->to_email = $user->email;
         $emailSpool->to_name = $user->name;
-        $emailSpool->from_email = YdConfig::setting('email');
+        $emailSpool->from_email = Config::setting('email');
         $emailSpool->from_name = app()->name;
         $emailSpool->model = 'User';
         $emailSpool->model_id = $user->id;
@@ -90,7 +90,7 @@ class YdEmail extends CApplicationComponent
         $emailSpool->priority = 5;
         $emailSpool->to_email = $user->email;
         $emailSpool->to_name = $user->name;
-        $emailSpool->from_email = YdConfig::setting('email');
+        $emailSpool->from_email = Config::setting('email');
         $emailSpool->from_name = app()->name;
         $emailSpool->model = 'User';
         $emailSpool->model_id = $user->id;
@@ -131,7 +131,7 @@ class YdEmail extends CApplicationComponent
             throw new CException('missing EmailTemplate - ' . $template);
 
         // add settings to params
-        $viewParams['Setting'] = YdConfig::settings();
+        $viewParams['Setting'] = Config::settings();
         $viewParams['Setting']['bu'] = Yii::app()->createAbsoluteUrl('/');
 
         // parse template
@@ -152,7 +152,7 @@ class YdEmail extends CApplicationComponent
      */
     public function userFlash($emailSpool)
     {
-        if (!YdConfig::setting('debug_email'))
+        if (!Config::setting('debug_email'))
             return;
         if (!Yii::app()->user->checkAccess('admin'))
             return;

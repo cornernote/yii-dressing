@@ -16,7 +16,7 @@ echo " * @var \$this " . $this->controllerClass . "\n";
 echo " * @var \$" . lcfirst($this->modelClass) . " " . $this->modelClass . "\n";
 echo " */\n";
 echo "\n";
-echo "\$this->pageTitle = \$this->pageHeading = \$this->getName() . ' ' . Yii::t('app', 'Create');\n";
+echo "\$this->pageTitle = \$this->pageHeading = Yii::t('app', 'Create') . ' ' . \$this->getName();\n";
 echo "\$this->breadcrumbs[] = Yii::t('app', 'Create');\n";
 echo "\n";
 echo "\$this->renderPartial('_menu', array(\n";

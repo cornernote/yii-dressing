@@ -21,7 +21,7 @@ $columns[] = array(
 );
 $columns[] = 'model_id';
 $columns[] = array(
-    'name' => 'type',
+    'name' => 'template',
     //'filter' => array(),
 );
 $columns[] = array(

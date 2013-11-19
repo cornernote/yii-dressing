@@ -24,7 +24,7 @@ class YdSecureLink
     {
         $params['ttl'] = $ttl;
         $params['rnd'] = md5(microtime(true));
-        $params['key'] = md5(implode('', $params) . YdConfig::setting('hashKey'));
+        $params['key'] = md5(implode('', $params) . Config::setting('hashKey'));
         return 'http://' . Yii::app()->params['website'] . Yii::app()->createUrl($action, $params);
     }
 
@@ -50,7 +50,7 @@ class YdSecureLink
         }
         $params['ttl'] = $data['ttl'];
         $params['rnd'] = $data['rnd'];
-        $key = md5(implode('', $params) . YdConfig::setting('hashKey'));
+        $key = md5(implode('', $params) . Config::setting('hashKey'));
         return ($data['key'] == $key);
     }
 

@@ -73,16 +73,16 @@ echo "\n";
 
 // beforeFilter
 echo "    /**\n";
-echo "     * @param string $view the view to be rendered\n";
+echo "     * @param string \$view the view to be rendered\n";
 echo "     * @return bool\n";
 echo "     */\n";
-echo "    public function beforeRender($view)\n";
+echo "    public function beforeRender(\$view)\n";
 echo "    {\n";
 echo "        \$this->breadcrumbs = array();\n";
 echo "        if (\$view != 'index') {\n";
 echo "            \$this->breadcrumbs[Yii::t('app', \$this->getName(true))] = user()->getState('index." . lcfirst($this->modelClass) . "', array('/" . lcfirst($this->modelClass) . "/index'));\n";
 echo "        }\n";
-echo "        return parent::beforeRender($view);\n";
+echo "        return parent::beforeRender(\$view);\n";
 echo "    }\n";
 echo "\n";
 

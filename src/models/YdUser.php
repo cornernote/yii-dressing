@@ -292,7 +292,7 @@ class YdUser extends YdActiveRecord
         if (!$password) {
             return '';
         }
-        return md5($password . YdConfig::setting('hashKey'));
+        return md5($password . Config::setting('hash_key'));
     }
 
     /**

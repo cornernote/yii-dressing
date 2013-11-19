@@ -32,7 +32,7 @@ if ($recaptcha) {
         'attribute' => 'recaptcha',
         'theme' => 'red',
         'language' => 'en_EN',
-        'publicKey' => YdConfig::setting('recaptchaPublic'),
+        'publicKey' => Config::setting('recaptcha_public'),
     ));
     echo CHtml::error($user, 'recaptcha');
 }

@@ -60,8 +60,8 @@ class YdUserLogin extends YdFormModel
             array('remember_me', 'boolean'),
         );
         // recaptcha
-        if (YdConfig::setting('recaptcha')) {
-            $rules[] = array('recaptcha', 'dressing.validators.YdReCaptchaValidator', 'privateKey' => YdConfig::setting('recaptchaPrivate'), 'on' => 'recaptcha');
+        if (Config::setting('recaptcha')) {
+            $rules[] = array('recaptcha', 'dressing.validators.YdReCaptchaValidator', 'privateKey' => Config::setting('recaptchaPrivate'), 'on' => 'recaptcha');
         }
         return $rules;
     }
