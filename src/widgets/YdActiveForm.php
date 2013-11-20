@@ -125,4 +125,32 @@ class YdActiveForm extends TbActiveForm
         return implode("\n", $inputs);
     }
 
+    /**
+     * @param string $label
+     * @return string
+     */
+    public function getSubmitButton($label, $options = array())
+    {
+        $defaultOptions = array(
+            'buttonType' => 'submit',
+            'type' => 'primary',
+            'icon' => 'ok white',
+            'label' => $label,
+        );
+        $options = CMap::mergeArray($defaultOptions, $options);
+        ob_start();
+        $this->widget('bootstrap.widgets.TbButton', $options);
+        return ob_get_clean();
+    }
+
+    /**
+     * @param YdActiveRecord $model
+     * @return string
+     */
+    public function getSaveButton($model)
+    {
+        $label = $model->isNewRecord ? Yii::t('dressing', 'Create') : Yii::t('dressing', 'Save');
+        return $this->getSubmitButton($label);
+    }
+
 }

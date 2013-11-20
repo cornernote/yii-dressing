@@ -33,6 +33,7 @@ foreach ($this->tableSchema->columns as $column) {
 echo "\n";
 echo "echo \$form->endModalWrap();\n";
 echo "echo '<div class=\"' . \$form->getSubmitRowClass() . '\">';\n";
+echo "echo \$form->getSaveButton(\$" . lcfirst($this->modelClass) . ");\n";
 echo "\$this->widget('bootstrap.widgets.TbButton', array(\n";
 echo "    'buttonType' => 'submit',\n";
 echo "    'type' => 'primary',\n";
