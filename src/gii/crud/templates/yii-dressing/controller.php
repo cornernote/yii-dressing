@@ -109,7 +109,6 @@ echo "     * @param \$id\n";
 echo "     */\n";
 echo "    public function actionView(\$id)\n";
 echo "    {\n";
-echo "        /** @var \$" . lcfirst($this->modelClass) . " " . $this->modelClass . " */\n";
 echo "        \$" . lcfirst($this->modelClass) . " = \$this->loadModel(\$id);\n";
 echo "\n";
 if (in_array('deleted', CHtml::listData($this->tableSchema->columns, 'name', 'name'))) {
@@ -161,7 +160,6 @@ echo "     * @param \$id\n";
 echo "     */\n";
 echo "    public function actionUpdate(\$id)\n";
 echo "    {\n";
-echo "        /** @var \$" . lcfirst($this->modelClass) . " " . $this->modelClass . " */\n";
 echo "        \$" . lcfirst($this->modelClass) . " = \$this->loadModel(\$id);\n";
 echo "\n";
 echo "        \$this->performAjaxValidation(\$" . lcfirst($this->modelClass) . ", '" . lcfirst($this->modelClass) . "-form');\n";

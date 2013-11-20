@@ -131,7 +131,7 @@ class YdActiveRecord extends CActiveRecord
      */
     public function getIdString()
     {
-        return $this->getControllerName() . '-' . $this->getPrimaryKeyString();
+        return get_class($this) . '-' . $this->getPrimaryKeyString();
     }
 
     /**
@@ -139,7 +139,7 @@ class YdActiveRecord extends CActiveRecord
      *
      * @param string $action
      * @param array $params
-     * @return string
+     * @return array
      */
     public function getUrl($action = 'view', $params = array())
     {

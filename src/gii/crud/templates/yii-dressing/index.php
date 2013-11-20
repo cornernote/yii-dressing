@@ -20,7 +20,7 @@ echo "Yii::app()->user->setState('index." . lcfirst($this->modelClass) . "', Yii
 echo "\$this->pageTitle = \$this->pageHeading = \$this->getName(true);\n";
 echo "\$this->breadcrumbs[] = \$this->getName(true);\n";
 echo "\n";
-echo "\$this->menu = YdSiteMenu::getItemsFromMenu('Main');\n";
+echo "\$this->renderPartial('_menu');\n";
 echo "\n";
 echo "echo '<div class=\"spacer\">';\n";
 echo "\$this->widget('bootstrap.widgets.TbButton', array(\n";

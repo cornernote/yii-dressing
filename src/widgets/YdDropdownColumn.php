@@ -12,7 +12,7 @@ Yii::import('zii.widgets.grid.CDataColumn');
  *
  * @package dressing.widgets
  */
-class YdDropdownColumn extends CDataColumn
+class YdDropdownColumn extends TbDataColumn
 {
 
     /**
@@ -51,9 +51,11 @@ class YdDropdownColumn extends CDataColumn
         else {
             $links[] = $parentContents;
         }
+        echo '<div class="filter-container">';
         app()->controller->widget('bootstrap.widgets.TbButtonGroup', array(
             'buttons' => $links,
         ));
+        echo '</div>';
     }
 
 }

@@ -413,6 +413,7 @@ ul.ui-sortable, ul.ui-sortable li {
     Tabs
 *********************/
 
+/*
 .nav-tabs .dropdown-toggle .caret {
     margin-top: 6px;
     border-top-color: #000;
@@ -424,6 +425,7 @@ ul.ui-sortable, ul.ui-sortable li {
     border-top-color: #333;
     border-bottom-color: #333;
 }
+*/
 
 /*********************
     Alerts
@@ -487,10 +489,11 @@ ul.ui-sortable, ul.ui-sortable li {
 }
 
 /*********************
-    Search
+    Dropdown Columns
 *********************/
 
-.dropdown-column .btn-group, .dropdown-column .btn-group .btn:first-child {
-    width: 85%;
-    text-align: left;
+.dropdown-column .btn-group {
+}
+
+.dropdown-column .btn-group .btn:first-child {
 }

@@ -5,7 +5,6 @@
  * @property array $dbConfig
  * @property array $webConfig
  * @property array $cliConfig
- * @property array $mainConfig
  * @property array $paramsConfig
  * @property array $importConfig
  * @property array $componentsConfig
@@ -147,7 +146,27 @@ class YdConfig
      */
     public function getWebConfig()
     {
-        $config = array();
+        $config = array(
+
+            // yii settings
+            'id' => $this->setting('id'),
+            'name' => $this->setting('name'),
+            'language' => $this->setting('language'),
+            'charset' => $this->setting('charset'),
+            'params' => $this->getParamsConfig(),
+
+            // paths
+            'basePath' => $this->appPath,
+            'runtimePath' => dirname($this->appPath) . DS . 'runtime',
+            'aliases' => $this->getAliasesConfig(),
+            'import' => $this->getImportConfig(),
+
+            // libraries
+            'modules' => $this->getModulesConfig(),
+            'components' => $this->getComponentsConfig(),
+            'preload' => $this->getPreloadConfig(),
+
+        );
 
         // web only preloads
         $config['preload'][] = 'bootstrap';
@@ -217,34 +236,13 @@ class YdConfig
             'user' => 'dressing.controllers.YdUserController',
         );
 
-        return $this->loadConfig('web', self::mergeArray($this->getMainConfig(), $config));
+        return $this->loadConfig('web', $config);
     }
 
     /**
      * @return array
      */
     public function getCliConfig()
-    {
-        $config = array();
-
-        // command map
-        $config['commandMap']['migrate'] = array(
-            'class' => 'system.cli.commands.MigrateCommand',
-            'migrationPath' => 'application.migrations',
-            'migrationTable' => 'migration',
-            'connectionID' => 'db',
-            'templateFile' => 'dressing.migrations.templates.migrate_template',
-        );
-        $config['commandMap']['emailSpool'] = 'dressing.commands.EmailSpoolCommand';
-        $config['commandMap']['errorEmail'] = 'dressing.commands.ErrorEmailCommand';
-
-        return $this->loadConfig('cli', self::mergeArray($this->getMainConfig(), $config));
-    }
-
-    /**
-     * @return array
-     */
-    public function getMainConfig()
     {
         $config = array(
 
@@ -267,7 +265,19 @@ class YdConfig
             'preload' => $this->getPreloadConfig(),
 
         );
-        return $this->loadConfig('main', $config);
+
+        // command map
+        $config['commandMap']['migrate'] = array(
+            'class' => 'system.cli.commands.MigrateCommand',
+            'migrationPath' => 'application.migrations',
+            'migrationTable' => 'migration',
+            'connectionID' => 'db',
+            'templateFile' => 'dressing.migrations.templates.migrate_template',
+        );
+        $config['commandMap']['emailSpool'] = 'dressing.commands.EmailSpoolCommand';
+        $config['commandMap']['errorEmail'] = 'dressing.commands.ErrorEmailCommand';
+
+        return $this->loadConfig('cli', $config);
     }
 
     /**
@@ -331,7 +341,7 @@ class YdConfig
             ),
             'user' => array(
                 'class' => 'dressing.components.YdWebUser',
-                'allowAutoLogin' => true,
+                'allowAutoLogin' => self::setting('allow_auto_login'),
                 'loginUrl' => array('/account/login'),
             ),
             'returnUrl' => array(
