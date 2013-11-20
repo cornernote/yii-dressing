@@ -51,7 +51,7 @@ $this->renderPartial('dressing.views.siteMenu._menu', array(
         // actions
         $this->widget('bootstrap.widgets.TbButton', array(
             'label' => Yii::t('dressing', 'Create Menu Item'),
-            'url' => array('/menu/create', 'Menu[parent_id]' => $menu->id),
+            'url' => array('/siteMenu/create', 'YdSiteMenu[parent_id]' => $menu->id),
             'type' => 'primary',
             'size' => 'mini',
         ));

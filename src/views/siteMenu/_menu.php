@@ -18,10 +18,10 @@ if ($this->action->id == 'index') {
 
 // create
 if ($menu->isNewRecord) {
-    $this->menu[] = array(
-        'label' => Yii::t('dressing', 'Create'),
-        'url' => array('/menu/create'),
-    );
+    //$this->menu[] = array(
+    //    'label' => Yii::t('dressing', 'Create'),
+    //    'url' => array('/menu/create'),
+    //);
     return; // no more links
 }
 
