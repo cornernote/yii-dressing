@@ -26,7 +26,6 @@ echo $form->textFieldRow($menu, 'url');
 echo $form->textFieldRow($menu, 'url_params');
 echo $form->textFieldRow($menu, 'target');
 echo $form->textFieldRow($menu, 'access_role');
-echo $form->textFieldRow($menu, 'sort_order');
 echo $form->checkBoxRow($menu, 'enabled');
 
 echo $form->endModalWrap();

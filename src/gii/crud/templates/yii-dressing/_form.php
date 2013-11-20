@@ -32,7 +32,5 @@ foreach ($this->tableSchema->columns as $column) {
 }
 echo "\n";
 echo "echo \$form->endModalWrap();\n";
-echo "echo '<div class=\"' . \$form->getSubmitRowClass() . '\">';\n";
-echo "echo \$form->getSaveButton(\$" . lcfirst($this->modelClass) . ");\n";
-echo "echo '</div>';\n";
+echo "echo \$form->getSubmitButtonRow(\$" . lcfirst($this->modelClass) . "->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Save'));\n";
 echo "\$this->endWidget();\n";

@@ -348,6 +348,7 @@ table.table-striped tbody tr:nth-child(odd) td, table.table-striped tbody tr:nth
 
 .grid-view .page-size, .grid-view .form-multi-actions, .grid-view .form-grid-actions {
     float: right;
+    margin-left: 10px;
 }
 
 .grid-view .toggle-filters {
@@ -402,6 +403,10 @@ table.detail-view.table-bordered tbody tr th a {
 /*********************
    Sortable
 *********************/
+
+ul.ui-sortable .handle {
+    cursor: move;
+}
 
 ul.ui-sortable, ul.ui-sortable li {
     list-style: none;
@@ -479,6 +484,7 @@ label.checkbox {
 
 .hero-unit h1 {
     padding-left: 0;
+    margin-bottom: 20px;
 }
 
 /*********************

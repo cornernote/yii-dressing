@@ -4,8 +4,7 @@
  */
 
 $this->pageTitle = $this->pageHeading = t('Tools');
-//$this->breadcrumbs = array(t('Tools'));
-//$this->menu = SiteMenu::getItemsFromMenu('User');
+$this->breadcrumbs[] = t('Tools');
 
 echo '<h2>' . t('Manage') . '</h2>';
 $this->widget('bootstrap.widgets.TbMenu', array(
@@ -17,6 +16,12 @@ echo '<h2>' . t('Settings') . '</h2>';
 $this->widget('bootstrap.widgets.TbMenu', array(
     'type' => 'pills',
     'items' => SiteMenu::getItemsFromMenu('Settings', SiteMenu::MENU_ADMIN),
+));
+
+echo '<h2>' . t('Reports') . '</h2>';
+$this->widget('bootstrap.widgets.TbMenu', array(
+    'type' => 'pills',
+    'items' => SiteMenu::getItemsFromMenu('Reports', SiteMenu::MENU_ADMIN),
 ));
 
 echo '<h2>' . t('Logs') . '</h2>';

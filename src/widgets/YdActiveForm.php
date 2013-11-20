@@ -144,13 +144,14 @@ class YdActiveForm extends TbActiveForm
     }
 
     /**
-     * @param YdActiveRecord $model
+     * @param string $label
      * @return string
      */
-    public function getSaveButton($model)
+    public function getSubmitButtonRow($label, $options = array())
     {
-        $label = $model->isNewRecord ? Yii::t('dressing', 'Create') : Yii::t('dressing', 'Save');
-        return $this->getSubmitButton($label);
+        echo '<div class="' . $this->getSubmitRowClass() . '">';
+        echo $this->getSubmitButton($label, $options);
+        echo '</div>';
     }
 
 }

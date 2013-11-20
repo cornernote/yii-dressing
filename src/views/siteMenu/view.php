@@ -60,15 +60,15 @@ $this->renderPartial('dressing.views.siteMenu._menu', array(
         // menuItems
         $sortables = array();
         foreach ($menu->child as $_menu) {
-            $sortables[$_menu->id] = '<i class="icon-move handle" title="' . Yii::t('dressing', 'Move') . '"></i> ' . $_menu->getLink();
+            $sortables[$_menu->id] = '<i class="icon-move handle"></i> ' . $_menu->getLink();
         }
         $this->widget('zii.widgets.jui.CJuiSortable', array(
             'items' => $sortables,
-            'id' => 'sortable-menu-' . $menu->id,
+            'id' => 'sortable-siteMenu-' . $menu->id,
             'htmlOptions' => array('class' => 'unstyled'),
             'options' => array(
                 'handle' => '.handle',
-                'beforeStop' => 'js: function() { jQuery.post("' . CHtml::normalizeUrl(array('/menu/order')) . '",{ Order:$("#sortable-menu-' . $menu->id . '.ui-sortable").sortable("toArray").toString() }); }',
+                'beforeStop' => 'js: function() { jQuery.post("' . CHtml::normalizeUrl(array('/siteMenu/order')) . '",{ Order:$("#sortable-siteMenu-' . $menu->id . '.ui-sortable").sortable("toArray").toString() }); }',
             ),
         ));
         ?>
