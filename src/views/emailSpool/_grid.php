@@ -2,6 +2,7 @@
 /**
  * @var $this EmailSpoolController
  * @var $emailSpool YdEmailSpool
+ * @var $hideModel bool
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -15,11 +16,13 @@ $columns[] = array(
     'name' => 'id',
     'class' => 'dressing.widgets.YdDropdownColumn',
 );
-$columns[] = array(
-    'name' => 'model',
-    //'filter' => array(),
-);
-$columns[] = 'model_id';
+if (empty($hideModel)) {
+    $columns[] = array(
+        'name' => 'model',
+        //'filter' => array(),
+    );
+    $columns[] = 'model_id';
+}
 $columns[] = array(
     'name' => 'template',
     //'filter' => array(),

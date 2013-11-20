@@ -45,7 +45,7 @@ class YdActiveForm extends TbActiveForm
         }
 
         // get a model we can use for this form
-        $this->model = new YdActiveFormModel();
+        $this->model = $this->model ? $this->model : new YdActiveFormModel();
 
         // init the parent (output <form> tag)
         parent::init();

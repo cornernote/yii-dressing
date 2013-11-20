@@ -31,6 +31,8 @@ class YdActiveFormModel extends YdFormModel
         } catch (Exception $e) {
             if (isset($this->_attributes[$name]))
                 return $this->_attributes[$name];
+            if (isset($_POST['YdActiveFormModel'][$name]))
+                return $this->_attributes[$name] = $_POST['YdActiveFormModel'][$name];
             return null;
         }
     }
@@ -52,4 +54,45 @@ class YdActiveFormModel extends YdFormModel
             return;
         }
     }
+
+    /**
+     * Sets the attribute values in a massive way.
+     * @param array $values attribute values (name=>value) to be set.
+     * @param boolean $safeOnly whether the assignments should only be done to the safe attributes.
+     * A safe attribute is one that is associated with a validation rule in the current {@link scenario}.
+     * @see getSafeAttributeNames
+     * @see attributeNames
+     */
+    public function setAttributes($values, $safeOnly = false)
+    {
+        if (!is_array($values))
+            return;
+        foreach ($values as $name => $value) {
+            $this->_attributes[$name] = $value;
+        }
+    }
+
+    /**
+     * Returns all attribute values.
+     * @param array $names list of attributes whose value needs to be returned.
+     * Defaults to null, meaning all attributes as listed in {@link attributeNames} will be returned.
+     * If it is an array, only the attributes in the array will be returned.
+     * @return array attribute values (name=>value).
+     */
+    public function getAttributes($names = null)
+    {
+        $values = array();
+        foreach (array_keys($this->_attributes) as $name)
+            $values[$name] = $this->$name;
+
+        if (is_array($names)) {
+            $values2 = array();
+            foreach ($names as $name)
+                $values2[$name] = isset($values[$name]) ? $values[$name] : null;
+            return $values2;
+        }
+        else
+            return $values;
+    }
+
 }

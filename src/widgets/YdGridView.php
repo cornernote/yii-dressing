@@ -51,6 +51,11 @@ class YdGridView extends TbGridView
     public $selectableRows = 1000;
 
     /**
+     * @var int
+     */
+    public $defaultPageSize;
+
+    /**
      * @var array
      */
     public $pageSizeOptions = array(10, 100, 1000);
@@ -228,6 +233,9 @@ class YdGridView extends TbGridView
      */
     public function renderPageSelect()
     {
+        if (!$this->dataProvider->getItemCount())
+            return;
+
         $label = Yii::t('dressing', 'per page');
         $options = array();
         foreach ($this->pageSizeOptions as $option) {
@@ -244,14 +252,17 @@ class YdGridView extends TbGridView
      */
     public function renderMultiActions()
     {
-        if ($this->dataProvider->getItemCount() > 0 && $this->multiActions) {
-            echo '<div class="form-multi-actions">';
-            echo CHtml::dropDownList("multiAction[{$this->id}]", '', CHtml::listData($this->multiActions, 'url', 'name'), array(
-                'empty' => Yii::t('dressing', 'with selected...'),
-                'class' => 'multi-actions',
-            ));
-            echo '</div>';
-        }
+        if (!$this->dataProvider->getItemCount())
+            return;
+        if (!$this->multiActions)
+            return;
+
+        echo '<div class="form-multi-actions">';
+        echo CHtml::dropDownList("multiAction[{$this->id}]", '', CHtml::listData($this->multiActions, 'url', 'name'), array(
+            'empty' => Yii::t('dressing', 'with selected...'),
+            'class' => 'multi-actions',
+        ));
+        echo '</div>';
     }
 
     /**
@@ -259,14 +270,17 @@ class YdGridView extends TbGridView
      */
     public function renderGridActions()
     {
-        if ($this->gridActions) {
-            echo '<div class="form-grid-actions">';
-            echo CHtml::dropDownList("gridAction[{$this->id}]", '', CHtml::listData($this->gridActions, 'url', 'name'), array(
-                'empty' => Yii::t('dressing', 'with all matching rows...'),
-                'class' => 'grid-actions',
-            ));
-            echo '</div>';
-        }
+        if (!$this->dataProvider->getItemCount())
+            return;
+        if (!$this->gridActions)
+            return;
+
+        echo '<div class="form-grid-actions">';
+        echo CHtml::dropDownList("gridAction[{$this->id}]", '', CHtml::listData($this->gridActions, 'url', 'name'), array(
+            'empty' => Yii::t('dressing', 'with all matching rows...'),
+            'class' => 'grid-actions',
+        ));
+        echo '</div>';
     }
 
     /**
@@ -297,7 +311,7 @@ class YdGridView extends TbGridView
     private function getUserPageSize()
     {
         $key = 'userPageSize.' . str_replace('-', '_', $this->id);
-        $size = Yii::app()->user->getState($key, Config::setting('default_page_size'));
+        $size = $this->defaultPageSize ? $this->defaultPageSize : Yii::app()->user->getState($key, Config::setting('default_page_size'));
         if (!$size) {
             $size = Config::setting('default_page_size');
         }
