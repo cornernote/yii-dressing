@@ -454,6 +454,15 @@ ul.ui-sortable, ul.ui-sortable li {
 }
 
 /*********************
+    Forms
+*********************/
+
+/* prevent checkbox label going entire width */
+label.checkbox {
+    display: inline-block;
+}
+
+/*********************
     Modal
 *********************/
 
