@@ -10,7 +10,7 @@
  */
 
 // start the timer
-defined('APP_START') or define('APP_START', microtime(true));
+defined('YII_BEGIN_TIME') or define('YII_BEGIN_TIME', microtime(true));
 
 // ensure cli is not being called
 if (substr(php_sapi_name(), 0, 3) == 'cli') {
