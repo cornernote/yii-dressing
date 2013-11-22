@@ -14,6 +14,11 @@ class YdEmail extends CApplicationComponent
 {
 
     /**
+     * @var string Render method, can be one of: php, database
+     */
+    public $renderMethod = 'php';
+
+    /**
      * Allows sending a quick email.
      *
      * Eg:
@@ -60,7 +65,7 @@ class YdEmail extends CApplicationComponent
 
         // save EmailSpool
         $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('UserRecover', array(
-            'User' => $user,
+            'user' => $user,
             'url' => $url,
         )));
         $emailSpool->priority = 10;
@@ -84,7 +89,7 @@ class YdEmail extends CApplicationComponent
 
         // save EmailSpool
         $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('UserWelcome', array(
-            'User' => $user,
+            'user' => $user,
             'url' => $url,
         )));
         $emailSpool->priority = 5;
@@ -115,10 +120,46 @@ class YdEmail extends CApplicationComponent
     /**
      * @param $template string
      * @param $viewParams array
-     * @throws CException
      * @return array
      */
     public function renderEmailTemplate($template, $viewParams = array(), $layout = 'layout.default')
+    {
+        if (!method_exists($this, 'renderEmailTemplate_' . $this->renderMethod))
+            $this->renderMethod = 'php';
+        return call_user_func_array(array($this, 'renderEmailTemplate_' . $this->renderMethod), array($template, $viewParams, $layout));
+    }
+
+    /**
+     * @param $template string
+     * @param $viewParams array
+     * @throws CException
+     * @return array
+     */
+    private function renderEmailTemplate_php($template, $viewParams = array(), $layout = 'layout.default')
+    {
+        // setup path to layout and template
+        $this->templatePath = 'dressing.views.email';
+        $emailLayout = $this->templatePath . '.' . $layout;
+        $emailTemplate = $this->templatePath . '.' . $template;
+
+        // parse template
+        $fields = array('message_title', 'message_subject', 'message_html', 'message_text');
+        $message = array('template' => $template);
+        foreach ($fields as $field) {
+            $viewParams['contents'] = $controller->renderPartial($emailTemplate . '.' . $field, $viewParams, true);
+            $viewParams[$field] = $message[$field] = $controller->renderPartial($emailLayout . '.' . $field, $viewParams, true);
+            unset($viewParams['contents']);
+        }
+        return $message;
+    }
+
+    /**
+     * @param $template string
+     * @param $viewParams array
+     * @throws CException
+     * @return array
+     */
+    private function renderEmailTemplate_database($template, $viewParams = array(), $layout = 'layout.default')
     {
         // load layout
         $emailLayout = YdEmailTemplate::model()->findByAttributes(array('name' => $layout));
@@ -130,10 +171,6 @@ class YdEmail extends CApplicationComponent
         if (!$emailTemplate)
             throw new CException('missing EmailTemplate - ' . $template);
 
-        // add settings to params
-        $viewParams['Setting'] = Config::settings();
-        $viewParams['Setting']['bu'] = Yii::app()->createAbsoluteUrl('/');
-
         // parse template
         $mustache = new YdMustache();
         $fields = array('message_title', 'message_subject', 'message_html', 'message_text');
@@ -143,7 +180,6 @@ class YdEmail extends CApplicationComponent
             $viewParams[$field] = $message[$field] = $mustache->render($emailLayout->$field, $viewParams);
             unset($viewParams['contents']);
         }
-
         return $message;
     }
 
@@ -159,7 +195,7 @@ class YdEmail extends CApplicationComponent
         if (!isset(Yii::app()->controller))
             return;
 
-        $debug = Yii::app()->controller->renderPartial('application.views.email._debug', $emailSpool, true);
+        $debug = Yii::app()->controller->renderPartial('dressing.views.email.debug', $emailSpool, true);
         Yii::app()->user->addFlash($debug, 'email');
     }
 
