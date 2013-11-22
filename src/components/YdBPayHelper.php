@@ -51,75 +51,16 @@ class YdBPayHelper
         return $crn;
     }
 
-
     /**
      * @param $crn
      * @return string
      */
     public function crnLogo($crn)
     {
-        return
-            '<style type="text/css">
-	<!--
-	TABLE.bpay{
-		width: 200px;
-		font-family: Arial, Helvetica, sans-serif;
-		background-color: #FFFFFF;
-		margin: 0px;
-		border: 7px solid #FFFFFF;
-
-	}
-	TD.bpayLogo {
-		width: 42px;
-
-	}
-	TD.customerReferenceBox {
-		border: 1px solid #000000;
-		padding: 0px 8px;
-		height: 54px;
-		width: 158px;
-	}
-
-	.customerReferenceBoxText {
-		font-size: 13px;
-		text-transform: capitalize;
-		color: #000000;
-		white-space: nowrap;
-		line-height: 22px;
-		font-weight: normal;
-
-	}
-
-	.billerTextHeading {
-		font-size: 11px;
-		text-transform: capitalize;
-		color: #000000;
-		white-space: nowrap;
-		line-height: 20px;
-		font-weight: bold;
-	}
-	.billerText{
-		font-size: 11px;
-		color: #000000;
-	}
-	-->
-	</style>
-	<div align="left">
-	<table border="0" cellpadding="0" cellspacing="0" class="bpay">
-	  <tr>
-		<td width="1%" class="bpayLogo"><img src="' . $this->logo . '" /></td>
-		<td class="customerReferenceBox">
-		  <p class="customerReferenceBoxText">Biller Code: ' . $this->billerCode . '<br>
-			Ref: ' . $crn . '</p>
-		  </td>
-	  </tr>
-	  <tr><td colspan="2"><p class="billerTextHeading">' . $this->heading . '</p>
-	</td></tr>
-	<tr><td colspan="2"><p class="billerText">' . $this->text . '</p></td></tr>
-	</table>
-	</div>
-	';
-        //MODULE_PAYMENT_BPAY_TEXT_DESCRIPTION
+        return Yii::app()->controller->renderPartial('dressing.views.misc.bpay', array(
+            'bPay' => $this,
+            'crn' => $crn,
+        ), true);
     }
 
 
