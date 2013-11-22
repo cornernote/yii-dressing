@@ -151,6 +151,13 @@ class YdBase extends YiiBase
         if (!YII_DRESSING_CLI)
             throw new CException(Yii::t('dressing', 'This script can only run from a CLI.'));
 
+        // fix for fcgi
+        defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
+
+        // fix for absolute url
+        $_SERVER['SERVER_NAME'] = PUBLIC_HOST;
+        Yii::app()->getRequest()->setBaseUrl(PUBLIC_URL);
+
         // load the config array
         $config = self::loadConfig($config);
 
@@ -163,6 +170,9 @@ class YdBase extends YiiBase
         if (!isset($config['commandMap']))
             $config['commandMap'] = array();
         $config['commandMap'] = self::mergeArray(self::getCommandMap(), $config['commandMap']);
+
+        Yii::app()->getRequest()->setBaseUrl(Config::setting('script_url'));
+        $_SERVER['SERVER_NAME'] = Config::setting('server_name');
 
         // create app and Yii commands
         $app = self::createApplication('CConsoleApplication', $config);
