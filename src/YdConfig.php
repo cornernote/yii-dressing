@@ -204,7 +204,6 @@ class YdConfig
             'YII_BOOSTER_PATH',
             'YII_DRESSING_PATH',
             'YII_DRESSING_CLI',
-            'YII_DRESSING_DB_PROFILE',
             'YII_DRESSING_LOG_LEVELS',
             'PUBLIC_PATH',
             'PUBLIC_HOST',
@@ -215,16 +214,16 @@ class YdConfig
                 define($name, $config);
 
         // bools and strings
-        defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-        defined('YII_DEBUG') or define('YII_DEBUG', true);
-        defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
+        defined('YII_DEBUG') or define('YII_DEBUG', false);
+        defined('YII_DEBUG_TOOLBAR') or define('YII_DEBUG_TOOLBAR', YII_DEBUG);
+        defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', YII_DEBUG);
         defined('YII_ENABLE_EXCEPTION_HANDLER') or define('YII_ENABLE_EXCEPTION_HANDLER', true);
         defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER', true);
         defined('YII_DRESSING_CLI') or define('YII_DRESSING_CLI', (substr(php_sapi_name(), 0, 3) == 'cli'));
-        defined('YII_DRESSING_DB_PROFILE') or define('YII_DRESSING_DB_PROFILE', false);
         defined('YII_DRESSING_LOG_LEVELS') or define('YII_DRESSING_LOG_LEVELS', 'error, warning');
 
         // paths
+        defined('DS') or define('DS', DIRECTORY_SEPARATOR);
         defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', dirname(__FILE__));
         defined('VENDOR_PATH') or define('VENDOR_PATH', dirname(dirname(dirname(dirname(YII_DRESSING_PATH)))) . DS . 'vendor');
         defined('APP_PATH') or define('APP_PATH', dirname(VENDOR_PATH) . DS . 'app');
@@ -280,9 +279,14 @@ class YdConfig
         ini_set('max_execution_time', YII_DRESSING_CLI ? 0 : $this->getConfig('time_limit', 120));
         ini_set('memory_limit', $this->getConfig('memory_limit', "128M"));
 
-        // fix for fcgi
-        if (YII_DRESSING_CLI)
+        // cli specific
+        if (YII_DRESSING_CLI) {
+            // fix for fcgi
             defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
+            // fix for absolute url
+            $_SERVER['SERVER_NAME'] = PUBLIC_HOST;
+        }
+
     }
 
 }

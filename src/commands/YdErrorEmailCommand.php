@@ -14,6 +14,11 @@ class YdErrorEmailCommand extends YdConsoleCommand
 {
 
     /**
+     * @var string comma separated list of email addresses
+     */
+    public $email;
+
+    /**
      * @param string $class
      * @return ErrorEmailCommand
      */
@@ -35,11 +40,9 @@ class YdErrorEmailCommand extends YdConsoleCommand
             rename($error, $archive);
             $archived++;
         }
-        if ($archived) {
-            foreach (explode(',', Config::setting('error_email')) as $to) {
+        if ($archived && $this->email)
+            foreach (explode(',', $this->email) as $to)
                 Yii::app()->email->sendEmail(trim($to), Yii::t('dressing', 'errors have been archived'), Yii::app()->createAbsoluteUrl('/error/index'));
-            }
-        }
     }
 
 }

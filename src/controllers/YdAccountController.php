@@ -132,7 +132,7 @@ class YdAccountController extends YdWebController
         $attempts = Yii::app()->cache->get("recover.attempt.{$_SERVER['REMOTE_ADDR']}");
         if (!$attempts)
             $attempts = 0;
-        $scenario = ($attempts >= 3 && Config::setting('recaptcha')) ? 'recaptcha' : '';
+        $scenario = ($attempts >= 3 && Yii::app()->dressing->recaptcha) ? 'recaptcha' : '';
 
         $userRecover = new YdUserRecover($scenario);
         $this->performAjaxValidation($userRecover, 'recover-form');
@@ -161,7 +161,7 @@ class YdAccountController extends YdWebController
         // display the recover form
         $this->render('dressing.views.account.recover', array(
             'user' => $userRecover,
-            'recaptcha' => ($attempts >= 3 && Config::setting('recaptcha')) ? true : false,
+            'recaptcha' => ($attempts >= 3 && Yii::app()->dressing->recaptcha) ? true : false,
         ));
     }
 

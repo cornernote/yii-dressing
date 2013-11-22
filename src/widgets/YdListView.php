@@ -19,6 +19,16 @@ class YdListView extends CListView
     public $template = "{items}\n{summary}\n{pager}{pageSelect}";
 
     /**
+     * @var int
+     */
+    public $defaultPageSize = 10;
+
+    /**
+     * @var array
+     */
+    public $pageSizeOptions = array(10, 100, 1000);
+
+    /**
      * @var array
      */
     public $pager = array('class' => 'dressing.widgets.YdPager');
@@ -67,10 +77,9 @@ class YdListView extends CListView
     private function getUserPageSize()
     {
         $key = 'userPageSize.' . str_replace('-', '_', $this->id);
-        $size = Yii::app()->user->getState($key, Config::setting('default_page_size'));
-        if (!$size) {
-            $size = Config::setting('defaultPageSize');
-        }
+        $size = Yii::app()->user->getState($key, $this->defaultPageSize);
+        if (!$size)
+            $size = $this->defaultPageSize;
         return $size;
     }
 

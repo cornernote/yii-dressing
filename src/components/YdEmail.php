@@ -14,9 +14,34 @@ class YdEmail extends CApplicationComponent
 {
 
     /**
+     * @var string defaults to the application name
+     */
+    public $defaultFromName;
+
+    /**
+     * @var string
+     */
+    public $defaultFromEmail = 'webmaster@localhost';
+
+    /**
+     * @var bool True if sent emails should be displayed as flash messages
+     */
+    public $enableUserFlash;
+
+    /**
      * @var string Render method, can be one of: php, database
      */
     public $renderMethod = 'php';
+
+    /**
+     *
+     */
+    public function init()
+    {
+        if (!$this->defaultFromName)
+            $this->defaultFromName = Yii::app()->name;
+
+    }
 
     /**
      * Allows sending a quick email.
@@ -37,8 +62,8 @@ class YdEmail extends CApplicationComponent
             'message_html' => Yii::app()->format->formatNtext($message_text),
         ));
         $emailSpool->status = $filename ? 'attaching' : 'pending';
-        $emailSpool->from_email = Config::setting('email');
-        $emailSpool->from_name = app()->name;
+        $emailSpool->from_email = $this->defaultFromEmail;
+        $emailSpool->from_name = $this->defaultFromName;
         $emailSpool->to_email = $to_email;
         $emailSpool->save(false);
 
@@ -64,16 +89,16 @@ class YdEmail extends CApplicationComponent
         $url = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
 
         // save EmailSpool
-        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('UserRecover', array(
+        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('user.recover', array(
             'user' => $user,
             'url' => $url,
         )));
         $emailSpool->priority = 10;
         $emailSpool->to_email = $user->email;
         $emailSpool->to_name = $user->name;
-        $emailSpool->from_email = Config::setting('email');
-        $emailSpool->from_name = app()->name;
-        $emailSpool->model = 'User';
+        $emailSpool->from_email = $this->defaultFromEmail;
+        $emailSpool->from_name = $this->defaultFromName;
+        $emailSpool->model = get_class($user);
         $emailSpool->model_id = $user->id;
         $emailSpool->save(false);
     }
@@ -88,16 +113,16 @@ class YdEmail extends CApplicationComponent
         $url = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
 
         // save EmailSpool
-        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('UserWelcome', array(
+        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('user.welcome', array(
             'user' => $user,
             'url' => $url,
         )));
         $emailSpool->priority = 5;
         $emailSpool->to_email = $user->email;
         $emailSpool->to_name = $user->name;
-        $emailSpool->from_email = Config::setting('email');
-        $emailSpool->from_name = app()->name;
-        $emailSpool->model = 'User';
+        $emailSpool->from_email = $this->defaultFromEmail;
+        $emailSpool->from_name = $this->defaultFromName;
+        $emailSpool->model = get_class($user);
         $emailSpool->model_id = $user->id;
         $emailSpool->save(false);
     }
@@ -139,8 +164,8 @@ class YdEmail extends CApplicationComponent
     {
         // setup path to layout and template
         $this->templatePath = 'dressing.views.email';
-        $emailLayout = $this->templatePath . '.' . $layout;
         $emailTemplate = $this->templatePath . '.' . $template;
+        $emailLayout = $this->templatePath . '.' . $layout;
 
         // parse template
         $fields = array('message_title', 'message_subject', 'message_html', 'message_text');
@@ -161,15 +186,15 @@ class YdEmail extends CApplicationComponent
      */
     private function renderEmailTemplate_database($template, $viewParams = array(), $layout = 'layout.default')
     {
-        // load layout
-        $emailLayout = YdEmailTemplate::model()->findByAttributes(array('name' => $layout));
-        if (!$emailLayout)
-            throw new CException('missing EmailTemplate - ' . $layout);
-
         // load template
         $emailTemplate = YdEmailTemplate::model()->findByAttributes(array('name' => $template));
         if (!$emailTemplate)
             throw new CException('missing EmailTemplate - ' . $template);
+
+        // load layout
+        $emailLayout = YdEmailTemplate::model()->findByAttributes(array('name' => $layout));
+        if (!$emailLayout)
+            throw new CException('missing EmailTemplate - ' . $layout);
 
         // parse template
         $mustache = new YdMustache();
@@ -188,7 +213,7 @@ class YdEmail extends CApplicationComponent
      */
     public function userFlash($emailSpool)
     {
-        if (!Config::setting('debug_email'))
+        if (!$this->enableUserFlash)
             return;
         if (!Yii::app()->user->checkAccess('admin'))
             return;

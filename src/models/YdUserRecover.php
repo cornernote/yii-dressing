@@ -45,8 +45,8 @@ class YdUserRecover extends YdFormModel
             array('username_or_email', 'checkExists'),
         );
         // recaptcha
-        if (Config::setting('recaptcha')) {
-            $rules[] = array('recaptcha', 'dressing.validators.YdReCaptchaValidator', 'privateKey' => Config::setting('recaptcha_private'), 'on' => 'recaptcha');
+        if (Yii::app()->dressing->recaptcha) {
+            $rules[] = array('recaptcha', 'dressing.validators.YdReCaptchaValidator', 'privateKey' => Yii::app()->dressing->recaptchaPrivate, 'on' => 'recaptcha');
         }
         return $rules;
     }
@@ -70,18 +70,18 @@ class YdUserRecover extends YdFormModel
     public function checkExists($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            if (strpos($this->username_or_email, '@')) {
+            if (strpos($this->username_or_email, '@'))
                 $user = User::model()->findByAttributes(array('email' => $this->username_or_email));
-            } else {
+            else
                 $user = User::model()->findByAttributes(array('username' => $this->username_or_email));
-            }
 
             if ($user === null || $user->deleted) {
                 if (strpos($this->username_or_email, '@'))
                     $this->addError('username_or_email', 'Email is incorrect.');
                 else
                     $this->addError('username_or_email', 'Username is incorrect.');
-            } else {
+            }
+            else {
                 $this->user_id = $user->id;
             }
         }

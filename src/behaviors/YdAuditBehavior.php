@@ -44,8 +44,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
      */
     public function afterSave($event)
     {
-        if (!Config::setting('audit')) {
+        if (!Yii::app()->dressing->audit) {
             parent::afterSave($event);
+            return;
         }
 
         $date = date('Y-m-d H:i:s');
@@ -127,8 +128,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
      */
     public function afterDelete($event)
     {
-        if (!Config::setting('audit')) {
+        if (!Yii::app()->dressing->audit) {
             parent::afterDelete($event);
+            return;
         }
 
         $date = date('Y-m-d H:i:s');

@@ -133,14 +133,10 @@ class YdWebUser extends CWebUser
      */
     function setting($name)
     {
-        if (!$this->user) {
-            return false;
-        }
-        $setting = $this->user->getEavAttribute($name);
-        if (!$setting) {
-            $setting = Config::setting($name);
-        }
-        return $setting;
+        $setting = $this->user && method_exists($this->user, 'getEavAttribute') ? $this->user->getEavAttribute($name) : null;
+        if ($setting)
+            return $setting;
+        return isset(Yii::app()->params[$name]) ? Yii::app()->params[$name] : null;
     }
 
 }

@@ -22,49 +22,57 @@
  *
  * @package dressing.helpers
  */
-class YdPayPalHelper
+class YdPayPalHelper extends CApplicationComponent
 {
+
     /**
-     * @param $options
-     * @return array
+     * @var string sandbox or live
+     */
+    public $environment = 'sandbox';
+
+    /**
+     * @var array PayPal Options
      * @ref https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_IPNandPDTVariables
      */
-    public static function getOptions($options)
+    public $options = array();
+
+    /**
+     *
+     */
+    public function init()
     {
-        $defaults = array(
-            // defaults
+        $this->options = CMap::mergeArray(array(
             'cmd' => '_xclick-subscriptions',
-            'business' => Config::setting('paypal_business'),
+            'business' => 'webmaster@localhost',
             'lc' => 'AU',
             'no_note' => 1,
             'no_shipping' => 1,
             'rm' => 1,
-            'return' => 'https://www.example.com/checkout/success',
-            'cancel_return' => 'https://www.example.com/checkout/plan',
-            'notify_url' => 'https://www.example.com/checkout/ipn',
+            'return' => 'https://localhost/checkout/success',
+            'cancel_return' => 'https://localhost/checkout/plan',
+            'notify_url' => 'https://localhost/checkout/ipn',
             'src' => 1,
             'p3' => 1,
             't3' => 'M',
             'currency_code' => 'AUD',
             'bn' => 'PP-SubscriptionsBF:btn_subscribeCC_LG.gif:NonHosted',
             // overwrite these using $options
-            'item_name' => Yii::t('dressing', 'Subscription'),
+            'item_name' => 'Subscription',
             'item_number' => 'subscription',
             'a3' => 1.00,
             'custom' => '',
             'invoice' => '',
-        );
-        return CMap::mergeArray($defaults, $options);
+        ), $this->options);
     }
 
     /**
      * @param $options
      * @return string
      */
-    public static function getButton($options)
+    public function getButton($options)
     {
-        $options = self::getOptions($options);
-        $button = '<form action="https://www.' . (Config::setting('paypal_env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr" method="get">';
+        $options = $this->getOptions($options);
+        $button = '<form action="https://www.' . ($this->environment != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr" method="get">';
         foreach ($options as $k => $v) {
             $button .= '<input type="hidden" name="' . $k . '" value="' . $v . '">';
         }
@@ -78,22 +86,22 @@ class YdPayPalHelper
      * @param $options
      * @return string
      */
-    public static function getLink($options)
+    public function getLink($options)
     {
-        $options = self::getOptions($options);
+        $options = $this->getOptions($options);
         $link = array();
         foreach ($options as $k => $v) {
             $link[] = urlencode($k) . '=' . urlencode($v);
         }
-        return 'https://www.' . (Config::setting('paypal_env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr?' . implode('&', $link);
+        return 'https://www.' . ($this->environment != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr?' . implode('&', $link);
     }
 
     /**
      * @return string
      */
-    public static function getUnsubscribeLink()
+    public function getUnsubscribeLink()
     {
-        return 'https://www.' . (Config::setting('paypal_env') != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr?cmd=_manage-paylist';
+        return 'https://www.' . ($this->environment != 'live' ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr?cmd=_manage-paylist';
     }
 
 }

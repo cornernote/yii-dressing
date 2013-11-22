@@ -29,11 +29,6 @@ defined('YII_DRESSING_CLI') or define('YII_DRESSING_CLI', (substr(php_sapi_name(
 defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', realpath(dirname(__FILE__)));
 
 /**
- * Defines if Yii dressing should run database profiling.
- */
-defined('YII_DRESSING_DB_PROFILE') or define('YII_DRESSING_DB_PROFILE', false);
-
-/**
  * Defines Yii dressing log levels, comma separated list of: trace, info, error, warning, profile
  */
 defined('YII_DRESSING_LOG_LEVELS') or define('YII_DRESSING_LOG_LEVELS', 'error, warning');
@@ -54,6 +49,31 @@ defined('YII_PATH') or define('YII_PATH', VENDOR_PATH . DS . 'yiisoft' . DS . 'y
 defined('YII_DRESSING_HASH') or define('YII_DRESSING_HASH', false);
 
 /**
+ * Defines if we should use the yii-debug-toolbar.
+ */
+defined('YII_DEBUG_TOOLBAR') or define('YII_DEBUG_TOOLBAR', false);
+
+/**
+ * Defines the filesystem path to the application.
+ */
+defined('APP_PATH') or define('APP_PATH', dirname(VENDOR_PATH) . DS . 'app');
+
+/**
+ * Defines the filesystem path to the public directory of the application.
+ */
+defined('PUBLIC_PATH') or define('PUBLIC_PATH', dirname(APP_PATH) . DS . 'public');
+
+/**
+ * Defines the public hostname of the application.
+ */
+defined('PUBLIC_HOST') or define('PUBLIC_HOST', 'localhost');
+
+/**
+ * Defines the public url to the application.
+ */
+defined('PUBLIC_URL') or define('PUBLIC_URL', '');
+
+/**
  * Include the Yii Framework
  */
 require_once(YII_PATH . DS . 'YiiBase.php');
@@ -62,8 +82,6 @@ require_once(YII_PATH . DS . 'YiiBase.php');
  * YdBase is a helper class serving common framework functionalities.
  *
  * Do not use YdBase directly. Instead, use its child class {@link Yii} where you can customize methods of YdBase.
- *
- * @method WebApplication static app() app()
  */
 class YdBase extends YiiBase
 {
@@ -79,11 +97,6 @@ class YdBase extends YiiBase
     {
         // load the config array
         $config = self::loadConfig($config);
-
-        // add params
-        if (!isset($config['params']))
-            $config['params'] = array();
-        $config['params'] = self::mergeArray(self::getParamsConfig(), $config['params']);
 
         // add components
         if (!isset($config['components']))
@@ -126,9 +139,9 @@ class YdBase extends YiiBase
                     'class' => 'CWebLogRoute',
                     'levels' => YII_DRESSING_LOG_LEVELS,
                 );
-                if (YII_DRESSING_DB_PROFILE)
+                if (YII_DEBUG_TOOLBAR)
                     $config['components']['log']['routes'][] = array(
-                        'class' => 'YdProfileLogRoute',
+                        'class' => 'vendor.malyshev.yii-debug-toolbar.yii-debug-toolbar.YiiDebugToolbarRoute',
                         'levels' => 'profile',
                     );
             }
@@ -138,7 +151,6 @@ class YdBase extends YiiBase
                     'levels' => YII_DRESSING_LOG_LEVELS,
                 );
         }
-
         return self::createApplication('CWebApplication', $config);
     }
 
@@ -150,13 +162,6 @@ class YdBase extends YiiBase
     {
         if (!YII_DRESSING_CLI)
             throw new CException(Yii::t('dressing', 'This script can only run from a CLI.'));
-
-        // fix for fcgi
-        defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
-
-        // fix for absolute url
-        $_SERVER['SERVER_NAME'] = PUBLIC_HOST;
-        Yii::app()->getRequest()->setBaseUrl(PUBLIC_URL);
 
         // load the config array
         $config = self::loadConfig($config);
@@ -171,15 +176,18 @@ class YdBase extends YiiBase
             $config['commandMap'] = array();
         $config['commandMap'] = self::mergeArray(self::getCommandMap(), $config['commandMap']);
 
-        Yii::app()->getRequest()->setBaseUrl(Config::setting('script_url'));
-        $_SERVER['SERVER_NAME'] = Config::setting('server_name');
-
-        // create app and Yii commands
+        // create app
         $app = self::createApplication('CConsoleApplication', $config);
+
+        // fix for absolute url
+        $app->getRequest()->setBaseUrl(PUBLIC_URL);
+
+        // add Yii commands
         $app->commandRunner->addCommands(YII_PATH . '/cli/commands');
         $env = @getenv('YII_CONSOLE_COMMANDS');
         if (!empty($env))
             $app->commandRunner->addCommands($env);
+
         return $app;
     }
 
@@ -201,27 +209,6 @@ class YdBase extends YiiBase
                 return self::mergeArray(require($config), $local);
         }
         return require($config);
-    }
-
-    /**
-     * @return array
-     */
-    public static function getParamsConfig()
-    {
-        return array(
-            'contact' => array(
-                'email' => 'webmaster@localhost',
-                'webmaster' => 'webmaster@localhost,webmaster2@localhost',
-            ),
-            'format' => array(
-                'date' => 'Y-m-d',
-                'date_long' => 'Y-m-d',
-                'time' => 'H:i',
-                'time_long' => 'H:i:s',
-                'datetime' => 'm-d H:i',
-                'datetime_long' => 'Y-m-d H:i:s',
-            ),
-        );
     }
 
     /**
@@ -347,7 +334,7 @@ class YdBase extends YiiBase
      */
     public static function getControllerMap()
     {
-        return array(
+        $controllers = array(
             'account' => 'dressing.controllers.YdAccountController',
             'attachment' => 'dressing.controllers.YdAttachmentController',
             'audit' => 'dressing.controllers.YdAuditController',
@@ -362,6 +349,11 @@ class YdBase extends YiiBase
             'setting' => 'dressing.controllers.YdSettingController',
             'user' => 'dressing.controllers.YdUserController',
         );
+        // unset controllers that app has defined
+        foreach (array_keys($controllers) as $controller)
+            if (file_exists(APP_PATH . DS . 'controllers' . DS . ucfirst($controller) . 'Controller.php'))
+                unset($controllers[$controller]);
+        return $controllers;
     }
 
     /**
@@ -369,7 +361,7 @@ class YdBase extends YiiBase
      */
     public static function getCommandMap()
     {
-        return array(
+        $commands = array(
             'migrate' => array(
                 'class' => 'system.cli.commands.MigrateCommand',
                 'migrationPath' => 'application.migrations',
@@ -377,9 +369,14 @@ class YdBase extends YiiBase
                 'connectionID' => 'db',
                 'templateFile' => 'dressing.migrations.templates.migrate_template',
             ),
-            'emailSpool' => 'dressing.commands.EmailSpoolCommand',
-            'errorEmail' => 'dressing.commands.ErrorEmailCommand',
+            'emailSpool' => 'dressing.commands.YdEmailSpoolCommand',
+            'errorEmail' => 'dressing.commands.YdErrorEmailCommand',
         );
+        // unset commands that app has defined
+        foreach (array_keys($commands) as $command)
+            if (file_exists(APP_PATH . DS . 'commands' . DS . ucfirst($command) . 'Command.php'))
+                unset($commands[$command]);
+        return $commands;
     }
 
     /**

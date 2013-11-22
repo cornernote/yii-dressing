@@ -29,6 +29,7 @@
         "clevertech/yii-booster": "dev-master",
         "swiftmailer/swiftmailer": "v5.0.2",
         "php-excel-reader/spreadsheet-reader": "dev-master",
+        "malyshev/yii-debug-toolbar": "dev-master",
         "php": ">=5.3.0"
     },
     "minimum-stability": "dev"
