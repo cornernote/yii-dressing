@@ -216,7 +216,7 @@ class YdBase extends YiiBase
     {
         return array(
             'dressing' => array(
-                'class' => 'dressing.YiiDressing',
+                'class' => 'dressing.components.YdDressing',
             ),
             'errorHandler' => array(
                 'class' => 'dressing.components.YdErrorHandler',
