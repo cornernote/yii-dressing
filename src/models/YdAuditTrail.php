@@ -60,11 +60,7 @@ class YdAuditTrail extends YdActiveRecord
     public function relations()
     {
         return array(
-            'user' => array(
-                self::BELONGS_TO,
-                Config::setting('audit_user_model'),
-                'user_id',
-            ),
+            'user' => Yii::app()->dressing->auditUserRelation,
             'audit' => array(
                 self::BELONGS_TO,
                 'YdAudit',

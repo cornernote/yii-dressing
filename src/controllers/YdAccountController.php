@@ -59,7 +59,7 @@ class YdAccountController extends YdWebController
         $attempts = Yii::app()->cache->get("login.attempt.{$_SERVER['REMOTE_ADDR']}");
         if (!$attempts)
             $attempts = 0;
-        $scenario = ($attempts > 3 && Config::setting('recaptcha')) ? 'recaptcha' : '';
+        $scenario = ($attempts > 3 && Yii::app()->dressing->recaptcha) ? 'recaptcha' : '';
 
         $user = new YdUserLogin($scenario);
 
@@ -80,13 +80,13 @@ class YdAccountController extends YdWebController
             Yii::app()->cache->set("login.attempt.{$_SERVER['REMOTE_ADDR']}", ++$attempts);
         }
         else {
-            $user->remember_me = Config::setting('rememberMe');
+            $user->remember_me = Yii::app()->dressing->defaultRememberMe;
         }
 
         // display the login form
         $this->render('dressing.views.account.login', array(
             'user' => $user,
-            'recaptcha' => ($attempts >= 3 && Config::setting('recaptcha')) ? true : false,
+            'recaptcha' => ($attempts >= 3 && Yii::app()->dressing->recaptcha) ? true : false,
         ));
     }
 

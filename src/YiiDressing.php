@@ -1,12 +1,12 @@
 <?php
 /**
  * In configuration file main.php add this lines of code:
- * 'preload'=>array('yiiDressing',...),
+ * 'preload'=>array('dressing',...),
  *  ...
  * 'components'=>array(
  *   ...
- *   'yiiDressing'=>array(
- *     'class'=>'YiiDressing',
+ *   'dressing'=>array(
+ *     'class'=>'YdApplicationComponent',
  *   ),
  *
  * @author Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
@@ -30,14 +30,43 @@ class YiiDressing extends CApplicationComponent
     public $minify = false;
 
     /**
-     * @var array
+     * @var array Map of tables used by Yii Dressing.
      */
     public $tableMap = array();
 
     /**
+     * @var bool Enable or disable recaptcha.
+     */
+    public $recaptcha = false;
+
+    /**
+     * @var string
+     */
+    public $recaptchaPrivate;
+
+    /**
+     * @var string
+     */
+    public $recaptchaPublic;
+
+    /**
+     * @var bool Default setting for remember me checkbox on login page
+     */
+    public $defaultRememberMe = true;
+
+    /**
+     * @var bool Enable or disable auditing.
+     */
+    public $audit = false;
+
+    /**
      * @var array
      */
-    public $packages = array();
+    public $auditUserRelation = array(
+        'CBelongsToRelation',
+        'YdUser',
+        'user_id',
+    );
 
     /**
      * @var string Url to the assets
@@ -83,7 +112,7 @@ class YiiDressing extends CApplicationComponent
         ));
 
         // add packages and register scripts
-        if (!YdHelper::isCli()) {
+        if (!YII_DRESSING_CLI) {
             $this->addPackages();
             $this->registerScripts();
         }
@@ -94,14 +123,24 @@ class YiiDressing extends CApplicationComponent
      */
     public function addPackages()
     {
-        $packages = require(Yii::getPathOfAlias('dressing') . '/packages.php');
-
-        $this->packages = CMap::mergeArray(
-            $packages,
-            $this->packages
+        $packages = array(
+            'signature-pad' => array(
+                'depends' => array('jquery'),
+                'baseUrl' => $this->getAssetsUrl() . '/signature-pad/',
+                'css' => array($this->minify ? 'jquery.signaturepad.yii-dressing.min.css' : 'jquery.signaturepad.yii-dressing.css'),
+                'js' => array($this->minify ? 'jquery.signaturepad.min.js' : 'jquery.signaturepad.js')
+            ),
+            'jquery-cluetip' => array(
+                'depends' => array('jquery'),
+                'baseUrl' => $this->getAssetsUrl() . '/jquery-cluetip/',
+                'css' => array('jquery.cluetip.css'),
+                'js' => array(
+                    'lib/jquery.hoverIntent.js',
+                    $this->minify ? 'jquery.cluetip.min.js' : 'jquery.cluetip.js',
+                )
+            ),
         );
-
-        foreach ($this->packages as $name => $definition) {
+        foreach ($packages as $name => $definition) {
             Yii::app()->clientScript->addPackage($name, $definition);
         }
     }

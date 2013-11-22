@@ -116,11 +116,7 @@ class YdAudit extends YdActiveRecord
     public function relations()
     {
         return array(
-            'user' => array(
-                self::BELONGS_TO,
-                Config::setting('audit_user_model'),
-                'user_id',
-            ),
+            'user' => Yii::app()->dressing->auditUserRelation,
             'auditTrail' => array(
                 self::HAS_MANY,
                 'YdAuditTrail',
@@ -397,7 +393,7 @@ class YdAudit extends YdActiveRecord
      */
     static public function findCurrent()
     {
-        if (!Config::setting('audit')) {
+        if (!Yii::app()->dressing->audit) {
             return false;
         }
 
@@ -423,7 +419,7 @@ class YdAudit extends YdActiveRecord
      */
     static public function findCurrentId()
     {
-        if (!Config::setting('audit')) {
+        if (!Yii::app()->dressing->audit) {
             return false;
         }
         if (self::$_audit) {

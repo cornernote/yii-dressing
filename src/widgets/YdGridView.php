@@ -53,7 +53,7 @@ class YdGridView extends TbGridView
     /**
      * @var int
      */
-    public $defaultPageSize;
+    public $defaultPageSize = 10;
 
     /**
      * @var array
@@ -311,10 +311,9 @@ class YdGridView extends TbGridView
     private function getUserPageSize()
     {
         $key = 'userPageSize.' . str_replace('-', '_', $this->id);
-        $size = $this->defaultPageSize ? $this->defaultPageSize : Yii::app()->user->getState($key, Config::setting('default_page_size'));
-        if (!$size) {
-            $size = Config::setting('default_page_size');
-        }
+        $size = Yii::app()->user->getState($key, $this->defaultPageSize);
+        if (!$size)
+            $size = $this->defaultPageSize;
         return $size;
     }
 

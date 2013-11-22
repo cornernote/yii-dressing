@@ -38,13 +38,6 @@ class YdHelper
         return $return;
     }
 
-    /**
-     * @return bool
-     */
-    public static function isCli()
-    {
-        return (substr(php_sapi_name(), 0, 3) == 'cli');
-    }
 
     /**
      * @return bool
@@ -53,6 +46,19 @@ class YdHelper
     {
         return (str_replace(Yii::app()->createUrl('/'), '', Yii::app()->getRequest()->getRequestUri()) == '/');
     }
+
+
+    /**
+     * @param $table
+     * @param CDbConnection $db
+     * @return bool
+     */
+    public static function tableExists($table, $db = null)
+    {
+        $db = $db ? $db : Yii::app()->getDb();
+        return ($db->createCommand("SHOW TABLES LIKE '" . $table . "'")->queryScalar() == $table);
+    }
+
 
     /**
      * @static
@@ -79,17 +85,6 @@ class YdHelper
     public static function isLinuxServer()
     {
         return (strtoupper(substr(PHP_OS, 0, 5)) === 'LINUX');
-    }
-
-    /**
-     * @param $table
-     * @param CDbConnection $db
-     * @return bool
-     */
-    public static function tableExists($table, $db = null)
-    {
-        $db = $db ? $db : Yii::app()->getDb();
-        return ($db->createCommand("SHOW TABLES LIKE '" . $table . "'")->queryScalar() == $table);
     }
 
 }
