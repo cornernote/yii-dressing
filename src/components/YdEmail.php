@@ -16,12 +16,12 @@ class YdEmail extends CApplicationComponent
     /**
      * @var string defaults to the application name
      */
-    public $defaultFromName;
+    public $fromName;
 
     /**
      * @var string
      */
-    public $defaultFromEmail = 'webmaster@localhost';
+    public $fromEmail = 'webmaster@localhost';
 
     /**
      * @var bool True if sent emails should be displayed as flash messages
@@ -38,9 +38,8 @@ class YdEmail extends CApplicationComponent
      */
     public function init()
     {
-        if (!$this->defaultFromName)
-            $this->defaultFromName = Yii::app()->name;
-
+        if (!$this->fromName)
+            $this->fromName = Yii::app()->name;
     }
 
     /**
@@ -62,8 +61,8 @@ class YdEmail extends CApplicationComponent
             'message_html' => Yii::app()->format->formatNtext($message_text),
         ));
         $emailSpool->status = $filename ? 'attaching' : 'pending';
-        $emailSpool->from_email = $this->defaultFromEmail;
-        $emailSpool->from_name = $this->defaultFromName;
+        $emailSpool->from_email = $this->fromEmail;
+        $emailSpool->from_name = $this->fromName;
         $emailSpool->to_email = $to_email;
         $emailSpool->save(false);
 
@@ -96,8 +95,8 @@ class YdEmail extends CApplicationComponent
         $emailSpool->priority = 10;
         $emailSpool->to_email = $user->email;
         $emailSpool->to_name = $user->name;
-        $emailSpool->from_email = $this->defaultFromEmail;
-        $emailSpool->from_name = $this->defaultFromName;
+        $emailSpool->from_email = $this->fromEmail;
+        $emailSpool->from_name = $this->fromName;
         $emailSpool->model = get_class($user);
         $emailSpool->model_id = $user->id;
         $emailSpool->save(false);
@@ -120,8 +119,8 @@ class YdEmail extends CApplicationComponent
         $emailSpool->priority = 5;
         $emailSpool->to_email = $user->email;
         $emailSpool->to_name = $user->name;
-        $emailSpool->from_email = $this->defaultFromEmail;
-        $emailSpool->from_name = $this->defaultFromName;
+        $emailSpool->from_email = $this->fromEmail;
+        $emailSpool->from_name = $this->fromName;
         $emailSpool->model = get_class($user);
         $emailSpool->model_id = $user->id;
         $emailSpool->save(false);
