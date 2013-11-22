@@ -134,21 +134,14 @@ class YdBase extends YiiBase
         // log routes (only setup if not already defined)
         if (!isset($config['components']['log']['routes'])) {
             $config['components']['log']['routes'] = array();
-            if (YII_DEBUG) {
+            $config['components']['log']['routes'][] = array(
+                'class' => YII_DEBUG || YII_DEBUG_TOOLBAR ? 'CWebLogRoute' : 'CFileLogRoute',
+                'levels' => YII_DRESSING_LOG_LEVELS,
+            );
+            if (YII_DEBUG_TOOLBAR)
                 $config['components']['log']['routes'][] = array(
-                    'class' => 'CWebLogRoute',
-                    'levels' => YII_DRESSING_LOG_LEVELS,
-                );
-                if (YII_DEBUG_TOOLBAR)
-                    $config['components']['log']['routes'][] = array(
-                        'class' => 'vendor.malyshev.yii-debug-toolbar.yii-debug-toolbar.YiiDebugToolbarRoute',
-                        'levels' => 'profile',
-                    );
-            }
-            else
-                $config['components']['log']['routes'][] = array(
-                    'class' => 'CFileLogRoute',
-                    'levels' => YII_DRESSING_LOG_LEVELS,
+                    'class' => 'vendor.malyshev.yii-debug-toolbar.yii-debug-toolbar.YiiDebugToolbarRoute',
+                    'levels' => 'profile',
                 );
         }
         return self::createApplication('CWebApplication', $config);
