@@ -16,7 +16,7 @@
  *
  * @package dressing
  */
-class YiiDressing extends CApplicationComponent
+class YdDressing extends CApplicationComponent
 {
 
     /**
