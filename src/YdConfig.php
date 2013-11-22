@@ -174,7 +174,7 @@ class YdConfig
 
         // get the database name
         if (!$this->file)
-            $this->file = dirname(__FILE__) . DS . get_class($this) . '.json';
+            $this->file = dirname(__FILE__) . DIRECTORY_SEPARATOR . get_class($this) . '.json';
 
         // create the folder
         if (!file_exists(dirname($this->file)))
@@ -222,23 +222,27 @@ class YdConfig
             if (!defined($name) && ($config = $this->getConfig($name)) !== null)
                 define($name, $config);
 
+        // bools and strings
         defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-        defined('APP_PATH') or define('APP_PATH', dirname(__FILE__) . DS . 'app');
-        defined('APP_CONFIG') or define('APP_CONFIG', APP_PATH . DS . 'config' . DS . 'main.php');
-        defined('VENDOR_PATH') or define('VENDOR_PATH', dirname(__FILE__) . DS . 'vendor');
         defined('YII_DEBUG') or define('YII_DEBUG', true);
         defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
         defined('YII_ENABLE_EXCEPTION_HANDLER') or define('YII_ENABLE_EXCEPTION_HANDLER', true);
         defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER', true);
-        defined('YII_PATH') or define('YII_PATH', VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework');
-        defined('YII_ZII_PATH') or define('YII_ZII_PATH', YII_PATH . DS . 'zii');
-        defined('YII_BOOSTER_PATH') or define('YII_BOOSTER_PATH', VENDOR_PATH . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src');
-        defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', VENDOR_PATH . DS . 'mrphp' . DS . 'yii-dressing' . DS . 'src');
         defined('YII_DRESSING_CLI') or define('YII_DRESSING_CLI', (substr(php_sapi_name(), 0, 3) == 'cli'));
         defined('YII_DRESSING_DB_PROFILE') or define('YII_DRESSING_DB_PROFILE', false);
         defined('YII_DRESSING_LOG_LEVELS') or define('YII_DRESSING_LOG_LEVELS', 'error, warning');
+
+        // paths
+        defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', dirname(__FILE__));
+        defined('VENDOR_PATH') or define('VENDOR_PATH', dirname(dirname(dirname(dirname(YII_DRESSING_PATH)))) . DS . 'vendor');
+        defined('APP_PATH') or define('APP_PATH', dirname(VENDOR_PATH) . DS . 'app');
+        defined('APP_CONFIG') or define('APP_CONFIG', APP_PATH . DS . 'config' . DS . 'main.php');
+        defined('YII_PATH') or define('YII_PATH', VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework');
+        defined('YII_ZII_PATH') or define('YII_ZII_PATH', YII_PATH . DS . 'zii');
+        defined('YII_BOOSTER_PATH') or define('YII_BOOSTER_PATH', VENDOR_PATH . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src');
         defined('PUBLIC_PATH') or define('PUBLIC_PATH', dirname(APP_PATH) . DS . 'public');
 
+        // public_host and public_url are saved into config when accessed via web so that the value is available for cli
         if (!defined('PUBLIC_HOST')) {
             define('PUBLIC_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
             if (!YII_DRESSING_CLI)
