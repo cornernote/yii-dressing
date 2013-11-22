@@ -1,5 +1,5 @@
 <?php
-Yii::import('dressing.extensions.yiiext.behaviors.model.eav.EEavBehavior');
+Yii::import('dressing.behaviors.YdEavBaseBehavior');
 
 /**
  * @package components.behaviors
@@ -14,7 +14,7 @@ Yii::import('dressing.extensions.yiiext.behaviors.model.eav.EEavBehavior');
  *
  * @package dressing.behaviors
  */
-class YdEavBehavior extends EEavBehavior
+class YdEavBehavior extends YdEavBaseBehavior
 {
 
     /**

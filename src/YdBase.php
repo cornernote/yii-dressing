@@ -49,6 +49,11 @@ defined('VENDOR_PATH') or define('VENDOR_PATH', dirname(dirname(dirname(YII_DRES
 defined('YII_PATH') or define('YII_PATH', VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework');
 
 /**
+ * Defines a hash that is used for encoding and decoding data.
+ */
+defined('YII_DRESSING_HASH') or define('YII_DRESSING_HASH', false);
+
+/**
  * Include the Yii Framework
  */
 require_once(YII_PATH . DS . 'YiiBase.php');
@@ -111,7 +116,7 @@ class YdBase extends YiiBase
         // add controller map
         if (!isset($config['controllerMap']))
             $config['controllerMap'] = array();
-        $config['controllerMap'] = self::mergeArray(self::getControllerMap(), $config['controllerMap']);;
+        $config['controllerMap'] = self::mergeArray(self::getControllerMap(), $config['controllerMap']);
 
         // log routes (only setup if not already defined)
         if (!isset($config['components']['log']['routes'])) {
@@ -264,7 +269,7 @@ class YdBase extends YiiBase
                 'class' => 'dressing.components.YdEmail',
             ),
             'swiftMailer' => array(
-                'class' => 'dressing.extensions.swiftMailer.SwiftMailer',
+                'class' => 'dressing.components.YdSwiftMailer',
             ),
             'widgetFactory' => array(
                 'widgets' => array(

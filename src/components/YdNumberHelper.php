@@ -10,14 +10,14 @@
  *
  * @package dressing.helpers
  */
-class YdNumberHelper
+class YdNumberHelper extends CComponent
 {
 
     /**
      * @param array $array
      * @return bool|float
      */
-    static public function getMedian($array = array())
+    public function getMedian($array = array())
     {
         if (!is_array($array) || empty($array)) return false;
         sort($array);
@@ -32,7 +32,7 @@ class YdNumberHelper
      * @param array $array
      * @return bool|float
      */
-    static public function getAverage($array = array())
+    public function getAverage($array = array())
     {
         if (!is_array($array) || empty($array)) return false;
         return array_sum($array) / count($array);
@@ -42,7 +42,7 @@ class YdNumberHelper
      * @param array $array
      * @return bool|float
      */
-    static public function getHigh($array = array())
+    public function getHigh($array = array())
     {
         if (!is_array($array) || empty($array)) return false;
         return max($array);
@@ -52,7 +52,7 @@ class YdNumberHelper
      * @param array $array
      * @return bool|float
      */
-    static public function getLow($array = array())
+    public function getLow($array = array())
     {
         if (!is_array($array) || empty($array)) return false;
         return min($array);

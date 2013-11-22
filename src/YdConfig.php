@@ -256,6 +256,12 @@ class YdConfig
             if (!YII_DRESSING_CLI)
                 $this->setConfig('PUBLIC_URL', PUBLIC_URL);
         }
+
+        // hash needs to be defined once and saved into config so that it does not change
+        if (!defined('YII_DRESSING_HASH')) {
+            define('YII_DRESSING_HASH', md5(uniqid(true)));
+            $this->setConfig('YII_DRESSING_HASH', YII_DRESSING_HASH);
+        }
     }
 
     /**

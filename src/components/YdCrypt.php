@@ -16,7 +16,7 @@ class YdCrypt
     /**
      * @var string
      */
-    static private $key = 'r_$&m|5&;/;gH}N';
+    static private $key = YII_DRESSING_HASH;
 
     /**
      * @param string $decrypted

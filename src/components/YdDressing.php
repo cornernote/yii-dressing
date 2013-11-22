@@ -91,7 +91,6 @@ class YdDressing extends CApplicationComponent
 
         // import classes
         Yii::import('dressing.components.*');
-        Yii::import('dressing.helpers.*');
         Yii::import('dressing.models.*');
 
         // map tables

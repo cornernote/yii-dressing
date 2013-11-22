@@ -1,6 +1,6 @@
 <?php
 /**
- * EEavBehavior class file.
+ * YdEavBaseBehavior class file.
  *
  * Entity-Attribute-Value behavior.
  * Allows model to work with custom fields on the fly (EAV pattern).
@@ -10,7 +10,7 @@
  *
  * @version 0.5
  */
-class EEavBehavior extends CActiveRecordBehavior {
+class YdEavBaseBehavior extends CActiveRecordBehavior {
     /**
      * @access public
      * @var string name of the table where data is stored. Required to be set on init behavior.

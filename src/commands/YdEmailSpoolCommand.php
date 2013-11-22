@@ -1,6 +1,6 @@
 <?php
 /**
- * EmailSpoolCommand
+ * YdEmailSpoolCommand
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -10,7 +10,7 @@
  *
  * @package dressing.commands
  */
-class EmailSpoolCommand extends YdConsoleCommand
+class YdEmailSpoolCommand extends YdConsoleCommand
 {
 
     /**

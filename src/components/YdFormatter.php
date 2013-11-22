@@ -1,6 +1,6 @@
 <?php
 /**
- * Class YdTime
+ * Class YdFormatter
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -8,16 +8,16 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license http://www.gnu.org/copyleft/gpl.html
  *
- * @package dressing.helpers
+ * @package dressing.components
  */
-class YdTime
+class YdFormatter extends CFormatter
 {
 
     /**
      * @param $dtGiven
      * @return int|null
      */
-    public static function timestamp($dtGiven)
+    public function timestamp($dtGiven)
     {
         if (!$dtGiven)
             return null;
@@ -31,9 +31,9 @@ class YdTime
      * @param string $format
      * @return null|string
      */
-    public static function date($dtGiven, $format = 'Y-m-d')
+    public function date($dtGiven, $format = 'Y-m-d')
     {
-        $date = self::timestamp($dtGiven);
+        $date = $this->timestamp($dtGiven);
         return date($format, $date);
     }
 
@@ -42,11 +42,11 @@ class YdTime
      * @param string $format
      * @return null|string
      */
-    public static function datetime($dtGiven, $format = 'Y-m-d H:i:s')
+    public function datetime($dtGiven, $format = 'Y-m-d H:i:s')
     {
         if (!$dtGiven)
             return null;
-        $date = self::timestamp($dtGiven);
+        $date = $this->timestamp($dtGiven);
         return date($format, $date);
     }
 
@@ -57,9 +57,9 @@ class YdTime
      * @param int|string $format Format of returned date
      * @return string Formatted date string
      */
-    public static function nice($dtGiven = null, $format = 'dateTimeFormat')
+    public function nice($dtGiven = null, $format = 'dateTimeFormat')
     {
-        $date = self::timestamp($dtGiven);
+        $date = $this->timestamp($dtGiven);
         if (!$date) {
             return '';
         }
@@ -71,39 +71,37 @@ class YdTime
     }
 
     /**
-     * @static
      * @param $dtGiven
      * @param $strToTimeString
      * @param string $dtFormat
      * @return string
      */
-    public static function getRelativeDate($dtGiven, $strToTimeString, $dtFormat = 'Y-m-d')
+    public function getRelativeDate($dtGiven, $strToTimeString, $dtFormat = 'Y-m-d')
     {
         //use like Time::getRelativeDate('01-Jan-1990', '+2 days')
-        $stamp = self::timestamp($dtGiven);
+        $stamp = $this->timestamp($dtGiven);
         $relativeDateStamp = strtotime($strToTimeString, $stamp);
         $relativeDate = date($dtFormat, $relativeDateStamp);
         return $relativeDate;
     }
 
     /**
-     * @static
      * @param string $date1 bigger date value
      * @param string $date2 smaller date value
      * @param bool $round
      * @param bool|array $holidays
      * @return int
      */
-    public static function differentInDays($date1, $date2, $round = true, $holidays = false)
+    public function differentInDays($date1, $date2, $round = true, $holidays = false)
     {
         $diff = strtotime($date1) - strtotime($date2);
         $diff = $diff / (60 * 60 * 24);
 
         if (($diff > 1) && is_array($holidays)) {
             if (current($holidays) == 'victoria') {
-                $holidays = self::getVictoriaHolidays();
+                $holidays = $this->getVictoriaHolidays();
             }
-            $diff = self::getWorkingDays($date2, $date1, $holidays) - 1;
+            $diff = $this->getWorkingDays($date2, $date1, $holidays) - 1;
         }
         if ($round) {
             $diff = round($diff);
@@ -114,7 +112,7 @@ class YdTime
     /**
      * @return array
      */
-    public static function getVictoriaHolidays()
+    public function getVictoriaHolidays()
     {
         return array(
             '1-January-2010',
@@ -163,16 +161,14 @@ class YdTime
     }
 
     /**
-     *
      * The function returns the no. of business days between two dates and it skips the holidays
      *
-     * @static
      * @param string $startDate
      * @param string $endDate
      * @param array $holidays
      * @return float|int
      */
-    public static function getWorkingDays($startDate, $endDate, $holidays)
+    public function getWorkingDays($startDate, $endDate, $holidays)
     {
         // do strtotime calculations just once
         $endDate = strtotime($endDate);
@@ -249,16 +245,16 @@ class YdTime
      * @param string $dtGiven
      * @return string Described, relative date string
      */
-    public static function short($dtGiven = null)
+    public function short($dtGiven = null)
     {
-        $date = ($dtGiven == null) ? time() : self::timestamp($dtGiven);
+        $date = ($dtGiven == null) ? time() : $this->timestamp($dtGiven);
 
-        $y = (self::isThisYear($date)) ? '' : ' Y';
+        $y = ($this->isThisYear($date)) ? '' : ' Y';
 
-        if (self::isToday($date)) {
+        if ($this->isToday($date)) {
             $ret = sprintf('Today, %s', date("g:i a", $date));
         }
-        elseif (self::wasYesterday($date)) {
+        elseif ($this->wasYesterday($date)) {
             $ret = sprintf('Yesterday, %s', date("g:i a", $date));
         }
         else {
@@ -274,9 +270,9 @@ class YdTime
      * @param string $dtGiven
      * @return boolean True if date is today
      */
-    public static function isToday($dtGiven)
+    public function isToday($dtGiven)
     {
-        $date = self::timestamp($dtGiven);
+        $date = $this->timestamp($dtGiven);
         return date('Y-m-d', $date) == date('Y-m-d', time());
     }
 
@@ -286,9 +282,9 @@ class YdTime
      * @param string $dtGiven
      * @return boolean True if date was yesterday
      */
-    public static function wasYesterday($dtGiven)
+    public function wasYesterday($dtGiven)
     {
-        $date = self::timestamp($dtGiven);
+        $date = $this->timestamp($dtGiven);
         return date('Y-m-d', $date) == date('Y-m-d', strtotime('yesterday'));
     }
 
@@ -298,9 +294,9 @@ class YdTime
      * @param string $dtGiven
      * @return boolean True if date is in this year
      */
-    public static function isThisYear($dtGiven)
+    public function isThisYear($dtGiven)
     {
-        $date = self::timestamp($dtGiven);
+        $date = $this->timestamp($dtGiven);
         return date('Y', $date) == date('Y', time());
     }
 
@@ -310,9 +306,9 @@ class YdTime
      * @param string $dtGiven
      * @return boolean True if date is in this week
      */
-    public static function isThisWeek($dtGiven)
+    public function isThisWeek($dtGiven)
     {
-        $date = self::timestamp($dtGiven);
+        $date = $this->timestamp($dtGiven);
         return date('W Y', $date) == date('W Y', time());
     }
 
@@ -322,9 +318,9 @@ class YdTime
      * @param string $dtGiven
      * @return boolean True if date is in this month
      */
-    public static function isThisMonth($dtGiven)
+    public function isThisMonth($dtGiven)
     {
-        $date = self::timestamp($dtGiven);
+        $date = $this->timestamp($dtGiven);
         return date('m Y', $date) == date('m Y', time());
     }
 
@@ -333,13 +329,13 @@ class YdTime
      * @param string $format
      * @return bool|string
      */
-    public static function agoIcon($dtGiven, $format = 'd-M-Y H:i:s')
+    public function agoIcon($dtGiven, $format = 'd-M-Y H:i:s')
     {
         if (!$dtGiven) {
             return false;
         }
-        $dtStamp = self::timestamp($dtGiven);
-        $ago = self::ago($dtStamp);
+        $dtStamp = $this->timestamp($dtGiven);
+        $ago = $this->ago($dtStamp);
         $date = date($format, $dtStamp);
         $icon = CHtml::link('<i class="icon-time"></i>', 'javascript:void();', array('title' => $date));
         $agoWithIcon = $icon . '&nbsp;' . $ago;
@@ -350,7 +346,7 @@ class YdTime
      * @param $gmDateGiven string
      * @return string
      */
-    public static function gmDateToDate($gmDateGiven)
+    public function gmDateToDate($gmDateGiven)
     {
         $format = 'Y-m-d H:i:s';
         $gmDate = gmdate($format);
@@ -366,15 +362,14 @@ class YdTime
     }
 
     /**
-     * @static
      * @param $dtGiven
      * @param int $rcs
      * @param null $_ago
      * @return string
      */
-    public static function ago($dtGiven, $rcs = 0, $_ago = null)
+    public function ago($dtGiven, $rcs = 0, $_ago = null)
     {
-        $tm = self::timestamp($dtGiven);
+        $tm = $this->timestamp($dtGiven);
         if (!$tm) {
             return '';
         }
@@ -397,7 +392,7 @@ class YdTime
             $pds[$v] .= 's';
         $x = sprintf("%d %s ", $no, $pds[$v]);
         if (($rcs == 1) && ($v >= 1) && (($cur_tm - $_tm) > 0))
-            $x .= self::ago($_tm, 0, $_ago);
+            $x .= $this->ago($_tm, 0, $_ago);
         $ago = '';
         if (!$rcs) {
             if (isset($_ago))
@@ -431,9 +426,9 @@ class YdTime
      * @internal param string $dateString Datetime string
      * @return string Relative time string.
      */
-    public static function timeAgoInWords($dtGiven, $options = array())
+    public function timeAgoInWords($dtGiven, $options = array())
     {
-        $dateTime = self::timestamp($dtGiven);
+        $dateTime = $this->timestamp($dtGiven);
         $now = time();
 
         $inSeconds = strtotime($dateTime);

@@ -1,6 +1,6 @@
 <?php
 /**
- * ErrorEmailCommand
+ * YdErrorEmailCommand
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -10,7 +10,7 @@
  *
  * @package dressing.commands
  */
-class ErrorEmailCommand extends YdConsoleCommand
+class YdErrorEmailCommand extends YdConsoleCommand
 {
 
     /**
