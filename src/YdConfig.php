@@ -101,7 +101,9 @@ class YdConfig
     public function __construct($file = null)
     {
         $this->file = $file;
-        $this->init();
+        $this->initConfig();
+        $this->initConstants();
+        $this->initEnvironment();
         self::$_instance = $this;
     }
 
@@ -151,16 +153,6 @@ class YdConfig
             elseif (isset($this->_configs[$name]))
                 unset($this->_configs[$name]);
         file_put_contents($this->file, json_encode($this->_configs));
-    }
-
-    /**
-     *
-     */
-    public function init()
-    {
-        $this->initConfig();
-        $this->initConstants();
-        $this->initEnvironment();
     }
 
     /**
