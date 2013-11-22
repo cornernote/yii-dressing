@@ -16,8 +16,25 @@
 class YdWebUser extends CWebUser
 {
 
+    /**
+     *
+     */
     const MF_KEY_PREFIX = 'mf';
+
+    /**
+     *
+     */
     const MF_MAX = 100;
+
+    /**
+     * @var bool
+     */
+    public $allowAutoLogin = true;
+
+    /**
+     * @var array
+     */
+    public $loginUrl = array('/account/login');
 
     /**
      * @var YdUser

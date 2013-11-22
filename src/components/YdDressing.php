@@ -42,12 +42,12 @@ class YdDressing extends CApplicationComponent
     /**
      * @var string
      */
-    public $recaptchaPrivate;
+    public $recaptchaPrivate = '6LeBItQSAAAAALA4_G05e_-fG5yH_-xqQIN8AfTD';
 
     /**
      * @var string
      */
-    public $recaptchaPublic;
+    public $recaptchaPublic = '6LeBItQSAAAAAG_umhiD0vyxXbDFbVMPA0kxZUF6';
 
     /**
      * @var bool Default setting for remember me checkbox on login page

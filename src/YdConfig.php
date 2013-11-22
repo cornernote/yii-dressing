@@ -276,7 +276,7 @@ class YdConfig
         date_default_timezone_set($this->getConfig('default_timezone', 'GMT'));
 
         // time and memory limit
-        ini_set('max_execution_time', YII_DRESSING_CLI ? 0 : $this->getConfig('time_limit', 120));
+        ini_set('max_execution_time', YII_DRESSING_CLI ? 0 : $this->getConfig('time_limit', 60));
         ini_set('memory_limit', $this->getConfig('memory_limit', "128M"));
 
         // cli specific
