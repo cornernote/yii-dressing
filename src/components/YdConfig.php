@@ -64,12 +64,13 @@ class YdConfig
      * It is provided for preparing the instance for static instance methods.
      *
      * @param null|string $file
-     * @return Config the instantiated object
+     * @return YdConfig the instantiated object
      * @see __construct
      */
     public static function createInstance($file = null)
     {
-        return new Config($file);
+        $class = get_called_class();
+        return new $class($file);
     }
 
     /**
