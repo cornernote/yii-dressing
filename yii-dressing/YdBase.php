@@ -159,6 +159,10 @@ class YdBase extends YiiBase
         // load the config array
         $config = self::loadConfig($config);
 
+        // remove theme
+        if (isset($config['theme']))
+            unset($config['theme']);
+
         // remove things from preload
         $excludeConsolePreloads = array('bootstrap');
         foreach ($config['preload'] as $k => $preload)
