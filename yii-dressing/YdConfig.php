@@ -224,14 +224,14 @@ class YdConfig
 
         // paths
         defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-        defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', dirname(__FILE__));
-        defined('VENDOR_PATH') or define('VENDOR_PATH', dirname(dirname(dirname(dirname(YII_DRESSING_PATH)))) . DS . 'vendor');
-        defined('APP_PATH') or define('APP_PATH', dirname(VENDOR_PATH) . DS . 'app');
-        defined('APP_CONFIG') or define('APP_CONFIG', APP_PATH . DS . 'config' . DS . 'main.php');
-        defined('YII_PATH') or define('YII_PATH', VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework');
-        defined('YII_ZII_PATH') or define('YII_ZII_PATH', YII_PATH . DS . 'zii');
-        defined('YII_BOOSTER_PATH') or define('YII_BOOSTER_PATH', VENDOR_PATH . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src');
-        defined('PUBLIC_PATH') or define('PUBLIC_PATH', dirname(APP_PATH) . DS . 'public');
+        defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', self::cleanPath(dirname(__FILE__)));
+        defined('VENDOR_PATH') or define('VENDOR_PATH', self::cleanPath(dirname(dirname(dirname(dirname(YII_DRESSING_PATH)))) . DS . 'vendor'));
+        defined('APP_PATH') or define('APP_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'app'));
+        defined('APP_CONFIG') or define('APP_CONFIG', self::cleanPath(APP_PATH . DS . 'config' . DS . 'main.php'));
+        defined('YII_PATH') or define('YII_PATH', self::cleanPath(VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework'));
+        defined('YII_ZII_PATH') or define('YII_ZII_PATH', self::cleanPath(YII_PATH . DS . 'zii'));
+        defined('YII_BOOSTER_PATH') or define('YII_BOOSTER_PATH', self::cleanPath(VENDOR_PATH . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src'));
+        defined('PUBLIC_PATH') or define('PUBLIC_PATH', self::cleanPath(dirname(APP_PATH) . DS . 'public'));
 
         // public_host and public_url are saved into config when accessed via web so that the value is available for cli
         if (!defined('PUBLIC_HOST')) {
@@ -287,6 +287,47 @@ class YdConfig
             $_SERVER['SERVER_NAME'] = PUBLIC_HOST;
         }
 
+    }
+
+    /**
+     * Prepares a path for the correct environment by converting back or forwardslashes to the OS prefered slash.
+     *
+     * @param $path
+     * @return mixed
+     */
+    public static function cleanPath($path)
+    {
+        return str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $path);
+    }
+
+    /**
+     * Merges two or more arrays into one recursively.
+     * If each array has an element with the same string key value, the latter will overwrite the former (different from array_merge_recursive).
+     * Recursive merging will be conducted if both arrays have an element of array type and are having the same key.
+     * For integer-keyed elements, the elements from the latter array will be appended to the former array.
+     *
+     * @param array $a array to be merged to
+     * @param array $b array to be merged from. You can specify additional
+     * arrays via third argument, fourth argument etc.
+     * @return array the merged array (the original arrays are not changed.)
+     * @see mergeWith
+     */
+    public static function mergeArray($a, $b)
+    {
+        $args = func_get_args();
+        $res = array_shift($args);
+        while (!empty($args)) {
+            $next = array_shift($args);
+            foreach ($next as $k => $v) {
+                if (is_integer($k))
+                    isset($res[$k]) ? $res[] = $v : $res[$k] = $v;
+                elseif (is_array($v) && isset($res[$k]) && is_array($res[$k]))
+                    $res[$k] = self::mergeArray($res[$k], $v);
+                else
+                    $res[$k] = $v;
+            }
+        }
+        return $res;
     }
 
 }

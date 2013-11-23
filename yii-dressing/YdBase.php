@@ -26,7 +26,7 @@ defined('YII_DRESSING_CLI') or define('YII_DRESSING_CLI', (substr(php_sapi_name(
 /**
  * Defines the Yii dressing path.
  */
-defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', realpath(dirname(__FILE__)));
+defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', YdConfig::cleanPath(realpath(dirname(__FILE__))));
 
 /**
  * Defines Yii dressing log levels, comma separated list of: trace, info, error, warning, profile
@@ -36,12 +36,12 @@ defined('YII_DRESSING_LOG_LEVELS') or define('YII_DRESSING_LOG_LEVELS', 'error, 
 /**
  * Defines the Vendor path.
  */
-defined('VENDOR_PATH') or define('VENDOR_PATH', dirname(dirname(dirname(YII_DRESSING_PATH))));
+defined('VENDOR_PATH') or define('VENDOR_PATH', YdConfig::cleanPath(dirname(dirname(dirname(YII_DRESSING_PATH)))));
 
 /**
  * Defines the Yii framework path.
  */
-defined('YII_PATH') or define('YII_PATH', VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework');
+defined('YII_PATH') or define('YII_PATH', YdConfig::cleanPath(VENDOR_PATH . '/yiisoft/yii/framework'));
 
 /**
  * Defines a hash that is used for encoding and decoding data.
@@ -56,12 +56,12 @@ defined('YII_DEBUG_TOOLBAR') or define('YII_DEBUG_TOOLBAR', false);
 /**
  * Defines the filesystem path to the application.
  */
-defined('APP_PATH') or define('APP_PATH', dirname(VENDOR_PATH) . DS . 'app');
+defined('APP_PATH') or define('APP_PATH', YdConfig::cleanPath(dirname(VENDOR_PATH) . DS . 'app'));
 
 /**
  * Defines the filesystem path to the public directory of the application.
  */
-defined('PUBLIC_PATH') or define('PUBLIC_PATH', dirname(APP_PATH) . DS . 'public');
+defined('PUBLIC_PATH') or define('PUBLIC_PATH', YdConfig::cleanPath(dirname(APP_PATH) . DS . 'public'));
 
 /**
  * Defines the public hostname of the application.
@@ -101,12 +101,12 @@ class YdBase extends YiiBase
         // add components
         if (!isset($config['components']))
             $config['components'] = array();
-        $config['components'] = self::mergeArray(self::getComponentsConfig(), $config['components']);
+        $config['components'] = YdConfig::mergeArray(self::getComponentsConfig(), $config['components']);
 
         // add modules
         if (!isset($config['modules']))
             $config['modules'] = array();
-        $config['modules'] = self::mergeArray(self::getModulesConfig(), $config['modules']);
+        $config['modules'] = YdConfig::mergeArray(self::getModulesConfig(), $config['modules']);
 
         $app = parent::createApplication($class, $config);
         YdAudit::findCurrent();
@@ -129,7 +129,7 @@ class YdBase extends YiiBase
         // add controller map
         if (!isset($config['controllerMap']))
             $config['controllerMap'] = array();
-        $config['controllerMap'] = self::mergeArray(self::getControllerMap(), $config['controllerMap']);
+        $config['controllerMap'] = YdConfig::mergeArray(self::getControllerMap(), $config['controllerMap']);
 
         // log routes (only setup if not already defined)
         if (!isset($config['components']['log']['routes'])) {
@@ -172,7 +172,7 @@ class YdBase extends YiiBase
         // add command map
         if (!isset($config['commandMap']))
             $config['commandMap'] = array();
-        $config['commandMap'] = self::mergeArray(self::getCommandMap(), $config['commandMap']);
+        $config['commandMap'] = YdConfig::mergeArray(self::getCommandMap(), $config['commandMap']);
 
         // create app
         $app = self::createApplication('CConsoleApplication', $config);
@@ -204,7 +204,7 @@ class YdBase extends YiiBase
         if (file_exists($local)) {
             $local = require($local);
             if (is_array($local))
-                return self::mergeArray(require($config), $local);
+                return YdConfig::mergeArray(require($config), $local);
         }
         return require($config);
     }
@@ -375,36 +375,6 @@ class YdBase extends YiiBase
             if (file_exists(APP_PATH . DS . 'commands' . DS . ucfirst($command) . 'Command.php'))
                 unset($commands[$command]);
         return $commands;
-    }
-
-    /**
-     * Merges two or more arrays into one recursively.
-     * If each array has an element with the same string key value, the latter will overwrite the former (different from array_merge_recursive).
-     * Recursive merging will be conducted if both arrays have an element of array type and are having the same key.
-     * For integer-keyed elements, the elements from the latter array will be appended to the former array.
-     *
-     * @param array $a array to be merged to
-     * @param array $b array to be merged from. You can specify additional
-     * arrays via third argument, fourth argument etc.
-     * @return array the merged array (the original arrays are not changed.)
-     * @see mergeWith
-     */
-    public static function mergeArray($a, $b)
-    {
-        $args = func_get_args();
-        $res = array_shift($args);
-        while (!empty($args)) {
-            $next = array_shift($args);
-            foreach ($next as $k => $v) {
-                if (is_integer($k))
-                    isset($res[$k]) ? $res[] = $v : $res[$k] = $v;
-                elseif (is_array($v) && isset($res[$k]) && is_array($res[$k]))
-                    $res[$k] = self::mergeArray($res[$k], $v);
-                else
-                    $res[$k] = $v;
-            }
-        }
-        return $res;
     }
 
 }
