@@ -163,9 +163,11 @@ class YdBase extends YiiBase
         unset($config['theme']);
 
         // remove things from preload
-        $excludeConsolePreloads = array('bootstrap');
-        foreach ($config['preload'] as $k => $preload)
-            if (in_array($preload, $excludeConsolePreloads)) unset($config['preload'][$k]);
+        if (isset($config['preload'])) {
+            $excludeConsolePreloads = array('bootstrap');
+            foreach ($config['preload'] as $k => $preload)
+                if (in_array($preload, $excludeConsolePreloads)) unset($config['preload'][$k]);
+        }
 
         // add command map
         if (!isset($config['commandMap']))
