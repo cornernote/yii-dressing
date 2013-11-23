@@ -37,6 +37,8 @@
  * @copyright Copyright (c) 2013, Brett O'Donnell and Zain ul abidin
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ * @package dressing.components
  */
 class YdConfig
 {

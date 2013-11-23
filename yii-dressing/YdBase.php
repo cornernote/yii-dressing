@@ -6,6 +6,8 @@
  * @copyright 2013 Mr PHP
  * @link https://github.com/cornernote/yii-skeleton
  * @license http://www.gnu.org/copyleft/gpl.html
+ *
+ * @package dressing.components
  */
 
 /**

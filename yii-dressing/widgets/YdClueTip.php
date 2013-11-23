@@ -2,6 +2,8 @@
 
 /**
  * Class YdClueTip
+ *
+ * @package dressing.widgets
  */
 class YdClueTip extends CWidget
 {

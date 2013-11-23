@@ -1,6 +1,8 @@
 <?php
 /**
+ * YdSignatureWidget
  *
+ * @package dressing.widgets
  */
 class YdSignatureWidget extends CWidget
 {

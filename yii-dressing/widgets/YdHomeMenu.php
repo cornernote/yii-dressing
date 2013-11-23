@@ -1,8 +1,9 @@
 <?php
-
 Yii::import('bootstrap.widgets.TbMenu');
 /**
  * Class YdHomeMenu
+ *
+ * @package dressing.widgets
  */
 class YdHomeMenu extends TbMenu
 {
