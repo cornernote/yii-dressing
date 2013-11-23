@@ -30,7 +30,7 @@
  *       $xml = Array2XML::createXML('root_node_name', $php_array);
  *       echo $xml->saveXML();
  *
- * @package dressing.helpers
+ * @package dressing.components
  */
 
 class YdArray2Xml

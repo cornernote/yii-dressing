@@ -14,7 +14,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license http://www.gnu.org/copyleft/gpl.html
  *
- * @package dressing
+ * @package dressing.components
  */
 class YdDressing extends CApplicationComponent
 {

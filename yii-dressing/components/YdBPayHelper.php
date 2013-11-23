@@ -1,6 +1,8 @@
 <?php
 /**
  * Class YdBPayHelper
+ *
+ * @package dressing.components
  */
 class YdBPayHelper
 {

@@ -24,6 +24,8 @@
  * 0.3    Simplified constructor params, changed RGB values to an array and removed GD on/off setting
  *        in favour of check for gd_info. Added per-frame based override settings for disposal and
  *        transparency settings.
+ *
+ * @package dressing.components
  */
 class YdGifCreator
 {

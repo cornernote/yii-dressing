@@ -25,7 +25,7 @@
  * Obviously, since this code is in the public domain, the above are not
  * requirements (there can be none), but merely suggestions.
  *
- * @package dressing.helpers
+ * @package dressing.components
  */
 class YdPasswordHash {
 	var $itoa64;

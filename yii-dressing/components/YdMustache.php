@@ -12,7 +12,7 @@
  *
  * @author Justin Hileman {@link http://justinhileman.com}
  *
- * @package dressing.helpers
+ * @package dressing.components
  */
 class YdMustache {
 

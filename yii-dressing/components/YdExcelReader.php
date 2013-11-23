@@ -1,8 +1,8 @@
 <?php
-require_once(vp() . '/php-excel-reader/spreadsheet-reader/src/PHPExcelReader/SpreadsheetReader.php');
+Yii::import('vendor.php-excel-reader.spreadsheet-reader.src.PHPExcelReader.SpreadsheetReader');
 
 /**
- *
+ * @package dressing.components
  */
 class YdExcelReader
 {

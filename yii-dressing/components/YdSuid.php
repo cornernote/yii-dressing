@@ -16,7 +16,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license http://www.gnu.org/copyleft/gpl.html
  *
- * @package dressing.helpers
+ * @package dressing.components
  */
 class YdSuid
 {

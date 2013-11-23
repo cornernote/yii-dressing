@@ -35,8 +35,8 @@ POSSIBILITY OF SUCH DAMAGE.
  * @example  https://github.com/neitanod/forceutf8
  * @license  Revised BSD
  *
- * @package dressing.helpers
-  */
+ * @package dressing.components
+ */
 
 //namespace ForceUTF8;
 

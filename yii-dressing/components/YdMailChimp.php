@@ -2,6 +2,8 @@
 
 /**
  * Class YdMailChimp
+ *
+ * @package dressing.components
  */
 class YdMailChimp extends CApplicationComponent
 {

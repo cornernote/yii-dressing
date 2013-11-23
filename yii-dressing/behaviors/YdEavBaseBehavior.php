@@ -9,6 +9,7 @@
  * @link http://code.google.com/p/yiiext/
  *
  * @version 0.5
+ * @package dressing.behaviors
  */
 class YdEavBaseBehavior extends CActiveRecordBehavior {
     /**

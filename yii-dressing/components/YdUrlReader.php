@@ -1,6 +1,8 @@
 <?php
 /**
  * Class YdUrlReader
+ *
+ * @package dressing.components
  */
 class YdUrlReader
 {

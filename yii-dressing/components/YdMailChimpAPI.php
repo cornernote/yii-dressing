@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class YdMailChimpAPI
+ *
+ * @package dressing.components
+ */
 class YdMailChimpAPI {
     var $version = "1.2";
     var $errorMessage;
