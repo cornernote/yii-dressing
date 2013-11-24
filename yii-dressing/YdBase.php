@@ -265,6 +265,9 @@ class YdBase extends YiiBase
                 'swiftMailer' => array(
                     'class' => 'dressing.components.YdSwiftMailer',
                 ),
+                'auditTracker' => array(
+                    'class' => 'dressing.components.YdAuditTracker',
+                ),
                 'widgetFactory' => array(
                     'widgets' => array(
                         'TbMenu' => array(
