@@ -121,7 +121,8 @@ class YdDressing extends CApplicationComponent
         ));
 
         // begin the audit
-        YdAudit::getAudit();
+        if ($this->audit)
+            YdAudit::getAudit();
 
         // add packages and register scripts
         if (!YII_DRESSING_CLI) {

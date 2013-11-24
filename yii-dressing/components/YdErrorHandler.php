@@ -184,7 +184,7 @@ class YdErrorHandler extends CErrorHandler
         $enableIncludePath = Yii::$enableIncludePath;
         if (Yii::$enableIncludePath)
             Yii::$enableIncludePath = false;
-        $auditId = class_exists('YdAudit') ? (YdAudit::getAudit() ? YdAudit::getAudit() : 0) : 0;
+        $auditId = class_exists('YdAudit') ? (YdAudit::getAudit() ? YdAudit::getAudit()->id : 0) : 0;
         Yii::$enableIncludePath = $enableIncludePath;
         return $auditId ? $auditId : uniqid();
     }

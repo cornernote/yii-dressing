@@ -1,6 +1,7 @@
 <?php
 /**
  * @var $this YdWebController
+ * @var $color string
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -11,22 +12,12 @@
 
 $color = isset($color) ? $color : (YII_DEBUG ? 'inherit' : 'transparent');
 
-$audit = YdAudit::getAudit();
-if ($audit) {
-    echo '<span class="small audit-id" style="color: ' . $color . ';">';
+echo '<span class="small audit-footer" style="color: ' . $color . ';">';
+if (Yii::app()->dressing->audit && $audit = YdAudit::getAudit()) {
     echo '<!-- audit start -->audit-' . $audit->id . '<!-- audit end -->'; // html comment is used for extracting audit_id
     echo ' | ';
-    echo number_format(microtime(true) - $audit->start_time, 2) . 'sec';
-    echo ' | ';
-    echo round(memory_get_peak_usage() / 1024 / 1024, 2) . 'mb';
-    echo '</span>';
 }
-else {
-    echo '<span class="small audit-id" style="color: ' . $color . ';">';
-    //echo '<!-- audit start -->audit-' . $audit->id . '<!-- audit end -->'; // html comment is used for extracting audit_id
-    //echo ' | ';
-    echo number_format(microtime(true) - YII_BEGIN_TIME, 2) . 's';
-    echo ' | ';
-    echo round(memory_get_peak_usage() / 1024 / 1024, 1) . 'm';
-    echo '</span>';
-}
+echo number_format(microtime(true) - YII_BEGIN_TIME, 2) . 's';
+echo ' | ';
+echo round(memory_get_peak_usage() / 1024 / 1024, 1) . 'm';
+echo '</span>';

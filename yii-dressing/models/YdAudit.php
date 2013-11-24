@@ -391,13 +391,10 @@ class YdAudit extends YdActiveRecord
     }
 
     /**
-     * @return Audit
+     * @return YdAudit
      */
     static public function getAudit()
     {
-        if (!Yii::app()->dressing->audit)
-            return false;
-
         // get existing Audit
         if (self::$_audit)
             return self::$_audit;
