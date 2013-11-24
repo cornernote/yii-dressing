@@ -229,8 +229,8 @@ class YdActiveRecord extends CActiveRecord
      */
     public function tableName()
     {
-        if (!empty(Yii::app()->dressing->tableMap[get_class($this)]))
-            return Yii::app()->dressing->tableMap[get_class($this)];
+        if (!empty(Yii::app()->dressing->modelMap[get_class($this)]['tableName']))
+            return Yii::app()->dressing->modelMap[get_class($this)]['tableName'];
         //throw new CException(Yii::t('dressing', 'Table not found in YiiDressing::tableMap for class :class.', array(':class' => get_class($this))));
         return str_replace('yd_', '', strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', get_class($this))));
     }

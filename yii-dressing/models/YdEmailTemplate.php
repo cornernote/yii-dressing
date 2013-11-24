@@ -66,10 +66,9 @@ class YdEmailTemplate extends YdActiveRecord
     }
 
     /**
-     * @param array $rules
      * @return array validation rules for model attributes.
      */
-    public function rules($rules = array())
+    public function rules()
     {
         $rules = array();
 

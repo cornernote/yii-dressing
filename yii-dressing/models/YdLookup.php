@@ -93,9 +93,6 @@ class YdLookup extends YdActiveRecord
      */
     public function search($options = array())
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
@@ -190,12 +187,10 @@ class YdLookup extends YdActiveRecord
     /**
      *
      */
-    public function clearCache()
+    public function afterSave()
     {
-        if ($this->type) {
+        if ($this->type)
             Yii::app()->cache->delete('Lookup.loadItems.' . $this->type);
-        }
-        parent::clearCache();
     }
 
 }

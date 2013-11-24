@@ -58,11 +58,6 @@ class YdEmailSpool extends YdActiveRecord
 {
 
     /**
-     * @var array
-     */
-    public $attachments = array();
-
-    /**
      * Returns the static model of the specified AR class.
      * @param string $className
      * @return YdEmailSpool the static model class
@@ -96,10 +91,9 @@ class YdEmailSpool extends YdActiveRecord
     }
 
     /**
-     * @param array $rules
      * @return array validation rules for model attributes.
      */
-    public function rules($rules = array())
+    public function rules()
     {
         $rules = array();
 
@@ -109,29 +103,6 @@ class YdEmailSpool extends YdActiveRecord
         }
 
         return $rules;
-    }
-
-    /**
-     * @param null $options
-     * @return array
-     */
-    public function getUrl($options = null)
-    {
-        $params = !empty($options['params']) ? $options['params'] : array();
-        return CMap::mergeArray($params, array(
-            '/emailSpool/view',
-            'id' => $this->id,
-        ));
-    }
-
-    /**
-     * @param array $parts
-     * @param array $urlOptions
-     * @return string
-     */
-    public function getLink($parts = array(), $urlOptions = array())
-    {
-        return l($this->id, $this->getUrl($urlOptions));
     }
 
     /**

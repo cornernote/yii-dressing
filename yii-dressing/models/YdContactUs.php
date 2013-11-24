@@ -91,9 +91,6 @@ class YdContactUs extends YdActiveRecord
      */
     public function search($options = array())
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
@@ -109,18 +106,6 @@ class YdContactUs extends YdActiveRecord
         return new YdActiveDataProvider($this, CMap::mergeArray(array(
             'criteria' => $criteria,
         ), $options));
-    }
-
-    /**
-     * Retrieves a list of links to be used in menus.
-     * @param bool $extra
-     * @return array
-     */
-    public function getMenuLinks($extra = false)
-    {
-        $links = array();
-        //$links[] = array('label' => Yii::t('dressing', 'Update'), 'url' => $this->getUrl('update'));
-        return $links;
     }
 
 }
