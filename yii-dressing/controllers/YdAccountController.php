@@ -61,11 +61,11 @@ class YdAccountController extends YdWebController
             $attempts = 0;
         $scenario = ($attempts > 3 && Yii::app()->dressing->recaptcha) ? 'recaptcha' : '';
 
-        $user = new YdUserLogin($scenario);
+        $user = new YdAccountLogin($scenario);
 
         // collect user input data
-        if (isset($_POST['YdUserLogin'])) {
-            $user->attributes = $_POST['YdUserLogin'];
+        if (isset($_POST['YdAccountLogin'])) {
+            $user->attributes = $_POST['YdAccountLogin'];
             if ($user->validate() && $user->login()) {
                 Yii::app()->cache->delete("login.attempt.{$_SERVER['REMOTE_ADDR']}");
                 $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
@@ -101,12 +101,12 @@ class YdAccountController extends YdWebController
             $this->redirect(Yii::app()->homeUrl);
         }
 
-        $user = new YdUserSignup();
+        $user = new YdAccountSignup();
         $this->performAjaxValidation($user, 'signup-form');
 
         // collect user input data
-        if (isset($_POST['YdUserSignup'])) {
-            $user->attributes = $_POST['YdUserSignup'];
+        if (isset($_POST['YdAccountSignup'])) {
+            $user->attributes = $_POST['YdAccountSignup'];
             if ($user->save()) {
                 $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
             }
@@ -134,33 +134,33 @@ class YdAccountController extends YdWebController
             $attempts = 0;
         $scenario = ($attempts >= 3 && Yii::app()->dressing->recaptcha) ? 'recaptcha' : '';
 
-        $userRecover = new YdUserRecover($scenario);
-        $this->performAjaxValidation($userRecover, 'recover-form');
+        $accountRecover = new YdAccountRecover($scenario);
+        $this->performAjaxValidation($accountRecover, 'recover-form');
 
         // collect user input data
-        if (isset($_POST['YdUserRecover'])) {
-            $userRecover->attributes = $_POST['YdUserRecover'];
+        if (isset($_POST['YdAccountRecover'])) {
+            $accountRecover->attributes = $_POST['YdAccountRecover'];
 
-            if ($userRecover->validate()) {
-                $user = User::model()->findbyPk($userRecover->user_id);
+            if ($accountRecover->validate()) {
+                $user = User::model()->findbyPk($accountRecover->user_id);
                 email()->sendRecoverPasswordEmail($user);
                 Yii::app()->user->addFlash(sprintf(Yii::t('dressing', 'Password reset instructions have been sent to %s. Please check your email.'), $user->email), 'success');
                 Yii::app()->cache->delete("recover.attempt.{$_SERVER['REMOTE_ADDR']}");
                 $this->redirect(array('/account/login'));
             }
             // remove all other errors on recaptcha error
-            if (isset($userRecover->errors['recaptcha'])) {
-                $errors = $userRecover->errors['recaptcha'];
-                $userRecover->clearErrors();
+            if (isset($accountRecover->errors['recaptcha'])) {
+                $errors = $accountRecover->errors['recaptcha'];
+                $accountRecover->clearErrors();
                 foreach ($errors as $error)
-                    $userRecover->addError('recaptcha', $error);
+                    $accountRecover->addError('recaptcha', $error);
             }
             Yii::app()->cache->set("recover.attempt.{$_SERVER['REMOTE_ADDR']}", ++$attempts);
 
         }
         // display the recover form
         $this->render('dressing.views.account.recover', array(
-            'user' => $userRecover,
+            'user' => $accountRecover,
             'recaptcha' => ($attempts >= 3 && Yii::app()->dressing->recaptcha) ? true : false,
         ));
     }
@@ -198,18 +198,18 @@ class YdAccountController extends YdWebController
             $this->redirect(array('/account/recover'));
         }
 
-        $userPassword = new YdUserPassword('recover');
-        $this->performAjaxValidation($userPassword, 'password-form');
-        if (isset($_POST['YdUserPassword'])) {
-            $userPassword->attributes = $_POST['YdUserPassword'];
-            if ($userPassword->validate()) {
+        $accountPassword = new YdAccountPassword('recover');
+        $this->performAjaxValidation($accountPassword, 'password-form');
+        if (isset($_POST['YdAccountPassword'])) {
+            $accountPassword->attributes = $_POST['YdAccountPassword'];
+            if ($accountPassword->validate()) {
 
-                $user->password = $user->hashPassword($userPassword->password);
+                $user->password = $user->hashPassword($accountPassword->password);
                 if (!$user->save(false)) {
                     Yii::app()->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'error');
                 }
 
-                $identity = new YdUserIdentity($user->email, $userPassword->password);
+                $identity = new YdUserIdentity($user->email, $accountPassword->password);
                 if ($identity->authenticate()) {
                     Yii::app()->user->login($identity);
                 }
@@ -238,7 +238,7 @@ class YdAccountController extends YdWebController
                 Yii::app()->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'warning');
             }
         }
-        $this->render('dressing.views.account.password_reset', array('user' => $userPassword));
+        $this->render('dressing.views.account.password_reset', array('user' => $accountPassword));
     }
 
     /**
@@ -280,19 +280,19 @@ class YdAccountController extends YdWebController
     {
         /**@var $user User * */
         $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
-        $userPassword = new YdUserPassword('password');
-        $this->performAjaxValidation($userPassword, 'password-form');
-        if (isset($_POST['YdUserPassword'])) {
-            $userPassword->attributes = $_POST['YdUserPassword'];
-            if ($userPassword->validate()) {
-                $user->password = $user->hashPassword($userPassword->password);
+        $accountPassword = new YdAccountPassword('password');
+        $this->performAjaxValidation($accountPassword, 'password-form');
+        if (isset($_POST['YdAccountPassword'])) {
+            $accountPassword->attributes = $_POST['YdAccountPassword'];
+            if ($accountPassword->validate()) {
+                $user->password = $user->hashPassword($accountPassword->password);
                 if ($user->save(false)) {
                     Yii::app()->user->addFlash('Your password has been saved.', 'success');
                     $this->redirect(array('/account/index'));
                 }
             }
         }
-        $this->render('dressing.views.account.password', array('user' => $userPassword));
+        $this->render('dressing.views.account.password', array('user' => $accountPassword));
 
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * YdUserLogin is the data structure for keeping user login form data.
+ * YdAccountLogin is the data structure for keeping account login form data.
  * It is used by the 'login' action of 'AccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -12,7 +12,7 @@
  *
  * @package dressing.models
  */
-class YdUserLogin extends YdFormModel
+class YdAccountLogin extends YdFormModel
 {
 
     /**

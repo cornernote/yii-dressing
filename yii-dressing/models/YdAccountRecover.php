@@ -1,7 +1,7 @@
 <?php
 
 /**
- * YdUserRecover is the data structure for keeping user recover form data.
+ * YdAccountRecover is the data structure for keeping account recover form data.
  * It is used by the 'recover' action of 'AccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -12,7 +12,7 @@
  *
  * @package dressing.models
  */
-class YdUserRecover extends YdFormModel
+class YdAccountRecover extends YdFormModel
 {
     /**
      * @var

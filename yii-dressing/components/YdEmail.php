@@ -79,16 +79,16 @@ class YdEmail extends CApplicationComponent
     }
 
     /**
-     * @param $user User
+     * @param $user YdUser
      */
-    public function sendUserRecover($user)
+    public function sendAccountRecover($user)
     {
         // get recovery temp login link
         $token = YdToken::model()->add('+1day', 1, $relation);
         $url = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
 
         // save EmailSpool
-        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('user.recover', array(
+        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('account.recover', array(
             'user' => $user,
             'url' => $url,
         )));
@@ -103,16 +103,16 @@ class YdEmail extends CApplicationComponent
     }
 
     /**
-     * @param $user User
+     * @param $user YdUser
      */
-    public function sendUserWelcome($user)
+    public function sendAccountWelcome($user)
     {
         // get activation token
         $token = YdToken::model()->add('+30days', 1, $relation);
         $url = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
 
         // save EmailSpool
-        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('user.welcome', array(
+        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('account.welcome', array(
             'user' => $user,
             'url' => $url,
         )));

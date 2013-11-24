@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this YdAccountController
- * @var $user YdUserRecover
+ * @var $user YdAccountRecover
  * @var $recaptcha string
  *
  * @author Brett O'Donnell <cornernote@gmail.com>

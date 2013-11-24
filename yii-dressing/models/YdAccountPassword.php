@@ -1,7 +1,7 @@
 <?php
 /**
- * YdUserPassword is the data structure for keeping user password form data.
- * It is used by the 'password' action of 'UserController'.
+ * YdAccountPassword is the data structure for keeping account password form data.
+ * It is used by the 'password' action of 'AccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -12,7 +12,7 @@
  * @package dressing.models
  */
 
-class YdUserPassword extends YdFormModel
+class YdAccountPassword extends YdFormModel
 {
     /**
      * @var
