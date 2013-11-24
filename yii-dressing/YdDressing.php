@@ -61,7 +61,7 @@ class YdDressing extends CApplicationComponent
     public $defaultRememberMe = true;
 
     /**
-     * @var bool Enable or disable auditing.
+     * @var bool Enable or disable auditing, you should first run the SQL in migrations/m000000_000003_audit.sql.
      */
     public $audit = false;
 

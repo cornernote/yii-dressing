@@ -110,10 +110,7 @@ class YdBase extends YiiBase
             $config['modules'] = array();
         $config['modules'] = self::mergeArray(self::getModulesConfig(), $config['modules']);
 
-        $app = parent::createApplication($class, $config);
-        if (Yii::app()->dressing->audit)
-            YdAudit::getAudit();
-        return $app;
+        return parent::createApplication($class, $config);
     }
 
     /**
