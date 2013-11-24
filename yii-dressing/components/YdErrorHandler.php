@@ -174,18 +174,23 @@ class YdErrorHandler extends CErrorHandler
     }
 
     /**
-     * Note:
-     * Without Yii::$enableIncludePath=false this triggers a fatal error trying to
-     * include YdAudit when you try to set Yii::app()->theme in a console app
-     * @link https://code.google.com/p/yii/issues/detail?id=2745#c6
+     *
      */
     private function getAuditId()
     {
-        $enableIncludePath = Yii::$enableIncludePath;
-        if (Yii::$enableIncludePath)
-            Yii::$enableIncludePath = false;
-        $auditId = class_exists('YdAudit') ? (Yii::app()->auditTracker->audit ? Yii::app()->auditTracker->audit->id : 0) : 0;
-        Yii::$enableIncludePath = $enableIncludePath;
+        /**
+         * Note:
+         * Without Yii::$enableIncludePath=false this triggers a fatal error trying to
+         * include YdAudit when you try to set Yii::app()->theme in a console app
+         * @link https://code.google.com/p/yii/issues/detail?id=2745#c6
+         */
+        //$enableIncludePath = Yii::$enableIncludePath;
+        //if (Yii::$enableIncludePath)
+        //    Yii::$enableIncludePath = false;
+        //$auditId = class_exists('YdAudit') ? Yii::app()->auditTracker->id : 0;
+        //Yii::$enableIncludePath = $enableIncludePath;
+
+        $auditId = Yii::app()->auditTracker->id;
         return $auditId ? $auditId : uniqid();
     }
 

@@ -2,6 +2,7 @@
 /**
  * YdAuditTracker
  *
+ * @property int $id
  * @property YdAudit $audit
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -50,6 +51,14 @@ class YdAuditTracker
             Yii::app()->onEndRequest = array($this, 'endAudit');
 
         return $this->_audit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->_audit ? $this->_audit->id : 0;
     }
 
     /**
