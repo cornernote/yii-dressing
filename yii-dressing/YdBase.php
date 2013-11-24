@@ -89,7 +89,7 @@ class YdBase extends YiiBase
 {
 
     /**
-     * Starts an Audit before returning an Application.
+     * Merge YdBase default configuration with the given configuration.
      *
      * @param string $class the application class name
      * @param mixed $config application configuration.
@@ -97,23 +97,12 @@ class YdBase extends YiiBase
      */
     public static function createApplication($class, $config = null)
     {
-        // load the config array
-        $config = self::loadConfig($config);
-
-        // add components
-        if (!isset($config['components']))
-            $config['components'] = array();
-        $config['components'] = self::mergeArray(self::getComponentsConfig(), $config['components']);
-
-        // add modules
-        if (!isset($config['modules']))
-            $config['modules'] = array();
-        $config['modules'] = self::mergeArray(self::getModulesConfig(), $config['modules']);
-
-        return parent::createApplication($class, $config);
+        return parent::createApplication($class, self::mergeArray(self::getConfig(), self::loadConfig($config)));
     }
 
     /**
+     * Creates a CWebApplication, in addition it will configure the controller map and log routes as well as remove
+     * config items that are incompatibale with CWebApplication.
      * @param null $config
      * @return CWebApplication
      * @throws CException if it is called from CLI
@@ -130,6 +119,10 @@ class YdBase extends YiiBase
         if (!isset($config['controllerMap']))
             $config['controllerMap'] = array();
         $config['controllerMap'] = self::mergeArray(self::getControllerMap(), $config['controllerMap']);
+
+        // remove incompatibale items
+        // do not use isset() to check, as it will return false if the key is set to null
+        unset($config['commandMap']);
 
         // log routes (only setup if not already defined)
         if (!isset($config['components']['log']['routes'])) {
@@ -148,6 +141,8 @@ class YdBase extends YiiBase
     }
 
     /**
+     * Creates a CConsoleApplication, in addition it will configure the command map as well as remove config items that
+     * are incompatibale with CConsoleApplication.
      * @param null $config
      * @return CConsoleApplication
      * @throws CException if it is not called from CLI
@@ -160,8 +155,10 @@ class YdBase extends YiiBase
         // load the config array
         $config = self::loadConfig($config);
 
-        // remove theme (do not use isset() to check, as it will return false if the key is set to null)
+        // remove incompatibale items
+        // do not use isset() to check, as it will return false if the key is set to null
         unset($config['theme']);
+        unset($config['controllerMap']);
 
         // remove things from preload
         if (isset($config['preload'])) {
@@ -193,7 +190,6 @@ class YdBase extends YiiBase
     /**
      * Config can be a string, in which case a file and optional local file override are loaded.
      * The files should return arrays.
-     *
      * @param $config
      * @return array|mixed
      */
@@ -211,113 +207,108 @@ class YdBase extends YiiBase
     }
 
     /**
+     * YdBase Config
      * @return array
      */
-    public static function getComponentsConfig()
+    public static function getConfig()
     {
-        return array(
-            'dressing' => array(
-                'class' => 'dressing.YdDressing',
-            ),
-            'errorHandler' => array(
-                'class' => 'dressing.components.YdErrorHandler',
-                'errorAction' => 'site/error',
-            ),
-            'fatalErrorCatch' => array(
-                'class' => 'dressing.components.YdFatalErrorCatch',
-            ),
-            'user' => array(
-                'class' => 'dressing.components.YdWebUser',
-                'allowAutoLogin' => true,
-                'loginUrl' => array('/account/login'),
-            ),
-            'returnUrl' => array(
-                'class' => 'dressing.components.YdReturnUrl',
-            ),
-            'bootstrap' => array(
-                'class' => 'bootstrap.components.Bootstrap',
-                'fontAwesomeCss' => true,
-            ),
-            'urlManager' => array(
-                'urlFormat' => isset($_GET['r']) ? 'get' : 'path', // allow filters in audit/index work
-                'showScriptName' => false,
-            ),
-            'cacheFile' => array(
-                'class' => 'CFileCache',
-            ),
-            'cacheDb' => array(
-                'class' => 'CDbCache',
-            ),
-            'cacheApc' => array(
-                'class' => 'CApcCache',
-            ),
-            'log' => array(
-                'class' => 'CLogRouter',
-            ),
-            'clientScript' => array(
-                'class' => 'YdClientScript',
-            ),
-            'session' => array(
-                'class' => 'CCacheHttpSession',
-                'cacheID' => 'cacheApc',
-            ),
-            'email' => array(
-                'class' => 'dressing.components.YdEmail',
-            ),
-            'swiftMailer' => array(
-                'class' => 'dressing.components.YdSwiftMailer',
-            ),
-            'widgetFactory' => array(
-                'widgets' => array(
-                    'TbMenu' => array(
-                        'activateParents' => true,
-                    ),
-                    'TbCKEditor' => array(
-                        'editorOptions' => array(
-                            'toolbar_Full' => array(
-                                array('name' => 'document', 'items' => array('Source', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates')),
-                                array('name' => 'clipboard', 'items' => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo')),
-                                array('name' => 'editing', 'items' => array('Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt')),
-                                array('name' => 'forms', 'items' => array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField')),
-                                array('name' => 'basicstyles', 'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')),
-                                array('name' => 'paragraph', 'items' => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl')),
-                                array('name' => 'links', 'items' => array('Link', 'Unlink', 'Anchor')),
-                                array('name' => 'insert', 'items' => array('Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe')),
-                                array('name' => 'styles', 'items' => array('Styles', 'Format', 'Font', 'FontSize')),
-                                array('name' => 'colors', 'items' => array('TextColor', 'BGColor')),
-                                array('name' => 'tools', 'items' => array('Maximize', 'ShowBlocks', '-', 'About')),
-                            ),
-                            'toolbar_Basic' => array(
-                                array('Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About'),
-                            ),
-                            'toolbar_DressingFull' => array(
-                                array('name' => 'tools', 'items' => array('Source', 'Maximize', 'ShowBlocks')),
-                                array('name' => 'clipboard', 'items' => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo')),
-                                array('name' => 'basicstyles', 'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')),
-                                array('name' => 'paragraph', 'items' => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock')),
-                                array('name' => 'links', 'items' => array('Link', 'Unlink', 'Anchor')),
-                                array('name' => 'insert', 'items' => array('Image', 'Table', 'HorizontalRule', 'SpecialChar')),
-                                array('name' => 'styles', 'items' => array('Format')),
-                            ),
-                            'toolbar_DressingBasic' => array(
-                                array('Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'),
-                            ),
-                            'toolbar' => 'DressingFull',
+        $config = array(
+            'components' => array(
+                'dressing' => array(
+                    'class' => 'dressing.YdDressing',
+                ),
+                'errorHandler' => array(
+                    'class' => 'dressing.components.YdErrorHandler',
+                    'errorAction' => 'site/error',
+                ),
+                'fatalErrorCatch' => array(
+                    'class' => 'dressing.components.YdFatalErrorCatch',
+                ),
+                'user' => array(
+                    'class' => 'dressing.components.YdWebUser',
+                    'allowAutoLogin' => true,
+                    'loginUrl' => array('/account/login'),
+                ),
+                'returnUrl' => array(
+                    'class' => 'dressing.components.YdReturnUrl',
+                ),
+                'bootstrap' => array(
+                    'class' => 'bootstrap.components.Bootstrap',
+                    'fontAwesomeCss' => true,
+                ),
+                'urlManager' => array(
+                    'urlFormat' => isset($_GET['r']) ? 'get' : 'path', // allow filters in audit/index work
+                    'showScriptName' => false,
+                ),
+                'cacheFile' => array(
+                    'class' => 'CFileCache',
+                ),
+                'cacheDb' => array(
+                    'class' => 'CDbCache',
+                ),
+                'cacheApc' => array(
+                    'class' => 'CApcCache',
+                ),
+                'log' => array(
+                    'class' => 'CLogRouter',
+                ),
+                'clientScript' => array(
+                    'class' => 'YdClientScript',
+                ),
+                'session' => array(
+                    'class' => 'CCacheHttpSession',
+                    'cacheID' => 'cacheApc',
+                ),
+                'email' => array(
+                    'class' => 'dressing.components.YdEmail',
+                ),
+                'swiftMailer' => array(
+                    'class' => 'dressing.components.YdSwiftMailer',
+                ),
+                'widgetFactory' => array(
+                    'widgets' => array(
+                        'TbMenu' => array(
+                            'activateParents' => true,
                         ),
-                    )
+                        'TbCKEditor' => array(
+                            'editorOptions' => array(
+                                'toolbar_Full' => array(
+                                    array('name' => 'document', 'items' => array('Source', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates')),
+                                    array('name' => 'clipboard', 'items' => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo')),
+                                    array('name' => 'editing', 'items' => array('Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt')),
+                                    array('name' => 'forms', 'items' => array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField')),
+                                    array('name' => 'basicstyles', 'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')),
+                                    array('name' => 'paragraph', 'items' => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl')),
+                                    array('name' => 'links', 'items' => array('Link', 'Unlink', 'Anchor')),
+                                    array('name' => 'insert', 'items' => array('Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe')),
+                                    array('name' => 'styles', 'items' => array('Styles', 'Format', 'Font', 'FontSize')),
+                                    array('name' => 'colors', 'items' => array('TextColor', 'BGColor')),
+                                    array('name' => 'tools', 'items' => array('Maximize', 'ShowBlocks', '-', 'About')),
+                                ),
+                                'toolbar_Basic' => array(
+                                    array('Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About'),
+                                ),
+                                'toolbar_DressingFull' => array(
+                                    array('name' => 'tools', 'items' => array('Source', 'Maximize', 'ShowBlocks')),
+                                    array('name' => 'clipboard', 'items' => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo')),
+                                    array('name' => 'basicstyles', 'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')),
+                                    array('name' => 'paragraph', 'items' => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock')),
+                                    array('name' => 'links', 'items' => array('Link', 'Unlink', 'Anchor')),
+                                    array('name' => 'insert', 'items' => array('Image', 'Table', 'HorizontalRule', 'SpecialChar')),
+                                    array('name' => 'styles', 'items' => array('Format')),
+                                ),
+                                'toolbar_DressingBasic' => array(
+                                    array('Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'),
+                                ),
+                                'toolbar' => 'DressingFull',
+                            ),
+                        )
+                    ),
                 ),
             ),
         );
-    }
-
-    /**
-     * @return array
-     */
-    public static function getModulesConfig()
-    {
-        $config = array();
-        if (YII_DEBUG && !YII_DRESSING_CLI) {
-            $config['gii'] = array(
+        if (YII_DEBUG && !YII_DRESSING_CLI && !isset($config['modules']['gii'])) {
+            $config['modules']['gii'] = array(
                 'class' => 'system.gii.GiiModule',
                 'generatorPaths' => array(
                     'dressing.gii',
@@ -329,6 +320,7 @@ class YdBase extends YiiBase
     }
 
     /**
+     * YdBase Controller Map
      * @return array
      */
     public static function getControllerMap()
@@ -356,6 +348,7 @@ class YdBase extends YiiBase
     }
 
     /**
+     * YdBase Command Map
      * @return array
      */
     public static function getCommandMap()
