@@ -90,7 +90,7 @@ class YdAudit extends YdActiveRecord
     /**
      * @var
      */
-    static private $_audit;
+    static protected $_audit;
 
     /**
      * Returns the static model of the specified AR class.
