@@ -51,7 +51,7 @@ class YdEavAuditBehavior extends YdEavBehavior
     protected function getSaveEavAttributeCommand($attribute, $value)
     {
         if ($this->getOwner()->asa('AuditBehavior')) {
-            $auditId = YdAudit::findCurrentId();
+            $auditId = YdAudit::getAudit() ? YdAudit::getAudit() : 0;
             try {
                 $userid = Yii::app()->user->id;
             } catch (Exception $e) { //If we have no user object, this must be a command line program

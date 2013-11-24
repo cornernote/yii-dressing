@@ -306,7 +306,7 @@ class YdAudit extends YdActiveRecord
     /**
      *
      */
-    protected function updateAudit()
+    protected function endAudit()
     {
         $headers = headers_list();
         foreach ($headers as $header) {
@@ -393,45 +393,27 @@ class YdAudit extends YdActiveRecord
     /**
      * @return Audit
      */
-    static public function findCurrent()
+    static public function getAudit()
     {
-        if (!Yii::app()->dressing->audit) {
+        if (!Yii::app()->dressing->audit)
             return false;
-        }
 
         // get existing Audit
-        if (self::$_audit) {
+        if (self::$_audit)
             return self::$_audit;
-        }
 
         // create new Audit
         self::$_audit = new YdAudit();
-        // cache not working so it could not get schema for audits
-        if (!self::$_audit->attributes) {
-            return false;
-        }
-        if (self::$_audit->recordAudit()) {
-            Yii::app()->onEndRequest = array(self::$_audit, 'updateAudit');
-        }
-        return self::$_audit;
-    }
 
-    /**
-     * @return int|bool
-     */
-    static public function findCurrentId()
-    {
-        if (!Yii::app()->dressing->audit) {
+        // cache not working so it could not get schema for audits
+        if (!self::$_audit->attributes)
             return false;
-        }
-        if (self::$_audit) {
-            return self::$_audit->id;
-        }
-        $audit = self::findCurrent();
-        if ($audit) {
-            return $audit->id;
-        }
-        return false;
+
+        // add an event callback to update the audit at the end
+        if (self::$_audit->recordAudit())
+            Yii::app()->onEndRequest = array(self::$_audit, 'endAudit');
+
+        return self::$_audit;
     }
 
     /**
@@ -441,6 +423,5 @@ class YdAudit extends YdActiveRecord
     {
         return 'audit';
     }
-
 
 }

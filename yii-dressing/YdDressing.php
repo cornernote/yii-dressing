@@ -7,10 +7,9 @@
  *
  * If you are not bootstrapping your application with YdBase then you will need to add the following to your Yii config:
  * <pre>
- * 'preload'=>array('dressing', ... ),
  * 'components'=>array(
  *     'dressing'=>array(
- *         'class'=>'path.to.YdDressing',
+ *         'class'=>'path.to.yii-dressing.YdDressing',
  *     ),
  *     ...
  * ),
@@ -120,6 +119,9 @@ class YdDressing extends CApplicationComponent
             'YdUser' => 'user',
             'YdUserToRole' => 'user_to_role',
         ));
+
+        // begin the audit
+        YdAudit::getAudit();
 
         // add packages and register scripts
         if (!YII_DRESSING_CLI) {

@@ -111,7 +111,7 @@ class YdBase extends YiiBase
         $config['modules'] = self::mergeArray(self::getModulesConfig(), $config['modules']);
 
         $app = parent::createApplication($class, $config);
-        YdAudit::findCurrent();
+        YdAudit::getAudit();
         return $app;
     }
 

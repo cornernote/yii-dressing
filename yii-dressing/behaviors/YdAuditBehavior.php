@@ -64,7 +64,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
         $newAttributes = $this->owner->attributes;
         $oldAttributes = $this->owner->dbAttributes;
         $auditModels = $this->getAuditModels();
-        $auditId = YdAudit::findCurrentId();
+        $auditId = YdAudit::getAudit() ? YdAudit::getAudit() : 0;
         $auditTrails = array();
         $userId = Yii::app()->user && Yii::app()->user->id ? Yii::app()->user->id : 0;
 
@@ -148,7 +148,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
 
         $date = date('Y-m-d H:i:s');
         $auditModels = $this->getAuditModels();
-        $auditId = YdAudit::findCurrentId();
+        $auditId = YdAudit::getAudit() ? YdAudit::getAudit() : 0;
         $userId = Yii::app()->user && Yii::app()->user->id ? Yii::app()->user->id : 0;
         $auditTrails = array();
 

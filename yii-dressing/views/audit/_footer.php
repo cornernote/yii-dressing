@@ -11,7 +11,7 @@
 
 $color = isset($color) ? $color : (YII_DEBUG ? 'inherit' : 'transparent');
 
-$audit = YdAudit::findCurrent();
+$audit = YdAudit::getAudit();
 if ($audit) {
     echo '<span class="small audit-id" style="color: ' . $color . ';">';
     echo '<!-- audit start -->audit-' . $audit->id . '<!-- audit end -->'; // html comment is used for extracting audit_id
