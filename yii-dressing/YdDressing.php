@@ -79,8 +79,6 @@ class YdDressing extends CApplicationComponent
      */
     public function init()
     {
-        parent::init();
-
         // set alias
         if (!Yii::getPathOfAlias('dressing'))
             Yii::setPathOfAlias('dressing', dirname(__FILE__));
@@ -92,15 +90,14 @@ class YdDressing extends CApplicationComponent
         // map models
         $this->mapModels();
 
-        // begin the audit - TODO, move out of here, perhaps YdAuditApplicationComponent ?
-        //if ($this->audit)
-        //    YdAudit::getAudit();
-
         // add packages and register scripts
         if (!YII_DRESSING_CLI) {
             $this->addPackages();
             $this->registerScripts();
         }
+
+        // init parent
+        parent::init();
     }
 
     /**

@@ -58,41 +58,6 @@ class YdAudit extends YdActiveRecord
 {
 
     /**
-     * @var
-     */
-    public $model;
-
-    /**
-     * @var
-     */
-    public $model_id;
-
-    /**
-     * @var
-     */
-    public $get;
-
-    /**
-     * @var
-     */
-    public $post;
-
-    /**
-     * @var
-     */
-    public $server;
-
-    /**
-     * @var bool
-     */
-    public $ignoreClearCache = true;
-
-    /**
-     * @var
-     */
-    static protected $_audit;
-
-    /**
      * Returns the static model of the specified AR class.
      * @param string $className
      * @return YdAudit the static model class
@@ -127,80 +92,56 @@ class YdAudit extends YdActiveRecord
         return substr($link, 0, 64) . '...';
     }
 
+
     /**
-     * @static
-     * @param $linkGiven
-     * @return string
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @param array $options
+     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    static function reverseLinkString($linkGiven)
+    public function search($options = array())
     {
-        if (strpos($linkGiven, '/') === 0) {
-            $path = Yii::app()->getRequest()->getHostInfo() . Yii::app()->request->baseUrl;
-            $result = $path . $linkGiven;
-            return $result;
+        $criteria = new CDbCriteria;
+        if (strpos($this->id, 'range ') !== false) {
+            $id = trim(str_replace('range ', '', $this->id));
+            list($start, $end) = explode('-', $id);
+            $criteria->addBetweenCondition('t.id', trim($start), trim($end));
         }
         else {
-            return $linkGiven;
+            $criteria->compare('t.id', $this->id);
         }
+
+        $criteria->compare('t.user_id', $this->user_id);
+        $criteria->compare('t.created', $this->created);
+        $criteria->compare('t.link', $this->link, true);
+        $criteria->compare('t.audit_trail_count', $this->audit_trail_count);
+        $criteria->compare('t.total_time', $this->total_time);
+        $criteria->compare('t.memory_usage', $this->memory_usage);
+        $criteria->compare('t.memory_peak', $this->memory_peak);
+        $criteria->mergeWith($this->getDbCriteria());
+
+        if ($this->model) {
+            $criteria->distinct = true;
+            $criteria->compare('t.audit_trail_count', '>0');
+            //$criteria->group = 't.id';
+            $criteria->join .= ' INNER JOIN audit_trail ON audit_trail.audit_id=t.id ';
+            $criteria->compare('audit_trail.model', $this->model);
+            if ($this->model_id) {
+                $criteria->compare('audit_trail.model_id', $this->model_id);
+            }
+        }
+
+        return new YdActiveDataProvider(get_class($this), CMap::mergeArray(array(
+            'criteria' => $criteria,
+        ), $options));
     }
 
-    /**
-     *
-     */
-    public function recordAudit()
-    {
-        // get info
-        $this->created = date('Y-m-d H:i:s');
-        $this->user_id = Yii::app()->user->id;
-        $this->link = $this->getCurrentLink();
-        $this->start_time = YII_BEGIN_TIME;
-        $this->post = $_POST;
-        $this->get = $_GET;
-        $this->files = $_FILES;
-        $this->cookie = $_COOKIE;
-        $this->session = $this->getShrinkedSession();
-        $this->server = $_SERVER;
-        $this->ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
-        $this->referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
-
-        // remove passwords
-        $passwordRemovedFromGet = self::removedValuesWithPasswordKeys($this->get);
-        $passwordRemovedFromPost = self::removedValuesWithPasswordKeys($this->post);
-        self::removedValuesWithPasswordKeys($this->server);
-        if ($passwordRemovedFromGet || $passwordRemovedFromPost) {
-            $this->server = null;
-        }
-        if ($passwordRemovedFromGet) {
-            $this->link = null;
-        }
-
-        // pack all
-        $this->post = $this->pack('post');
-        $this->get = $this->pack('get');
-        $this->cookie = $this->pack('cookie');
-        $this->server = $this->pack('server');
-        $this->session = $this->pack('session');
-        $this->files = $this->pack('files');
-
-        // save
-        return $this->save();
-    }
 
     /**
      * @return string
      */
-    public function getCurrentLink()
+    public function getControllerName()
     {
-        if (Yii::app() instanceof CWebApplication) {
-            return Yii::app()->getRequest()->getHostInfo() . Yii::app()->getRequest()->getUrl();
-        }
-        $link = 'yiic ';
-        if (isset($_SERVER['argv'])) {
-            $argv = $_SERVER['argv'];
-            array_shift($argv);
-            $link .= implode(' ', $argv);
-        }
-        return trim($link);
+        return 'audit';
     }
 
     /**
@@ -248,157 +189,6 @@ class YdAudit extends YdActiveRecord
             $this->$attribute = "could not unserialize [" . var_dump($value) . "]";
         }
         return $value;
-    }
-
-    /**
-     * @static
-     * @param $array
-     * @return bool
-     */
-    static function removedValuesWithPasswordKeys(&$array)
-    {
-        if (!$array) {
-            return false;
-        }
-        $removed = false;
-        foreach ($array as $key => $value) {
-            if (stripos($key, 'password') !== false) {
-                $array[$key] = 'Possible password removed';
-                $removed = true;
-            }
-            elseif (stripos($key, 'PHP_AUTH_PW') !== false) {
-                $array[$key] = 'Possible password removed';
-                $removed = true;
-            }
-            else {
-                if (is_array($value)) {
-                    $removedChild = self::removedValuesWithPasswordKeys($value);
-                    if ($removedChild) {
-                        $array[$key] = $value;
-                        $removed = true;
-                    }
-                }
-            }
-        }
-        return $removed;
-    }
-
-    /**
-     *
-     */
-    protected function endAudit()
-    {
-        $headers = headers_list();
-        foreach ($headers as $header) {
-            if (strpos(strtolower($header), 'location:') === 0) {
-                $this->redirect = trim(substr($header, 9));
-            }
-        }
-        $this->memory_usage = memory_get_usage();
-        $this->memory_peak = memory_get_peak_usage();
-        $this->end_time = microtime(true);
-        $this->audit_trail_count = $this->auditTrailCount;
-        $this->total_time = $this->end_time - $this->start_time;
-        $this->save();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getShrinkedSession()
-    {
-        $serialized = '';
-        if (isset($_SESSION)) {
-            $serialized = serialize($_SESSION);
-        }
-        if (strlen($serialized) > 64000) {
-            $sessionCopy = $_SESSION;
-            $ignoredKeys = array();
-            foreach ($_SESSION as $key => $value) {
-                $size = strlen(serialize($value));
-                if ($size > 1000) {
-                    unset($sessionCopy[$key]);
-                    $ignoredKeys[$key] = $key;
-                }
-            }
-            $sessionCopy['__ignored_keys_in_audit'] = $ignoredKeys;
-            $serialized = serialize($sessionCopy);
-        }
-        return unserialize($serialized);
-    }
-
-
-    /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @param array $options
-     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
-    public function search($options = array())
-    {
-        $criteria = new CDbCriteria;
-        if (strpos($this->id, 'range ') !== false) {
-            $id = trim(str_replace('range ', '', $this->id));
-            list($start, $end) = explode('-', $id);
-            $criteria->addBetweenCondition('t.id', trim($start), trim($end));
-        }
-        else {
-            $criteria->compare('t.id', $this->id);
-        }
-
-        $criteria->compare('t.user_id', $this->user_id);
-        $criteria->compare('t.created', $this->created);
-        $criteria->compare('t.link', $this->link, true);
-        $criteria->compare('t.audit_trail_count', $this->audit_trail_count);
-        $criteria->compare('t.total_time', $this->total_time);
-        $criteria->compare('t.memory_usage', $this->memory_usage);
-        $criteria->compare('t.memory_peak', $this->memory_peak);
-        $criteria->mergeWith($this->getDbCriteria());
-
-        if ($this->model) {
-            $criteria->distinct = true;
-            $criteria->compare('t.audit_trail_count', '>0');
-            //$criteria->group = 't.id';
-            $criteria->join .= ' INNER JOIN audit_trail ON audit_trail.audit_id=t.id ';
-            $criteria->compare('audit_trail.model', $this->model);
-            if ($this->model_id) {
-                $criteria->compare('audit_trail.model_id', $this->model_id);
-            }
-        }
-
-        return new YdActiveDataProvider(get_class($this), CMap::mergeArray(array(
-            'criteria' => $criteria,
-        ), $options));
-    }
-
-    /**
-     * @return YdAudit
-     */
-    public static function getAudit()
-    {
-        // get existing Audit
-        if (self::$_audit)
-            return self::$_audit;
-
-        // create new Audit
-        self::$_audit = new YdAudit();
-
-        // cache not working so it could not get schema for audits
-        if (!self::$_audit->attributes)
-            return false;
-
-        // add an event callback to update the audit at the end
-        if (self::$_audit->recordAudit())
-            Yii::app()->onEndRequest = array(self::$_audit, 'endAudit');
-
-        return self::$_audit;
-    }
-
-    /**
-     * @return string
-     */
-    public function getControllerName()
-    {
-        return 'audit';
     }
 
 }
