@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class YdModal
+ * YdModal
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

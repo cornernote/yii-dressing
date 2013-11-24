@@ -1,6 +1,6 @@
 <?php
 /**
- * YdErrorEmailCommand
+ * YdErrorEmailCommand will email errors that have been generated into the error runtime folder.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

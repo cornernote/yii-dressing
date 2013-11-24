@@ -3,7 +3,7 @@
 Yii::import('zii.widgets.grid.CDataColumn');
 
 /**
- * ItemPriceFieldColumn
+ * YdDropdownColumn
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @copyright 2013 Mr PHP

@@ -1,16 +1,17 @@
 <?php
 
 /**
- * This extension ask for a confirmation to user before leaving the page
- * when he is editing or creating something
- *
+ * YdAskToSaveWork will ask for a confirmation to user before leaving the page after they make a change to the form.
  *
  * USAGE:
- * $this->widget('widgets.AskToSaveWork', array('watchElement' => '#my-form :input', 'message' => Yii::t('dressing', 'Please save before leaving the page')));
- *
+ * <pre>
+ * $this->widget('widgets.AskToSaveWork', array(
+ *     'watchElement' => '#my-form :input',
+ *     'message' => Yii::t('app', 'Please save before leaving the page')
+ * ));
+ * </pre>
  *
  * @author aleksdj
- *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
  * @copyright 2013 Mr PHP

@@ -1,5 +1,7 @@
 <?php
 /**
+ * YdLookup
+ *
  * --- BEGIN GenerateProperties ---
  *
  * This is the model class for table 'lookup'

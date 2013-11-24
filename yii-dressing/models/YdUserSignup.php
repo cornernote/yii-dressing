@@ -2,6 +2,7 @@
 
 /**
  * YdUserSignup is the data structure for keeping user registration form data.
+ * It is used by the 'signup' action of 'AccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

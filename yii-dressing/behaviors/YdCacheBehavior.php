@@ -1,6 +1,7 @@
 <?php
 /**
- * YdCacheBehavior
+ * YdCacheBehavior allows simple assignment of cached data to a model which is automatically cleared when the model
+ * is saved.  It can also automatically clear the cache of related models.
  *
  * @property YdActiveRecord $owner
  *
@@ -119,6 +120,5 @@ class YdCacheBehavior extends CActiveRecordBehavior
         $this->clearCache();
         parent::afterDelete($event);
     }
-
 
 }

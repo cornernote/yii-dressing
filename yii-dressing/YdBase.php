@@ -1,6 +1,6 @@
 <?php
 /**
- * YdBase class file.
+ * YdBase
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @copyright 2013 Mr PHP

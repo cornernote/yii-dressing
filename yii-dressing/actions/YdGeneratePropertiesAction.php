@@ -1,7 +1,23 @@
 <?php
 
 /**
- * Class YdGeneratePropertiesAction
+ * YdGeneratePropertiesAction allows you to update model files to contain correct phpdoc definitions regarding fields,
+ * relations and behaviors.
+ *
+ * YdGeneratePropertiesAction can be added as an action to any controller:
+ * <pre>
+ * class ToolController extends YdWebController
+ * {
+ *     public function actions()
+ *     {
+ *         return array(
+ *             'generateProperties' => array(
+ *                 'class' => 'dressing.actions.YdGeneratePropertiesAction',
+ *             ),
+ *         );
+ *     }
+ * }
+ * </pre>
  *
  * @property YdWebController $controller
  *

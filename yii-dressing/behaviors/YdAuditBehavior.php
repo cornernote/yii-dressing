@@ -1,6 +1,6 @@
 <?php
 /**
- * YdAuditBehavior
+ * YdAuditBehavior automatically tracks changes to model data.
  *
  * @property YdActiveRecord $owner
  * @property YdActiveRecord $auditModel
@@ -17,17 +17,24 @@ class YdAuditBehavior extends CActiveRecordBehavior
 {
 
     /**
+     * Any additional models you want to use to write model and model_id audits to.  If this array is not empty then
+     * each field modifed will result in an YdAuditTrail being created for each additionalAuditModels.
      * @var array
+     * - modelName => modelIdField
      */
     public $additionalAuditModels = array();
 
     /**
+     * A list of values that will be treated as if they were null.
      * @var array
      */
     public $ignoreValues = array('0', '0.0', '0.00', '0.000', '0.0000', '0.00000', '0.000000', '0000-00-00', '0000-00-00 00:00:00');
 
     /**
+     * A list of fields to be ignored on update and delete
      * @var array
+     * - insert: array()
+     * - update: array()
      */
     public $ignoreFields = array(
         'insert' => array('modified', 'modified_by', 'deleted', 'deleted_by'),
@@ -35,11 +42,15 @@ class YdAuditBehavior extends CActiveRecordBehavior
     );
 
     /**
+     * The model that will be used to populate model and model_id fields.
      * @var YdActiveRecord
+     * @see getAuditModel
      */
     private $_auditModel;
 
     /**
+     * Find changes to the model and save them as YdAuditTrail records
+     * Do not call this method directly, it will be called after the model is saved.
      * @param CModelEvent $event
      */
     public function afterSave($event)
@@ -124,6 +135,8 @@ class YdAuditBehavior extends CActiveRecordBehavior
     }
 
     /**
+     * Find changes to the model and save them as YdAuditTrail records.
+     * Do not call this method directly, it will be called after the model is deleted.
      * @param CModelEvent $event
      */
     public function afterDelete($event)
@@ -165,7 +178,10 @@ class YdAuditBehavior extends CActiveRecordBehavior
     }
 
     /**
-     * @return array
+     * Gets the model to be used in the model and model_id fields.
+     * If a method exists in the owner called getAuditModel() it must return an YdActiveRecord which will be used.
+     * Otherwise the owner model itself will be used.
+     * @return YdActiveRecord
      */
     protected function getAuditModel()
     {
@@ -177,7 +193,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
     }
 
     /**
+     * Gets additional models to be used in the model and model_id fields.
      * @return array
+     * @see additionalAuditModels
      */
     protected function getAuditModels()
     {
@@ -206,6 +224,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
     }
 
     /**
+     * If the model is not the same as the owner then prefix the field so we know the model.
      * @return string
      */
     protected function fieldPrefix()

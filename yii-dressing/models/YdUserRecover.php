@@ -1,9 +1,8 @@
 <?php
 
 /**
- * UserRecover class.
- * UserRecover is the data structure for keeping user recover form data.
- * It is used by the 'recover' action of 'UserController'.
+ * YdUserRecover is the data structure for keeping user recover form data.
+ * It is used by the 'recover' action of 'AccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

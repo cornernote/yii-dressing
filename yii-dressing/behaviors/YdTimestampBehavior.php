@@ -2,7 +2,7 @@
 Yii::import('zii.behaviors.CTimestampBehavior');
 
 /**
- * YdTimestampBehavior
+ * YdTimestampBehavior automatically detects the created and updated fields and populates them when the model is saved.
  *
  * @property ActiveRecord $owner
  *
@@ -18,21 +18,19 @@ class YdTimestampBehavior extends CTimestampBehavior
 {
 
     /**
-     * @var bool
+     * @var bool True to attempt to detect the fields to use for created and updated.
      */
     public $autoColumns = true;
 
     /**
-     * @var mixed The name of the attribute to store the creation time.  Set to null to not
-     * use a timestamp for the creation attribute.
+     * @var array Contains any fields that may be used to store the created timestamp.
      */
-    public $createAttribute;
+    public $createAttributes = array('created', 'create_time', 'created_at');
 
     /**
-     * @var mixed The name of the attribute to store the modification time.  Set to null to not
-     * use a timestamp for the update attribute.
+     * @var array Contains any fields that may be used to store the updated timestamp.
      */
-    public $updateAttribute;
+    public $updateAttributes = array('updated', 'update_time', 'updated_at');
 
     /**
      * Responds to {@link CModel::onBeforeSave} event.
@@ -54,14 +52,21 @@ class YdTimestampBehavior extends CTimestampBehavior
         if (!$this->autoColumns)
             return;
         $this->autoColumns = false;
+        $this->createAttribute = $this->_getAttribute($this->createAttributes);
+        $this->updateAttribute = $this->_getAttribute($this->updateAttributes);
+    }
 
-        $columnNames = $this->owner->tableSchema->columnNames;
-        if (in_array('created', $columnNames)) {
-            $this->createAttribute = 'created';
-        }
-        if (in_array('updated', $columnNames)) {
-            $this->updateAttribute = 'updated';
-        }
+    /**
+     * Checks the table to see if a matching field exists
+     * @param array $attributes fields to check for
+     * @return bool|string
+     */
+    private function _getAttribute($attributes)
+    {
+        foreach ($attributes as $attribute)
+            if (in_array($attribute, $this->owner->tableSchema->columnNames))
+                return $attribute;
+        return false;
     }
 
 }

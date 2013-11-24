@@ -2,7 +2,7 @@
 Yii::import('bootstrap.widgets.TbNavbar');
 
 /**
- * Class Navbar
+ * Navbar
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

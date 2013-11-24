@@ -1,13 +1,20 @@
 <?php
 /**
- * In configuration file main.php add this lines of code:
- * 'preload'=>array('dressing',...),
- *  ...
+ * YdDressing is the main application component for YiiDressing.
+ *
+ * It defines the options available to YiiDressing and several other components as well as including table mapping
+ * and asset package definitions.
+ *
+ * If you are not bootstrapping your application with YdBase then you will need to add the following to your Yii config:
+ * <pre>
+ * 'preload'=>array('dressing', ... ),
  * 'components'=>array(
- *   ...
- *   'dressing'=>array(
- *     'class'=>'path.to.YdDressing',
- *   ),
+ *     'dressing'=>array(
+ *         'class'=>'path.to.YdDressing',
+ *     ),
+ *     ...
+ * ),
+ * </pre>
  *
  * @author Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
  * @copyright 2013 Mr PHP

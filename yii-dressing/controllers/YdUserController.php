@@ -1,7 +1,7 @@
 <?php
 
 /**
- * UserController
+ * YdUserController
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * YdUserToRole
+ *
  * --- BEGIN GenerateProperties ---
  *
  * This is the model class for table 'user_to_role'

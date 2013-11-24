@@ -1,7 +1,7 @@
 <?php
 
 /**
- * YdHighchartsWidget class file.
+ * YdHighchartsWidget
  *
  * @author Milo Schuman <miloschuman@gmail.com>
  * @link http://yii-highcharts.googlecode.com/

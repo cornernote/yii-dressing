@@ -1,8 +1,8 @@
 <?php
 
 /**
- * UserLogin is the data structure for keeping user login form data.
- * It is used by the 'login' action of 'UserController'.
+ * YdUserLogin is the data structure for keeping user login form data.
+ * It is used by the 'login' action of 'AccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

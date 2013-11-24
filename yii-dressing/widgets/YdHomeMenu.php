@@ -1,7 +1,7 @@
 <?php
 Yii::import('bootstrap.widgets.TbMenu');
 /**
- * Class YdHomeMenu
+ * YdHomeMenu
  *
  * @package dressing.widgets
  */

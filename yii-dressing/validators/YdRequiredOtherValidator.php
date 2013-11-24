@@ -1,8 +1,7 @@
 <?php
 /**
- * YdRequiredOtherValidator
- * Validates that the specified attribute does not
- * have null or empty value when the otherField has a value.
+ * YdRequiredOtherValidator validates that the specified attribute does not have null or empty value when the
+ * otherField has a value.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @copyright 2013 Mr PHP

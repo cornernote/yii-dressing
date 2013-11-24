@@ -1,7 +1,6 @@
 <?php
 /**
- * UserPassword class.
- * UserPassword is the data structure for keeping user password form data.
+ * YdUserPassword is the data structure for keeping user password form data.
  * It is used by the 'password' action of 'UserController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>

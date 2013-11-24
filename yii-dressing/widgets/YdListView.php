@@ -1,7 +1,7 @@
 <?php
 Yii::import('zii.widgets.CListView');
 /**
- * Class YdListView
+ * YdListView
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

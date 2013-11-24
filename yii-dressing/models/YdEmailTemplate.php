@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * YdEmailTemplate
+ *
  * --- BEGIN GenerateProperties ---
  *
  * This is the model class for table 'email_template'

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class YdClueTip
+ * YdClueTip
  *
  * @package dressing.widgets
  */

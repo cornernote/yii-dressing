@@ -1,6 +1,6 @@
 <?php
 /**
- * YdEmailSpoolCommand
+ * YdEmailSpoolCommand will send emails that are pending in the spool.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

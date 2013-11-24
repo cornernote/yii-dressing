@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AuditController
+ * YdAuditController
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

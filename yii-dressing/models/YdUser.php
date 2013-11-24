@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * YdUser
+ *
  * --- BEGIN GenerateProperties ---
  *
  * This is the model class for table 'user'
