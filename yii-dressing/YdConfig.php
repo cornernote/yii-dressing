@@ -38,7 +38,7 @@
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
- * @package dressing.components
+ * @package dressing
  */
 class YdConfig
 {

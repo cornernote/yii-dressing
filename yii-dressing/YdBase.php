@@ -6,8 +6,6 @@
  * @copyright 2013 Mr PHP
  * @link https://github.com/cornernote/yii-skeleton
  * @license http://www.gnu.org/copyleft/gpl.html
- *
- * @package dressing.components
  */
 
 /**
@@ -84,6 +82,8 @@ require_once(YII_PATH . DS . 'YiiBase.php');
  * YdBase is a helper class serving common framework functionalities.
  *
  * Do not use YdBase directly. Instead, use its child class {@link Yii} where you can customize methods of YdBase.
+ *
+ * @package dressing
  */
 class YdBase extends YiiBase
 {
@@ -218,7 +218,7 @@ class YdBase extends YiiBase
     {
         return array(
             'dressing' => array(
-                'class' => 'dressing.components.YdDressing',
+                'class' => 'dressing.YdDressing',
             ),
             'errorHandler' => array(
                 'class' => 'dressing.components.YdErrorHandler',

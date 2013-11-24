@@ -6,7 +6,7 @@
  * 'components'=>array(
  *   ...
  *   'dressing'=>array(
- *     'class'=>'YdApplicationComponent',
+ *     'class'=>'path.to.YdDressing',
  *   ),
  *
  * @author Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
@@ -14,7 +14,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license http://www.gnu.org/copyleft/gpl.html
  *
- * @package dressing.components
+ * @package dressing
  */
 class YdDressing extends CApplicationComponent
 {
@@ -88,6 +88,10 @@ class YdDressing extends CApplicationComponent
     public function init()
     {
         parent::init();
+
+        // set alias
+        if (!Yii::getPathOfAlias('dressing'))
+            Yii::setPathOfAlias('dressing', dirname(__FILE__));
 
         // import classes
         Yii::import('dressing.components.*');
