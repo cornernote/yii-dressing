@@ -152,6 +152,7 @@ class YdBase extends YiiBase
     /**
      * @param null $config
      * @return CConsoleApplication
+     * @throws CException if it is not called from CLI
      */
     public static function createConsoleApplication($config = null)
     {
