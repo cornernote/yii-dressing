@@ -103,12 +103,12 @@ class YdBase extends YiiBase
         // add components
         if (!isset($config['components']))
             $config['components'] = array();
-        $config['components'] = YdConfig::mergeArray(self::getComponentsConfig(), $config['components']);
+        $config['components'] = self::mergeArray(self::getComponentsConfig(), $config['components']);
 
         // add modules
         if (!isset($config['modules']))
             $config['modules'] = array();
-        $config['modules'] = YdConfig::mergeArray(self::getModulesConfig(), $config['modules']);
+        $config['modules'] = self::mergeArray(self::getModulesConfig(), $config['modules']);
 
         $app = parent::createApplication($class, $config);
         YdAudit::findCurrent();
@@ -131,7 +131,7 @@ class YdBase extends YiiBase
         // add controller map
         if (!isset($config['controllerMap']))
             $config['controllerMap'] = array();
-        $config['controllerMap'] = YdConfig::mergeArray(self::getControllerMap(), $config['controllerMap']);
+        $config['controllerMap'] = self::mergeArray(self::getControllerMap(), $config['controllerMap']);
 
         // log routes (only setup if not already defined)
         if (!isset($config['components']['log']['routes'])) {
@@ -175,7 +175,7 @@ class YdBase extends YiiBase
         // add command map
         if (!isset($config['commandMap']))
             $config['commandMap'] = array();
-        $config['commandMap'] = YdConfig::mergeArray(self::getCommandMap(), $config['commandMap']);
+        $config['commandMap'] = self::mergeArray(self::getCommandMap(), $config['commandMap']);
 
         // create app
         $app = self::createApplication('CConsoleApplication', $config);
@@ -207,7 +207,7 @@ class YdBase extends YiiBase
         if (file_exists($local)) {
             $local = require($local);
             if (is_array($local))
-                return YdConfig::mergeArray(require($config), $local);
+                return self::mergeArray(require($config), $local);
         }
         return require($config);
     }
@@ -378,6 +378,34 @@ class YdBase extends YiiBase
             if (file_exists(APP_PATH . DS . 'commands' . DS . ucfirst($command) . 'Command.php'))
                 unset($commands[$command]);
         return $commands;
+    }
+
+
+    /**
+     * Merges two or more arrays into one recursively.
+     * Required internally before Yii is loaded.  Use CMap::mergeArray() for normal usage in other files.
+     *
+     * @param array $a array to be merged to
+     * @param array $b array to be merged from. You can specify additional arrays via third argument, fourth argument etc.
+     * @return array the merged array (the original arrays are not changed.)
+     * @see CMap::mergeArray
+     */
+    private static function mergeArray($a, $b)
+    {
+        $args = func_get_args();
+        $res = array_shift($args);
+        while (!empty($args)) {
+            $next = array_shift($args);
+            foreach ($next as $k => $v) {
+                if (is_integer($k))
+                    isset($res[$k]) ? $res[] = $v : $res[$k] = $v;
+                elseif (is_array($v) && isset($res[$k]) && is_array($res[$k]))
+                    $res[$k] = self::mergeArray($res[$k], $v);
+                else
+                    $res[$k] = $v;
+            }
+        }
+        return $res;
     }
 
 }
