@@ -218,8 +218,12 @@ class YdActiveRecord extends CActiveRecord
      */
     public function tableName()
     {
-        if (empty(Yii::app()->dressing->tableMap[get_class($this)]))
-            throw new CException(Yii::t('dressing', 'Table not found in YiiDressing::tableMap for class :class.', array(':class' => get_class($this))));
+        // If no dressing application component exists, or the table is not in the map then try to guess the tablename.
+        // Do not try to load the dressing component as current runtime could be within the YdDressing::init() method.
+        if (!Yii::app()->getComponent('dressing', false) || empty(Yii::app()->dressing->tableMap[get_class($this)])) {
+            //throw new CException(Yii::t('dressing', 'Table not found in YiiDressing::tableMap for class :class.', array(':class' => get_class($this))));
+            return str_replace('yd_', '', strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', get_class($this))));
+        }
         return Yii::app()->dressing->tableMap[get_class($this)];
     }
 
