@@ -82,25 +82,6 @@ class YdUser extends YdActiveRecord
     }
 
     /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        return array(
-            'role' => array(
-                self::MANY_MANY,
-                'YdRole',
-                'user_to_role(user_id, role_id)',
-            ),
-            'userToRole' => array(
-                self::HAS_MANY,
-                'YdUserToRole',
-                'user_id',
-            ),
-        );
-    }
-
-    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
@@ -114,22 +95,6 @@ class YdUser extends YdActiveRecord
             'last_name' => Yii::t('dressing', 'Last Name'),
             'role_id' => Yii::t('dressing', 'Roles'),
             'web_status' => Yii::t('dressing', 'Web Login'),
-        );
-    }
-
-    /**
-     * @return array containing model behaviors
-     */
-    public function behaviors()
-    {
-        return array(
-            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
-            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-            'EavBehavior' => array(
-                'class' => 'dressing.behaviors.YdEavBehavior',
-                'tableName' => 'user_eav',
-            ),
         );
     }
 

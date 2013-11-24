@@ -66,16 +66,6 @@ class YdEmailTemplate extends YdActiveRecord
     }
 
     /**
-     * @return array containing model behaviors
-     */
-    public function behaviors()
-    {
-        return array(
-            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-        );
-    }
-
-    /**
      * @param array $rules
      * @return array validation rules for model attributes.
      */

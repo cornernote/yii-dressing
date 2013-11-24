@@ -65,16 +65,6 @@ class YdContactUs extends YdActiveRecord
         return $rules;
     }
 
-    /**
-     * @return array containing model behaviors
-     */
-    public function behaviors()
-    {
-        return array(
-            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-        );
-    }
 
     /**
      * @return array customized attribute labels (name=>label)

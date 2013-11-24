@@ -113,26 +113,6 @@ class YdAudit extends YdActiveRecord
     }
 
     /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        return array(
-            'user' => Yii::app()->dressing->auditUserRelation,
-            'auditTrail' => array(
-                self::HAS_MANY,
-                'YdAuditTrail',
-                'audit_id',
-            ),
-            'auditTrailCount' => array(
-                self::STAT,
-                'YdAuditTrail',
-                'audit_id',
-            ),
-        );
-    }
-
-    /**
      * @return string
      */
     public function getLinkString()
@@ -393,7 +373,7 @@ class YdAudit extends YdActiveRecord
     /**
      * @return YdAudit
      */
-    static public function getAudit()
+    public static function getAudit()
     {
         // get existing Audit
         if (self::$_audit)

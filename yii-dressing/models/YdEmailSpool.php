@@ -96,35 +96,6 @@ class YdEmailSpool extends YdActiveRecord
     }
 
     /**
-     * @return array containing model behaviours
-     */
-    public function behaviors()
-    {
-        return array(
-            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
-            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-        );
-    }
-
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        return array(
-            'attachment' => array(
-                self::HAS_MANY,
-                'YdAttachment',
-                'model_id',
-                'condition' => 'attachment.model=:model AND deleted IS NULL',
-                'params' => array(':model' => 'EmailSpool'),
-                'order' => 'weight',
-            ),
-        );
-    }
-
-    /**
      * @param array $rules
      * @return array validation rules for model attributes.
      */

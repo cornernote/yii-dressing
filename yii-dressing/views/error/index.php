@@ -34,7 +34,7 @@ $this->breadcrumbs[] = Yii::t('dressing', 'Errors');
         if (strpos($error, 'archive/') !== false) {
             $errorLink = array('/error/view', 'error' => str_replace('archive/', '', $error), 'archive' => 1);
         }
-        if ($auditId && is_numeric($auditId) && YdHelper::tableExists(Yii::app()->dressing->tableMap['YdAudit'])) {
+        if ($auditId && is_numeric($auditId) && YdHelper::tableExists(YdAudit::model()->tableName())) {
             $audit = YdAudit::model()->findByPk($auditId);
             if ($audit) {
                 $auditLink = $audit->getLink();

@@ -95,39 +95,6 @@ class YdSiteMenu extends YdActiveRecord
     }
 
     /**
-     * @return array containing model behaviors
-     */
-    public function behaviors()
-    {
-        return array(
-            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
-            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-        );
-    }
-
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        return array(
-            'child' => array(
-                self::HAS_MANY,
-                'YdSiteMenu',
-                'parent_id',
-                'condition' => 'child.enabled=1 AND child.deleted IS NULL',
-                'order' => 'sort_order ASC, label ASC',
-            ),
-            'parent' => array(
-                self::BELONGS_TO,
-                'YdSiteMenu',
-                'parent_id',
-            ),
-        );
-    }
-
-    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
@@ -270,7 +237,7 @@ class YdSiteMenu extends YdActiveRecord
      */
     static public function getItemsFromMenu($label, $parent_id = 0, $options = array())
     {
-        if (!YdHelper::tableExists(Yii::app()->dressing->tableMap['YdSiteMenu']))
+        if (!YdHelper::tableExists(YdSiteMenu::model()->tableName()))
             return array();
         $menu = self::model()->findByAttributes(array('label' => $label, 'parent_id' => $parent_id));
         if ($menu) {
@@ -473,7 +440,7 @@ class YdSiteMenu extends YdActiveRecord
      */
     static public function userMenu()
     {
-        if (!YdHelper::tableExists(Yii::app()->dressing->tableMap['YdUser']))
+        if (!YdHelper::tableExists(YdSiteMenu::model()->tableName()))
             return '';
 
         ob_start();

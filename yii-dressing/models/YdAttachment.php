@@ -74,16 +74,6 @@ class YdAttachment extends YdActiveRecord
     }
 
     /**
-     * @return array containing model behaviors
-     */
-    public function behaviors()
-    {
-        return array(
-            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-        );
-    }
-
-    /**
      * @return array validation rules for model attributes.
      */
     public function rules()

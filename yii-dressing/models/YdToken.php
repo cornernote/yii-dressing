@@ -51,16 +51,6 @@ class YdToken extends YdActiveRecord
     }
 
     /**
-     * @return array containing model behaviors
-     */
-    public function behaviors()
-    {
-        return array(
-            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-        );
-    }
-
-    /**
      * @return array
      */
     public function attributeLabels()

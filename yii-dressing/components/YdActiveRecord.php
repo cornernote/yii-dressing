@@ -22,6 +22,16 @@ class YdActiveRecord extends CActiveRecord
     public $dbAttributes = array();
 
     /**
+     * Returns the static model of the specified AR class.
+     * @param string $className
+     * @return YdAttachment the static model class
+     */
+    public static function model($className = null)
+    {
+        return parent::model(get_called_class());
+    }
+
+    /**
      * Allows setting attributes
      *
      * @see ActiveRecord::beforeValidate()
@@ -214,17 +224,34 @@ class YdActiveRecord extends CActiveRecord
     }
 
     /**
+     * Guess the table name based on the class
      * @return string the associated database table name
      */
     public function tableName()
     {
-        // If no dressing application component exists, or the table is not in the map then try to guess the tablename.
-        // Do not try to load the dressing component as current runtime could be within the YdDressing::init() method.
-        if (!Yii::app()->getComponent('dressing', false) || empty(Yii::app()->dressing->tableMap[get_class($this)])) {
-            //throw new CException(Yii::t('dressing', 'Table not found in YiiDressing::tableMap for class :class.', array(':class' => get_class($this))));
-            return str_replace('yd_', '', strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', get_class($this))));
-        }
-        return Yii::app()->dressing->tableMap[get_class($this)];
+        if (!empty(Yii::app()->dressing->tableMap[get_class($this)]))
+            return Yii::app()->dressing->tableMap[get_class($this)];
+        //throw new CException(Yii::t('dressing', 'Table not found in YiiDressing::tableMap for class :class.', array(':class' => get_class($this))));
+        return str_replace('yd_', '', strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', get_class($this))));
     }
 
+    /**
+     * @return array
+     */
+    public function relations()
+    {
+        if (!empty(Yii::app()->dressing->modelMap[get_class($this)]['relations']))
+            return Yii::app()->dressing->modelMap[get_class($this)]['relations'];
+        return parent::relations();
+    }
+
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        if (!empty(Yii::app()->dressing->modelMap[get_class($this)]['behaviors']))
+            return Yii::app()->dressing->modelMap[get_class($this)]['behaviors'];
+        return parent::behaviors();
+    }
 }

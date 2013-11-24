@@ -45,20 +45,4 @@ class YdUserToRole extends YdActiveRecord
         return parent::model($className);
     }
 
-    /**
-     * @return array containing model behaviors
-     */
-    public function behaviors()
-    {
-        return array(
-            'AuditBehavior' => array(
-                'class' => 'dressing.behaviors.YdAuditBehavior',
-                'additionalAuditModels' => array(
-                    'User' => 'user_id',
-                    //'Role' => 'role_id',
-                ),
-            ),
-        );
-    }
-
 }
