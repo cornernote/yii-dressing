@@ -138,9 +138,6 @@ class YdDressing extends CApplicationComponent
                         'audit_id',
                     ),
                 ),
-                'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-                ),
             ),
             'YdContactUs' => array(
                 'behaviors' => array(
