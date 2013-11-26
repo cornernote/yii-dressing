@@ -161,6 +161,7 @@ class YdGeneratePropertiesAction extends CAction
         $properties[] = " *";
 
         // table
+        $properties[] = " * @method {$this->modelName} model() static model(string \$className = NULL)";
         $properties[] = " * @method {$this->modelName} with() with()";
         $properties[] = " * @method {$this->modelName} find() find(\$condition, array \$params = array())";
         $properties[] = " * @method {$this->modelName}[] findAll() findAll(\$condition = '', array \$params = array())";

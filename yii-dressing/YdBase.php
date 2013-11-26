@@ -305,7 +305,7 @@ class YdBase extends YiiBase
                                 ),
                                 'toolbar' => 'DressingFull',
                             ),
-                        )
+                        ),
                     ),
                 ),
             ),
