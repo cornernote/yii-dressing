@@ -317,6 +317,7 @@ class YdBase extends YiiBase
                     'dressing.gii',
                 ),
                 'ipFilters' => array('127.0.0.1'),
+                'password' => false,
             );
         }
         return $config;
