@@ -16,6 +16,11 @@ class YdLinkBehavior extends CActiveRecordBehavior
 {
 
     /**
+     * @var string The name of default action for the model, usually view
+     */
+    public $defaultAction = 'view';
+
+    /**
      * @var string The name of the controller to be used in links
      */
     public $controllerName;
@@ -60,8 +65,10 @@ class YdLinkBehavior extends CActiveRecordBehavior
      * @param array $params
      * @return array
      */
-    public function getUrl($action = 'view', $params = array())
+    public function getUrl($action = null, $params = array())
     {
+        if (!$action)
+            $action = $this->defaultAction;
         return array_merge(array(
             '/' . $this->getControllerName() . '/' . $action,
             'id' => $this->getPrimaryKeyString(),
