@@ -13,7 +13,7 @@
 $color = isset($color) ? $color : (YII_DEBUG ? 'inherit' : 'transparent');
 
 echo '<span class="small audit-footer" style="color: ' . $color . ';">';
-if (Yii::app()->dressing->audit && $audit = Yii::app()->auditTracker->audit) {
+if (Yii::app()->getComponent('auditTracker', false) && $audit = Yii::app()->auditTracker->audit) {
     echo '<!-- audit start -->audit-' . $audit->id . '<!-- audit end -->'; // html comment is used for extracting audit_id
     echo ' | ';
 }
