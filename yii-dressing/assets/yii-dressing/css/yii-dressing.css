@@ -340,7 +340,6 @@ ul.ui-sortable, ul.ui-sortable li {
     margin-bottom: 20px;
 }
 
-
 /*********************
     prevent checkbox label going entire width
     https://github.com/twbs/bootstrap/issues/5046
@@ -355,3 +354,13 @@ checkbox.label {
     clear: both;
 }
 
+.form-vertical p, .form-vertical br, .form-vertical hr, .form-vertical h1, .form-vertical h2, .form-vertical h3, .form-vertical h4, .form-vertical h5 {
+    clear: both;
+}
+
+.form-vertical .cke {
+    float: left;
+    clear: both;
+    width: 100%;
+    margin-bottom: 20px;
+}
