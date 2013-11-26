@@ -21,7 +21,9 @@ class YdActiveRecord extends CActiveRecord
      */
     public static function model($className = null)
     {
-        return parent::model(get_called_class());
+        if (!$className)
+            $className = get_called_class();
+        return parent::model($className);
     }
 
     /**
