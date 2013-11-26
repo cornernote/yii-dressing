@@ -31,6 +31,11 @@ class YdAuditBehavior extends CActiveRecordBehavior
     public $ignoreValues = array('0', '0.0', '0.00', '0.000', '0.0000', '0.00000', '0.000000', '0000-00-00', '0000-00-00 00:00:00');
 
     /**
+     * @var array The attributes that are currently in the database
+     */
+    private $_dbAttributes = array();
+
+    /**
      * A list of fields to be ignored on update and delete
      * @var array
      * - insert: array()
@@ -49,11 +54,50 @@ class YdAuditBehavior extends CActiveRecordBehavior
     private $_auditModel;
 
     /**
+     * Gets an attribute, as it is in the database
+     *
+     * @param $attribute
+     * @param $default
+     * @return mixed
+     */
+    public function getDbAttribute($attribute, $default = null)
+    {
+        return isset($this->_dbAttributes[$attribute]) ? $this->_dbAttributes[$attribute] : $default;
+    }
+
+    /**
+     * Check if any fields have changed
+     *
+     * @param string $field
+     * @return bool|string|array
+     */
+    public function changed($field = null)
+    {
+        if ($this->owner->isNewRecord)
+            return false;
+        if ($field)
+            return $this->getDbAttribute($field) != $this->owner->getAttribute($field);
+        foreach ($this->owner->getAttributes() as $k => $v)
+            if ($this->getDbAttribute($k) != $v)
+                return true;
+        return false;
+    }
+
+    /**
+     * Actions to be performed after the model is loaded
+     */
+    protected function afterFind($event)
+    {
+        $this->_dbAttributes = $this->owner->attributes;
+        parent::afterFind($event);
+    }
+
+    /**
      * Find changes to the model and save them as YdAuditTrail records
      * Do not call this method directly, it will be called after the model is saved.
      * @param CModelEvent $event
      */
-    public function afterSave($event)
+    protected function afterSave($event)
     {
         if (!Yii::app()->dressing->audit) {
             parent::afterSave($event);
@@ -62,7 +106,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
 
         $date = date('Y-m-d H:i:s');
         $newAttributes = $this->owner->attributes;
-        $oldAttributes = $this->owner->dbAttributes;
+        $oldAttributes = $this->_dbAttributes;
         $auditModels = $this->getAuditModels();
         $auditId = Yii::app()->auditTracker->id;
         $auditTrails = array();
@@ -131,6 +175,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
             Yii::app()->db->commandBuilder->createMultipleInsertCommand(YdAuditTrail::model()->tableName(), $auditTrails)->execute();
         }
 
+        // set the dbAttributes to the new values
+        $this->_dbAttributes = $this->owner->attributes;
+
         parent::afterSave($event);
     }
 
@@ -139,7 +186,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
      * Do not call this method directly, it will be called after the model is deleted.
      * @param CModelEvent $event
      */
-    public function afterDelete($event)
+    protected function afterDelete($event)
     {
         if (!Yii::app()->dressing->audit) {
             parent::afterDelete($event);

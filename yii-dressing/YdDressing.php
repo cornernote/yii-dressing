@@ -138,11 +138,15 @@ class YdDressing extends CApplicationComponent
                         'audit_id',
                     ),
                 ),
+                'behaviors' => array(
+                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                ),
             ),
             'YdContactUs' => array(
                 'behaviors' => array(
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
+                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
                 ),
             ),
             'YdEmailSpool' => array(
@@ -160,11 +164,13 @@ class YdDressing extends CApplicationComponent
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
+                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
                 ),
             ),
             'YdEmailTemplate' => array(
                 'behaviors' => array(
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
                 ),
             ),
             'YdLookup' => array(
@@ -172,6 +178,7 @@ class YdDressing extends CApplicationComponent
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
+                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
                 ),
             ),
             'YdSetting' => array(
@@ -198,6 +205,7 @@ class YdDressing extends CApplicationComponent
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
+                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
                 ),
             ),
             'YdToken' => array(
@@ -222,6 +230,7 @@ class YdDressing extends CApplicationComponent
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
+                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
                     'EavBehavior' => array(
                         'class' => 'dressing.behaviors.YdEavBehavior',
                         'tableName' => 'user_eav',
