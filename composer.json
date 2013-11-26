@@ -26,6 +26,7 @@
         "yiisoft/yii": "1.1.14",
         "mrphp/php-recaptcha": "dev-master",
         "mrphp/js-highcharts": "dev-master",
+		"mrphp/ckfinder-assets": "2.4.0",
         "clevertech/yii-booster": "dev-master",
         "swiftmailer/swiftmailer": "v5.0.2",
         "php-excel-reader/spreadsheet-reader": "dev-master",

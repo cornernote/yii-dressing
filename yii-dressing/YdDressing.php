@@ -259,21 +259,26 @@ class YdDressing extends CApplicationComponent
      */
     public function addPackages()
     {
+        $baseUrl = $this->getAssetsUrl();
         $packages = array(
             'signature-pad' => array(
                 'depends' => array('jquery'),
-                'baseUrl' => $this->getAssetsUrl() . '/signature-pad/',
+                'baseUrl' => $baseUrl . '/signature-pad/',
                 'css' => array($this->minify ? 'jquery.signaturepad.yii-dressing.min.css' : 'jquery.signaturepad.yii-dressing.css'),
                 'js' => array($this->minify ? 'jquery.signaturepad.min.js' : 'jquery.signaturepad.js')
             ),
             'jquery-cluetip' => array(
                 'depends' => array('jquery'),
-                'baseUrl' => $this->getAssetsUrl() . '/jquery-cluetip/',
+                'baseUrl' => $baseUrl . '/jquery-cluetip/',
                 'css' => array('jquery.cluetip.css'),
                 'js' => array(
                     'lib/jquery.hoverIntent.js',
                     $this->minify ? 'jquery.cluetip.min.js' : 'jquery.cluetip.js',
                 )
+            ),
+            'jquery' => array(
+                'baseUrl' => $baseUrl . '/jquery/',
+                'js' => array($this->minify ? 'jquery-1.10.2.min.js' : 'jquery-1.10.2.js'),
             ),
         );
         foreach ($packages as $name => $definition) {
