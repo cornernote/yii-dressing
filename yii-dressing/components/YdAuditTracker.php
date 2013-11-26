@@ -39,6 +39,9 @@ class YdAuditTracker
         if ($this->_audit)
             return $this->_audit;
 
+        // init the dressing component
+        Yii::app()->getComponent('dressing');
+
         // create new Audit
         $this->_audit = new YdAudit();
 
