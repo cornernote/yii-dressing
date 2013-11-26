@@ -23,6 +23,11 @@ class YdTimestampBehavior extends CTimestampBehavior
     public $autoColumns = true;
 
     /**
+     * @var bool
+     */
+    public $setUpdateOnCreate = true;
+
+    /**
      * @var array Contains any fields that may be used to store the created timestamp.
      */
     public $createAttributes = array('created', 'create_time', 'created_at');
@@ -59,14 +64,31 @@ class YdTimestampBehavior extends CTimestampBehavior
     /**
      * Checks the table to see if a matching field exists
      * @param array $attributes fields to check for
-     * @return bool|string
+     * @return null|string
      */
     private function _getAttribute($attributes)
     {
         foreach ($attributes as $attribute)
             if (in_array($attribute, $this->owner->tableSchema->columnNames))
                 return $attribute;
-        return false;
+        return null;
+    }
+
+    /**
+     * Returns the appropriate timestamp depending on $columnType
+     *
+     * @param string $columnType $columnType
+     * @return mixed timestamp (eg unix timestamp or a mysql function)
+     */
+    protected function getTimestampByColumnType($columnType)
+    {
+        if ($columnType == 'datetime')
+            return date('Y-m-d H:i:s');
+        if ($columnType == 'timestamp')
+            return date('Y-m-d H:i:s');
+        if ($columnType == 'date')
+            return date('Y-m-d');
+        return time();
     }
 
 }
