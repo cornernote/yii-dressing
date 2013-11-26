@@ -13,7 +13,7 @@
  *
  * @package dressing.components
  */
-class YdAuditTracker
+class YdAuditTracker extends CComponent
 {
 
     /**
