@@ -39,39 +39,7 @@ echo "        );\n";
 echo "    }\n";
 echo "\n";
 
-// filters
-echo "    /**\n";
-echo "     * Filters\n";
-echo "     */\n";
-echo "    //public function filters()\n";
-echo "    //{\n";
-echo "    //    return array(\n";
-echo "    //        'inlineFilterName',\n";
-echo "    //        array(\n";
-echo "    //            'class'=>'path.to.FilterClass',\n";
-echo "    //            'propertyName'=>'propertyValue',\n";
-echo "    //        ),\n";
-echo "    //    );\n";
-echo "    //}\n";
-echo "\n";
-
-// actions
-echo "    /**\n";
-echo "     * Actions\n";
-echo "     */\n";
-echo "    //public function actions()\n";
-echo "    //{\n";
-echo "    //    return array(\n";
-echo "    //        'action1' => 'path.to.ActionClass',\n";
-echo "    //        'action2' => array(\n";
-echo "    //            'class' => 'path.to.AnotherActionClass',\n";
-echo "    //            'propertyName' => 'propertyValue',\n";
-echo "    //        ),\n";
-echo "    //    );\n";
-echo "    //}\n";
-echo "\n";
-
-// beforeFilter
+// beforeRender
 echo "    /**\n";
 echo "     * @param string \$view the view to be rendered\n";
 echo "     * @return bool\n";
