@@ -17,6 +17,12 @@ class YdAuditBehavior extends CActiveRecordBehavior
 {
 
     /**
+     * Set to false if you just want to use getDbAttribute and other methods in this class.
+     * @var bool
+     */
+    public $enableAuditTrail = true;
+
+    /**
      * Any additional models you want to use to write model and model_id audits to.  If this array is not empty then
      * each field modifed will result in an YdAuditTrail being created for each additionalAuditModels.
      * @var array
@@ -86,9 +92,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
     /**
      * Actions to be performed after the model is loaded
      */
-    protected function afterFind($event)
+    public function afterFind($event)
     {
-        $this->_dbAttributes = $this->owner->attributes;
+        $this->_dbAttributes = $this->owner->getAttributes();
         parent::afterFind($event);
     }
 
@@ -97,9 +103,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
      * Do not call this method directly, it will be called after the model is saved.
      * @param CModelEvent $event
      */
-    protected function afterSave($event)
+    public function afterSave($event)
     {
-        if (!Yii::app()->dressing->audit) {
+        if (!$this->enableAuditTrail || !Yii::app()->dressing->enableAuditTrail) {
             parent::afterSave($event);
             return;
         }
@@ -186,9 +192,9 @@ class YdAuditBehavior extends CActiveRecordBehavior
      * Do not call this method directly, it will be called after the model is deleted.
      * @param CModelEvent $event
      */
-    protected function afterDelete($event)
+    public function afterDelete($event)
     {
-        if (!Yii::app()->dressing->audit) {
+        if (!$this->enableAuditTrail || !Yii::app()->dressing->enableAuditTrail) {
             parent::afterDelete($event);
             return;
         }
@@ -200,7 +206,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
         $auditTrails = array();
 
         // prepare the logs
-        $pk = $this->auditModel->getPrimaryKeyString();
+        $pk = $this->getPrimaryKeyString($this->auditModel);
         foreach ($auditModels as $auditModel) {
             $prefix = isset($auditModel['prefix']) ? $auditModel['prefix'] . '.' . $pk : '';
             $auditTrails[] = array(
@@ -252,8 +258,8 @@ class YdAuditBehavior extends CActiveRecordBehavior
         if ($this->auditModel) {
             $auditModels[] = array(
                 'model' => get_class($this->auditModel),
-                'model_id' => $this->auditModel->getPrimaryKeyString(),
-                'prefix' => $this->fieldPrefix(),
+                'model_id' => $this->getPrimaryKeyString($this->auditModel),
+                'prefix' => $this->getFieldPrefix($this->auditModel),
             );
         }
 
@@ -272,14 +278,27 @@ class YdAuditBehavior extends CActiveRecordBehavior
 
     /**
      * If the model is not the same as the owner then prefix the field so we know the model.
+     * @param $model CActiveRecord
      * @return string
      */
-    protected function fieldPrefix()
+    protected function getFieldPrefix($model)
     {
-        if (get_class($this->owner) != get_class($this->auditModel)) {
+        if (get_class($this->owner) != get_class($model)) {
             return get_class($this->owner) . '.';
         }
         return '';
+    }
+
+    /**
+     * Returns Primary Key as a string
+     * @param $model CActiveRecord
+     * @return string
+     */
+    protected function getPrimaryKeyString($model)
+    {
+        if (is_array($model->getPrimaryKey()))
+            return implode('-', $model->getPrimaryKey());
+        return $model->getPrimaryKey();
     }
 
 }

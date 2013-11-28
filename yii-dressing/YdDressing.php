@@ -28,6 +28,11 @@ class YdDressing extends CApplicationComponent
     /**
      * @var bool
      */
+    public $enableAuditTrail = true;
+
+    /**
+     * @var bool
+     */
     public $enableCdn = false;
 
     /**
@@ -261,6 +266,10 @@ class YdDressing extends CApplicationComponent
     {
         $baseUrl = $this->getAssetsUrl();
         $packages = array(
+            'jquery' => array(
+                'baseUrl' => $baseUrl . '/jquery/',
+                'js' => array($this->minify ? 'jquery-1.10.2.min.js' : 'jquery-1.10.2.js'),
+            ),
             'signature-pad' => array(
                 'depends' => array('jquery'),
                 'baseUrl' => $baseUrl . '/signature-pad/',
@@ -275,10 +284,6 @@ class YdDressing extends CApplicationComponent
                     'lib/jquery.hoverIntent.js',
                     $this->minify ? 'jquery.cluetip.min.js' : 'jquery.cluetip.js',
                 )
-            ),
-            'jquery' => array(
-                'baseUrl' => $baseUrl . '/jquery/',
-                'js' => array($this->minify ? 'jquery-1.10.2.min.js' : 'jquery-1.10.2.js'),
             ),
         );
         foreach ($packages as $name => $definition) {
