@@ -62,7 +62,7 @@ class YdStringHelper
      */
     public static function getValidFileName($fileName)
     {
-        $fileName = preg_replace('/[^0-9a-z ]+/i', '', $fileName);
+        $fileName = preg_replace('/[^0-9a-z\.]+/i', '', $fileName);
         return $fileName;
     }
 
