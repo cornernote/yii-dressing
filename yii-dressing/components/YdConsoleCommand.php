@@ -68,6 +68,8 @@ class YdConsoleCommand extends CConsoleCommand
      */
     protected function runStats($i, $count)
     {
+        if (!$this->timer)
+            $this->timer = YII_BEGIN_TIME;
         $stats = '';
         $stats .= '[mem=' . number_format(memory_get_peak_usage() / 1024 / 1024, 1) . '|' . number_format(memory_get_usage() / 1024 / 1024, 1) . ']';
         $stats .= '[time=' . number_format((microtime(true) - $this->timer), 1) . ']';
