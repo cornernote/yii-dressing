@@ -156,7 +156,7 @@ class YdCsv
             $row = array();
             foreach ($header as $key => $heading) {
                 $heading = trim($heading);
-                $row[$heading] = (isset($data[$key])) ? Encoding::toUTF8($data[$key]) : '';
+                $row[$heading] = (isset($data[$key])) ? YdEncoding::toUTF8($data[$key]) : '';
             }
             $rows[] = $row;
         }
