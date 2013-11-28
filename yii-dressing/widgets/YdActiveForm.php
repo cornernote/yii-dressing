@@ -129,8 +129,10 @@ class YdActiveForm extends TbActiveForm
      * @param string $label
      * @return string
      */
-    public function getSubmitButton($label, $options = array())
+    public function getSubmitButton($label = null, $options = array())
     {
+        if (!$label)
+            $label = Yii::t('dressing', 'Submit');
         $defaultOptions = array(
             'buttonType' => 'submit',
             'type' => 'primary',
@@ -147,7 +149,7 @@ class YdActiveForm extends TbActiveForm
      * @param string $label
      * @return string
      */
-    public function getSubmitButtonRow($label, $options = array())
+    public function getSubmitButtonRow($label = null, $options = array())
     {
         echo '<div class="' . $this->getSubmitRowClass() . '">';
         echo $this->getSubmitButton($label, $options);
