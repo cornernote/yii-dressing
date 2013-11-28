@@ -59,7 +59,7 @@ class YdLinkBehavior extends CActiveRecordBehavior
     }
 
     /**
-     * Returns a URL to the model
+     * Returns a URL Array to the model
      *
      * @param string $action
      * @param array $params
@@ -76,6 +76,20 @@ class YdLinkBehavior extends CActiveRecordBehavior
     }
 
     /**
+     * Returns a URL String to the model
+     *
+     * @param string $action
+     * @param array $params
+     * @return string
+     */
+    public function getUrlString($action = null, $params = array())
+    {
+        $params = $this->getUrl($action, $params);
+        $route = array_shift($params);
+        return Yii::app()->createUrl($route, $params);
+    }
+
+    /**
      * Returns a Link to the model
      *
      * @param string $title
@@ -84,7 +98,7 @@ class YdLinkBehavior extends CActiveRecordBehavior
      * @param array $htmlOptions
      * @return string
      */
-    public function getLink($title = null, $urlAction = 'view', $urlParams = array(), $htmlOptions = array())
+    public function getLink($title = null, $urlAction = null, $urlParams = array(), $htmlOptions = array())
     {
         $title = $title ? $title : $this->owner->getName();
         return CHtml::link($title, $this->owner->getUrl($urlAction, $urlParams), $htmlOptions);
