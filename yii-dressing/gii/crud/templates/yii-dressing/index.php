@@ -52,4 +52,5 @@ echo "\n";
 echo "// grid\n";
 echo "\$this->renderPartial('/" . lcfirst($this->modelClass) . "/_grid', array(\n";
 echo "    '" . lcfirst($this->modelClass) . "' => \$" . lcfirst($this->modelClass) . ",\n";
+echo "    'dataProvider' => isset(\$dataProvider) ? \$dataProvider : null,\n";
 echo "));\n";

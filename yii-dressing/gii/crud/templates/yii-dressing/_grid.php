@@ -42,7 +42,7 @@ echo "\n";
 echo "// grid\n";
 echo "\$this->widget('dressing.widgets.YdGridView', array(\n";
 echo "    'id' => '" . lcfirst($this->modelClass) . "-grid',\n";
-echo "    'dataProvider' => \$" . lcfirst($this->modelClass) . "->search(),\n";
+echo "    'dataProvider' => isset(\$dataProvider) ? \$dataProvider : \$" . lcfirst($this->modelClass) . "->search(),\n";
 echo "    'filter' => \$" . lcfirst($this->modelClass) . ",\n";
 echo "    'columns' => \$columns,\n";
 echo "    'multiActions' => \$multiActions,\n";
