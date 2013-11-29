@@ -10,7 +10,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html
  */
 
-user()->setState('index.attachment', Yii::app()->request->requestUri);
+Yii::app()->user->setState('index.attachment', Yii::app()->request->requestUri);
 $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');

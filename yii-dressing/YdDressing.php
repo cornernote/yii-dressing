@@ -96,7 +96,7 @@ class YdDressing extends CApplicationComponent
         $this->mapModels();
 
         // add packages and register scripts
-        if (!YII_DRESSING_CLI) {
+        if (!YdHelper::isCli()) {
             $this->addPackages();
             $this->registerScripts();
         }
@@ -110,7 +110,7 @@ class YdDressing extends CApplicationComponent
      */
     public function mapModels()
     {
-        $this->modelMap = array_merge($this->modelMap, array(
+        $this->modelMap = array_merge(array(
             'YdAudit' => array(
                 'relations' => array(
                     'user' => array(
@@ -129,6 +129,9 @@ class YdDressing extends CApplicationComponent
                         'audit_id',
                     ),
                 ),
+                'behaviors' => array(
+                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                ),
             ),
             'YdAuditTrail' => array(
                 'relations' => array(
@@ -143,15 +146,15 @@ class YdDressing extends CApplicationComponent
                         'audit_id',
                     ),
                 ),
-                'behaviors' => array(
-                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
-                ),
             ),
             'YdContactUs' => array(
                 'behaviors' => array(
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                    'LinkBehavior' => array(
+                        'class' => 'dressing.behaviors.YdLinkBehavior',
+                        'controllerName' => 'contactUs',
+                    ),
                 ),
             ),
             'YdEmailSpool' => array(
@@ -169,13 +172,19 @@ class YdDressing extends CApplicationComponent
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                    'LinkBehavior' => array(
+                        'class' => 'dressing.behaviors.YdLinkBehavior',
+                        'controllerName' => 'emailSpool',
+                    ),
                 ),
             ),
             'YdEmailTemplate' => array(
                 'behaviors' => array(
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
-                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                    'LinkBehavior' => array(
+                        'class' => 'dressing.behaviors.YdLinkBehavior',
+                        'controllerName' => 'emailTemplate',
+                    ),
                 ),
             ),
             'YdLookup' => array(
@@ -183,7 +192,10 @@ class YdDressing extends CApplicationComponent
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
-                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                    'LinkBehavior' => array(
+                        'class' => 'dressing.behaviors.YdLinkBehavior',
+                        'controllerName' => 'lookup',
+                    ),
                 ),
             ),
             'YdSetting' => array(
@@ -210,7 +222,10 @@ class YdDressing extends CApplicationComponent
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                    'LinkBehavior' => array(
+                        'class' => 'dressing.behaviors.YdLinkBehavior',
+                        'controllerName' => 'siteMenu',
+                    ),
                 ),
             ),
             'YdToken' => array(
@@ -235,7 +250,10 @@ class YdDressing extends CApplicationComponent
                     'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                    'LinkBehavior' => array(
+                        'class' => 'dressing.behaviors.YdLinkBehavior',
+                        'controllerName' => 'user',
+                    ),
                     'EavBehavior' => array(
                         'class' => 'dressing.behaviors.YdEavBehavior',
                         'tableName' => 'user_eav',
@@ -253,7 +271,7 @@ class YdDressing extends CApplicationComponent
                     ),
                 ),
             ),
-        ));
+        ), $this->modelMap);
     }
 
     /**

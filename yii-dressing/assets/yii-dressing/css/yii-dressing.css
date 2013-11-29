@@ -250,7 +250,7 @@ table.table-striped tbody tr:nth-child(odd) td, table.table-striped tbody tr:nth
     float: left;
 }
 
-.grid-view .page-size, .grid-view .form-multi-actions, .grid-view .form-grid-actions {
+.grid-view .page-size, .grid-view .form-multi-actions, .grid-view .form-grid-actions, .grid-view .form-grid-buttons {
     float: right;
     margin-left: 10px;
 }

@@ -87,4 +87,12 @@ class YdHelper
         return (strtoupper(substr(PHP_OS, 0, 5)) === 'LINUX');
     }
 
+    /**
+     * @return bool
+     */
+    public static function isCli()
+    {
+        return substr(php_sapi_name(), 0, 3) == 'cli';
+    }
+
 }

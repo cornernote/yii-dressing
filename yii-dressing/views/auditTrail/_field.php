@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AuditTrailController
+ * @var $this YdAuditTrailController
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

@@ -165,14 +165,6 @@ class YdAttachment extends YdActiveRecord
             $this->_file->saveAs($file);
         }
 
-        // clear cache for jobs and items
-        if (in_array($this->model, array('Job', 'Item'))) {
-            $model = ActiveRecord::model($this->model)->findByPk($this->model_id);
-            if ($model) {
-                $model->clearCache();
-            }
-        }
-
         $this->handleFileUpload = true;
     }
 

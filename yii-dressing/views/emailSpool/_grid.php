@@ -42,12 +42,12 @@ $columns[] = array(
 $columns[] = array(
     'name' => 'sent',
     'type' => 'raw',
-    'value' => 'Time::agoIcon($data->sent)',
+    'value' => 'Yii::app()->format->agoIcon($data->sent)',
 );
 $columns[] = array(
     'name' => 'created',
     'type' => 'raw',
-    'value' => 'Time::agoIcon($data->created)',
+    'value' => 'Yii::app()->format->agoIcon($data->created)',
 );
 
 // grid

@@ -48,7 +48,7 @@ echo "    public function beforeRender(\$view)\n";
 echo "    {\n";
 echo "        \$this->breadcrumbs = array();\n";
 echo "        if (\$view != 'index') {\n";
-echo "            \$this->breadcrumbs[Yii::t('app', \$this->getName(true))] = user()->getState('index." . lcfirst($this->modelClass) . "', array('/" . lcfirst($this->modelClass) . "/index'));\n";
+echo "            \$this->breadcrumbs[Yii::t('app', \$this->getName(true))] = Yii::app()->user->getState('index." . lcfirst($this->modelClass) . "', array('/" . lcfirst($this->modelClass) . "/index'));\n";
 echo "        }\n";
 echo "        return parent::beforeRender(\$view);\n";
 echo "    }\n";

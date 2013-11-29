@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AuditTrailController
+ * @var $this YdAuditTrailController
  * @var $auditTrail YdAuditTrail
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -11,13 +11,13 @@
  */
 
 $columns = array();
-if ($this->id != 'user') {
-    $columns[] = array(
-        'name' => 'user_id',
-        'value' => '$data->user?$data->user->getLink():null',
-        'type' => 'raw',
-    );
-}
+//if ($this->id != 'user') {
+//    $columns[] = array(
+//        'name' => 'user_id',
+//        'value' => '$data->user?$data->user->getLink():null',
+//        'type' => 'raw',
+//    );
+//}
 if ($this->id != 'audit') {
     $columns[] = array(
         'name' => 'audit_id',

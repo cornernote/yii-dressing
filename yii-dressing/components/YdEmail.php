@@ -34,6 +34,11 @@ class YdEmail extends CApplicationComponent
     public $renderMethod = 'php';
 
     /**
+     * @var string when renderMethod=php this is the path to the email views
+     */
+    public $templatePath = 'dressing.views.emails';
+
+    /**
      *
      */
     public function init()
@@ -88,7 +93,7 @@ class YdEmail extends CApplicationComponent
         $url = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->id, 'token' => $token));
 
         // save EmailSpool
-        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('account.recover', array(
+        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('account_recover', array(
             'user' => $user,
             'url' => $url,
         )));
@@ -112,7 +117,7 @@ class YdEmail extends CApplicationComponent
         $url = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->id, 'token' => $token));
 
         // save EmailSpool
-        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('account.welcome', array(
+        $emailSpool = $this->getEmailSpool($this->renderEmailTemplate('account_welcome', array(
             'user' => $user,
             'url' => $url,
         )));
@@ -146,7 +151,7 @@ class YdEmail extends CApplicationComponent
      * @param $viewParams array
      * @return array
      */
-    public function renderEmailTemplate($template, $viewParams = array(), $layout = 'layout.default')
+    public function renderEmailTemplate($template, $viewParams = array(), $layout = 'layout_default')
     {
         if (!method_exists($this, 'renderEmailTemplate_' . $this->renderMethod))
             $this->renderMethod = 'php';
@@ -159,19 +164,19 @@ class YdEmail extends CApplicationComponent
      * @throws CException
      * @return array
      */
-    private function renderEmailTemplate_php($template, $viewParams = array(), $layout = 'layout.default')
+    private function renderEmailTemplate_php($template, $viewParams = array(), $layout = 'layout_default')
     {
         // setup path to layout and template
-        $this->templatePath = 'dressing.views.email';
         $emailTemplate = $this->templatePath . '.' . $template;
         $emailLayout = $this->templatePath . '.' . $layout;
 
         // parse template
         $fields = array('message_title', 'message_subject', 'message_html', 'message_text');
         $message = array('template' => $template);
+        $controller = Yii::app()->controller;
         foreach ($fields as $field) {
-            $viewParams['contents'] = $controller->renderPartial($emailTemplate . '.' . $field, $viewParams, true);
-            $viewParams[$field] = $message[$field] = $controller->renderPartial($emailLayout . '.' . $field, $viewParams, true);
+            $viewParams['contents'] = $controller->renderPartial($emailTemplate . '.' . str_replace('message_', '', $field), $viewParams, true);
+            $viewParams[$field] = $message[$field] = $controller->renderPartial($emailLayout . '.' . str_replace('message_', '', $field), $viewParams, true);
             unset($viewParams['contents']);
         }
         return $message;
@@ -183,7 +188,7 @@ class YdEmail extends CApplicationComponent
      * @throws CException
      * @return array
      */
-    private function renderEmailTemplate_database($template, $viewParams = array(), $layout = 'layout.default')
+    private function renderEmailTemplate_database($template, $viewParams = array(), $layout = 'layout_default')
     {
         // load template
         $emailTemplate = YdEmailTemplate::model()->findByAttributes(array('name' => $template));

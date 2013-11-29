@@ -70,7 +70,7 @@ class YdDropdownColumn extends TbDataColumn
             $links[] = $parentContents;
         }
         echo '<div class="filter-container">';
-        app()->controller->widget('bootstrap.widgets.TbButtonGroup', array(
+        Yii::app()->controller->widget('bootstrap.widgets.TbButtonGroup', array(
             'buttons' => $links,
         ));
         echo '</div>';

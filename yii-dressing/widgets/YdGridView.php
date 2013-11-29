@@ -88,7 +88,7 @@ class YdGridView extends TbGridView
         $this->setUserPageSize();
 
         // set pagination
-        $this->dataProvider->setPagination($this->getPagination());
+        $this->dataProvider->pagination->pageSize = $this->getUserPageSize();
 
         // add checkbox when we have multiactions
         if ($this->multiActions) {
@@ -98,16 +98,6 @@ class YdGridView extends TbGridView
         }
 
         parent::init();
-    }
-
-    /**
-     * @return CPagination
-     */
-    public function getPagination()
-    {
-        $pagination = $this->dataProvider ? $this->dataProvider->getPagination() : new CPagination();
-        $pagination->pageSize = $this->getUserPageSize();
-        return $pagination;
     }
 
     /**
@@ -134,7 +124,7 @@ class YdGridView extends TbGridView
                     $(this).val('');
                     if (url) {
                         $('.select-on-check').each(function () {
-                            if ($(this).attr('checked'))
+                            if ($(this).is(':checked'))
                                 checked = true;
                         });
                         if (checked) {
@@ -241,7 +231,7 @@ class YdGridView extends TbGridView
         foreach ($this->pageSizeOptions as $option) {
             $options[$option] = $option . ' ' . $label;
         }
-        echo CHtml::dropDownList("userPageSize[{$this->id}]", $this->getUserPageSize(), $options, array(
+        echo CHtml::dropDownList("userPageSize[{$this->id}]", $this->dataProvider->pagination->pageSize, $options, array(
             'onchange' => "$.fn.yiiGridView.update('{$this->id}',{data:{userPageSize:{" . str_replace('-', '_', $this->id) . ":$(this).val()}}})",
             'class' => 'page-size',
         ));
@@ -288,13 +278,15 @@ class YdGridView extends TbGridView
      */
     public function renderGridButtons()
     {
-        if ($this->gridButtons) {
-            echo '<div class="form-grid-buttons">';
-            foreach ($this->gridButtons as $gridButton) {
-                echo '<button class="btn gridButton" value="' . $gridButton['url'] . '">' . $gridButton['name'] . '</button> ';
-            }
-            echo '</div>';
+        if (!$this->gridButtons)
+            return;
+        echo '<div class="form-grid-buttons">';
+        foreach ($this->gridButtons as $gridButton) {
+            $class = isset($gridButton['class']) ? $gridButton['class'] . ' ' : '';
+            $class .= 'btn gridButton';
+            echo '<button class="' . $class . '" value="' . $gridButton['url'] . '">' . $gridButton['name'] . '</button> ';
         }
+        echo '</div>';
     }
 
     /**
@@ -308,9 +300,9 @@ class YdGridView extends TbGridView
     /**
      * @return bool
      */
-    private function getUserPageSize()
+    public function getUserPageSize()
     {
-        $key = 'userPageSize.' . str_replace('-', '_', $this->id);
+        $key = 'userPageSize.' . $this->id;
         $size = Yii::app()->user->getState($key, $this->defaultPageSize);
         if (!$size)
             $size = $this->defaultPageSize;

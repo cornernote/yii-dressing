@@ -23,7 +23,7 @@ class YdEmailSpoolController extends YdWebController
     {
         return array(
             array('allow',
-                'actions' => array('index', 'view'),
+                'actions' => array('index', 'view', 'log'),
                 'roles' => array('admin'),
             ),
             array('deny', 'users' => array('*')),
@@ -49,6 +49,18 @@ class YdEmailSpoolController extends YdWebController
     {
         $emailSpool = $this->loadModel($id, 'YdEmailSpool');
         $this->render('dressing.views.emailSpool.view', array(
+            'emailSpool' => $emailSpool,
+        ));
+    }
+
+    /**
+     * Displays logs for a particular YdEmailSpool.
+     * @param integer $id the ID of the YdEmailSpool to be displayed
+     */
+    public function actionLog($id)
+    {
+        $emailSpool = $this->loadModel($id, 'YdEmailSpool');
+        $this->render('dressing.views.emailSpool.log', array(
             'emailSpool' => $emailSpool,
         ));
     }

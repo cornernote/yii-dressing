@@ -10,12 +10,11 @@
  * @license http://www.gnu.org/copyleft/gpl.html
  */
 
-$this->pageTitle = $this->pageHeading = $emailSpool->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'Log');
+$this->pageTitle = $this->pageHeading = $emailSpool->getName();
 
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Email Spools')] = Yii::app()->user->getState('index.emailSpool', array('/emailSpool/index'));
-$this->breadcrumbs[$emailSpool->getName()] = $emailSpool->getLink();
-$this->breadcrumbs[] = Yii::t('dressing', 'Log');
+$this->breadcrumbs[] = $emailSpool->getName();
 
 $this->renderPartial('dressing.views.emailSpool._menu', array(
     'emailSpool' => $emailSpool,

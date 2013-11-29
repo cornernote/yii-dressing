@@ -10,7 +10,7 @@ class YdBPayHelper
     /**
      * @var string
      */
-    public $billerCode = '180885';
+    public $billerCode = '123456';
     /**
      * @var string
      */
@@ -23,6 +23,14 @@ class YdBPayHelper
      * @var string
      */
     public $logo = 'http://d2v52na0ig3b4y.cloudfront.net/images/icons/Bpayv54ha.gif';
+
+    /**
+     *
+     */
+    public function init()
+    {
+
+    }
 
     /**
      * @param $ref

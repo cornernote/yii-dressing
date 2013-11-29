@@ -47,16 +47,6 @@ class YdAuditTrail extends YdActiveRecord
 {
 
     /**
-     * Returns the static model of the specified AR class.
-     * @param string $className
-     * @return YdAuditTrail the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
-
-    /**
      * @return array validation rules for model attributes.
      */
     public function rules()

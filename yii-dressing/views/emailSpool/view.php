@@ -9,7 +9,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license http://www.gnu.org/copyleft/gpl.html
  */
-$this->pageTitle = $this->pageHeading = $emailSpool->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'View');
+$this->pageTitle = $this->pageHeading = $emailSpool->getName();
 
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Email Spools')] = Yii::app()->user->getState('index.emailSpool', array('/emailSpool/index'));
@@ -36,7 +36,7 @@ $attributes[] = 'from_email';
 $attributes[] = 'from_name';
 $attributes[] = array(
     'name' => 'model_id',
-    'value' => $emailSpool->getModelLink(),
+    //'value' => $emailSpool->getModelLink(),
     'type' => 'raw',
 );
 $attributes[] = 'sent';

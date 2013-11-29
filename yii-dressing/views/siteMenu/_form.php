@@ -29,7 +29,5 @@ echo $form->textFieldRow($menu, 'access_role');
 echo $form->checkBoxRow($menu, 'enabled');
 
 echo $form->endModalWrap();
-echo '<div class="' . $form->getSubmitRowClass() . '">';
-echo $form->getSaveButton($menu);
-echo '</div>';
+echo $form->getSubmitButtonRow($menu->isNewRecord ? Yii::t('dressing', 'Create') : Yii::t('dressing', 'Save'));
 $this->endWidget();

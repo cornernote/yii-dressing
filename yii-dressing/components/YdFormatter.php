@@ -331,15 +331,9 @@ class YdFormatter extends CFormatter
      */
     public function agoIcon($dtGiven, $format = 'd-M-Y H:i:s')
     {
-        if (!$dtGiven) {
+        if (!$dtGiven)
             return false;
-        }
-        $dtStamp = $this->timestamp($dtGiven);
-        $ago = $this->ago($dtStamp);
-        $date = date($format, $dtStamp);
-        $icon = CHtml::link('<i class="icon-time"></i>', 'javascript:void();', array('title' => $date));
-        $agoWithIcon = $icon . '&nbsp;' . $ago;
-        return $agoWithIcon;
+        return CHtml::link('<i class="icon-time"></i>', 'javascript:void();', array('title' => $this->ago($dtGiven))) . '&nbsp;' . $this->formatDatetime($dtGiven);
     }
 
     /**

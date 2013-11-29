@@ -136,7 +136,7 @@ class YdActiveForm extends TbActiveForm
         $defaultOptions = array(
             'buttonType' => 'submit',
             'type' => 'primary',
-            'icon' => 'ok white',
+            //'icon' => 'ok white',
             'label' => $label,
         );
         $options = CMap::mergeArray($defaultOptions, $options);

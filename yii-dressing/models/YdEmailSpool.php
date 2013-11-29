@@ -132,4 +132,25 @@ class YdEmailSpool extends YdActiveRecord
         ), $options));
     }
 
+    /**
+     * Retrieves a list of links to be used in menus.
+     * @param bool $extra
+     * @return array
+     */
+    public function getMenuLinks($extra = false)
+    {
+        $links = array();
+        $links[] = array('label' => Yii::t('dressing', 'Log'), 'url' => $this->getUrl('log'));
+        if ($extra) {
+            //$more = array();
+            //$more[] = array('label' => Yii::t('dressing', 'Delete'), 'url' => $this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));
+            //$links[] = array(
+            //    'label' => Yii::t('app', 'More'),
+            //    'items' => $more,
+            //);
+        }
+        return $links;
+    }
+
+
 }

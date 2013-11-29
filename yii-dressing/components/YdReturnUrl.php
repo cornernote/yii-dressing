@@ -151,7 +151,7 @@ class YdReturnUrl extends CApplicationComponent
     static private function urlEncode($input)
     {
         $key = uniqid();
-        cache()->set('ReturnUrl.' . $key, $input);
+        Yii::app()->cache->set('ReturnUrl.' . $key, $input);
         return $key;
     }
 
@@ -161,7 +161,7 @@ class YdReturnUrl extends CApplicationComponent
      */
     static private function urlDecode($key)
     {
-        return cache()->get('ReturnUrl.' . $key);
+        return Yii::app()->cache->get('ReturnUrl.' . $key);
     }
 
 }

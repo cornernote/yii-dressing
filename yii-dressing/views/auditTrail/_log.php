@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AuditTrailController
+ * @var $this YdAuditTrailController
  * @var $auditTrail YdAuditTrail
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -10,9 +10,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html
  */
 
-$auditTrail = new AuditTrail('search');
-if (isset($_GET['AuditTrail'])) {
-    $auditTrail->attributes = $_GET['AuditTrail'];
+$auditTrail = new YdAuditTrail('search');
+if (isset($_GET['YdAuditTrail'])) {
+    $auditTrail->attributes = $_GET['YdAuditTrail'];
 }
 $auditTrail->model = get_class($model);
 $auditTrail->model_id = $model->id;
