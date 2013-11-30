@@ -45,14 +45,9 @@
  *
  * @package dressing.widgets
  */
+
 class YdReCaptchaInput extends CInputWidget
 {
-    /**
-     * reCAPTCHA public key
-     *
-     * @var string
-     */
-    private $publicKey = '';
 
     /**
      * The theme name for the widget. Valid themes are 'red', 'white', 'blackglass', 'clean', 'custom'
@@ -60,16 +55,19 @@ class YdReCaptchaInput extends CInputWidget
      * @var string the theme name for the widget
      */
     private $theme = 'red';
+
     /**
      * The language for the widget. Valid languages are 'en', 'nl', 'fr', 'de', 'pt', 'ru', 'es', 'tr'
      *
      * @var string the language suffix
      */
     private $language = 'en';
+
     /**
      * @var string the tab index for the HTML tag
      */
     public $tabIndex = 0;
+
     /**
      * @var string the id for the HTML containing the custom theme
      */
@@ -93,30 +91,6 @@ class YdReCaptchaInput extends CInputWidget
      * @var array
      */
     private $validThemes = array('red', 'white', 'blackglass', 'clean', 'custom');
-
-    /**
-     * Sets the public key.
-     *
-     * @param string $value
-     * @throws CException if $value is not valid.
-     */
-    public function setPublicKey($value)
-    {
-        if (empty($value) || !is_string($value)) throw new CException(Yii::t('yii', 'ReCaptcha.publicKey must contain your reCAPTCHA public key.'));
-        $this->publicKey = $value;
-    }
-
-    /**
-     * Returns the reCAPTCHA private key
-     *
-     * @return string
-     */
-    public function getPublicKey()
-    {
-        if ($this->publicKey)
-            return $this->publicKey;
-        return $this->publicKey = Yii::app()->reCaptcha->publicKey;
-    }
 
     /**
      * Sets the language
@@ -165,16 +139,14 @@ class YdReCaptchaInput extends CInputWidget
      */
     public function run()
     {
-        require_once(Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'mrphp' . DIRECTORY_SEPARATOR . 'php-recaptcha' . DIRECTORY_SEPARATOR . 'recaptchalib' . DIRECTORY_SEPARATOR . 'recaptchalib.php');
-
-        $customthemewidget = (($w = $this->customThemeWidget) != '') ? "'{$w}'" : 'null';
+        $customThemeWidget = (($w = $this->customThemeWidget) != '') ? "'{$w}'" : 'null';
         $cs = Yii::app()->getClientScript();
 
         if (!$cs->isScriptRegistered(get_class($this) . '_options')) {
             $script = <<<EOP
 var RecaptchaOptions = {
    theme : '{$this->theme}',
-   custom_theme_widget : {$customthemewidget},
+   custom_theme_widget : {$customThemeWidget},
    lang : '{$this->language}',
    tabindex : {$this->tabIndex}
 };
@@ -185,6 +157,28 @@ EOP;
         $body = '';
         if ($this->hasModel())
             $body = CHtml::activeHiddenField($this->model, $this->attribute) . "\n";
-        echo $body . recaptcha_get_html($this->publicKey, null, true);
+        echo $body . $this->getHtml();
     }
+
+    /**
+     * Gets the challenge HTML (javascript and non-javascript version).
+     * This is called from the browser, and the resulting reCAPTCHA HTML widget
+     * is embedded within the HTML form it was called from.
+     * @param boolean $ssl Should the request be made over ssl? (optional, default is false)
+     * @return string - The HTML to be embedded in the user's form.
+     */
+    protected function getHtml($ssl = true)
+    {
+        $reCaptcha = Yii::app()->reCaptcha;
+        $server = $ssl ? $reCaptcha->secureServer : $reCaptcha->server;
+        return '
+            <script type="text/javascript" src="' . $server . '/challenge?k=' . $reCaptcha->publicKey . '"></script>
+            <noscript>
+                <iframe src="' . $server . '/noscript?k=' . $reCaptcha->publicKey . '" height="300" width="500" frameborder="0"></iframe><br/>
+                <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+            </noscript>
+        ';
+    }
+
 }

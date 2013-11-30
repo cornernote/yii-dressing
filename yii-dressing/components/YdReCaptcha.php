@@ -22,4 +22,20 @@ class YdReCaptcha extends CApplicationComponent
      */
     public $privateKey = '6LeBItQSAAAAALA4_G05e_-fG5yH_-xqQIN8AfTD';
 
+    /**
+     * @var string
+     */
+    public $server = 'http://www.google.com/recaptcha/api';
+
+    /**
+     * @var string
+     */
+    public $secureServer = 'https://www.google.com/recaptcha/api';
+
+    /**
+     * @var string
+     */
+    public $verifyServer = 'www.google.com';
+
+
 }

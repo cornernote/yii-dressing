@@ -47,36 +47,6 @@
  */
 class YdReCaptchaValidator extends CValidator
 {
-    /**
-     * The private key for reCAPTCHA
-     *
-     * @var string
-     */
-    private $privateKey = '';
-
-    /**
-     * Sets the private key.
-     *
-     * @param string $value
-     * @throws CException if $value is not valid.
-     */
-    public function setPrivateKey($value)
-    {
-        if (empty($value) || !is_string($value)) throw new CException(Yii::t('dressing', 'ReCaptchaValidator.privateKey must contain your reCAPTCHA private key.'));
-        $this->privateKey = $value;
-    }
-
-    /**
-     * Returns the reCAPTCHA private key
-     *
-     * @return string
-     */
-    public function getPrivateKey()
-    {
-        if ($this->privateKey)
-            return $this->privateKey;
-        return $this->privateKey = Yii::app()->reCaptcha->privateKey;
-    }
 
     /**
      * Validates the attribute of the object.
@@ -86,14 +56,89 @@ class YdReCaptchaValidator extends CValidator
      */
     protected function validateAttribute($object, $attribute)
     {
-        require_once(Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'recaptcha' . DIRECTORY_SEPARATOR . 'recaptcha' . DIRECTORY_SEPARATOR . 'recaptchalib.php');
-        $resp = recaptcha_check_answer($this->privateKey,
-            $_SERVER['REMOTE_ADDR'],
-            $_POST['recaptcha_challenge_field'],
-            $_POST['recaptcha_response_field']);
-        if (!$resp->is_valid) {
+        if (!$this->checkAnswer($_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field'])) {
             $message = $this->message !== null ? $this->message : Yii::t('dressing', 'The verification code is incorrect.');
             $this->addError($object, $attribute, $message);
         }
     }
+
+    /**
+     * Calls an HTTP POST function to verify if the user's guess was correct
+     * @param string $challenge
+     * @param string $response
+     * @param array $extra_params an array of extra variables to post to the server
+     * @return bool
+     */
+    protected function checkAnswer($challenge, $response, $extra_params = array())
+    {
+        $reCaptcha = Yii::app()->reCaptcha;
+        if (!$challenge || !$response)
+            return false;
+
+        $response = $this->httpPost($reCaptcha->verifyServer, '/recaptcha/api/verify', array(
+                'privatekey' => $reCaptcha->privateKey,
+                'remoteip' => $_SERVER['REMOTE_ADDR'],
+                'challenge' => $challenge,
+                'response' => $response
+            ) + $extra_params);
+
+        $answers = explode("\n", $response [1]);
+        if (trim($answers[0]) != 'true') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Submits an HTTP POST to a reCAPTCHA server
+     * @param string $host
+     * @param string $path
+     * @param array $data
+     * @param int $port
+     * @return array response
+     */
+    function httpPost($host, $path, $data, $port = 80)
+    {
+
+        $req = $this->qsEncode($data);
+
+        $http_request = "POST $path HTTP/1.0\r\n";
+        $http_request .= "Host: $host\r\n";
+        $http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
+        $http_request .= "Content-Length: " . strlen($req) . "\r\n";
+        $http_request .= "User-Agent: reCAPTCHA/PHP\r\n";
+        $http_request .= "\r\n";
+        $http_request .= $req;
+
+        $response = '';
+        if (false == ($fs = @fsockopen($host, $port, $errno, $errstr, 10))) {
+            die ('Could not open socket to ' . $host . ' on port ' . $port);
+        }
+
+        fwrite($fs, $http_request);
+
+        while (!feof($fs))
+            $response .= fgets($fs, 1160); // One TCP-IP packet
+        fclose($fs);
+        $response = explode("\r\n\r\n", $response, 2);
+
+        return $response;
+    }
+
+    /**
+     * Encodes the given data into a query string format
+     * @param $data - array of string elements to be encoded
+     * @return string - encoded request
+     */
+    protected function qsEncode($data)
+    {
+        $req = "";
+        foreach ($data as $key => $value)
+            $req .= $key . '=' . urlencode(stripslashes($value)) . '&';
+
+        // Cut the last '&'
+        $req = substr($req, 0, strlen($req) - 1);
+        return $req;
+    }
+
 }
