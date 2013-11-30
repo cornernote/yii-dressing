@@ -16,7 +16,7 @@ class YdWebController extends YdController
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
      * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
      */
-    public $layout = 'dressing.views.layouts.default';
+    public $layout = '/layouts/default';
 
     /**
      * @var array context menu items. This property will be assigned to {@link CMenu::items}.
@@ -91,6 +91,14 @@ class YdWebController extends YdController
 
         // decide if this is a modal
         $this->isModal = Yii::app()->getRequest()->isAjaxRequest;
+
+        // register yii-dressing style
+        Yii::app()->clientScript->registerCSSFile(Yii::app()->dressing->getAssetsUrl() . '/yii-dressing/css/yii-dressing.css');
+
+        // init widgets
+        $this->widget('dressing.widgets.YdModal');
+        $this->widget('dressing.components.YdFancyBox');
+        $this->widget('dressing.widgets.YdQTip');
     }
 
     /**

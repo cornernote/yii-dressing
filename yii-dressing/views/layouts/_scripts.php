@@ -9,14 +9,8 @@
  * @license http://www.gnu.org/copyleft/gpl.html
  */
 
-// application stylesheet
-cs()->registerCSSFile(au() . '/css/app.css');
-
-// application stylesheet
-cs()->registerCSSFile(au() . '/js/app.js');
-
 // load here so modals don't have to load it
-cs()->registerCoreScript('yiiactiveform');
+Yii::app()->getClientScript()->registerCoreScript('yiiactiveform');
 
 // modal for popups
 $this->widget('dressing.widgets.YdModal');
@@ -27,8 +21,3 @@ $this->widget('dressing.components.YdFancyBox');
 // qtip for tooltips
 $this->widget('dressing.widgets.YdQTip');
 
-// google analytics
-//$this->renderPartial('/layouts/_google_analytics');
-
-// theme scripts
-$this->renderPartial('/layouts/_theme_scripts');

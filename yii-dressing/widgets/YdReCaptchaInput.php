@@ -1,6 +1,6 @@
 <?php
 /**
- * YdReCaptcha class file.
+ * YdReCaptchaInput class file.
  *
  * @author MetaYii
  * @link http://www.yiiframework.com/
@@ -45,7 +45,7 @@
  *
  * @package dressing.widgets
  */
-class YdReCaptcha extends CInputWidget
+class YdReCaptchaInput extends CInputWidget
 {
     /**
      * reCAPTCHA public key
@@ -53,6 +53,7 @@ class YdReCaptcha extends CInputWidget
      * @var string
      */
     private $publicKey = '';
+
     /**
      * The theme name for the widget. Valid themes are 'red', 'white', 'blackglass', 'clean', 'custom'
      *
@@ -73,6 +74,11 @@ class YdReCaptcha extends CInputWidget
      * @var string the id for the HTML containing the custom theme
      */
     public $customThemeWidget = '';
+
+    /**
+     * @var string
+     */
+    public $attribute = 'recapture';
 
     /**
      * Valid languages
@@ -107,7 +113,9 @@ class YdReCaptcha extends CInputWidget
      */
     public function getPublicKey()
     {
-        return $this->publicKey;
+        if ($this->publicKey)
+            return $this->publicKey;
+        return $this->publicKey = Yii::app()->reCaptcha->publicKey;
     }
 
     /**

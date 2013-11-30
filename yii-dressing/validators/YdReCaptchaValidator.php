@@ -73,7 +73,9 @@ class YdReCaptchaValidator extends CValidator
      */
     public function getPrivateKey()
     {
-        return $this->privateKey;
+        if ($this->privateKey)
+            return $this->privateKey;
+        return $this->privateKey = Yii::app()->reCaptcha->privateKey;
     }
 
     /**

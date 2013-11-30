@@ -29,11 +29,7 @@ echo $form->checkBoxRow($user, 'remember_me');
 
 if ($recaptcha) {
     echo CHtml::activeLabel($user, 'recaptcha');
-    $this->widget('dressing.widgets.YdReCaptcha', array(
-        'model' => $user, 'attribute' => 'recaptcha',
-        'theme' => 'red', 'language' => 'en_EN',
-        'publicKey' => Yii::app()->dressing->recaptchaPublic,
-    ));
+    $this->widget('dressing.widgets.YdReCaptchaInput', array('model' => $user));
     echo CHtml::error($user, 'recaptcha');
 }
 echo $form->endModalWrap();

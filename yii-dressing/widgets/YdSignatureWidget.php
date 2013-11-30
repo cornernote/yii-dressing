@@ -83,6 +83,8 @@ class YdSignatureWidget extends CWidget
      */
     public function registerScripts()
     {
+        $options = array();
+        $methodChain = '';
         if ($this->action == 'form') {
             $options = json_encode(array(
                 //'name' => '#Signature_name',
@@ -90,7 +92,6 @@ class YdSignatureWidget extends CWidget
                 'lineTop' => 120,
                 'drawOnly' => true,
             ));
-            $methodChain = '';
         }
         if ($this->action == 'view') {
             $options = json_encode(array(
@@ -99,8 +100,11 @@ class YdSignatureWidget extends CWidget
             $methodChain = ".regenerate('" . $this->signature->signature . "')";
         }
 
-        Yii::app()->clientScript->registerPackage('signature-pad');
-        Yii::app()->clientScript->registerScript('signature-pad', '$(".signature-pad").signaturePad(' . $options . ')' . $methodChain . ';', CClientScript::POS_READY);
+        $cs = Yii::app()->clientScript;
+        $baseUrl = Yii::app()->dressing->getAssetsUrl();
+        $cs->registerScriptFile($baseUrl . '/signature-pad/jquery.signaturepad.min.js');
+        $cs->registerCssFile($baseUrl . '/signature-pad/jquery.signaturepad.yii-dressing.min.css');
+        $cs->registerScript('signature-pad', '$(".signature-pad").signaturePad(' . $options . ')' . $methodChain . ';', CClientScript::POS_READY);
     }
 
 }

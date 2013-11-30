@@ -44,8 +44,8 @@ class YdAccountRecover extends YdFormModel
             array('username_or_email', 'checkExists'),
         );
         // recaptcha
-        if (Yii::app()->dressing->recaptcha) {
-            $rules[] = array('recaptcha', 'dressing.validators.YdReCaptchaValidator', 'privateKey' => Yii::app()->dressing->recaptchaPrivate, 'on' => 'recaptcha');
+        if (isset(Yii::app()->reCaptcha)) {
+            $rules[] = array('recaptcha', 'dressing.validators.YdReCaptchaValidator', 'on' => 'recaptcha');
         }
         return $rules;
     }

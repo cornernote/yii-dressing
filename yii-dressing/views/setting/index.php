@@ -74,22 +74,6 @@ echo $form->textFieldRow($settings['name'], 'value', array('name' => 'YdSetting[
 echo $form->textFieldRow($settings['email'], 'value', array('name' => 'YdSetting[email][value]', 'labelOptions' => array('for' => 'YdSetting_email_value')));
 echo '</fieldset>';
 
-echo '<fieldset><legend>' . Yii::t('dressing', 'Recaptcha Settings') . '</legend>';
-echo $form->checkBoxRow($settings['recaptcha'], 'value', array('name' => 'YdSetting[recaptcha][value]', 'labelOptions' => array('for' => 'YdSetting_recaptcha_value')));
-echo $form->textFieldRow($settings['recaptchaPrivate'], 'value', array('name' => 'YdSetting[recaptchaPrivate][value]', 'labelOptions' => array('for' => 'YdSetting_recaptchaPrivate_value')));
-echo $form->textFieldRow($settings['recaptchaPublic'], 'value', array('name' => 'YdSetting[recaptchaPublic][value]', 'labelOptions' => array('for' => 'YdSetting_recaptchaPublic_value')));
-echo '</fieldset>';
-
-echo '<fieldset><legend>' . Yii::t('dressing', 'Date Settings') . '</legend>';
-echo $form->textFieldRow($settings['timezone'], 'value', array('name' => 'YdSetting[timezone][value]', 'labelOptions' => array('for' => 'YdSetting_timezone_value')));
-echo $form->textFieldRow($settings['dateFormat'], 'value', array('name' => 'YdSetting[dateFormat][value]', 'labelOptions' => array('for' => 'YdSetting_dateFormat_value')));
-echo $form->textFieldRow($settings['dateFormatLong'], 'value', array('name' => 'YdSetting[dateFormatLong][value]', 'labelOptions' => array('for' => 'YdSetting_dateFormatLong_value')));
-echo $form->textFieldRow($settings['timeFormat'], 'value', array('name' => 'YdSetting[timeFormat][value]', 'labelOptions' => array('for' => 'YdSetting_timeFormat_value')));
-echo $form->textFieldRow($settings['timeFormatLong'], 'value', array('name' => 'YdSetting[timeFormatLong][value]', 'labelOptions' => array('for' => 'YdSetting_timeFormatLong_value')));
-echo $form->textFieldRow($settings['dateTimeFormat'], 'value', array('name' => 'YdSetting[dateTimeFormat][value]', 'labelOptions' => array('for' => 'YdSetting_dateTimeFormat_value')));
-echo $form->textFieldRow($settings['dateTimeFormatLong'], 'value', array('name' => 'YdSetting[dateTimeFormatLong][value]', 'labelOptions' => array('for' => 'YdSetting_dateTimeFormatLong_value')));
-echo '</fieldset>';
-
 echo $form->endModalWrap();
 echo '<div class="' . $form->getSubmitRowClass() . '">';
 $this->widget('bootstrap.widgets.TbButton', array(

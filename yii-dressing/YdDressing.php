@@ -31,34 +31,9 @@ class YdDressing extends CApplicationComponent
     public $enableAuditTrail = true;
 
     /**
-     * @var bool
-     */
-    public $enableCdn = false;
-
-    /**
-     * @var bool
-     */
-    public $minify = false;
-
-    /**
      * @var array Map of model info including relations and behaviors.
      */
     public $modelMap = array();
-
-    /**
-     * @var bool Enable or disable recaptcha.
-     */
-    public $recaptcha = false;
-
-    /**
-     * @var string
-     */
-    public $recaptchaPrivate = '6LeBItQSAAAAALA4_G05e_-fG5yH_-xqQIN8AfTD';
-
-    /**
-     * @var string
-     */
-    public $recaptchaPublic = '6LeBItQSAAAAAG_umhiD0vyxXbDFbVMPA0kxZUF6';
 
     /**
      * @var bool Default setting for remember me checkbox on login page
@@ -96,10 +71,9 @@ class YdDressing extends CApplicationComponent
         $this->mapModels();
 
         // add packages and register scripts
-        if (!YdHelper::isCli()) {
-            $this->addPackages();
-            $this->registerScripts();
-        }
+        //if (!YdHelper::isCli()) {
+        //    $this->addPackages();
+        //}
 
         // init parent
         parent::init();
@@ -283,34 +257,18 @@ class YdDressing extends CApplicationComponent
      * Yii::app()->clientScript->registerPackage($name)
      * </pre>
      */
-    public function addPackages()
-    {
-        $baseUrl = $this->getAssetsUrl();
-        $packages = array(
-            'jquery' => array(
-                'baseUrl' => $baseUrl . '/jquery/',
-                'js' => array($this->minify ? 'jquery-1.10.2.min.js' : 'jquery-1.10.2.js'),
-            ),
-            'signature-pad' => array(
-                'depends' => array('jquery'),
-                'baseUrl' => $baseUrl . '/signature-pad/',
-                'css' => array($this->minify ? 'jquery.signaturepad.yii-dressing.min.css' : 'jquery.signaturepad.yii-dressing.css'),
-                'js' => array($this->minify ? 'jquery.signaturepad.min.js' : 'jquery.signaturepad.js')
-            ),
-            'jquery-cluetip' => array(
-                'depends' => array('jquery'),
-                'baseUrl' => $baseUrl . '/jquery-cluetip/',
-                'css' => array('jquery.cluetip.css'),
-                'js' => array(
-                    'lib/jquery.hoverIntent.js',
-                    $this->minify ? 'jquery.cluetip.min.js' : 'jquery.cluetip.js',
-                )
-            ),
-        );
-        foreach ($packages as $name => $definition) {
-            Yii::app()->clientScript->addPackage($name, $definition);
-        }
-    }
+    //public function addPackages()
+    //{
+    //    $baseUrl = $this->getAssetsUrl();
+    //    $packages = array(
+    //        'jquery' => array(
+    //            'baseUrl' => $baseUrl . '/jquery/',
+    //            'js' => array(YII_DEBUG ? 'jquery-1.10.2.js' : 'jquery-1.10.2.min.js'),
+    //        ),
+    //    );
+    //    foreach ($packages as $name => $definition)
+    //        Yii::app()->clientScript->addPackage($name, $definition);
+    //}
 
     /**
      * Returns the url for YiiDressing assets
@@ -321,18 +279,6 @@ class YdDressing extends CApplicationComponent
         if ($this->_assetsUrl)
             return $this->_assetsUrl;
         return $this->_assetsUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets'), true, -1, YII_DEBUG);
-    }
-
-    /**
-     *
-     */
-    public function registerScripts()
-    {
-        // register style
-        Yii::app()->clientScript->registerCSSFile($this->getAssetsUrl() . '/yii-dressing/css/yii-dressing.css');
-        // dropdown JS doesn't work on iPad - https://github.com/twitter/bootstrap/issues/2975#issuecomment-6659992
-        // fixed: https://github.com/twbs/bootstrap/issues/2975#issuecomment-11166414
-        // Yii::app()->clientScript->registerScript('bootstrap-dropdown-fix', "$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });", CClientScript::POS_END);
     }
 
 }

@@ -211,6 +211,9 @@ class YdBase extends YiiBase
                 'format' => array(
                     'class' => 'dressing.components.YdFormatter',
                 ),
+                'reCapture' => array(
+                    'class' => 'dressing.components.YdReCapture',
+                ),
                 'widgetFactory' => array(
                     'widgets' => array(
                         'TbMenu' => array(
