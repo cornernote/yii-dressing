@@ -39,7 +39,7 @@ class YdUserIdentity extends CUserIdentity
                 $this->_id = $user->id;
                 $this->username = $user->username ? $user->username : $user->email;
                 $this->errorCode = self::ERROR_NONE;
-                Yii::app()->session->add('YdUserIdentity.web', true);
+                Yii::app()->session->add('UserIdentity.web', true);
             }
         }
 
@@ -69,7 +69,7 @@ class YdUserIdentity extends CUserIdentity
                 $this->_id = $user->id;
                 $this->username = $user->username ? $user->username : $user->email;
                 $this->errorCode = self::ERROR_NONE;
-                Yii::app()->session->add('YdUserIdentity.api', true);
+                Yii::app()->session->add('UserIdentity.api', true);
             }
         }
 
