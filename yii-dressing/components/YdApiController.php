@@ -16,7 +16,7 @@ class YdApiController extends YdController
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
      * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
      */
-    public $layout = '//layouts/json';
+    public $layout = '/layouts/json';
 
     /**
      * @var
@@ -107,7 +107,7 @@ class YdApiController extends YdController
     /**
      * @param $id
      * @param bool|string $model
-     * @return ActiveRecord
+     * @return YdActiveRecord
      * @throws CHttpException
      */
     public function loadModel($id, $model = false)

@@ -1,18 +1,19 @@
 <?php
 
 /**
- * Class YdWebUserFilter
+ * YdWebUserFilter will ensure the user logged in through the correct UserIdentity method
  */
 class YdWebUserTypeFilter extends CFilter
 {
 
     /**
-     * @var string
+     * @var string The method in UserIdentity that the user logged in with.
      */
     public $type = 'web';
 
     /**
-     * Performs the pre-action filtering.
+     * Ensure the user logged in through the correct UserIdentity method.
+     *
      * @param CFilterChain $filterChain the filter chain that the filter is on.
      * @return boolean whether the filtering process should continue and the action
      * should be executed.
@@ -24,8 +25,7 @@ class YdWebUserTypeFilter extends CFilter
         $request = $app->getRequest();
         $session = $app->getSession();
 
-        // ensure the user is the right type of login
-        if (!$user->getIsGuest() && !$session->get('UserIdentity.' . $this->type)) {
+        if (!$user->getIsGuest() && !$session->get($user->getStateKeyPrefix() . 'UserIdentity.' . $this->type)) {
             if ($app->createUrl($user->loginUrl[0], array_splice($user->loginUrl, 1)) != $request->getRequestUri()) {
                 $user->loginRequired();
                 return false;
