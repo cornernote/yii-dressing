@@ -47,25 +47,22 @@ class YdGeneratePropertiesAction extends CAction
      * This method displays the view requested by the user.
      * @throws CHttpException if the modelName is invalid
      */
-    public function run()
+    public function run($modelName = null)
     {
-        // try get the model name
-        $this->modelName = YdHelper::getSubmittedField('modelName');
+        // build all
+        if ($modelName == 'confirm_all') {
+            $this->replaceAllModelProperties();
+            $modelName = null;
+        }
 
         // show a list
-        if (!$this->modelName) {
+        if (!$modelName) {
             $this->renderModelList();
             return;
         }
 
-        // load the model
-        $this->model = CActiveRecord::model($this->modelName);
-        if (!$this->model) {
-            throw new CHttpException(strtr(Yii::t('dressing', 'No CActiveRecord Class with name :modelName was not found.'), array(':modelName' => $this->modelName)));
-        }
-
         // render the properties
-        $this->renderModelProperties();
+        $this->renderModelProperties($modelName);
     }
 
     /**
@@ -73,14 +70,16 @@ class YdGeneratePropertiesAction extends CAction
      */
     public function renderModelList()
     {
-        ob_start();
-        $this->controller->widget('bootstrap.widgets.TbMenu', array(
-            'type' => 'pills', // '', 'tabs', 'pills' (or 'list')
-            'stacked' => true, // whether this is a stacked menu
-            'items' => $this->getModelList(),
-        ));
-        $contents = ob_get_clean();
-        $this->controller->renderText($contents);
+        //ob_start();
+        //$this->controller->widget('bootstrap.widgets.TbMenu', array(
+        //    'type' => 'pills', // '', 'tabs', 'pills' (or 'list')
+        //    //'stacked' => true, // whether this is a stacked menu
+        //    'items' => $this->getModelList(),
+        //));
+        //$contents = ob_get_clean();
+        $this->controller->pageHeading = $this->controller->pageTitle = Yii::t('dressing', 'Generate Model Properties');
+        $this->controller->menu = $this->getModelList();
+        $this->controller->renderText(CHtml::link(Yii::t('dressing', 'Replace All Model Properties'), array('/' . $this->controller->id . '/' . $this->controller->action->id, 'modelName' => 'confirm_all'), array('class' => 'btn btn-primary btn-large')));
     }
 
     /**
@@ -98,25 +97,61 @@ class YdGeneratePropertiesAction extends CAction
             }
             $model = new $modelName;
             if ($model && is_subclass_of($model, 'CActiveRecord')) {
-                $modelList[] = array('label' => $modelName, 'url' => array('/tool/generateProperties', 'modelName' => $modelName));
+                $modelList[] = array('label' => $modelName, 'url' => array('/' . $this->controller->id . '/' . $this->controller->action->id, 'modelName' => $modelName));
             }
         }
         return $modelList;
     }
 
     /**
+     * @param $modelName string
+     */
+    public function renderModelProperties($modelName)
+    {
+        $properties = $this->getModelProperties($modelName);
+        $message = $this->replaceModelProperties($modelName, $properties);
+        $this->controller->breadcrumbs = array(
+            Yii::t('dressing', 'Generate Properties') => array('/tool/generateProperties'),
+            $modelName,
+        );
+        $this->controller->pageHeading = $this->controller->pageTitle = $modelName;
+        $this->controller->menu = $this->getModelList();
+        $this->controller->renderText($message . '<pre>' . implode("\n", $properties) . '</pre>');
+    }
+
+    /**
      *
      */
-    public function renderModelProperties()
+    public function replaceAllModelProperties()
+    {
+        foreach ($this->getModelList() as $modelInfo) {
+            $modelName = $modelInfo['label'];
+            $properties = $this->getModelProperties($modelName);
+            $this->replaceModelProperties($modelName, $properties);
+        }
+        $this->controller->breadcrumbs = array(
+            Yii::t('dressing', 'Generate Properties') => array('/tool/generateProperties'),
+            Yii::t('dressing', 'Replace All Model Properties'),
+        );
+        $this->controller->pageHeading = $this->controller->pageTitle = Yii::t('dressing', 'Replace All Model Properties');
+        $this->controller->menu = $this->getModelList();
+        $this->controller->renderText(Yii::t('dressing', 'Done!'));
+    }
+
+    /**
+     * @param $modelName string
+     * @param $properties array
+     * @return string
+     */
+    public function replaceModelProperties($modelName, $properties)
     {
         $begin = " * --- BEGIN GenerateProperties ---";
         $end = " * --- END GenerateProperties ---";
-        $contents = $begin . "\n" . implode("\n", $this->getModelProperties()) . "\n" . $end;
+        $contents = $begin . "\n" . implode("\n", $properties) . "\n" . $end;
 
-        $message = '';
-        $fileName = Yii::getPathOfAlias("application.models") . '/' . $this->modelName . '.php';
+        $fileName = Yii::getPathOfAlias("application.models") . '/' . $modelName . '.php';
         if (!file_exists($fileName)) {
-            $fileName = Yii::getPathOfAlias("application.models.cre") . '/' . $this->modelName . '.php';
+            $fileName = Yii::getPathOfAlias("application.models.cre") . '/' . $modelName . '.php';
         }
         if (file_exists($fileName)) {
             $fileContents = file_get_contents($fileName);
@@ -130,56 +165,60 @@ class YdGeneratePropertiesAction extends CAction
                 $oldDoc = YdStringHelper::getBetweenString($fileContents, $begin, $end, false, false);
                 if ($contents != $oldDoc) {
                     file_put_contents($fileName, str_replace($oldDoc, $contents, $fileContents));
-                    $message = 'overwrote file: ' . realpath($fileName);
+                    return 'overwrote file: ' . realpath($fileName);
                 }
                 else {
-                    $message = 'contents matches file: ' . realpath($fileName);
+                    return 'contents matches file: ' . realpath($fileName);
                 }
             }
         }
-        $this->controller->breadcrumbs = array(
-            Yii::t('dressing', 'Generate Properties') => array('/tool/generateProperties'),
-            Yii::t('dressing', 'Model') . ' ' . $this->modelName,
-        );
-        $this->controller->renderText($message . '<pre>' . $contents . '</pre>');
+        return '';
     }
 
     /**
+     * @param $modelName
+     * @throws CHttpException
      * @return array
      */
-    public function getModelProperties()
+    public function getModelProperties($modelName)
     {
+        // load the model
+        $model = CActiveRecord::model($modelName);
+        if (!$model) {
+            throw new CHttpException(strtr(Yii::t('dressing', 'No CActiveRecord Class with name :modelName was not found.'), array(':modelName' => $modelName)));
+        }
+
         $properties = array();
 
         Yii::app()->db->getSchema()->refresh();
-        $this->model->refreshMetaData();
-        //$this->model->refresh(); // caused an error on many_to_many tables
+        $model->refreshMetaData();
+        //$model->refresh(); // caused an error on many_to_many tables
 
         // intro
         $properties[] = " *";
-        $properties[] = " * This is the model class for table '" . $this->model->tableName() . "'";
+        $properties[] = " * This is the model class for table '" . $model->tableName() . "'";
         $properties[] = " *";
 
         // table
-        $properties[] = " * @method {$this->modelName} model() static model(string \$className = NULL)";
-        $properties[] = " * @method {$this->modelName} with() with()";
-        $properties[] = " * @method {$this->modelName} find() find(\$condition, array \$params = array())";
-        $properties[] = " * @method {$this->modelName}[] findAll() findAll(\$condition = '', array \$params = array())";
-        $properties[] = " * @method {$this->modelName} findByPk() findByPk(\$pk, \$condition = '', array \$params = array())";
-        $properties[] = " * @method {$this->modelName}[] findAllByPk() findAllByPk(\$pk, \$condition = '', array \$params = array())";
-        $properties[] = " * @method {$this->modelName} findByAttributes() findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
-        $properties[] = " * @method {$this->modelName}[] findAllByAttributes() findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
-        $properties[] = " * @method {$this->modelName} findBySql() findBySql(\$sql, array \$params = array())";
-        $properties[] = " * @method {$this->modelName}[] findAllBySql() findAllBySql(\$sql, array \$params = array())";
+        $properties[] = " * @method {$modelName} model() static model(string \$className = NULL)";
+        $properties[] = " * @method {$modelName} with() with()";
+        $properties[] = " * @method {$modelName} find() find(\$condition, array \$params = array())";
+        $properties[] = " * @method {$modelName}[] findAll() findAll(\$condition = '', array \$params = array())";
+        $properties[] = " * @method {$modelName} findByPk() findByPk(\$pk, \$condition = '', array \$params = array())";
+        $properties[] = " * @method {$modelName}[] findAllByPk() findAllByPk(\$pk, \$condition = '', array \$params = array())";
+        $properties[] = " * @method {$modelName} findByAttributes() findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
+        $properties[] = " * @method {$modelName}[] findAllByAttributes() findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
+        $properties[] = " * @method {$modelName} findBySql() findBySql(\$sql, array \$params = array())";
+        $properties[] = " * @method {$modelName}[] findAllBySql() findAllBySql(\$sql, array \$params = array())";
         $properties[] = " *";
 
         // behaviors
-        $behaviors = $this->model->behaviors();
+        $behaviors = $model->behaviors();
         $inheritedMethods = array();
         foreach (get_class_methods('CActiveRecordBehavior') as $methodName) {
             $inheritedMethods[$methodName] = $methodName;
         }
-        $reflection = new ReflectionClass ($this->modelName);
+        $reflection = new ReflectionClass ($modelName);
         $selfMethods = CHtml::listData($reflection->getMethods(), 'name', 'name');
         foreach ($behaviors as $behavior) {
             $className = $behavior;
@@ -237,7 +276,7 @@ class YdGeneratePropertiesAction extends CAction
         }
 
         // relations
-        $relations = $this->model->relations();
+        $relations = $model->relations();
         if ($relations) {
             $properties[] = ' * Properties from relation';
             foreach ($relations as $relationName => $relation) {
@@ -260,7 +299,7 @@ class YdGeneratePropertiesAction extends CAction
 
         // table fields
         $properties[] = ' * Properties from table fields';
-        foreach ($this->model->tableSchema->columns as $column) {
+        foreach ($model->tableSchema->columns as $column) {
             $type = $column->type;
             if (($column->dbType == 'datetime') || ($column->dbType == 'date')) {
                 $type = 'string'; // $column->dbType;
