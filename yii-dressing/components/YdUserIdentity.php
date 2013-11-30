@@ -31,14 +31,15 @@ class YdUserIdentity extends CUserIdentity
         ));
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-        } else {
+        }
+        else {
             if (!$user->validatePassword($this->password))
                 $this->errorCode = self::ERROR_PASSWORD_INVALID;
             else {
                 $this->_id = $user->id;
                 $this->username = $user->username ? $user->username : $user->email;
                 $this->errorCode = self::ERROR_NONE;
-                Yii::app()->user->setState('YdUserIdentity.web', true);
+                Yii::app()->session->add('YdUserIdentity.web', true);
             }
         }
 
@@ -60,14 +61,15 @@ class YdUserIdentity extends CUserIdentity
         ));
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-        } else {
+        }
+        else {
             if (!$user->validatePassword($this->password, $user->api_key))
                 $this->errorCode = self::ERROR_PASSWORD_INVALID;
             else {
                 $this->_id = $user->id;
                 $this->username = $user->username ? $user->username : $user->email;
                 $this->errorCode = self::ERROR_NONE;
-                Yii::app()->user->setState('YdUserIdentity.api', true);
+                Yii::app()->session->add('YdUserIdentity.api', true);
             }
         }
 

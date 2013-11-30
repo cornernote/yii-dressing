@@ -23,8 +23,12 @@ class YdAccountController extends YdWebController
     {
         return array(
             array('allow',
-                'actions' => array('login', 'signup', 'recover', 'passwordReset'),
+                'actions' => array('login', 'recover', 'passwordReset'),
                 'users' => array('*'),
+            ),
+            array('allow',
+                'actions' => array('signup'),
+                'users' => array('?'),
             ),
             array('allow',
                 'actions' => array('logout', 'index', 'update', 'password', 'settings'),
@@ -51,8 +55,8 @@ class YdAccountController extends YdWebController
     public function actionLogin()
     {
         // redirect if the user is already logged in
-        if (Yii::app()->user->id) {
-            $this->redirect(Yii::app()->homeUrl);
+        if (Yii::app()->user->id && Yii::app()->session->get('YdUserIdentity.web')) {
+            $this->redirect(Yii::app()->user->getReturnUrl(Yii::app()->homeUrl));
         }
 
         // enable recaptcha after 3 attempts

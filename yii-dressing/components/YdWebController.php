@@ -83,9 +83,13 @@ class YdWebController extends YdController
         parent::init();
 
         // ensure the user is a web login
-        if (!Yii::app()->user->isGuest && !Yii::app()->user->getState('YdUserIdentity.web')) {
-            Yii::app()->user->addFlash(Yii::t('dressing', 'Please login to the web interface.'));
-            $this->redirect(Yii::app()->user->loginUrl);
+        if (!Yii::app()->user->isGuest && !Yii::app()->session->get('YdUserIdentity.web')) {
+            $route = Yii::app()->user->loginUrl;
+            $path = array_shift($route);
+            if (Yii::app()->request->requestUri != Yii::app()->createUrl($path, $route)) {
+                Yii::app()->user->addFlash(Yii::t('dressing', 'Please login to the web interface.'));
+                $this->redirect(Yii::app()->user->loginUrl);
+            }
         }
 
         // set user theme
