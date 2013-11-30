@@ -70,11 +70,6 @@ class YdDressing extends CApplicationComponent
         // map models
         $this->mapModels();
 
-        // add packages and register scripts
-        //if (!YdHelper::isCli()) {
-        //    $this->addPackages();
-        //}
-
         // init parent
         parent::init();
     }
@@ -250,25 +245,6 @@ class YdDressing extends CApplicationComponent
             ),
         ), $this->modelMap);
     }
-
-    /**
-     * Defines packages that can be called later using:
-     * <pre>
-     * Yii::app()->clientScript->registerPackage($name)
-     * </pre>
-     */
-    //public function addPackages()
-    //{
-    //    $baseUrl = $this->getAssetsUrl();
-    //    $packages = array(
-    //        'jquery' => array(
-    //            'baseUrl' => $baseUrl . '/jquery/',
-    //            'js' => array(YII_DEBUG ? 'jquery-1.10.2.js' : 'jquery-1.10.2.min.js'),
-    //        ),
-    //    );
-    //    foreach ($packages as $name => $definition)
-    //        Yii::app()->clientScript->addPackage($name, $definition);
-    //}
 
     /**
      * Returns the url for YiiDressing assets

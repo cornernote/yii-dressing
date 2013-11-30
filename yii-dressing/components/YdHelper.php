@@ -42,11 +42,24 @@ class YdHelper
     /**
      * @return bool
      */
-    public static function isFrontPage()
+    public static function isHomePage()
     {
-        return (str_replace(Yii::app()->createUrl('/'), '', Yii::app()->getRequest()->getRequestUri()) == '/');
+        $app = Yii::app();
+        $url = $app->getHomeUrl();
+        $request = $app->getRequest();
+        return ($app->createUrl($url[0], array_splice($url, 1)) == $request->getRequestUri());
     }
 
+    /**
+     * @return bool
+     */
+    public static function isLoginPage()
+    {
+        $app = Yii::app();
+        $url = $app->getUser()->loginUrl;
+        $request = $app->getRequest();
+        return ($app->createUrl($url[0], array_splice($url, 1)) == $request->getRequestUri());
+    }
 
     /**
      * @param $table

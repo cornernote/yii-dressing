@@ -107,7 +107,10 @@ class YdWebUser extends CWebUser
     public function setState($key, $value, $defaultValue = null)
     {
         if ($this->_userModel && $this->_userModel->asa('EavBehavior')) {
-            $this->_userModel->setEavAttribute($key, $this->serializeStateValue($value), true);
+            if ($value)
+                $this->_userModel->setEavAttribute($key, $this->serializeStateValue($value), true);
+            else
+                $this->_userModel->deleteEavAttributes(array($key), true);
         }
         return parent::setState($key, $value, $defaultValue);
     }
@@ -127,7 +130,8 @@ class YdWebUser extends CWebUser
      */
     protected function unserializeStateValue($value)
     {
-        return unserialize($value);
+        if ($value)
+            return unserialize($value);
     }
 
 }
