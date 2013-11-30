@@ -47,7 +47,7 @@ class YdDropdownColumn extends TbDataColumn
      * Renders the data cell content.
      *
      * @param integer $row the row number (zero-based)
-     * @param ActiveRecord $data the data associated with the row
+     * @param YdActiveRecord $data the data associated with the row
      */
     protected function renderDataCellContent($row, $data)
     {
