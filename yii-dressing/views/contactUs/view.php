@@ -16,7 +16,7 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[$this->getName() . ' ' . Yii::t('dressing', 'List')] = Yii::app()->user->getState('index.contactUs', array('/contactUs/index'));
 $this->breadcrumbs[] = $contactUs->getName();
 
-$this->renderPartial('dressing.views.contactUs._menu', array(
+$this->renderPartial('/contactUs/_menu', array(
     'contactUs' => $contactUs,
 ));
 

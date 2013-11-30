@@ -36,7 +36,7 @@ class YdSiteMenuController extends YdWebController
         $criteria = new CDbCriteria();
         $criteria->compare('t.parent_id', 0);
         $menus = YdSiteMenu::model()->findAll($criteria);
-        $this->render('dressing.views.siteMenu.index', array(
+        $this->render('index', array(
             'menus' => $menus,
         ));
     }
@@ -55,7 +55,7 @@ class YdSiteMenuController extends YdWebController
             Yii::app()->user->addFlash('THIS RECORD IS DELETED', 'warning');
         }
 
-        $this->render('dressing.views.siteMenu.view', array(
+        $this->render('view', array(
             'menu' => $menu,
         ));
     }
@@ -69,7 +69,7 @@ class YdSiteMenuController extends YdWebController
         /** @var $menu YdSiteMenu */
         $menu = $this->loadModel($id, 'YdSiteMenu');
 
-        $this->render('dressing.views.siteMenu.log', array(
+        $this->render('log', array(
             'menu' => $menu,
         ));
     }
@@ -96,7 +96,7 @@ class YdSiteMenuController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.siteMenu.create', array(
+        $this->render('create', array(
             'menu' => $menu,
         ));
     }
@@ -119,7 +119,7 @@ class YdSiteMenuController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.siteMenu.update', array(
+        $this->render('update', array(
             'menu' => $menu,
         ));
     }
@@ -146,7 +146,7 @@ class YdSiteMenuController extends YdWebController
             $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->getState('index.siteMenu', array('/menu/index'))));
         }
 
-        $this->render('dressing.views.siteMenu.delete', array(
+        $this->render('delete', array(
             'id' => $id,
             'task' => $task,
         ));

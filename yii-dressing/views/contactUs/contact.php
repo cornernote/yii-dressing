@@ -13,6 +13,6 @@
 $this->pageTitle = $this->pageHeading = $this->getName();
 $this->breadcrumbs[] = $this->getName();
 
-$this->renderPartial('dressing.views.contactUs._form', array(
+$this->renderPartial('/contactUs/_form', array(
     'contactUs' => $contactUs,
 ));

@@ -44,7 +44,7 @@ class YdAccountController extends YdWebController
     public function actionIndex()
     {
         $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
-        $this->render('dressing.views.account.view', array(
+        $this->render('view', array(
             'user' => $user,
         ));
     }
@@ -88,7 +88,7 @@ class YdAccountController extends YdWebController
         }
 
         // display the login form
-        $this->render('dressing.views.account.login', array(
+        $this->render('login', array(
             'user' => $user,
             'recaptcha' => ($attempts >= 3 && Yii::app()->dressing->recaptcha) ? true : false,
         ));
@@ -117,7 +117,7 @@ class YdAccountController extends YdWebController
         }
 
         // display the signup form
-        $this->render('dressing.views.account.signup', array(
+        $this->render('signup', array(
             'user' => $user,
         ));
     }
@@ -163,7 +163,7 @@ class YdAccountController extends YdWebController
 
         }
         // display the recover form
-        $this->render('dressing.views.account.recover', array(
+        $this->render('recover', array(
             'user' => $accountRecover,
             'recaptcha' => ($attempts >= 3 && Yii::app()->dressing->recaptcha) ? true : false,
         ));
@@ -242,7 +242,7 @@ class YdAccountController extends YdWebController
                 Yii::app()->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'warning');
             }
         }
-        $this->render('dressing.views.account.password_reset', array('user' => $accountPassword));
+        $this->render('password_reset', array('user' => $accountPassword));
     }
 
     /**
@@ -272,7 +272,7 @@ class YdAccountController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.account.update', array(
+        $this->render('update', array(
             'user' => $user,
         ));
     }
@@ -296,7 +296,7 @@ class YdAccountController extends YdWebController
                 }
             }
         }
-        $this->render('dressing.views.account.password', array('user' => $accountPassword));
+        $this->render('password', array('user' => $accountPassword));
 
     }
 
@@ -327,7 +327,7 @@ class YdAccountController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.account.settings', array(
+        $this->render('settings', array(
             'user' => $user,
         ));
     }

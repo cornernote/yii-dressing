@@ -17,9 +17,9 @@ $this->breadcrumbs[Yii::t('dressing', 'Site Menus')] = Yii::app()->user->getStat
 $this->breadcrumbs[$menu->getName()] = $menu->getLink();
 $this->breadcrumbs[] = t('Log');
 
-$this->renderPartial('dressing.views.siteMenu._menu', array(
+$this->renderPartial('/siteMenu/_menu', array(
     'menu' => $menu,
 ));
-$this->renderPartial('dressing.views.auditTrail._log', array(
+$this->renderPartial('/auditTrail/_log', array(
     'model' => $menu,
 ));

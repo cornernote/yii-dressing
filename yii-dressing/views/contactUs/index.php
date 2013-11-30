@@ -16,7 +16,7 @@ $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressin
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
-$this->renderPartial('dressing.views.contactUs._menu');
+$this->renderPartial('/contactUs/_menu');
 
 echo '<div class="spacer">';
 
@@ -35,11 +35,11 @@ if (Yii::app()->user->getState('index.contactUs') != Yii::app()->createUrl('/con
 echo '</div>';
 
 // search
-$this->renderPartial('dressing.views.contactUs._search', array(
+$this->renderPartial('/contactUs/_search', array(
     'contactUs' => $contactUs,
 ));
 
 // grid
-$this->renderPartial('dressing.views.contactUs._grid', array(
+$this->renderPartial('/contactUs/_grid', array(
     'contactUs' => $contactUs,
 ));

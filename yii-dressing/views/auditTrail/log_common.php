@@ -34,5 +34,5 @@ echo '</fieldset>';
 
 // audit trails
 echo '<fieldset><legend>' . Yii::t('dressing', 'Audit Trails') . '</legend>';
-$this->renderPartial('dressing.views.auditTrail._log', array('model' => $model));
+$this->renderPartial('/auditTrail/_log', array('model' => $model));
 echo '</fieldset>';

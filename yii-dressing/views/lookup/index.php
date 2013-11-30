@@ -17,7 +17,7 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Lookups')] = Yii::app()->user->getState('index.lookup', array('/lookup/index'));
 $this->breadcrumbs[] = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
-$this->renderPartial('dressing.views.lookup._menu', array(
+$this->renderPartial('/lookup/_menu', array(
     'lookup' => $lookup,
 ));
 
@@ -45,11 +45,11 @@ if (Yii::app()->user->getState('index.lookup') != Yii::app()->createUrl('/lookup
 echo '</div>';
 
 // search
-$this->renderPartial('dressing.views.lookup._search', array(
+$this->renderPartial('/lookup/_search', array(
     'lookup' => $lookup,
 ));
 
 // grid
-$this->renderPartial('dressing.views.lookup._grid', array(
+$this->renderPartial('/lookup/_grid', array(
     'lookup' => $lookup,
 ));

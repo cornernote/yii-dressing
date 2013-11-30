@@ -14,5 +14,5 @@
 $this->widget('dressing.widgets.YdListView', array(
     'id' => 'contactUs-list',
     'dataProvider' => $contactUs->search(),
-    'itemView' => 'dressing.views.contactUs._list_view',
+    'itemView' => '/contactUs/_list_view',
 ));

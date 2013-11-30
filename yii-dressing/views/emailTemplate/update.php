@@ -16,9 +16,9 @@ $this->breadcrumbs[Yii::t('dressing', 'Email Templates')] = Yii::app()->user->ge
 $this->breadcrumbs[$emailTemplate->getName()] = $emailTemplate->getLink();
 $this->breadcrumbs[] = Yii::t('dressing', 'Update');
 
-$this->renderPartial('dressing.views.emailTemplate._menu', array(
+$this->renderPartial('/emailTemplate/_menu', array(
     'emailTemplate' => $emailTemplate,
 ));
-$this->renderPartial('dressing.views.emailTemplate._form', array(
+$this->renderPartial('/emailTemplate/_form', array(
     'emailTemplate' => $emailTemplate,
 ));

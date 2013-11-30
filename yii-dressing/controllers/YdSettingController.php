@@ -99,7 +99,7 @@ class YdSettingController extends YdWebController
             $settings['server_name']->value = $settings['server_name']->value ? $settings['server_name']->value : $_SERVER['SERVER_NAME'];
         }
 
-        $this->render('dressing.views.setting.index', array(
+        $this->render('index', array(
             'settings' => $settings,
         ));
     }

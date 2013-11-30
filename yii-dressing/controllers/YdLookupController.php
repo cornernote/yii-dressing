@@ -37,7 +37,7 @@ class YdLookupController extends YdWebController
         if (!empty($_GET['YdLookup']))
             $lookup->attributes = $_GET['YdLookup'];
 
-        $this->render('dressing.views.lookup.index', array(
+        $this->render('index', array(
             'lookup' => $lookup,
         ));
     }
@@ -56,7 +56,7 @@ class YdLookupController extends YdWebController
             Yii::app()->user->addFlash('THIS RECORD IS DELETED', 'warning');
         }
 
-        $this->render('dressing.views.lookup.view', array(
+        $this->render('view', array(
             'lookup' => $lookup,
         ));
     }
@@ -70,7 +70,7 @@ class YdLookupController extends YdWebController
         /** @var $lookup YdLookup */
         $lookup = $this->loadModel($id, 'YdLookup');
 
-        $this->render('dressing.views.lookup.log', array(
+        $this->render('log', array(
             'lookup' => $lookup,
         ));
     }
@@ -96,7 +96,7 @@ class YdLookupController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.lookup.create', array(
+        $this->render('create', array(
             'lookup' => $lookup,
         ));
     }
@@ -119,7 +119,7 @@ class YdLookupController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.lookup.update', array(
+        $this->render('update', array(
             'lookup' => $lookup,
         ));
     }
@@ -146,7 +146,7 @@ class YdLookupController extends YdWebController
             $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->getState('index.lookup', array('/lookup/index'))));
         }
 
-        $this->render('dressing.views.lookup.delete', array(
+        $this->render('delete', array(
             'id' => $id,
             'task' => $task,
         ));
@@ -202,7 +202,7 @@ class YdLookupController extends YdWebController
         }
 
         // render view
-        $this->render('dressing.views.lookup.view', array(
+        $this->render('view', array(
             'types' => $types,
             'type' => $type,
             'lookups' => $lookups,

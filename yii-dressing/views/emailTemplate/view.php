@@ -15,7 +15,7 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Email Templates')] = Yii::app()->user->getState('index.emailTemplate', array('/emailTemplate/index'));
 $this->breadcrumbs[] = $emailTemplate->getName();
 
-$this->renderPartial('dressing.views.emailTemplate._menu', array(
+$this->renderPartial('/emailTemplate/_menu', array(
     'emailTemplate' => $emailTemplate,
 ));
 

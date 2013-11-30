@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AttachmentController
+ * @var $this YdAttachmentController
  * @var $attachment YdAttachment
  *
  * @author Brett O'Donnell <cornernote@gmail.com>

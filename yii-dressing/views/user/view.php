@@ -15,7 +15,7 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Users')] = Yii::app()->user->getState('index.user', array('/user/index'));
 $this->breadcrumbs[] = $user->getName();
 
-$this->renderPartial('dressing.views.user._menu', array(
+$this->renderPartial('/user/_menu', array(
     'user' => $user,
 ));
 

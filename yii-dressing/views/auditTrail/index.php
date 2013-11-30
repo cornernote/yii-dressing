@@ -16,5 +16,5 @@ $this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Audit Trails');
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Audit Trails');
 
-$this->renderPartial('dressing.views.auditTrail._menu');
-$this->renderPartial('dressing.views.auditTrail._grid', array('auditTrail' => $auditTrail));
+$this->renderPartial('/auditTrail/_menu');
+$this->renderPartial('/auditTrail/_grid', array('auditTrail' => $auditTrail));

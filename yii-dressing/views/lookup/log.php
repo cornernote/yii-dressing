@@ -17,9 +17,9 @@ $this->breadcrumbs[Yii::t('dressing', 'Lookups')] = Yii::app()->user->getState('
 $this->breadcrumbs[$lookup->getName()] = $lookup->getLink();
 $this->breadcrumbs[] = Yii::t('dressing', 'Log');
 
-$this->renderPartial('dressing.views.lookup._menu', array(
+$this->renderPartial('/lookup/_menu', array(
     'lookup' => $lookup,
 ));
-$this->renderPartial('dressing.views.auditTrail._log', array(
+$this->renderPartial('/auditTrail/_log', array(
     'model' => $lookup,
 ));

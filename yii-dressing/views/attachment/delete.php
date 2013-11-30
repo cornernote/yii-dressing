@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AttachmentController
+ * @var $this YdAttachmentController
  * @var $id int
  * @var $task string
  *

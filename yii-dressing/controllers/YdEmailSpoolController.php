@@ -36,7 +36,7 @@ class YdEmailSpoolController extends YdWebController
     public function actionIndex()
     {
         $emailSpool = new YdEmailSpool('search');
-        $this->render('dressing.views.emailSpool.index', array(
+        $this->render('index', array(
             'emailSpool' => $emailSpool,
         ));
     }
@@ -48,7 +48,7 @@ class YdEmailSpoolController extends YdWebController
     public function actionView($id)
     {
         $emailSpool = $this->loadModel($id, 'YdEmailSpool');
-        $this->render('dressing.views.emailSpool.view', array(
+        $this->render('view', array(
             'emailSpool' => $emailSpool,
         ));
     }
@@ -60,7 +60,7 @@ class YdEmailSpoolController extends YdWebController
     public function actionLog($id)
     {
         $emailSpool = $this->loadModel($id, 'YdEmailSpool');
-        $this->render('dressing.views.emailSpool.log', array(
+        $this->render('log', array(
             'emailSpool' => $emailSpool,
         ));
     }

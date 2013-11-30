@@ -41,7 +41,7 @@ class YdErrorController extends YdWebController
             $errors[$k] = substr($v, strlen($dir) + 1);
         }
         rsort($errors);
-        $this->render('dressing.views.error.index', array(
+        $this->render('index', array(
             'errors' => $errors,
         ));
     }

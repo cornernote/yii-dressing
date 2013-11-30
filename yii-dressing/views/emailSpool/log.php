@@ -16,9 +16,9 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Email Spools')] = Yii::app()->user->getState('index.emailSpool', array('/emailSpool/index'));
 $this->breadcrumbs[] = $emailSpool->getName();
 
-$this->renderPartial('dressing.views.emailSpool._menu', array(
+$this->renderPartial('/emailSpool/_menu', array(
     'emailSpool' => $emailSpool,
 ));
-$this->renderPartial('dressing.views.auditTrail._log', array(
+$this->renderPartial('/auditTrail/_log', array(
     'model' => $emailSpool,
 ));

@@ -105,7 +105,7 @@ class YdAttachmentController extends YdWebController
     public function actionPreview($id, $thumb, $dl = null, $cache = null)
     {
         $attachment = YdAttachment::model()->findByPk((int)$id);
-        $this->render('dressing.views.attachment.preview', array(
+        $this->render('preview', array(
             'attachment' => $attachment,
             'thumb' => $thumb,
         ));
@@ -260,7 +260,7 @@ class YdAttachmentController extends YdWebController
 
         }
 
-        $this->render('dressing.views.attachment.create', array(
+        $this->render('create', array(
             'attachment' => $attachment,
         ));
     }
@@ -282,7 +282,7 @@ class YdAttachmentController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.attachment.update', array(
+        $this->render('update', array(
             'attachment' => $attachment,
         ));
     }
@@ -331,7 +331,7 @@ class YdAttachmentController extends YdWebController
             $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->getState('index.attachment', array('/attachment/index'))));
         }
 
-        $this->render('dressing.views.attachment.delete', array(
+        $this->render('delete', array(
             'id' => $id,
             'task' => $task,
         ));

@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AttachmentController
+ * @var $this YdAttachmentController
  * @var $attachment YdAttachment
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -16,7 +16,7 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Attachments')] = Yii::app()->user->getState('index.attachment', array('/attachment/index'));
 $this->breadcrumbs[] = Yii::t('dressing', 'Create');
 
-$this->renderPartial('dressing.views.attachment._menu', array(
+$this->renderPartial('attachment._menu', array(
     'attachment' => $attachment,
 ));
 $this->renderPartial('_form', array(

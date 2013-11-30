@@ -15,7 +15,7 @@ $this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Audits');
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Audits');
 
-$this->renderPartial('dressing.views.audit._menu');
+$this->renderPartial('/audit/_menu');
 
 echo '<div class="spacer">';
 $this->widget('bootstrap.widgets.TbButton', array(
@@ -33,11 +33,11 @@ if (Yii::app()->user->getState('index.audit') != Yii::app()->createUrl('/audit/i
 echo '</div>';
 
 // search
-$this->renderPartial('dressing.views.audit._search', array(
+$this->renderPartial('/audit/_search', array(
     'audit' => $audit,
 ));
 
 // grid
-$this->renderPartial('dressing.views.audit._grid', array(
+$this->renderPartial('/audit/_grid', array(
     'audit' => $audit
 ));

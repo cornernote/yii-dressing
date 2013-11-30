@@ -15,7 +15,7 @@ $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressin
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Users');
 
-$this->renderPartial('dressing.views.user._menu', array(
+$this->renderPartial('/user/_menu', array(
     'user' => $user,
 ));
 
@@ -42,11 +42,11 @@ if (Yii::app()->user->getState('index.user') != Yii::app()->createUrl('/user/ind
 echo '</div>';
 
 // search
-$this->renderPartial('dressing.views.user._search', array(
+$this->renderPartial('/user/_search', array(
     'user' => $user,
 ));
 
 // grid
-$this->renderPartial('dressing.views.user._grid', array(
+$this->renderPartial('/user/_grid', array(
     'user' => $user,
 ));

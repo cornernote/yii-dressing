@@ -15,7 +15,7 @@ $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressin
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Email Spools');
 
-$this->renderPartial('dressing.views.emailSpool._menu');
+$this->renderPartial('/emailSpool/_menu');
 
 echo '<div class="spacer">';
 if (Yii::app()->user->getState('index.emailSpool') != Yii::app()->createUrl('/emailSpool/index')) {
@@ -28,4 +28,4 @@ if (Yii::app()->user->getState('index.emailSpool') != Yii::app()->createUrl('/em
 echo '</div>';
 
 // grid
-$this->renderPartial('dressing.views.emailSpool._grid', array('emailSpool' => $emailSpool));
+$this->renderPartial('/emailSpool/_grid', array('emailSpool' => $emailSpool));

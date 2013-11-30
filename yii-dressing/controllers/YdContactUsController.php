@@ -43,7 +43,7 @@ class YdContactUsController extends YdWebController
         if (!empty($_GET['YdContactUs']))
             $contactUs->attributes = $_GET['YdContactUs'];
 
-        $this->render('dressing.views.contactUs.index', array(
+        $this->render('index', array(
             'contactUs' => $contactUs,
         ));
     }
@@ -57,7 +57,7 @@ class YdContactUsController extends YdWebController
         /** @var $contactUs YdContactUs */
         $contactUs = $this->loadModel($id, 'YdContactUs');
 
-        $this->render('dressing.views.contactUs.view', array(
+        $this->render('view', array(
             'contactUs' => $contactUs,
         ));
     }
@@ -71,7 +71,7 @@ class YdContactUsController extends YdWebController
         /** @var $contactUs YdContactUs */
         $contactUs = $this->loadModel($id, 'YdContactUs');
 
-        $this->render('dressing.views.contactUs.log', array(
+        $this->render('log', array(
             'contactUs' => $contactUs,
         ));
     }
@@ -101,7 +101,7 @@ class YdContactUsController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.contactUs.contact', array(
+        $this->render('contact', array(
             'contactUs' => $contactUs,
         ));
     }
@@ -114,7 +114,7 @@ class YdContactUsController extends YdWebController
         /** @var $contactUs YdContactUs */
         $contactUs = $this->loadModel($id, 'YdContactUs');
 
-        $this->render('dressing.views.contactUs.thank_you', array(
+        $this->render('thank_you', array(
             'contactUs' => $contactUs,
         ));
     }

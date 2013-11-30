@@ -16,7 +16,7 @@ $this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressin
 $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[] = Yii::t('dressing', 'Roles');
 
-$this->renderPartial('dressing.views.role._menu');
+$this->renderPartial('/role/_menu');
 
 echo '<div class="spacer">';
 $this->widget('bootstrap.widgets.TbButton', array(
@@ -41,11 +41,11 @@ if (Yii::app()->user->getState('index.role') != Yii::app()->createUrl('/role/ind
 echo '</div>';
 
 // search
-$this->renderPartial('dressing.views.role._search', array(
+$this->renderPartial('/role/_search', array(
     'role' => $role,
 ));
 
 // grid
-$this->renderPartial('dressing.views.role._grid', array(
+$this->renderPartial('/role/_grid', array(
     'role' => $role,
 ));

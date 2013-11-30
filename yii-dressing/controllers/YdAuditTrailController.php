@@ -36,7 +36,7 @@ class YdAuditTrailController extends YdWebController
     public function actionIndex()
     {
         $auditTrail = new YdAuditTrail('search');
-        $this->render('dressing.views.auditTrail.index', array(
+        $this->render('index', array(
             'auditTrail' => $auditTrail,
         ));
     }

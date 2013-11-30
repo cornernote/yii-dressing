@@ -15,7 +15,7 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Audits')] = Yii::app()->user->getState('index.audit', array('/audit/index'));
 $this->breadcrumbs[] = $audit->getName();
 
-$this->renderPartial('dressing.views.audit._menu', array(
+$this->renderPartial('/audit/_menu', array(
     'audit' => $audit,
 ));
 
@@ -81,7 +81,7 @@ if (isset($_GET['YdAuditTrail'])) {
     $auditTrail->attributes = $_GET['YdAuditTrail'];
 }
 $auditTrail->audit_id = $audit->id;
-$this->renderPartial('dressing.views.auditTrail._grid', array(
+$this->renderPartial('/auditTrail/_grid', array(
     'auditTrail' => $auditTrail,
 ));
 

@@ -14,5 +14,5 @@
 $this->widget('dressing.widgets.YdListView', array(
     'id' => 'menu-list',
     'dataProvider' => $menu->search(),
-    'itemView' => 'dressing.views.menu._list_view',
+    'itemView' => '/menu/_list_view',
 ));

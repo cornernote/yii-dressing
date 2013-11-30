@@ -39,7 +39,7 @@ class YdUserController extends YdWebController
         if (!empty($_GET['YdUser']))
             $user->attributes = $_GET['YdUser'];
 
-        $this->render('dressing.views.user.index', array(
+        $this->render('index', array(
             'user' => $user,
         ));
     }
@@ -59,7 +59,7 @@ class YdUserController extends YdWebController
             Yii::app()->user->addFlash('THIS USER IS DELETED', 'warning');
         }
 
-        $this->render('dressing.views.user.view', array(
+        $this->render('view', array(
             'user' => $user,
         ));
     }
@@ -74,7 +74,7 @@ class YdUserController extends YdWebController
         /** @var $user User */
         $user = $this->loadModel($id, 'YdUser');
 
-        $this->render('dressing.views.user.log', array(
+        $this->render('log', array(
             'user' => $user,
         ));
     }
@@ -104,7 +104,7 @@ class YdUserController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.user.create', array(
+        $this->render('create', array(
             'user' => $user,
         ));
     }
@@ -132,7 +132,7 @@ class YdUserController extends YdWebController
             $user->password = null;
         }
 
-        $this->render('dressing.views.user.update', array(
+        $this->render('update', array(
             'user' => $user,
         ));
     }
@@ -161,7 +161,7 @@ class YdUserController extends YdWebController
             $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->getState('index.user', array('/user/index'))));
         }
 
-        $this->render('dressing.views.user.delete', array(
+        $this->render('delete', array(
             'id' => $id,
             'task' => $task,
         ));

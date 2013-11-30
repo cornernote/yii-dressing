@@ -16,4 +16,4 @@ if (isset($_GET['YdAuditTrail'])) {
 }
 $auditTrail->model = get_class($model);
 $auditTrail->model_id = $model->id;
-$this->renderPartial('dressing.views.auditTrail._grid', array('auditTrail' => $auditTrail));
+$this->renderPartial('/auditTrail/_grid', array('auditTrail' => $auditTrail));

@@ -36,7 +36,7 @@ class YdEmailTemplateController extends YdWebController
     public function actionIndex()
     {
         $emailTemplate = new YdEmailTemplate('search');
-        $this->render('dressing.views.emailTemplate.index', array(
+        $this->render('index', array(
             'emailTemplate' => $emailTemplate,
         ));
     }
@@ -50,7 +50,7 @@ class YdEmailTemplateController extends YdWebController
         $emailTemplate = $this->loadModel($id, 'YdEmailTemplate');
 
         // render the page
-        $this->render('dressing.views.emailTemplate.view', array(
+        $this->render('view', array(
             'emailTemplate' => $emailTemplate,
         ));
     }
@@ -80,7 +80,7 @@ class YdEmailTemplateController extends YdWebController
         }
 
         // render the page
-        $this->render('dressing.views.emailTemplate.update', array(
+        $this->render('update', array(
             'emailTemplate' => $emailTemplate,
         ));
     }

@@ -38,7 +38,7 @@ class YdRoleController extends YdWebController
         if (!empty($_GET['YdRole']))
             $role->attributes = $_GET['YdRole'];
 
-        $this->render('dressing.views.role.index', array(
+        $this->render('index', array(
             'role' => $role,
         ));
     }
@@ -52,7 +52,7 @@ class YdRoleController extends YdWebController
         /** @var $role YdRole */
         $role = $this->loadModel($id, 'YdRole');
 
-        $this->render('dressing.views.role.view', array(
+        $this->render('view', array(
             'role' => $role,
         ));
     }
@@ -66,7 +66,7 @@ class YdRoleController extends YdWebController
         /** @var $role YdRole */
         $role = $this->loadModel($id, 'YdRole');
 
-        $this->render('dressing.views.role.log', array(
+        $this->render('log', array(
             'role' => $role,
         ));
     }
@@ -92,7 +92,7 @@ class YdRoleController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.role.create', array(
+        $this->render('create', array(
             'role' => $role,
         ));
     }
@@ -115,7 +115,7 @@ class YdRoleController extends YdWebController
             }
         }
 
-        $this->render('dressing.views.role.update', array(
+        $this->render('update', array(
             'role' => $role,
         ));
     }
@@ -142,7 +142,7 @@ class YdRoleController extends YdWebController
             $this->redirect(ReturnUrl::getUrl(Yii::app()->user->getState('index.role', array('/role/index'))));
         }
 
-        $this->render('dressing.views.role.delete', array(
+        $this->render('delete', array(
             'id' => $id,
             'task' => $task,
         ));

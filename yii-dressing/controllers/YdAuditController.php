@@ -40,7 +40,7 @@ class YdAuditController extends YdWebController
             $audit->attributes = $_GET['YdAudit'];
         $urlManager = app()->getUrlManager();
         $urlManager->setUrlFormat('get');
-        $this->render('dressing.views.audit.index', array(
+        $this->render('index', array(
             'audit' => $audit,
         ));
     }
@@ -53,7 +53,7 @@ class YdAuditController extends YdWebController
     public function actionView($id)
     {
         $audit = $this->loadModel($id, 'YdAudit');
-        $this->render('dressing.views.audit.view', array(
+        $this->render('view', array(
             'audit' => $audit,
         ));
     }

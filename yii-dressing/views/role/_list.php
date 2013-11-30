@@ -14,5 +14,5 @@
 $this->widget('dressing.widgets.YdListView', array(
     'id' => 'role-list',
     'dataProvider' => $role->search(),
-    'itemView' => 'dressing.views.role._list_view',
+    'itemView' => '/role/_list_view',
 ));

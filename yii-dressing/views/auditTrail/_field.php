@@ -27,7 +27,7 @@ echo '<div class="grid-view">';
 $this->widget('dressing.widgets.YdListView', array(
     'id' => "audit-list-$model-$model_id-$field",
     'dataProvider' => $dataProvider,
-    'itemView' => 'dressing.views.auditTrail._field_view',
+    'itemView' => '/auditTrail/_field_view',
     'itemsTagName' => 'table',
     'itemsCssClass' => 'table table-condensed table-striped',
 ));

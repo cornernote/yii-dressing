@@ -16,7 +16,7 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Site Menus')] = Yii::app()->user->getState('index.siteMenu', array('/siteMenu/index'));
 $this->breadcrumbs[] = $menu->getName();
 
-$this->renderPartial('dressing.views.siteMenu._menu', array(
+$this->renderPartial('/siteMenu/_menu', array(
     'menu' => $menu,
 ));
 ?>

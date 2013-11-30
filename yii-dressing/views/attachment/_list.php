@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AttachmentController
+ * @var $this YdAttachmentController
  * @var $attachment YdAttachment
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -14,5 +14,5 @@
 $this->widget('dressing.widgets.YdListView', array(
     'id' => 'attachment-list',
     'dataProvider' => $attachment->search(),
-    'itemView' => 'dressing.views.attachment._list_view',
+    'itemView' => '/attachment/_list_view',
 ));

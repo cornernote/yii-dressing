@@ -17,9 +17,9 @@ $this->breadcrumbs[Yii::t('dressing', 'Roles')] = Yii::app()->user->getState('in
 $this->breadcrumbs[$role->getName()] = $role->getUrl();
 $this->breadcrumbs[] = Yii::t('dressing', 'Log');
 
-$this->renderPartial('dressing.views.role._menu', array(
+$this->renderPartial('/role/_menu', array(
     'role' => $role,
 ));
-$this->renderPartial('dressing.views.auditTrail._log', array(
+$this->renderPartial('/auditTrail/_log', array(
     'model' => $role,
 ));

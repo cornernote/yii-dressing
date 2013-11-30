@@ -17,9 +17,9 @@ $this->breadcrumbs[$this->getName() . ' ' . Yii::t('dressing', 'List')] = Yii::a
 $this->breadcrumbs[$contactUs->getName()] = $contactUs->getUrl();
 $this->breadcrumbs[] = Yii::t('dressing', 'Log');
 
-$this->renderPartial('dressing.views.contactUs._menu', array(
+$this->renderPartial('/contactUs/_menu', array(
     'contactUs' => $contactUs,
 ));
-$this->renderPartial('dressing.views.contactUs._log', array(
+$this->renderPartial('/contactUs/_log', array(
     'model' => $contactUs,
 ));

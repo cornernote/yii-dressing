@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AttachmentController
+ * @var $this YdAttachmentController
  * @var $attachment YdAttachment
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -41,11 +41,11 @@ if (Yii::app()->user->getState('index.attachment') != Yii::app()->createUrl('/at
 echo '</div>';
 
 // search
-$this->renderPartial('dressing.views.attachment._search', array(
+$this->renderPartial('/attachment/_search', array(
     'attachment' => $attachment,
 ));
 
 // grid
-$this->renderPartial('dressing.views.attachment._grid', array(
+$this->renderPartial('/attachment/_grid', array(
     'attachment' => $attachment,
 ));

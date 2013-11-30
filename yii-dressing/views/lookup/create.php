@@ -16,9 +16,9 @@ $this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
 $this->breadcrumbs[Yii::t('dressing', 'Lookups')] = Yii::app()->user->getState('index.lookup', array('/lookup/index'));
 $this->breadcrumbs[] = Yii::t('dressing', 'Create');
 
-$this->renderPartial('dressing.views.lookup._menu', array(
+$this->renderPartial('/lookup/_menu', array(
     'lookup' => $lookup,
 ));
-$this->renderPartial('dressing.views.lookup._form', array(
+$this->renderPartial('/lookup/_form', array(
     'lookup' => $lookup,
 ));
