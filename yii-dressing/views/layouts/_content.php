@@ -29,7 +29,13 @@ if ($this->showNavBar) {
         <header class="container-fluid">
             <?php
             if ($this->pageHeading) {
-                echo '<h1 class="header">' . $this->pageHeading . '</h1>';
+                echo '<h1 class="header">';
+                if ($this->pageIcon)
+                    echo '<i class="' . $this->pageIcon . '"></i> ';
+                echo $this->pageHeading;
+                if ($this->pageSubheading)
+                    echo '<small>' . $this->pageSubheading . '</small>';
+                echo '</h1>';
             }
             if ($this->menu) {
                 $this->widget('bootstrap.widgets.TbMenu', array(

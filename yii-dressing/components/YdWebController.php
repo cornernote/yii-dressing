@@ -43,11 +43,6 @@ class YdWebController extends YdController
     /**
      * @var
      */
-    public $ajaxHeading;
-
-    /**
-     * @var
-     */
     public $pageIcon;
 
     /**
@@ -81,19 +76,25 @@ class YdWebController extends YdController
     public function init()
     {
         parent::init();
+        $app = Yii::app();
 
         // if returnUrl is in submitted data it will be saved in session
-        Yii::app()->returnUrl->setUrlFromSubmitFields();
+        $app->returnUrl->setUrlFromSubmitFields();
 
         // set user theme
-        if ($theme = Yii::app()->user->getState('theme'))
-            Yii::app()->setTheme($theme);
+        if ($theme = $app->user->getState('theme'))
+            $app->setTheme($theme);
+
+        // set the heading from the title
+        if ($this->pageHeading === null)
+            $this->pageHeading = $this->pageTitle;
 
         // decide if this is a modal
-        $this->isModal = Yii::app()->getRequest()->isAjaxRequest;
+        if ($this->isModal === null)
+            $this->isModal = $app->getRequest()->isAjaxRequest;
 
         // register yii-dressing style
-        Yii::app()->clientScript->registerCSSFile(Yii::app()->dressing->getAssetsUrl() . '/yii-dressing/css/yii-dressing.css');
+        $app->clientScript->registerCSSFile($app->dressing->getAssetsUrl() . '/yii-dressing/css/yii-dressing.css');
 
         // init widgets
         $this->widget('dressing.widgets.YdModal');
