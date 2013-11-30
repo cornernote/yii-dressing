@@ -58,6 +58,16 @@ class YdAudit extends YdActiveRecord
 {
 
     /**
+     * @var string used in search
+     */
+    public $model;
+
+    /**
+     * @var string|int used in search
+     */
+    public $model_id;
+
+    /**
      * Returns the static model of the specified AR class.
      * @param string $className
      * @return YdAudit the static model class

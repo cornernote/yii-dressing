@@ -130,7 +130,10 @@ class YdDressing extends CApplicationComponent
                     ),
                 ),
                 'behaviors' => array(
-                    'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',
+                    'LinkBehavior' => array(
+                        'class' => 'dressing.behaviors.YdLinkBehavior',
+                        'controllerName' => 'audit',
+                    ),
                 ),
             ),
             'YdAuditTrail' => array(

@@ -105,6 +105,20 @@ class YdLinkBehavior extends CActiveRecordBehavior
     }
 
     /**
+     * Override this in your model to return an array of links to be used in a menu
+     *
+     * @param bool $extra
+     * @return array
+     */
+    public function getMenuLinks($extra = false)
+    {
+        $links = array();
+        // eg:
+        //$links[] = array('label' => Yii::t('dressing', 'Update'), 'url' => $this->owner->getUrl('update'));
+        return $links;
+    }
+
+    /**
      * Returns Primary Key Schema as a string
      *
      * @return string
