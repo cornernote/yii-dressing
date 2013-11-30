@@ -44,15 +44,15 @@ class YdApiController extends YdController
             $password = $_SERVER['PHP_AUTH_PW'];
 
             // allow a secure link to api-login
-            $identity = new UserIdentity($username, $password);
+            $identity = new YdUserIdentity($username, $password);
             if ($identity->authenticateApi()) {
                 Yii::app()->user->login($identity, $duration = 0);
             }
         }
 
         // ensure the user is an api login
-        if (!Yii::app()->user->isGuest && !Yii::app()->user->getState('UserIdentity.api')) {
-            throw new CHttpException(403, Yii::t('dressing', 'Please login to API.'));
+        if (!Yii::app()->user->isGuest && !Yii::app()->user->getState('YdUserIdentity.api')) {
+            throw new CHttpException(403, Yii::t('dressing', 'Please login to the API interface.'));
         }
     }
 

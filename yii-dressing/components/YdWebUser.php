@@ -17,16 +17,6 @@ class YdWebUser extends CWebUser
 {
 
     /**
-     *
-     */
-    const MF_KEY_PREFIX = 'mf';
-
-    /**
-     *
-     */
-    const MF_MAX = 100;
-
-    /**
      * @var bool
      */
     public $allowAutoLogin = true;
@@ -39,7 +29,7 @@ class YdWebUser extends CWebUser
     /**
      * @var YdUser
      */
-    private $_userModel;
+    protected $_userModel;
 
     /**
      * Initializes the application component.
@@ -76,84 +66,46 @@ class YdWebUser extends CWebUser
     }
 
     /**
-     * Add flash to the stack.
-     * @param string $msg
-     * @param string $class
-     */
-    public function addFlash($msg = '', $class = 'info')
-    {
-        $key = $this->getNexMultiFlashKey();
-        if ($key === false)
-            Yii::trace("Stack overflow in addFlash", 'dressing.YdWebUser.addFlash()');
-        else
-            $this->setFlash($key, array($msg, $class));
-    }
-
-    /**
-     * Returns next flash key for addFlash function.
-     * @return mixed string if ok or bool false if there was stack overflow.
-     */
-    protected function getNexMultiFlashKey()
-    {
-        $counters = $this->getState(self::FLASH_COUNTERS, array());
-        if (empty($counters)) return self::MF_KEY_PREFIX . "1";
-        for ($i = 1; $i <= self::MF_MAX; $i++) {
-            $key = self::MF_KEY_PREFIX . (string)$i;
-            if (array_key_exists($key, $counters)) continue;
-            return $key;
-        }
-        return false;
-    }
-
-    /**
-     * Gets all flashes and shows them to the user.
-     * Every flash is div with css class 'flash' and another 'flash_xxx' where xxx is the $class
-     * parameter set in addFlash function.
-     * Examples:
-     * Yii::app()->user->addFlash('My text, something important!', 'warning');
-     * Yii::app()->multiFlash();
-     * Output is <div class="flash flash_warning">My text, something important!<div>
-     * @return string
-     */
-    public function multiFlash()
-    {
-        $output = '';
-        for ($i = 1; $i <= self::MF_MAX; $i++) {
-            $key = self::MF_KEY_PREFIX . (string)$i;
-            if (!$this->hasFlash($key)) continue;
-            list($msg, $class) = $this->getFlash($key);
-            $output .= "<div class=\"alert alert-$class\">$msg</div>\n";
-        }
-        return $output;
-    }
-
-    /**
      * Load user model
      * @param null $id
      * @return YdUser
      */
-    function getUser($id = null)
+    public function getUser($id = null)
     {
         if ($this->_userModel === null && YdHelper::tableExists(YdUser::model()->tableName())) {
-            if ($id !== null)
-                $this->_userModel = YdUser::model()->findByPk($id);
-            else
-                $this->_userModel = YdUser::model()->findByPk(Yii::app()->user->id);
+            $this->_userModel = YdUser::model()->findByPk($id !== null ? $id : $this->id);
         }
         return $this->_userModel;
     }
 
     /**
      * Load user setting
-     * @param $name
+     * @param string $key
+     * @param mixed $defaultValue
      * @return string
      */
-    function setting($name)
+    public function getState($key, $defaultValue = null)
     {
-        $setting = $this->user && method_exists($this->user, 'getEavAttribute') ? $this->user->getEavAttribute($name) : null;
-        if ($setting)
-            return $setting;
-        return isset(Yii::app()->params[$name]) ? Yii::app()->params[$name] : null;
+        $state = parent::getState($key);
+        if ($state === null)
+            $state = $this->_userModel && method_exists($this->_userModel, 'getEavAttribute') ? $this->_userModel->getEavAttribute($this->stateKeyPrefix . $state) : null;
+        if ($state === null)
+            $state = isset(Yii::app()->params[$key]) ? Yii::app()->params[$key] : null;
+        return $state === null ? $defaultValue : $state;
+    }
+
+    /**
+     * Save user setting
+     * @param string $key
+     * @param mixed $value
+     * @param mixed $defaultValue
+     * @return string
+     */
+    public function setState($key, $value, $defaultValue = null)
+    {
+        if ($this->_userModel && method_exists($this->_userModel, 'getEavAttribute'))
+            $this->_userModel->setEavAttribute($this->stateKeyPrefix . $key, $value, true);
+        return parent::setState($key, $value, $defaultValue);
     }
 
 }

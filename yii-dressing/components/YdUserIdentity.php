@@ -38,6 +38,7 @@ class YdUserIdentity extends CUserIdentity
                 $this->_id = $user->id;
                 $this->username = $user->username ? $user->username : $user->email;
                 $this->errorCode = self::ERROR_NONE;
+                Yii::app()->user->setState('YdUserIdentity.web', true);
             }
         }
 
@@ -63,10 +64,10 @@ class YdUserIdentity extends CUserIdentity
             if (!$user->validatePassword($this->password, $user->api_key))
                 $this->errorCode = self::ERROR_PASSWORD_INVALID;
             else {
-                Yii::app()->user->setState('UserIdentity.api', true);
                 $this->_id = $user->id;
                 $this->username = $user->username ? $user->username : $user->email;
                 $this->errorCode = self::ERROR_NONE;
+                Yii::app()->user->setState('YdUserIdentity.api', true);
             }
         }
 

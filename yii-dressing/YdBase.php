@@ -69,7 +69,7 @@ class YdBase extends YiiBase
             $config['components']['log']['routes'] = array();
             $config['components']['log']['routes'][] = array(
                 'class' => YII_DEBUG ? 'CWebLogRoute' : 'CFileLogRoute',
-                'levels' => YII_DRESSING_LOG_LEVELS,
+                'levels' => 'error, warning',
             );
             if (YII_DEBUG_TOOLBAR)
                 $config['components']['log']['routes'][] = array(

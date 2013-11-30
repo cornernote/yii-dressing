@@ -26,17 +26,17 @@ defined('YII_DRESSING_CLI') or define('YII_DRESSING_CLI', (substr(php_sapi_name(
 /**
  * Defines the Yii dressing path.
  */
-defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', str_replace(array('\\', '/'), DS, realpath(dirname(__FILE__))));
+//defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', str_replace(array('\\', '/'), DS, realpath(dirname(__FILE__))));
 
 /**
  * Defines Yii dressing log levels, comma separated list of: trace, info, error, warning, profile
  */
-defined('YII_DRESSING_LOG_LEVELS') or define('YII_DRESSING_LOG_LEVELS', 'error, warning');
+//defined('YII_DRESSING_LOG_LEVELS') or define('YII_DRESSING_LOG_LEVELS', 'error, warning');
 
 /**
  * Defines the Vendor path.
  */
-defined('VENDOR_PATH') or define('VENDOR_PATH', str_replace(array('\\', '/'), DS, dirname(dirname(dirname(YII_DRESSING_PATH)))));
+defined('VENDOR_PATH') or define('VENDOR_PATH', str_replace(array('\\', '/'), DS, dirname(dirname(dirname(dirname(__FILE__))))));
 
 /**
  * Defines the Yii framework path.
@@ -56,17 +56,17 @@ defined('YII_DEBUG_TOOLBAR') or define('YII_DEBUG_TOOLBAR', false);
 /**
  * Defines the filesystem path to the application.
  */
-defined('APP_PATH') or define('APP_PATH', str_replace(array('\\', '/'), DS, dirname(VENDOR_PATH) . DS . 'app'));
+//defined('APP_PATH') or define('APP_PATH', str_replace(array('\\', '/'), DS, dirname(VENDOR_PATH) . DS . 'app'));
 
 /**
  * Defines the filesystem path to the public directory of the application.
  */
-defined('PUBLIC_PATH') or define('PUBLIC_PATH', str_replace(array('\\', '/'), DS, dirname(APP_PATH) . DS . 'public'));
+defined('PUBLIC_PATH') or define('PUBLIC_PATH', str_replace(array('\\', '/'), DS, dirname(VENDOR_PATH) . DS . 'public'));
 
 /**
  * Defines the public hostname of the application.
  */
-defined('PUBLIC_HOST') or define('PUBLIC_HOST', 'localhost');
+defined('PUBLIC_HOST') or define('PUBLIC_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
 
 /**
  * Defines the public url to the application.

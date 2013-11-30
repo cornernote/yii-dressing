@@ -12,10 +12,6 @@
  */
 class YdController extends CController
 {
-    /**
-     * @var
-     */
-    protected $loadModel;
 
     /**
      * @return array action filters

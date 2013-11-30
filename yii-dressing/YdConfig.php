@@ -51,7 +51,7 @@ class YdConfig
     /**
      * @var array config keys and values
      */
-    private $_configs = array();
+    private $_values = array();
 
     /**
      * The instantiated object
@@ -103,10 +103,19 @@ class YdConfig
     public function __construct($file = null)
     {
         $this->file = $file;
-        $this->initConfig();
+        $this->initValues();
         $this->initConstants();
         $this->initEnvironment();
         self::$_instance = $this;
+    }
+
+    /**
+     * Returns the Yii Config
+     * @return string|array
+     */
+    public function getAppConfig()
+    {
+        return self::cleanPath(dirname(VENDOR_PATH) . DS . 'app' . DS . 'config' . DS . 'main.php');
     }
 
     /**
@@ -116,9 +125,9 @@ class YdConfig
      * @param mixed $default
      * @return mixed
      */
-    public function getConfig($name, $default = null)
+    public function getValue($name, $default = null)
     {
-        return isset($this->_configs[$name]) ? $this->_configs[$name] : $default;
+        return isset($this->_values[$name]) ? $this->_values[$name] : $default;
     }
 
     /**
@@ -126,44 +135,44 @@ class YdConfig
      *
      * @return array
      */
-    public function getConfigs()
+    public function getValues()
     {
-        return $this->_configs;
+        return $this->_values;
     }
 
     /**
-     * Set the value of a config key
+     * Set the value of a value key
      *
      * @param $name
      * @param $value
      */
-    public function setConfig($name, $value)
+    public function setValue($name, $value)
     {
-        $this->setConfigs(array($name => $value));
+        $this->setValues(array($name => $value));
     }
 
     /**
      * Set the value of all config keys and values and writes to the config file
      *
-     * @param $configs
+     * @param $values
      */
-    public function setConfigs($configs)
+    public function setValues($values)
     {
-        foreach ($configs as $name => $value)
+        foreach ($values as $name => $value)
             if ($value !== null)
-                $this->_configs[$name] = $value;
-            elseif (isset($this->_configs[$name]))
-                unset($this->_configs[$name]);
-        file_put_contents($this->file, json_encode($this->_configs));
+                $this->_values[$name] = $value;
+            elseif (isset($this->_values[$name]))
+                unset($this->_values[$name]);
+        file_put_contents($this->file, json_encode($this->_values));
     }
 
     /**
-     * Load data from config file into the config array.
+     * Load data from config file into the value array.
      */
-    private function initConfig()
+    private function initValues()
     {
         // return existing object
-        if ($this->_configs)
+        if ($this->_values)
             return;
 
         // get the database name
@@ -179,12 +188,12 @@ class YdConfig
 
         // create the file
         if (!file_exists($this->file))
-            if (!file_put_contents($this->file, json_encode($this->_configs)))
+            if (!file_put_contents($this->file, json_encode($this->_values)))
                 throw new Exception(strtr('Could not create file for {class}.', array(
                     '{class}' => get_class($this),
                 )));
 
-        $this->_configs = json_decode(file_get_contents($this->file), true);
+        $this->_values = json_decode(file_get_contents($this->file), true);
     }
 
     /**
@@ -194,28 +203,29 @@ class YdConfig
     {
         $constants = array(
             'DS',
-            'APP_PATH',
-            'APP_CONFIG',
+            //'APP_PATH',
+            //'APP_CONFIG',
             'VENDOR_PATH',
             'YII_DEBUG',
             'YII_DEBUG_TOOLBAR',
             'YII_TRACE_LEVEL',
             'YII_ENABLE_EXCEPTION_HANDLER',
             'YII_ENABLE_ERROR_HANDLER',
-            'YII_PATH',
-            'YII_ZII_PATH',
-            'YII_BOOSTER_PATH',
-            'YII_DRESSING_PATH',
+            //'YII_PATH',
+            //'YII_ZII_PATH',
+            //'YII_AUTH_PATH',
+            //'YII_BOOSTER_PATH',
+            //'YII_DRESSING_PATH',
             'YII_DRESSING_CLI',
-            'YII_DRESSING_LOG_LEVELS',
+            //'YII_DRESSING_LOG_LEVELS',
             'YII_DRESSING_HASH',
             'PUBLIC_PATH',
             'PUBLIC_HOST',
             'PUBLIC_URL',
         );
         foreach ($constants as $name)
-            if (!defined($name) && ($config = $this->getConfig($name)) !== null)
-                define($name, $config);
+            if (!defined($name) && ($value = $this->getValue($name)) !== null)
+                define($name, $value);
 
         // bools and strings
         defined('YII_DEBUG') or define('YII_DEBUG', false);
@@ -224,24 +234,25 @@ class YdConfig
         defined('YII_ENABLE_EXCEPTION_HANDLER') or define('YII_ENABLE_EXCEPTION_HANDLER', true);
         defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER', true);
         defined('YII_DRESSING_CLI') or define('YII_DRESSING_CLI', (substr(php_sapi_name(), 0, 3) == 'cli'));
-        defined('YII_DRESSING_LOG_LEVELS') or define('YII_DRESSING_LOG_LEVELS', 'error, warning');
+        //defined('YII_DRESSING_LOG_LEVELS') or define('YII_DRESSING_LOG_LEVELS', 'error, warning');
 
         // paths
         defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-        defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', self::cleanPath(dirname(__FILE__)));
-        defined('VENDOR_PATH') or define('VENDOR_PATH', self::cleanPath(dirname(dirname(dirname(dirname(YII_DRESSING_PATH)))) . DS . 'vendor'));
-        defined('APP_PATH') or define('APP_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'app'));
-        defined('APP_CONFIG') or define('APP_CONFIG', self::cleanPath(APP_PATH . DS . 'config' . DS . 'main.php'));
-        defined('YII_PATH') or define('YII_PATH', self::cleanPath(VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework'));
-        defined('YII_ZII_PATH') or define('YII_ZII_PATH', self::cleanPath(YII_PATH . DS . 'zii'));
-        defined('YII_BOOSTER_PATH') or define('YII_BOOSTER_PATH', self::cleanPath(VENDOR_PATH . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src'));
-        defined('PUBLIC_PATH') or define('PUBLIC_PATH', self::cleanPath(dirname(APP_PATH) . DS . 'public'));
+        //defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', self::cleanPath(dirname(__FILE__)));
+        defined('VENDOR_PATH') or define('VENDOR_PATH', self::cleanPath(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'vendor'));
+        //defined('APP_PATH') or define('APP_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'app'));
+        //defined('APP_CONFIG') or define('APP_CONFIG', self::cleanPath(APP_PATH . DS . 'config' . DS . 'main.php'));
+        //defined('YII_PATH') or define('YII_PATH', self::cleanPath(VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework'));
+        //defined('YII_ZII_PATH') or define('YII_ZII_PATH', self::cleanPath(YII_PATH . DS . 'zii'));
+        //defined('YII_AUTH_PATH') or define('YII_AUTH_PATH', self::cleanPath(VENDOR_PATH . DS . 'crisu83' . DS . 'yii-auth'));
+        //defined('YII_BOOSTER_PATH') or define('YII_BOOSTER_PATH', self::cleanPath(VENDOR_PATH . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src'));
+        defined('PUBLIC_PATH') or define('PUBLIC_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'public'));
 
         // public_host and public_url are saved into config when accessed via web so that the value is available for cli
         if (!defined('PUBLIC_HOST')) {
             define('PUBLIC_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
             if (!YII_DRESSING_CLI)
-                $this->setConfig('PUBLIC_HOST', PUBLIC_HOST);
+                $this->setValue('PUBLIC_HOST', PUBLIC_HOST);
         }
         if (!defined('PUBLIC_URL')) {
             $url = isset($_SERVER['SCRIPT_NAME']) ? dirname($_SERVER['SCRIPT_NAME']) : '';
@@ -249,13 +260,13 @@ class YdConfig
                 $url = '';
             define('PUBLIC_URL', $url);
             if (!YII_DRESSING_CLI)
-                $this->setConfig('PUBLIC_URL', PUBLIC_URL);
+                $this->setValue('PUBLIC_URL', PUBLIC_URL);
         }
 
         // hash needs to be defined once and saved into config so that it does not change
         if (!defined('YII_DRESSING_HASH')) {
             define('YII_DRESSING_HASH', md5(uniqid(true)));
-            $this->setConfig('YII_DRESSING_HASH', YII_DRESSING_HASH);
+            $this->setValue('YII_DRESSING_HASH', YII_DRESSING_HASH);
         }
     }
 
@@ -277,11 +288,11 @@ class YdConfig
         }
 
         // timezone
-        date_default_timezone_set($this->getConfig('default_timezone', 'GMT'));
+        date_default_timezone_set($this->getValue('default_timezone', 'GMT'));
 
         // time and memory limit
-        ini_set('max_execution_time', YII_DRESSING_CLI ? 0 : $this->getConfig('time_limit', 60));
-        ini_set('memory_limit', $this->getConfig('memory_limit', "128M"));
+        ini_set('max_execution_time', YII_DRESSING_CLI ? 0 : $this->getValue('time_limit', 60));
+        ini_set('memory_limit', $this->getValue('memory_limit', "128M"));
 
         // cli specific
         if (YII_DRESSING_CLI) {

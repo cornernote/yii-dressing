@@ -61,6 +61,12 @@ class YdWebController extends YdController
     public $isModal = false;
 
     /**
+     * @var
+     */
+    protected $loadModel;
+
+    /**
+     * @param bool $plural
      * @return mixed
      */
     public function getName($plural = false)
@@ -76,18 +82,14 @@ class YdWebController extends YdController
     {
         parent::init();
 
-        // ensure the user is an api login
-        if (!Yii::app()->user->isGuest && Yii::app()->user->getState('UserIdentity.api')) {
+        // ensure the user is a web login
+        if (!Yii::app()->user->isGuest && !Yii::app()->user->getState('YdUserIdentity.web')) {
             Yii::app()->user->addFlash(Yii::t('dressing', 'Please login to the web interface.'));
-            Yii::app()->user->logout();
-            $this->redirect(Yii::app()->homeUrl);
+            $this->redirect(Yii::app()->user->loginUrl);
         }
 
         // set user theme
-        $theme = Yii::app()->user->setting('theme');
-        if ($theme) {
-            app()->theme = $theme;
-        }
+        //Yii::app()->theme = Yii::app()->user->getState('theme', Yii::app()->theme);
 
         // decide if this is a modal
         $this->isModal = Yii::app()->getRequest()->isAjaxRequest;
