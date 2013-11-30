@@ -88,7 +88,7 @@ class YdWebUser extends CWebUser
     {
         $state = parent::getState($key);
         if ($state === null)
-            $state = $this->_userModel && $this->_userModel->asa('EavBehavior') ? $this->_userModel->getEavAttribute($key) : null;
+            $state = $this->_userModel && $this->_userModel->asa('EavBehavior') ? $this->unserializeStateValue($this->_userModel->getEavAttribute($key)) : null;
         if ($state === null)
             $state = isset(Yii::app()->params[$key]) ? Yii::app()->params[$key] : null;
         return $state === null ? $defaultValue : $state;
@@ -104,9 +104,27 @@ class YdWebUser extends CWebUser
     public function setState($key, $value, $defaultValue = null)
     {
         if ($this->_userModel && $this->_userModel->asa('EavBehavior')) {
-            $this->_userModel->setEavAttribute($key, $value, true);
+            $this->_userModel->setEavAttribute($key, $this->serializeStateValue($value), true);
         }
         return parent::setState($key, $value, $defaultValue);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    protected function serializeStateValue($value)
+    {
+        return serialize($value);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    protected function unserializeStateValue($value)
+    {
+        return unserialize($value);
     }
 
 }
