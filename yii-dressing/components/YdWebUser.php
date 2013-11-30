@@ -88,7 +88,7 @@ class YdWebUser extends CWebUser
     {
         $state = parent::getState($key);
         if ($state === null)
-            $state = $this->_userModel && method_exists($this->_userModel, 'getEavAttribute') ? $this->_userModel->getEavAttribute($this->stateKeyPrefix . $state) : null;
+            $state = $this->_userModel && $this->_userModel->asa('EavBehavior') ? $this->_userModel->getEavAttribute($key) : null;
         if ($state === null)
             $state = isset(Yii::app()->params[$key]) ? Yii::app()->params[$key] : null;
         return $state === null ? $defaultValue : $state;
@@ -103,8 +103,9 @@ class YdWebUser extends CWebUser
      */
     public function setState($key, $value, $defaultValue = null)
     {
-        if ($this->_userModel && method_exists($this->_userModel, 'getEavAttribute'))
-            $this->_userModel->setEavAttribute($this->stateKeyPrefix . $key, $value, true);
+        if ($this->_userModel && $this->_userModel->asa('EavBehavior')) {
+            $this->_userModel->setEavAttribute($key, $value, true);
+        }
         return parent::setState($key, $value, $defaultValue);
     }
 
