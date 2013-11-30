@@ -67,7 +67,7 @@ echo "\n";
 echo "        // redirect to view page if only one result\n";
 echo "        \$dataProvider = \$" . lcfirst($this->modelClass) . "->search();\n";
 echo "        \$this->createWidget('dressing.widgets.YdGridView', array('id' => '" . lcfirst($this->modelClass) . "-grid', 'dataProvider' => \$dataProvider));\n";
-echo "        if (!request()->isAjaxRequest && \$dataProvider->itemCount == 1)\n";
+echo "        if (!Yii::app()->request->isAjaxRequest && \$dataProvider->itemCount == 1)\n";
 echo "            \$this->redirect(\$dataProvider->data[0]->url);\n";
 echo "\n";
 echo "        \$this->render('index', array(\n";
