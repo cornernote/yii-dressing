@@ -162,10 +162,11 @@ class YdDropzone extends CWidget
      */
     private function registerAssets()
     {
-        $baseUrl = Yii::app()->dressing->getAssetsUrl() . '/dropzone';
-        Yii::app()->getClientScript()->registerCoreScript('jquery');
-        Yii::app()->getClientScript()->registerScriptFile("{$baseUrl}/js/dropzone.js", CClientScript::POS_END);
-        Yii::app()->getClientScript()->registerCssFile("{$baseUrl}/css/dropzone.css");
+        $cs = Yii::app()->getClientScript();
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.dropzone'), true, -1, YII_DEBUG);
+        $cs->registerCoreScript('jquery');
+        $cs->registerScriptFile($baseUrl . '/js/dropzone.js', CClientScript::POS_END);
+        $cs->registerCssFile($baseUrl . '/css/dropzone.css');
     }
 
 }

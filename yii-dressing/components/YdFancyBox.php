@@ -67,26 +67,27 @@ class YdFancyBox extends CWidget
     // function to publish and register assets on page 
     public function publishAssets()
     {
-        $baseUrl = Yii::app()->dressing->getAssetsUrl() . '/fancybox';
+        $cs = Yii::app()->getClientScript();
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.fancybox'), true, -1, YII_DEBUG);
 
-        Yii::app()->clientScript->registerCssFile($baseUrl . '/css/jquery.fancybox.css');
-        Yii::app()->clientScript->registerCoreScript('jquery');
-        Yii::app()->clientScript->registerScriptFile($baseUrl . '/js/jquery.fancybox.pack.js', CClientScript::POS_END);
+        $cs->registerCssFile($baseUrl . '/css/jquery.fancybox.css');
+        $cs->registerCoreScript('jquery');
+        $cs->registerScriptFile($baseUrl . '/js/jquery.fancybox.pack.js', CClientScript::POS_END);
         // if mouse actions enbled register the js
         if ($this->mouseEnabled) {
-            Yii::app()->clientScript->registerScriptFile($baseUrl . '/js/jquery.mousewheel-3.0.6.pack.js', CClientScript::POS_END);
+            $cs->registerScriptFile($baseUrl . '/js/jquery.mousewheel-3.0.6.pack.js', CClientScript::POS_END);
         }
         // if easing enbled register the js
         if ($this->easingEnabled) {
-            Yii::app()->clientScript->registerScriptFile($baseUrl . '/js/jquery.easing-1.3.pack.js', CClientScript::POS_END);
+            $cs->registerScriptFile($baseUrl . '/js/jquery.easing-1.3.pack.js', CClientScript::POS_END);
         }
         // if easing enbled register the js & css
         if ($this->helpersEnabled) {
-            Yii::app()->clientScript->registerCssFile($baseUrl . '/css/jquery.fancybox-buttons.css');
-            Yii::app()->clientScript->registerCssFile($baseUrl . '/css/jquery.fancybox-thumbs.css');
-            Yii::app()->clientScript->registerScriptFile($baseUrl . '/js/jquery.fancybox-buttons.js', CClientScript::POS_END);
-            Yii::app()->clientScript->registerScriptFile($baseUrl . '/js/jquery.fancybox-media.js', CClientScript::POS_END);
-            Yii::app()->clientScript->registerScriptFile($baseUrl . '/js/jquery.fancybox-thumbs.js', CClientScript::POS_END);
+            $cs->registerCssFile($baseUrl . '/css/jquery.fancybox-buttons.css');
+            $cs->registerCssFile($baseUrl . '/css/jquery.fancybox-thumbs.css');
+            $cs->registerScriptFile($baseUrl . '/js/jquery.fancybox-buttons.js', CClientScript::POS_END);
+            $cs->registerScriptFile($baseUrl . '/js/jquery.fancybox-media.js', CClientScript::POS_END);
+            $cs->registerScriptFile($baseUrl . '/js/jquery.fancybox-thumbs.js', CClientScript::POS_END);
         }
     }
 

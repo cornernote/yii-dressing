@@ -12,7 +12,7 @@ class YdSignatureWidget extends CWidget
     public $action = 'form';
 
     /**
-     * @var Signature signature to view
+     * @var YdSignature signature to view
      */
     public $signature;
 
@@ -101,9 +101,9 @@ class YdSignatureWidget extends CWidget
         }
 
         $cs = Yii::app()->clientScript;
-        $baseUrl = Yii::app()->dressing->getAssetsUrl();
-        $cs->registerScriptFile($baseUrl . '/signature-pad/jquery.signaturepad.min.js');
-        $cs->registerCssFile($baseUrl . '/signature-pad/jquery.signaturepad.yii-dressing.min.css');
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.signature-pad'), true, -1, YII_DEBUG);
+        $cs->registerScriptFile($baseUrl . '/jquery.signaturepad.min.js');
+        $cs->registerCssFile($baseUrl . '/jquery.signaturepad.yii-dressing.min.css');
         $cs->registerScript('signature-pad', '$(".signature-pad").signaturePad(' . $options . ')' . $methodChain . ';', CClientScript::POS_READY);
     }
 

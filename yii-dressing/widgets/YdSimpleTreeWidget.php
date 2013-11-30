@@ -1,24 +1,80 @@
 <?php
 
+/**
+ * Class YdSimpleTreeWidget
+ */
 class YdSimpleTreeWidget extends CInputWidget
 {
+    /**
+     * @var
+     */
     private $baseUrl;
 
+    /**
+     * @var
+     */
     public $ajaxUrl;
+    /**
+     * @var string
+     */
     public $id = 'simpletree_widget';
+    /**
+     * @var
+     */
     public $model;
+    /**
+     * @var string
+     */
     public $modelPropertyName = 'title';
+    /**
+     * @var string
+     */
     public $modelPropertyId = 'id';
+    /**
+     * @var string
+     */
     public $modelPropertyParentId = 'id_parent';
+    /**
+     * @var string
+     */
     public $modelPropertyPosition = 'position';
+    /**
+     * @var
+     */
     public $modelPropertyUrl;
+    /**
+     * @var string
+     */
     public $theme = 'default';
+    /**
+     * @var
+     */
     public $onSelect;
+    /**
+     * @var
+     */
     public $onCreate;
+    /**
+     * @var
+     */
     public $onMove;
+    /**
+     * @var
+     */
     public $onRemove;
+    /**
+     * @var
+     */
     public $onRename;
 
+    /**
+     * @var string Url to the assets
+     */
+    private $_assetsUrl;
+
+    /**
+     *
+     */
     public function run()
     {
         //if this is an Ajax request, do Ajax and die.
@@ -28,7 +84,7 @@ class YdSimpleTreeWidget extends CInputWidget
             die;
         }
         //register assets
-        $this->baseUrl = Yii::app()->dressing->getAssetsUrl() . '/jstree';
+        $this->baseUrl = $this->getAssetsUrl();
         $clientScript = Yii::app()->getClientScript();
         $clientScript->registerCoreScript('jquery');
         $clientScript->registerScriptFile($this->baseUrl . '/_lib/jquery.cookie.js', CClientScript::POS_HEAD);
@@ -176,6 +232,9 @@ class YdSimpleTreeWidget extends CInputWidget
         });', CClientScript::POS_END);
     }
 
+    /**
+     * @return string
+     */
     public function getEnvironment()
     {
         $model = is_string($this->model) ? $this->model : get_class($this->model);
@@ -190,6 +249,9 @@ class YdSimpleTreeWidget extends CInputWidget
     }
 
 
+    /**
+     * @return int
+     */
     public function getModelId()
     {
         if (is_object($this->model))
@@ -198,6 +260,19 @@ class YdSimpleTreeWidget extends CInputWidget
             return 0;
     }
 
+    /**
+     * @return string
+     */
+    private function getAssetsUrl()
+    {
+        if ($this->_assetsUrl)
+            return $this->_assetsUrl;
+        return Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.jstree'), true, -1, YII_DEBUG);
+    }
+
+    /**
+     *
+     */
     static function _get_children()
     {
 
@@ -237,6 +312,9 @@ class YdSimpleTreeWidget extends CInputWidget
     }
 
 
+    /**
+     *
+     */
     static function performAjax()
     {
         $Model = new $_REQUEST['model'];
@@ -251,6 +329,9 @@ class YdSimpleTreeWidget extends CInputWidget
 
     }
 
+    /**
+     * @param $params
+     */
     static function _create_node($params)
     {
         $Model = new $params['model'];
@@ -264,12 +345,18 @@ class YdSimpleTreeWidget extends CInputWidget
             print_r($Model->getErrors());
     }
 
+    /**
+     * @param $params
+     */
     static function _remove_node($params)
     {
         self::_removeModelRecursively($params);
         echo json_encode(array('status' => 1));
     }
 
+    /**
+     * @param $params
+     */
     static function _rename_node($params)
     {
         $Model = new $params['model'];
@@ -280,6 +367,9 @@ class YdSimpleTreeWidget extends CInputWidget
     }
 
 
+    /**
+     * @param $params
+     */
     static function _move_node($params)
     {
         $params['ref'] = (int)$params['ref'];
@@ -322,6 +412,12 @@ class YdSimpleTreeWidget extends CInputWidget
         echo json_encode(array('status' => 1));
     }
 
+    /**
+     * @param $Model
+     * @param $params
+     * @param bool $inheritPosition
+     * @return mixed
+     */
     static function _copy_node($Model, $params, $inheritPosition = false)
     {
         $NewModel = new $params['model'];
@@ -342,6 +438,10 @@ class YdSimpleTreeWidget extends CInputWidget
         }
     }
 
+    /**
+     * @param $params
+     * @return string
+     */
     static function _removeModelRecursively($params)
     {
         if (!$params['id'] || preg_match('/[^\d]/', $params['id']))
@@ -357,5 +457,3 @@ class YdSimpleTreeWidget extends CInputWidget
     }
 }
 
-
-?>

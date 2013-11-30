@@ -13,6 +13,7 @@
  */
 class YdQTip extends CWidget
 {
+
     /**
      *
      */
@@ -21,15 +22,14 @@ class YdQTip extends CWidget
         $this->publishAssets();
     }
 
-    // function to publish and register assets on page
     /**
-     *
+     * function to publish and register assets on page
      */
     public function publishAssets()
     {
-        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.qtip2'), false, 1, YII_DEBUG);
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.qtip2'), true, -1, YII_DEBUG);
+        $cs = Yii::app()->getClientScript();
 
-        $cs = Yii::app()->clientScript;
         // auto-qtip on <a title="something">link</a>
         $cs->registerScript('qtip2', '
             $(document).on("mouseover", "a[title],i[title],.icon[title]", function(event) {
@@ -57,4 +57,5 @@ class YdQTip extends CWidget
         $cs->registerCSSFile($baseUrl . '/jquery.qtip.css', 'screen, projection');
         $cs->registerScriptFile($baseUrl . '/jquery.qtip.min.js', CClientScript::POS_HEAD);
     }
+
 }

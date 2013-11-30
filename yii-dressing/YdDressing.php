@@ -254,7 +254,7 @@ class YdDressing extends CApplicationComponent
     {
         if ($this->_assetsUrl)
             return $this->_assetsUrl;
-        return $this->_assetsUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets'), true, -1, YII_DEBUG);
+        return $this->_assetsUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.yii-dressing'), true, -1, YII_DEBUG);
     }
 
 }

@@ -25,17 +25,17 @@ class YdClueTip extends CWidget
         $this->publishAssets();
     }
 
-    // function to publish and register assets on page
     /**
-     *
+     * function to publish and register assets on page
      */
     public function publishAssets()
     {
         $cs = Yii::app()->getClientScript();
-        $baseUrl = Yii::app()->dressing->getAssetsUrl();
-        $cs->registerScriptFile($baseUrl . '/jquery-cluetip/lib/jquery.hoverIntent.js');
-        $cs->registerScriptFile($baseUrl . '/jquery-cluetip/jquery.cluetip.min.js');
-        $cs->registerCssFile($baseUrl . '/jquery-cluetip/jquery.cluetip.css');
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.jquery-cluetip'), true, -1, YII_DEBUG);
+        $cs->registerScriptFile($baseUrl . '/lib/jquery.hoverIntent.js');
+        $cs->registerScriptFile($baseUrl . '/jquery.cluetip.min.js');
+        $cs->registerCssFile($baseUrl . '/jquery.cluetip.css');
         $cs->registerScript('cluetip', '$("' . $this->target . '").cluetip(' . json_encode($this->config) . ');', CClientScript::POS_READY);
     }
+
 }
