@@ -82,24 +82,15 @@ class YdWebController extends YdController
     {
         parent::init();
 
+        // if returnUrl is in submitted data it will be saved in session
+        Yii::app()->returnUrl->setUrlFromSubmitFields();
 
         // set user theme
-        //Yii::app()->theme = Yii::app()->user->getState('theme', Yii::app()->theme);
+        if ($theme = Yii::app()->user->getState('theme'))
+            Yii::app()->setTheme($theme);
 
         // decide if this is a modal
         $this->isModal = Yii::app()->getRequest()->isAjaxRequest;
-    }
-
-    /**
-     * This method is invoked right before an action is to be executed (after all possible filters.)
-     * @param CAction $action the action to be executed.
-     * @return boolean whether the action should be executed.
-     */
-    protected function beforeAction($action)
-    {
-        // if returnUrl is in submitted data it will be saved in session
-        Yii::app()->returnUrl->setUrlFromSubmitFields();
-        return parent::beforeAction($action);
     }
 
     /**

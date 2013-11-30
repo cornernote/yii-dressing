@@ -1,6 +1,9 @@
 <?php
 /**
  *
+ * @method multiFlash() multiFlash()
+ * @method addFlash() addFlash(string $message, string $class = 'info')
+ *
  * @property YdUser $user
  * @property integer $id
  * @property bool $api
