@@ -94,7 +94,7 @@ class YdWebController extends YdController
             $this->isModal = $app->getRequest()->isAjaxRequest;
 
         // register yii-dressing style
-        $app->clientScript->registerCSSFile($app->dressing->getAssetsUrl() . '/yii-dressing/css/yii-dressing.css');
+        $app->clientScript->registerCSSFile($app->dressing->getAssetsUrl() . '/css/yii-dressing.css');
 
         // init widgets
         $this->widget('dressing.widgets.YdModal');
