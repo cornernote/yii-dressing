@@ -169,7 +169,7 @@ class YdConfig
     /**
      * Load data from config file into the value array.
      */
-    private function initValues()
+    protected function initValues()
     {
         // return existing object
         if ($this->_values)
@@ -199,7 +199,7 @@ class YdConfig
     /**
      * Defines any constant that has not yet been defined.
      */
-    private function initConstants()
+    protected function initConstants()
     {
         $constants = array(
             'DS',
@@ -273,7 +273,7 @@ class YdConfig
     /**
      * Sets up the PHP environment
      */
-    private function initEnvironment()
+    protected function initEnvironment()
     {
         // error reporting
         if (YII_DEBUG) {
