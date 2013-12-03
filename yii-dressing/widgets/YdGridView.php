@@ -303,6 +303,7 @@ class YdGridView extends TbGridView
     public function getUserPageSize()
     {
         $key = 'YdGridView_userPageSize_' . str_replace('-', '_', $this->id);
+        $user = Yii::app()->getUser();
         $size = 0;
         if (!$size && $user->user && $user->user->asa('EavBehavior'))
             $size = $user->user->getEavAttribute($key);
@@ -321,7 +322,7 @@ class YdGridView extends TbGridView
         if (!isset($_GET['userPageSize']))
             return;
 
-        $user = Yii::app()->user;
+        $user = Yii::app()->getUser();
         foreach ($_GET['userPageSize'] as $type => $size) {
             $key = 'YdGridView_userPageSize_' . $type;
             $user->setState($key, (int)$size);
