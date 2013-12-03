@@ -53,7 +53,7 @@ class YdWebController extends YdController
     /**
      * @var bool
      */
-    public $isModal = false;
+    public $isModal;
 
     /**
      * @var
