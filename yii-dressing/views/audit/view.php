@@ -123,14 +123,9 @@ $this->widget('dressing.widgets.YdDetailView', array(
 ));
 
 echo '<h2>' . Yii::t('dressing', 'Session and Cookies') . '</h2>';
-?>
-    <a href='javascript:void(0)' onclick="$('#show_session_detail').show('slow');$('#show_session').hide();"
-       id='show_session'>Show</a>
-
-<div id='show_session_detail' style="display: none;">
-    <a href='javascript:void(0)'
-       onclick="$('#show_session_detail').hide('hide');$('#show_session').show();">Hide</a>
-<?php
+echo '<a href="javascript:void(0)" onclick="$(\'#show_session_detail\').show(\'slow\');$(\'#show_session\').hide();" id="show_session">Show</a>';
+echo '<div id="show_session_detail" style="display: none;">';
+echo '<a href="javascript:void(0)" onclick="$(\'#show_session_detail\').hide(\'hide\');$(\'#show_session\').show();">Hide</a>';
 $this->widget('dressing.widgets.YdDetailView', array(
     'data' => $audit,
     'attributes' => array(
@@ -146,50 +141,39 @@ $this->widget('dressing.widgets.YdDetailView', array(
         ),
     ),
 ));
+echo '</div>';
 
 echo '<h2>' . Yii::t('dressing', 'Server Data') . '</h2>';
-?>
-    <a href='javascript:void(0)' onclick="$('#show_server_detail').show('slow');$('#show_server').hide();"
-       id='show_server'>Show</a>
-    <div id='show_server_detail' style="display: none;">
-        <a href='javascript:void(0)'
-           onclick="$('#show_server_detail').hide('hide');$('#show_server').show();">Hide</a>
-        <?php
-        $this->widget('dressing.widgets.YdDetailView', array(
-            'data' => $audit,
-            'attributes' => array(
-                array(
-                    'label' => '$_SERVER',
-                    'value' => '<pre>' . print_r($audit->unpack('server'), true) . '</pre>',
-                    'type' => 'raw',
-                ),
-            ),
-        )); ?>
-    </div>
-<?php
+echo '<a href="javascript:void(0)" onclick="$(\'#show_server_detail\').show(\'slow\');$(\'#show_server\').hide();" id="show_server">Show</a>';
+echo '<div id="show_server_detail" style="display: none;">';
+echo '<a href="javascript:void(0)" onclick="$(\'#show_server_detail\').hide(\'hide\');$(\'#show_server\').show();">Hide</a>';
+$this->widget('dressing.widgets.YdDetailView', array(
+    'data' => $audit,
+    'attributes' => array(
+        array(
+            'label' => '$_SERVER',
+            'value' => '<pre>' . print_r($audit->unpack('server'), true) . '</pre>',
+            'type' => 'raw',
+        ),
+    ),
+));
+echo '</div>';
 
 
 if ($audit->error) {
     echo '<h2>' . Yii::t('dressing', 'Error') . ($audit->error_code ? '-' . $audit->error_code : '') . '</h2>';
-    ?>
-    <a href='javascript:void(0)' onclick="$('#show_error_detail').show('slow');$('#show_error').hide();"
-       id='show_error'>Show</a>
-
-    <div id='show_error_detail' style="display: none;">
-        <a href='javascript:void(0)'
-           onclick="$('#show_error_detail').hide('hide');$('#show_error').show();">Hide</a>
-        <?php
-        $contents = $audit->unpack('error');
-        $contents = str_replace('class="container"', 'class="container-fluid"', $contents);
-        if (strpos($contents, '<body>')) {
-            $contents = StringHelper::getBetweenString($contents, '<body>', '</body>');
-            Yii::app()->clientScript->registerCss('error', file_get_contents(dirname($this->getViewFile('/error/index')) . '/view.css'));
-        }
-        else {
-            $contents = '<pre>' . $contents . '</pre>';
-        }
-        echo $contents;
-        ?>
-    </div>
-<?php
+    echo '<a href="javascript:void(0)" onclick="$(\'#show_error_detail\').show(\'slow\');$(\'#show_error\').hide();" id="show_error">Show</a>';
+    echo '<div id="show_error_detail" style="display: none;">';
+    echo '<a href="javascript:void(0)" onclick="$(\'#show_error_detail\').hide(\'hide\');$(\'#show_error\').show();">Hide</a>';
+    $contents = $audit->unpack('error');
+    $contents = str_replace('class="container"', 'class="container-fluid"', $contents);
+    if (strpos($contents, '<body>')) {
+        $contents = StringHelper::getBetweenString($contents, '<body>', '</body>');
+        Yii::app()->clientScript->registerCss('error', file_get_contents(dirname($this->getViewFile('/error/index')) . '/view.css'));
+    }
+    else {
+        $contents = '<pre>' . $contents . '</pre>';
+    }
+    echo $contents;
+    echo '</div>';
 }
