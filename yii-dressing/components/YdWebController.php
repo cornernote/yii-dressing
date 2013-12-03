@@ -77,13 +77,15 @@ class YdWebController extends YdController
     {
         parent::init();
         $app = Yii::app();
+        $user = $app->user;
 
         // if returnUrl is in submitted data it will be saved in session
         $app->returnUrl->setUrlFromSubmitFields();
 
         // set user theme
-        if ($theme = $app->user->getState('theme'))
-            $app->setTheme($theme);
+        if ($user->user && $user->user->asa('EavBehavior'))
+            if ($theme = $user->user->getEavAttribute('theme'))
+                $app->setTheme($theme);
 
         // set the heading from the title
         if ($this->pageHeading === null)

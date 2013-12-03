@@ -302,8 +302,12 @@ class YdGridView extends TbGridView
      */
     public function getUserPageSize()
     {
-        $key = 'userPageSize.' . str_replace('-', '_', $this->id);
-        $size = Yii::app()->user->getState($key, $this->defaultPageSize);
+        $key = 'YdGridView_userPageSize_' . str_replace('-', '_', $this->id);
+        $size = 0;
+        if (!$size && $user->user && $user->user->asa('EavBehavior'))
+            $size = $user->user->getEavAttribute($key);
+        if (!$size)
+            $size = Yii::app()->user->getState($key, $this->defaultPageSize);
         if (!$size)
             $size = $this->defaultPageSize;
         return $size;
@@ -314,12 +318,18 @@ class YdGridView extends TbGridView
      */
     private function setUserPageSize()
     {
-        if (isset($_GET['userPageSize'])) {
-            foreach ($_GET['userPageSize'] as $type => $size) {
-                Yii::app()->user->setState('userPageSize.' . $type, (int)$size);
-            }
-            unset($_GET['userPageSize']);
+        if (!isset($_GET['userPageSize']))
+            return;
+
+        $user = Yii::app()->user;
+        foreach ($_GET['userPageSize'] as $type => $size) {
+            $key = 'YdGridView_userPageSize_' . $type;
+            $user->setState($key, (int)$size);
+            if ($user->user && $user->user->asa('EavBehavior'))
+                $user->user->setEavAttribute($key, (int)$size, true);
         }
+        unset($_GET['userPageSize']);
+
     }
 
 

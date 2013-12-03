@@ -39,7 +39,7 @@ class YdUserIdentity extends CUserIdentity
                 $this->_id = $user->id;
                 $this->username = $user->username ? $user->username : $user->email;
                 $this->errorCode = self::ERROR_NONE;
-                Yii::app()->session->add(Yii::app()->getUser()->getStateKeyPrefix() . 'UserIdentity.web', true);
+                $this->setState('UserIdentity_method', 'authenticate');
             }
         }
 
@@ -69,7 +69,7 @@ class YdUserIdentity extends CUserIdentity
                 $this->_id = $user->id;
                 $this->username = $user->username ? $user->username : $user->email;
                 $this->errorCode = self::ERROR_NONE;
-                Yii::app()->session->add(Yii::app()->getUser()->getStateKeyPrefix() . 'UserIdentity.api', true);
+                $this->setState('UserIdentity_method', 'authenticateApi');
             }
         }
 
@@ -98,7 +98,7 @@ class YdUserIdentity extends CUserIdentity
             $this->_id = $user->id;
             $this->username = $user->username ? $user->username : $user->email;
             $this->errorCode = self::ERROR_NONE;
-            Yii::app()->session->add(Yii::app()->getUser()->getStateKeyPrefix() . 'UserIdentity.web', true);
+            $this->setState('UserIdentity_method', 'authenticateChangeUser');
         }
 
         // returns true if no error, false if error

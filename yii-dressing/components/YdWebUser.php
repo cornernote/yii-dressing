@@ -1,9 +1,11 @@
 <?php
 /**
  *
+ * Methods from behavior YdWebUserFlashBehavior
  * @method multiFlash() multiFlash()
  * @method addFlash() addFlash(string $message, string $class = 'info')
  *
+ * Properties from getters
  * @property YdUser $user
  * @property integer $id
  * @property bool $api
@@ -79,59 +81,6 @@ class YdWebUser extends CWebUser
             $this->_userModel = YdUser::model()->findByPk($id !== null ? $id : $this->id);
         }
         return $this->_userModel;
-    }
-
-    /**
-     * Load user setting
-     * @param string $key
-     * @param mixed $defaultValue
-     * @return string
-     */
-    public function getState($key, $defaultValue = null)
-    {
-        $state = parent::getState($key);
-        if ($state === null)
-            $state = $this->_userModel && $this->_userModel->asa('EavBehavior') ? $this->unserializeStateValue($this->_userModel->getEavAttribute($key)) : null;
-        if ($state === null)
-            $state = isset(Yii::app()->params[$key]) ? Yii::app()->params[$key] : null;
-        return $state === null ? $defaultValue : $state;
-    }
-
-    /**
-     * Save user setting
-     * @param string $key
-     * @param mixed $value
-     * @param mixed $defaultValue
-     * @return string
-     */
-    public function setState($key, $value, $defaultValue = null)
-    {
-        if ($this->_userModel && $this->_userModel->asa('EavBehavior')) {
-            if ($value)
-                $this->_userModel->setEavAttribute($key, $this->serializeStateValue($value), true);
-            else
-                $this->_userModel->deleteEavAttributes(array($key), true);
-        }
-        return parent::setState($key, $value, $defaultValue);
-    }
-
-    /**
-     * @param $value
-     * @return string
-     */
-    protected function serializeStateValue($value)
-    {
-        return serialize($value);
-    }
-
-    /**
-     * @param $value
-     * @return mixed
-     */
-    protected function unserializeStateValue($value)
-    {
-        if ($value)
-            return unserialize($value);
     }
 
 }
