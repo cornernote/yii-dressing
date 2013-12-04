@@ -26,11 +26,6 @@ class YdDressing extends CApplicationComponent
 {
 
     /**
-     * @var bool
-     */
-    public $enableAuditTrail = true;
-
-    /**
      * @var array Map of model info including relations and behaviors.
      */
     public $modelMap = array();

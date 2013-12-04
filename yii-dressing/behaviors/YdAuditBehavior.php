@@ -116,7 +116,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
      */
     public function afterSave($event)
     {
-        if (!$this->enableAuditTrail || !Yii::app()->dressing->enableAuditTrail) {
+        if (!$this->enableAuditTrail) {
             parent::afterSave($event);
             return;
         }
@@ -205,7 +205,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
      */
     public function afterDelete($event)
     {
-        if (!$this->enableAuditTrail || !Yii::app()->dressing->enableAuditTrail) {
+        if (!$this->enableAuditTrail) {
             parent::afterDelete($event);
             return;
         }
