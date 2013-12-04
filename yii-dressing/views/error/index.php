@@ -40,10 +40,7 @@ $this->breadcrumbs[] = Yii::t('dressing', 'Errors');
                 $auditLink = $audit->getLink();
                 $auditCreated = $audit->created;
                 $auditCreated = Yii::app()->format->agoIcon($auditCreated);
-                $auditRoute = $audit->link;
-                $auditRoute = str_replace(Yii::app()->request->baseUrl, '', $auditRoute);
-                $auditRoute = str_replace($_SERVER['HTTP_HOST'], '', $auditRoute);
-                $auditRoute = str_replace('http://', '', $auditRoute);
+                $auditRoute = str_replace(array(Yii::app()->request->baseUrl, $_SERVER['HTTP_HOST'], 'http://', 'https://'), '', $audit->link);
                 $auditRoute = YdStringHelper::getFirstLineWithIcon($auditRoute, 60);
             }
         }

@@ -33,18 +33,47 @@ class YdErrorController extends YdWebController
     /**
      *
      */
-    public function actionIndex()
+    public function actionIndex($ignoreCodes = false)
     {
         $dir = app()->getRuntimePath() . '/errors';
         $errors = $this->getErrors();
+        if (!$ignoreCodes) {
+            $ignoreCodes = 404;
+        }
+        if ($ignoreCodes) {
+            //none not in the list
+            if (stripos($ignoreCodes, 'none') === false) {
+                $ignoreCodes = explode('-', $ignoreCodes);
+            }
+            //if none in the list simply ignore all errors
+            else {
+                $ignoreCodes = array();
+            }
+        }
+        $filteredErrors = array();
         foreach ($errors as $k => $v) {
-            $errors[$k] = substr($v, strlen($dir) + 1);
+            $error = substr($v, strlen($dir) + 1);
+            $auditInfo = str_replace(array('archive/', 'audit-', '.html'), '', $error);
+            $errorCode = '';
+            if (strpos($auditInfo, '-')) {
+                list($auditId, $errorCode) = explode('-', $auditInfo);
+            }
+            else {
+                $auditId = $auditInfo;
+            }
+            if ($ignoreCodes && in_array($errorCode, $ignoreCodes)) {
+                continue;
+            }
+
+//            $errors[$k] = substr($v, strlen($dir) + 1);
+            $filteredErrors[$k] = substr($v, strlen($dir) + 1);
         }
         rsort($errors);
         $this->render('index', array(
-            'errors' => $errors,
+            'errors' => $filteredErrors,
         ));
     }
+
 
     /**
      * @param $error
