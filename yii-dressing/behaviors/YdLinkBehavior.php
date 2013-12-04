@@ -100,7 +100,8 @@ class YdLinkBehavior extends CActiveRecordBehavior
      */
     public function getLink($title = null, $urlAction = null, $urlParams = array(), $htmlOptions = array())
     {
-        $title = $title ? $title : $this->owner->getName();
+        if ($title === null)
+            $title = $this->owner->getName();
         return CHtml::link($title, $this->owner->getUrl($urlAction, $urlParams), $htmlOptions);
     }
 
