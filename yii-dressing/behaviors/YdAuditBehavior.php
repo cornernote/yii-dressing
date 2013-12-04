@@ -18,9 +18,10 @@ class YdAuditBehavior extends CActiveRecordBehavior
 
     /**
      * Set to false if you just want to use getDbAttribute and other methods in this class.
+     * If left unset the value will come from YdAuditTracker::enableAuditTrail
      * @var bool
      */
-    public $enableAuditTrail = true;
+    public $enableAuditTrail;
 
     /**
      * Any additional models you want to use to write model and model_id audits to.  If this array is not empty then
@@ -40,6 +41,16 @@ class YdAuditBehavior extends CActiveRecordBehavior
      * @var array The attributes that are currently in the database
      */
     private $_dbAttributes = array();
+
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        if ($this->enableAuditTrail === null)
+            $this->enableAuditTrail = Yii::app()->auditTracker->enableAuditTrail;
+    }
 
     /**
      * A list of fields to be ignored on update and delete
