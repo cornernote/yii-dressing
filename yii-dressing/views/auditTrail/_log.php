@@ -15,5 +15,5 @@ if (isset($_GET['YdAuditTrail'])) {
     $auditTrail->attributes = $_GET['YdAuditTrail'];
 }
 $auditTrail->model = get_class($model);
-$auditTrail->model_id = $model->id;
+$auditTrail->model_id = is_array($model->getPrimaryKey()) ? implode('-', $model->getPrimaryKey()) : $model->getPrimaryKey();
 $this->renderPartial('/auditTrail/_grid', array('auditTrail' => $auditTrail));
