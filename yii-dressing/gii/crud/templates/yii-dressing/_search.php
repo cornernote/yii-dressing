@@ -32,8 +32,6 @@ foreach ($this->tableSchema->columns as $column) {
 }
 echo "echo '</fieldset>';\n";
 echo "\n";
-echo "echo '<div class=\"form-actions\">';\n";
-echo "\$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'icon' => 'search white', 'label' => Yii::t('app', 'Search')));\n";
-echo "echo '</div>';\n";
+echo "echo \$form->getSubmitButtonRow(Yii::t('app', 'Search'), array('icon' => 'search white'));\n";
 echo "\n";
 echo "\$this->endWidget();\n";

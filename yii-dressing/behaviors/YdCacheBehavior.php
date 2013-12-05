@@ -54,7 +54,6 @@ class YdCacheBehavior extends CActiveRecordBehavior
         if ($allowDbCache && Yii::app()->cacheDb) {
             Yii::app()->cacheDb->set($fullKey, $value);
         }
-
     }
 
     /**
