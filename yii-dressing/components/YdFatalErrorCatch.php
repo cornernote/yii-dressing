@@ -3,12 +3,12 @@
  * Extension for catching FATAL errors
  * In configuration file main.php add this lines of code:
  *
- * 'preload'=>array('FatalErrorCatch',...),
+ * 'preload'=>array('fatalErrorCatch',...),
  *  ...
  * 'components'=>array(
  *   ...
  *   'fatalErrorCatch'=>array(
- *     'class'=>'FatalErrorCatch',
+ *     'class'=>'dressing.components.YdFatalErrorCatch',
  *   ),
  *
  * @author Rustam Gumerov <psrustik@yandex.ru>
