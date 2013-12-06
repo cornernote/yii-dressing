@@ -5,6 +5,12 @@
  * @property YdActiveRecord $owner
  * @property YdActiveRecord $auditModel
  *
+ * This class was inspired by LoggableBehavior by MadSkillsTisdale.
+ * @author MadSkillsTisdale
+ * @link http://www.yiiframework.com/user/597/
+ * @copyright Copyright 2010 MadSkillsTisdale
+ * @link http://www.yiiframework.com/extension/audittrail/
+ *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
  * @copyright 2013 Mr PHP

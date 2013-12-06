@@ -2,10 +2,10 @@
 /**
  * YdSwiftMailer is a yii wrapper for SwiftMailer
  *
- * This class was inspired by SwiftMailer by Martin Nilsson.
  * It is functionally identical, however it includes swiftmailer from the
  * composer vendor folder and is documented for use in phpStorm.
  *
+ * This class was inspired by SwiftMailer by Martin Nilsson.
  * @author Martin Nilsson <martin.nilsson@haxtech.se>
  * @link http://www.haxtech.se
  * @copyright Copyright 2010 Haxtech
