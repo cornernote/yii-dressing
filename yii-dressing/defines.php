@@ -5,7 +5,7 @@
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @copyright 2013 Mr PHP
  * @link https://github.com/cornernote/yii-skeleton
- * @license http://www.gnu.org/copyleft/gpl.html
+ * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
 /**

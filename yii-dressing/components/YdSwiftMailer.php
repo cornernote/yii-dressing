@@ -1,11 +1,18 @@
 <?php
 /**
- * Swift Mailer wrapper class.
+ * YdSwiftMailer is a yii wrapper for SwiftMailer
+ *
+ * This class was inspired by SwiftMailer by Martin Nilsson.
+ * It is functionally identical, however it includes swiftmailer from the
+ * composer vendor folder and is documented for use in phpStorm.
  *
  * @author Martin Nilsson <martin.nilsson@haxtech.se>
  * @link http://www.haxtech.se
  * @copyright Copyright 2010 Haxtech
- * @license GNU GPL
+ * @link http://www.yiiframework.com/extension/swiftmailer/
+ *
+ * @link https://github.com/cornernote/yii-dressing
+ * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  *
  * @package dressing.components
  */
@@ -17,7 +24,7 @@ class YdSwiftMailer
      */
     public function init()
     {
-        require_once(Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . '/swiftmailer/swiftmailer/lib/swift_required.php');
+        require_once(Yii::getPathOfAlias('vendor') . DS . '/swiftmailer/swiftmailer/lib/swift_required.php');
     }
 
     /**
@@ -88,6 +95,5 @@ class YdSwiftMailer
     {
         return Swift_MailTransport::newInstance();
     }
-
 
 }

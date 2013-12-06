@@ -1,8 +1,8 @@
 {
     "name": "mrphp/yii-dressing",
-    "description": "Toolkit for Yii framework",
+    "description": "Component library for Yii framework",
     "type": "library",
-    "license": "GPL3",
+    "license": "BSD-3-Clause",
     "keywords": ["yii","mrphp"],
     "homepage": "http://yiidressing.mrphp.com.au/",
     "authors": [

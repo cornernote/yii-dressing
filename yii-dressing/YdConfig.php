@@ -33,10 +33,10 @@
  * This class was written and compiled by Brett O'Donnell and Zain ul abidin.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
- * @author Zain ul abidin <zainengineer@gmail.com>
- * @copyright Copyright (c) 2013, Brett O'Donnell and Zain ul abidin
- *
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @author Zain Ul abidin <zainengineer@gmail.com>
+ * @copyright 2013 Mr PHP
+ * @link https://github.com/cornernote/yii-dressing
+ * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  *
  * @package dressing
  */
