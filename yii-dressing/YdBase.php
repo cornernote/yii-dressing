@@ -168,6 +168,11 @@ class YdBase extends YiiBase
                     'class' => 'dressing.components.YdWebUser',
                     'allowAutoLogin' => true,
                     'loginUrl' => array('/account/login'),
+                    'behaviors' => array(
+                        'webUserFlash' => array(
+                            'class' => 'dressing.behaviors.YdWebUserFlashBehavior',
+                        ),
+                    ),
                 ),
                 'returnUrl' => array(
                     'class' => 'dressing.components.YdReturnUrl',
