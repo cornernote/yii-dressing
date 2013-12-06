@@ -45,9 +45,7 @@ class YdHelper
     public static function isHomePage()
     {
         $app = Yii::app();
-        $url = $app->getHomeUrl();
-        $request = $app->getRequest();
-        return ($app->createUrl($url[0], array_splice($url, 1)) == $request->getRequestUri());
+        return ($app->getHomeUrl() == $app->getRequest()->getRequestUri());
     }
 
     /**
