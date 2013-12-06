@@ -30,16 +30,18 @@ echo "\n";
 echo "class " . $modelClass . " extends " . $this->baseClass . "\n";
 echo "{\n";
 echo "\n";
-//echo "    /**\n";
-//echo "     * Returns the static model of the specified AR class.\n";
-//echo "     * @param string \$className active record class name.\n";
-//echo "     * @return " . $modelClass . " the static model class\n";
-//echo "     */\n";
-//echo "    public static function model(\$className=__CLASS__)\n";
-//echo "    {\n";
-//echo "        return parent::model(\$className);\n";
-//echo "    }\n";
-//echo "\n";
+if (!($this->baseClass instanceof YdActiveRecord)) {
+    echo "    /**\n";
+    echo "     * Returns the static model of the specified AR class.\n";
+    echo "     * @param string \$className active record class name.\n";
+    echo "     * @return " . $modelClass . " the static model class\n";
+    echo "     */\n";
+    echo "    public static function model(\$className=__CLASS__)\n";
+    echo "    {\n";
+    echo "        return parent::model(\$className);\n";
+    echo "    }\n";
+    echo "\n";
+}
 if ($connectionId != 'db') {
     echo "    /**\n";
     echo "     * @return CDbConnection database connection\n";
@@ -82,12 +84,19 @@ echo "    public function behaviors()\n";
 echo "    {\n";
 echo "        return array(\n";
 echo "            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',\n";
-if (in_array('created', CHtml::listData($columns, 'name', 'name')) || in_array('updated', CHtml::listData($columns, 'name', 'name'))) {
+echo "            'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',\n";
+
+$useTimestampBehavior = false;
+$timestampFields = array('created', 'create_time', 'created_at', 'updated', 'update_time', 'updated_at');
+$tableFields = CHtml::listData($columns, 'name', 'name');
+foreach ($timestampFields as $timestampField)
+    if (in_array($timestampField, $tableFields))
+        $useTimestampBehavior = true;
+if ($useTimestampBehavior)
     echo "            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',\n";
-}
-if (in_array('deleted', CHtml::listData($columns, 'name', 'name'))) {
+if (in_array('deleted', CHtml::listData($columns, 'name', 'name')))
     echo "            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',\n";
-}
+
 echo "        );\n";
 echo "    }\n";
 echo "\n";
