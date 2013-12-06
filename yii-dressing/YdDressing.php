@@ -46,7 +46,7 @@ class YdDressing extends CApplicationComponent
     public static function getVersion()
     {
         //return 'dev';
-        return '0.1.1';
+        return '0.3.0';
     }
 
     /**
