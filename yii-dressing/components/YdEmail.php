@@ -51,7 +51,7 @@ class YdEmail extends CApplicationComponent
      * Allows sending a quick email.
      *
      * Eg:
-     * Yii::app()->email->sendEmail('webmaster@localhost', 'test', 'hello world');
+     * Yii::app()->email->sendEmail('webmaster@localhost', 'subject', 'message');
      *
      * @param $to_email
      * @param $subject
