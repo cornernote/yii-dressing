@@ -2,6 +2,9 @@
 /**
  * Class YdErrorHandler
  *
+ * @property $path string
+ * @property $auditId string|int
+ *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
  * @copyright 2013 Mr PHP
@@ -12,6 +15,12 @@
  */
 class YdErrorHandler extends CErrorHandler
 {
+
+    /**
+     * @var
+     */
+    private $_path;
+
     /**
      * @param CEvent $event
      */
@@ -30,10 +39,7 @@ class YdErrorHandler extends CErrorHandler
     public function logError($event)
     {
         $errorMessage = $this->getErrorHtml($event);
-        $dir = app()->getRuntimePath() . '/errors';
-        if (!file_exists($dir))
-            mkdir($dir, 0777, true);
-        $path = $dir . '/audit-' . $this->getAuditId() . '.html';
+        $path = $this->getPath() . '/audit-' . $this->getAuditId() . '.html';
         file_put_contents($path, $errorMessage);
     }
 
@@ -43,10 +49,7 @@ class YdErrorHandler extends CErrorHandler
     public function logException($event)
     {
         $errorMessage = $this->getExceptionHtml($event->exception);
-        $dir = app()->getRuntimePath() . '/errors';
-        if (!file_exists($dir))
-            mkdir($dir, 0777, true);
-        $path = $dir . '/audit-' . $this->getAuditId() . '.html';
+        $path = $this->getPath() . '/audit-' . $this->getAuditId() . '.html';
         file_put_contents($path, $errorMessage);
     }
 
@@ -192,6 +195,28 @@ class YdErrorHandler extends CErrorHandler
 
         $auditId = Yii::app()->auditTracker->id;
         return $auditId ? $auditId : uniqid();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        if ($this->_path)
+            return $this->_path;
+
+        $this->_path = Yii::app()->getRuntimePath() . DS . 'errors';
+        if (!file_exists($this->_path))
+            mkdir($this->_path, 0777, true);
+        return $this->_path;
+    }
+
+    /**
+     * @param $path string
+     */
+    public function setPath($path)
+    {
+        $this->_path = $path;
     }
 
 }
