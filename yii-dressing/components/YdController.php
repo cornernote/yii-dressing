@@ -16,13 +16,13 @@ class YdController extends CController
     /**
      * @return array action filters
      */
-    public function filters()
-    {
-        return array(
-            'accessControl',
-            'webUserType' => array('dressing.components.YdWebUserTypeFilter'),
-        );
-    }
+    //public function filters()
+    //{
+    //    return array(
+    //        'accessControl',
+    //        'webUserType' => array('dressing.components.YdWebUserTypeFilter'),
+    //    );
+    //}
 
 
     /**
