@@ -23,20 +23,7 @@ class YdEmailSpoolCommand extends YdConsoleCommand
     }
 
     /**
-     * SEND TO MAILINATOR.COM
-     */
-    public function actionIndex()
-    {
-        // short loop
-        set_time_limit(60 * 60);
-        for ($i = 0; $i < 60 * 5; $i++) {
-            Yii::app()->email->processSpool($mailinator = true);
-            sleep(10);
-        }
-    }
-
-    /**
-     * SEND LIVE EMAILS
+     * Sends live emails
      */
     public function actionLive()
     {
@@ -45,6 +32,19 @@ class YdEmailSpoolCommand extends YdConsoleCommand
         for ($i = 0; $i < 60 * 60; $i++) {
             Yii::app()->email->processSpool();
             sleep(1);
+        }
+    }
+
+    /**
+     * Sends emails to mailinator
+     */
+    public function actionMailinator()
+    {
+        // short loop
+        set_time_limit(60 * 60);
+        for ($i = 0; $i < 60 * 5; $i++) {
+            Yii::app()->email->processSpool($mailinator = true);
+            sleep(10);
         }
     }
 
