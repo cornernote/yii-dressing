@@ -252,7 +252,7 @@ class YdEmail extends CApplicationComponent
             $to_email = $mailinator ? str_replace('@', '.', $spool->to_email) . '@mailinator.com' : $spool->to_email;
 
             // build the message
-            $SM = app()->swiftMailer;
+            $SM = Yii::app()->swiftMailer;
             $message = $SM->newMessage($spool->message_subject);
             $message->setFrom($spool->from_name ? array($spool->from_email => $spool->from_name) : array($spool->from_email));
             $message->setTo($spool->to_name ? array($to_email => $spool->to_name) : array($to_email));
