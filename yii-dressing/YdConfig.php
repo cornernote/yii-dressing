@@ -203,21 +203,13 @@ class YdConfig
     {
         $constants = array(
             'DS',
-            //'APP_PATH',
-            //'APP_CONFIG',
             'VENDOR_PATH',
             'YII_DEBUG',
             'YII_DEBUG_TOOLBAR',
             'YII_TRACE_LEVEL',
             'YII_ENABLE_EXCEPTION_HANDLER',
             'YII_ENABLE_ERROR_HANDLER',
-            //'YII_PATH',
-            //'YII_ZII_PATH',
-            //'YII_AUTH_PATH',
-            //'YII_BOOSTER_PATH',
-            //'YII_DRESSING_PATH',
             'YII_DRESSING_CLI',
-            //'YII_DRESSING_LOG_LEVELS',
             'YII_DRESSING_HASH',
             'PUBLIC_PATH',
             'PUBLIC_HOST',
@@ -238,14 +230,7 @@ class YdConfig
 
         // paths
         defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-        //defined('YII_DRESSING_PATH') or define('YII_DRESSING_PATH', self::cleanPath(dirname(__FILE__)));
         defined('VENDOR_PATH') or define('VENDOR_PATH', self::cleanPath(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'vendor'));
-        //defined('APP_PATH') or define('APP_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'app'));
-        //defined('APP_CONFIG') or define('APP_CONFIG', self::cleanPath(APP_PATH . DS . 'config' . DS . 'main.php'));
-        //defined('YII_PATH') or define('YII_PATH', self::cleanPath(VENDOR_PATH . DS . 'yiisoft' . DS . 'yii' . DS . 'framework'));
-        //defined('YII_ZII_PATH') or define('YII_ZII_PATH', self::cleanPath(YII_PATH . DS . 'zii'));
-        //defined('YII_AUTH_PATH') or define('YII_AUTH_PATH', self::cleanPath(VENDOR_PATH . DS . 'crisu83' . DS . 'yii-auth'));
-        //defined('YII_BOOSTER_PATH') or define('YII_BOOSTER_PATH', self::cleanPath(VENDOR_PATH . DS . 'clevertech' . DS . 'yii-booster' . DS . 'src'));
         defined('PUBLIC_PATH') or define('PUBLIC_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'public'));
 
         // public_host and public_url are saved into config when accessed via web so that the value is available for cli
