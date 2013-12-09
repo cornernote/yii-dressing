@@ -40,6 +40,8 @@ class YdModal extends CWidget
         $cs->registerScriptFile($baseUrl . '/modal-responsive-fix.min.js', CClientScript::POS_HEAD, array('order' => 1));
         $cs->registerCSS('modal-responsive-fix', '.modal-body { -webkit-overflow-scrolling:touch; } body.modal-open{overflow: hidden;} @media (max-width: 767px) {.modal.fade.in {top: 10px !important;}}', '', array('order' => 10));
 
+        // load here so ajax requests dont need it
+        Yii::app()->getClientScript()->registerCoreScript('yiiactiveform');
     }
 
     /**

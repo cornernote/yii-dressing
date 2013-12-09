@@ -99,9 +99,11 @@ class YdWebController extends YdController
         $app->clientScript->registerCSSFile($app->dressing->getAssetsUrl() . '/css/yii-dressing.css');
 
         // init widgets
-        $this->widget('dressing.widgets.YdModal');
-        $this->widget('dressing.components.YdFancyBox');
-        $this->widget('dressing.widgets.YdQTip');
+        if (!$app->request->isAjaxRequest) {
+            $this->widget('dressing.widgets.YdModal');
+            $this->widget('dressing.components.YdFancyBox');
+            $this->widget('dressing.widgets.YdQTip');
+        }
     }
 
     /**
