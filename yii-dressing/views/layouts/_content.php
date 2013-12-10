@@ -46,7 +46,7 @@ if ($this->showNavBar) {
             }
             if ($this->breadcrumbs) {
                 $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-                    'links' => $this->breadcrumbs,
+                    'links' => CMap::mergeArray($this->breadcrumbs, array($this->pageHeading)),
                     'separator' => '<i class="icon-chevron-right"></i>',
                 ));
             }

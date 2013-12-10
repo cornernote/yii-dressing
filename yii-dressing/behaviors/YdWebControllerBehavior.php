@@ -63,7 +63,9 @@ class YdWebControllerBehavior extends CBehavior
      */
     public function getName($plural = false)
     {
-        return ucwords(trim(strtolower(str_replace(array('-', '_', '.'), ' ', preg_replace('/(?<![A-Z])[A-Z]/', ' \0', str_replace('Controller', '', get_class($this))))))) . ($plural ? 's' : '');
+        $name = preg_replace('/(?<![A-Z])[A-Z]/', ' \0', str_replace('Controller', '', get_class($this->getOwner())));
+        $name = ucwords(trim(strtolower(str_replace(array('-', '_', '.'), ' ', $name))));
+        return $name . ($plural ? 's' : '');
     }
 
     /**
@@ -72,7 +74,7 @@ class YdWebControllerBehavior extends CBehavior
     public function getPageHeading()
     {
         if ($this->_pageHeading === null)
-            $this->_pageHeading = $this->owner->pageTitle;
+            $this->_pageHeading = $this->getOwner()->pageTitle;
         return $this->_pageHeading;
     }
 
