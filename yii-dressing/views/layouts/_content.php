@@ -12,15 +12,11 @@
 ?>
 <?php
 if ($this->showNavBar) {
-    $this->widget('dressing.widgets.YdNavbar', array(
-        'id' => 'navbar',
+    $this->widget('bootstrap.widgets.TbNavbar', array(
         'fixed' => 'top',
         'fluid' => true,
         'collapse' => true,
-        'items' => SiteMenu::topMenu(),
-        'constantItems' => array(
-            SiteMenu::userMenu(),
-        ),
+        'items' => YdSiteMenu::topMenu(),
     ));
 }
 ?>

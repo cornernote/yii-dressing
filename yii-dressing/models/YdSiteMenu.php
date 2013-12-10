@@ -396,6 +396,9 @@ class YdSiteMenu extends YdActiveRecord
             'items' => self::getItemsFromMenu('Main'),
         );
 
+        // user
+        $menu[] = self::userMenu();
+
         // search
         $menu[] = '<form id="navmenu-header-search" class="navbar-search pull-right" action="' . Yii::app()->createUrl('/site/search') . '"><input type="text" name="term" class="search-query span1" id = "jump-search-box" placeholder="' . Yii::t('dressing', 'Search') . '"><input type="hidden" name="r" value="site/jump"></form>';
 

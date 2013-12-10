@@ -36,11 +36,9 @@ class YdModal extends CWidget
 
         // fix modals on mobile devices
         // http://niftylettuce.github.com/twitter-bootstrap-jquery-plugins/
-        if (YdHelper::isMobileBrowser()) {
-            $cs->registerScriptFile($baseUrl . '/touchscroll.js', CClientScript::POS_HEAD, array('order' => 1));
-            $cs->registerScriptFile($baseUrl . '/modal-responsive-fix.min.js', CClientScript::POS_HEAD, array('order' => 1));
-            $cs->registerCSS('modal-responsive-fix', '.modal-body { -webkit-overflow-scrolling:touch; } body.modal-open{overflow: hidden;} @media (max-width: 767px) {.modal.fade.in {top: 10px !important;}}', '', array('order' => 10));
-        }
+        $cs->registerScriptFile($baseUrl . '/touchscroll.js', CClientScript::POS_HEAD, array('order' => 1));
+        $cs->registerScriptFile($baseUrl . '/modal-responsive-fix.min.js', CClientScript::POS_HEAD, array('order' => 1));
+        $cs->registerCSS('modal-responsive-fix', '.modal-body { -webkit-overflow-scrolling:touch; } body.modal-open{overflow: hidden;} @media (max-width: 767px) {.modal.fade.in {top: 10px !important;}}', '', array('order' => 10));
 
         // load here so ajax requests dont need it
         Yii::app()->getClientScript()->registerCoreScript('yiiactiveform');
