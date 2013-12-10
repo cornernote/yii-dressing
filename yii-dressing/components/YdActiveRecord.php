@@ -27,38 +27,6 @@ class YdActiveRecord extends CActiveRecord
     }
 
     /**
-     * Allows setting default attributes before validation and saving in a single method.
-     *
-     * @see beforeValidate()
-     * @see beforeSave()
-     */
-    public function setDefaultAttributes()
-    {
-    }
-
-    /**
-     * Actions to be performed before the model is saved
-     *
-     * @return bool
-     */
-    protected function beforeValidate()
-    {
-        $this->setDefaultAttributes();
-        return parent::beforeValidate();
-    }
-
-    /**
-     * Actions to be performed before the model is saved
-     *
-     * @return bool
-     */
-    protected function beforeSave()
-    {
-        $this->setDefaultAttributes();
-        return parent::beforeSave();
-    }
-
-    /**
      * Guess the table name based on the class
      *
      * @return string the associated database table name
