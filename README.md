@@ -4,7 +4,7 @@ MrPHP.com.au's own Yii Library, used for making awesome Yii applications.
 
 ## About
 
-Copyright (c) 2013 Brett O'Donnell <cornernote@gmail.com>, Zain Ul abidin <zainengineer@gmail.com>
+Copyright (c) 2013 Mr PHP <info@mrphp.com.au>
 
 Source Code: https://github.com/cornernote/yii-dressing
 
