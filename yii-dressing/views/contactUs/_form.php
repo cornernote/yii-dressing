@@ -14,7 +14,6 @@
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'contactUs-form',
     'type' => 'vertical',
-    //'enableAjaxValidation' => true,
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($contactUs);

@@ -59,20 +59,6 @@ class YdActiveRecord extends CActiveRecord
     }
 
     /**
-     * Returns error array as a string
-     *
-     * @return string
-     */
-    public function getErrorString()
-    {
-        $output = array();
-        foreach ($this->getErrors() as $attribute => $errors) {
-            $output[] = $attribute . ': ' . implode(' ', $errors);
-        }
-        return implode(' | ', $output);
-    }
-
-    /**
      * Guess the table name based on the class
      *
      * @return string the associated database table name

@@ -86,7 +86,6 @@ class YdUserController extends YdWebController
     {
         $user = new YdUser('create');
 
-        $this->performAjaxValidation($user, 'user-form');
         if (isset($_POST['YdUser'])) {
             $user->attributes = $_POST['YdUser'];
             if ($user->save()) {
@@ -119,7 +118,6 @@ class YdUserController extends YdWebController
         /** @var $user YdUser */
         $user = $this->loadModel($id, 'YdUser');
 
-        $this->performAjaxValidation($user, 'user-form');
         if (isset($_POST['YdUser'])) {
             $user->attributes = $_POST['YdUser'];
             if ($user->save()) {
@@ -145,7 +143,7 @@ class YdUserController extends YdWebController
     {
         $task = YdHelper::getSubmittedField('task', 'YdUser') == 'undelete' ? 'undelete' : 'delete';
         if (YdHelper::getSubmittedField('confirm', 'YdUser')) {
-            foreach ($this->getGridIds($id) as $_id) {
+            foreach (YdHelper::getGridIds($id) as $_id) {
                 $user = YdUser::model()->findByPk($_id);
 
                 // check access

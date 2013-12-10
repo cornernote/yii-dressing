@@ -199,7 +199,6 @@ class YdAttachmentController extends YdWebController
             $attachment->attributes = $_GET['YdAttachment'];
         }
 
-        $this->performAjaxValidation($attachment, 'attachment-form');
         if (isset($_POST['YdAttachment']) || isset($_FILES['Filedata'])) {
 
             // restructure swfupload posted file
@@ -227,8 +226,6 @@ class YdAttachmentController extends YdWebController
                 );
                 $attachment->model = $_GET['model'];
                 $attachment->foreign_key = $_GET['foreign_key'];
-                $attachment->created_by = $_GET['user_id'];
-                $attachment->modified_by = $_GET['user_id'];
             }
             $attachment->attributes = $_POST['YdAttachment'];
             $saved = $attachment->save();
@@ -250,12 +247,6 @@ class YdAttachmentController extends YdWebController
                     if (!isAjax())
                         $this->redirect(Yii::app()->returnUrl->getUrl());
                 }
-                else {
-                    if (!$attachment->getErrorString()) {
-                        Yii::app()->user->addFlash('Could not create Attachment', 'error');
-                    }
-
-                }
             }
 
         }
@@ -272,8 +263,6 @@ class YdAttachmentController extends YdWebController
     public function actionUpdate($id)
     {
         $attachment = $this->loadModel($id, 'YdAttachment');
-
-        $this->performAjaxValidation($attachment, 'attachment-form');
 
         if (isset($_POST['YdAttachment'])) {
             $attachment->attributes = $_POST['YdAttachment'];
@@ -315,7 +304,7 @@ class YdAttachmentController extends YdWebController
     {
         $task = YdHelper::getSubmittedField('task', 'YdAttachment') == 'undelete' ? 'undelete' : 'delete';
         if (YdHelper::getSubmittedField('confirm', 'YdAttachment')) {
-            foreach ($this->getGridIds($id) as $_id) {
+            foreach (YdHelper::getGridIds($id) as $_id) {
                 $attachment = YdAttachment::model()->findByPk($_id);
 
                 // check access

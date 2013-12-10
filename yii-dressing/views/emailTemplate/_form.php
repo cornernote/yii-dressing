@@ -13,7 +13,6 @@
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'emailTemplate-form',
-    'enableAjaxValidation' => true,
     'type' => 'horizontal',
     'htmlOptions' => array(
         'class' => app()->request->isAjaxRequest ? 'modal-form' : '',

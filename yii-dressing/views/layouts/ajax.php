@@ -1,5 +1,7 @@
 <?php
 /**
+ * Ajax layout
+ *
  * @var $this YdWebController
  * @var $content
  *

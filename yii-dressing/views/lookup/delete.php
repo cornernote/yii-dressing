@@ -30,7 +30,7 @@ echo $form->errorSummary($lookup);
 
 echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
-$lookups = Lookup::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
+$lookups = Lookup::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
 if ($lookups) {
     echo '<ul>';
     foreach ($lookups as $lookup) {

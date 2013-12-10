@@ -62,7 +62,6 @@ class YdEmailTemplateController extends YdWebController
     public function actionUpdate($id)
     {
         $emailTemplate = $this->loadModel($id, 'YdEmailTemplate');
-        $this->performAjaxValidation($emailTemplate, 'emailTemplate-form');
 
         // handle posted data
         if (isset($_POST['YdEmailTemplate'])) {

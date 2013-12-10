@@ -83,7 +83,6 @@ class YdContactUsController extends YdWebController
     {
         $contactUs = new YdContactUs('create');
 
-        $this->performAjaxValidation($contactUs, 'contactUs-form');
         if (isset($_POST['YdContactUs'])) {
             $contactUs->attributes = $_POST['YdContactUs'];
             $contactUs->ip_address = si($_SERVER, 'REMOTE_ADDR');

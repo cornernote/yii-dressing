@@ -19,7 +19,6 @@ $this->menu = YdSiteMenu::getItemsFromMenu('User');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'password-form',
-    //'enableAjaxValidation' => true,
     'type' => 'horizontal',
 ));
 echo $form->beginModalWrap();

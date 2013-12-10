@@ -30,7 +30,7 @@ echo $form->errorSummary($emailTemplate);
 
 echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
-$emailTemplates = EmailTemplate::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
+$emailTemplates = EmailTemplate::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
 if ($emailTemplates) {
     echo '<ul>';
     foreach ($emailTemplates as $emailTemplate) {

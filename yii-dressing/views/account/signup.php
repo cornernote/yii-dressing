@@ -16,7 +16,6 @@ $this->breadcrumbs[] = Yii::t('dressing', 'Sign Up');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'register-form',
-    //'enableAjaxValidation' => true,
     'type' => 'horizontal',
 ));
 echo $form->beginModalWrap();

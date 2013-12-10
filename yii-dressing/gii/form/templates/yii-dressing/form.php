@@ -21,7 +21,7 @@
 
 <?php echo "<?php \$form=\$this->beginWidget('CActiveForm', array(
 	'id'=>'".$this->class2id($this->modelClass).'-'.basename($this->viewName)."-form',
-	'enableAjaxValidation'=>false,
+	//'enableAjaxValidation'=>true,
 )); ?>\n"; ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>

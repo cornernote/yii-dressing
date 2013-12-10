@@ -18,7 +18,6 @@ $this->breadcrumbs[] = Yii::t('dressing', 'Recover Password');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'recover-form',
-    //'enableAjaxValidation' => false,
     'type' => 'horizontal',
 ));
 echo $form->beginModalWrap();

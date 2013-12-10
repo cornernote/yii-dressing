@@ -95,7 +95,7 @@ class YdSimpleTreeWidget extends CInputWidget
         //create container node
         echo "<div id='$this->id'>node</div>";
         $clientScript->registerScript('createJtree', 'jQuery("#' . $this->id . '").jstree({
-            "plugins" : [ "themes", "json_data", "ui", "crrm", "cookies", "dnd", "types", "hotkeys", "contextmenu" ],
+            "plugins" : [ "themes", "json_data", "ui", "crrm", "cookies", "types", "hotkeys" ],
             "core" : {
                 "animation" : 300
             },
@@ -128,104 +128,6 @@ class YdSimpleTreeWidget extends CInputWidget
                     }
                 }
             }
-        })
-        .bind("create.jstree", function (e, data) {
-            $.post(
-                "' . $this->ajaxUrl . '",
-                { 
-                    "simpletree" : 1,
-                    "operation" : "create_node", 
-                    "id" : data.rslt.parent.attr("id").replace("node_",""), 
-                    "position" : data.rslt.position,
-                    "title" : data.rslt.name,
-                    "type" : data.rslt.obj.attr("rel"),
-                    ' . $this->getEnvironment() . '
-                }, 
-                function (r) {
-                    if(r.status) {
-                        $(data.rslt.obj).attr("id", "node_" + r.id);
-                        ' . $this->onCreate . '
-                    }
-                    else {
-                        $.jstree.rollback(data.rlbk);
-                    }
-                }
-            );
-        })
-        .bind("remove.jstree", function (e, data) {
-            data.rslt.obj.each(function () {
-                if (data.inst._get_type(this) == "readonly")
-                    return; 
-                $.ajax({
-                    async : false,
-                    type: \'POST\',
-                    url: "' . $this->ajaxUrl . '",
-                    data : { 
-                        "simpletree" : 1,
-                        "operation" : "remove_node", 
-                        "id" : this.id.replace("node_",""),
-                        ' . $this->getEnvironment() . '
-                    }, 
-                    success : function (r) {
-                        if(!r.status) {
-                            data.inst.refresh();
-                        }else{
-                        
-                            ' . $this->onRemove . '
-                        }
-                    }
-                });
-            });
-        })
-        .bind("rename.jstree", function (e, data) {
-            $.post(
-                "' . $this->ajaxUrl . '",
-                { 
-                    "simpletree" : 1,
-                    "operation" : "rename_node", 
-                    "id" : data.rslt.obj.attr("id").replace("node_",""),
-                    "title" : data.rslt.new_name,
-                    ' . $this->getEnvironment() . '
-                }, 
-                function (r) {
-                    if(!r.status) {
-                        $.jstree.rollback(data.rlbk);
-                    }else{
-                        ' . $this->onRename . '
-                    }
-                }
-            );
-        })
-        .bind("move_node.jstree", function (e, data) {
-            data.rslt.o.each(function (i) {
-                $.ajax({
-                    async : false,
-                    type: \'POST\',
-                    url: "' . $this->ajaxUrl . '",
-                    data : { 
-                        "simpletree" : 1,
-                        "operation" : "move_node", 
-                        "id" : $(this).attr("id").replace("node_",""), 
-                        "ref" : data.rslt.np.attr("id").replace("node_",""), 
-                        "position" : data.rslt.cp + i,
-                        "title" : data.rslt.name,
-                        "copy" : data.rslt.cy ? 1 : 0,
-                        ' . $this->getEnvironment() . '
-                    },
-                    success : function (r) {
-                        if(!r.status) {
-                            $.jstree.rollback(data.rlbk);
-                        }
-                        else {
-                            $(data.rslt.oc).attr("id", "node_" + r.id);
-                            if(data.rslt.cy) {
-                                data.inst.refresh(data.inst._get_parent(data.rslt.oc));
-                            }
-                            ' . $this->onMove . '
-                        }
-                    }
-                });
-            });
         })
         .bind("select_node.jstree", function (e, data){
             ' . $this->onSelect . '
@@ -275,13 +177,12 @@ class YdSimpleTreeWidget extends CInputWidget
      */
     static function _get_children()
     {
-
         $children = array();
         $Model = new $_REQUEST['model'];
         foreach ($Model->findAllByAttributes(array($_REQUEST['modelPropertyParentId'] => $_REQUEST['id'])) AS $k => $Model) {
             if (strpos($_REQUEST['modelPropertyName'], '.') !== false) {
                 $modelPropertyName = explode('.', $_REQUEST['modelPropertyName']);
-                $children[$k]["data"] = $Model->{$modelPropertyName[0]}->{$modelPropertyName[1]};
+                $children[$k]["data"] = $Model->{$modelPropertyName[0]} ? $Model->{$modelPropertyName[0]}->{$modelPropertyName[1]} : null;
             }
             else
                 $children[$k]["data"] = $Model->{$_REQUEST['modelPropertyName']};

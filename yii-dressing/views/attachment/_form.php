@@ -59,7 +59,6 @@ if ($attachment->isNewRecord) {
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'attachment-form',
     'type' => 'horizontal',
-    //'enableAjaxValidation' => true,
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($attachment);

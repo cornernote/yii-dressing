@@ -81,7 +81,6 @@ class YdSiteMenuController extends YdWebController
     {
         $menu = new YdSiteMenu('create');
 
-        $this->performAjaxValidation($menu, 'menu-form');
         if (isset($_POST['YdSiteMenu'])) {
             $menu->attributes = $_POST['YdSiteMenu'];
             if ($menu->save()) {
@@ -110,7 +109,6 @@ class YdSiteMenuController extends YdWebController
         /** @var $menu YdSiteMenu */
         $menu = $this->loadModel($id, 'YdSiteMenu');
 
-        $this->performAjaxValidation($menu, 'menu-form');
         if (isset($_POST['YdSiteMenu'])) {
             $menu->attributes = $_POST['YdSiteMenu'];
             if ($menu->save()) {
@@ -132,7 +130,7 @@ class YdSiteMenuController extends YdWebController
     {
         $task = YdHelper::getSubmittedField('task', 'YdSiteMenu') == 'undelete' ? 'undelete' : 'delete';
         if (YdHelper::getSubmittedField('confirm', 'YdSiteMenu')) {
-            foreach ($this->getGridIds($id) as $_id) {
+            foreach (YdHelper::getGridIds($id) as $_id) {
                 $menu = YdSiteMenu::model()->findByPk($_id);
                 if (!$menu) {
                     continue;

@@ -31,7 +31,7 @@ echo $form->errorSummary($user);
     <fieldset>
         <legend><?php echo Yii::t('dressing', 'Selected Users'); ?></legend>
         <?php
-        $users = User::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
+        $users = User::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
         if ($users) {
             echo '<ul>';
             foreach ($users as $user) {

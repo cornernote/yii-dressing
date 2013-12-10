@@ -30,7 +30,7 @@ echo $form->errorSummary($attachment);
 
 echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
-$attachments = Attachment::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
+$attachments = Attachment::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
 if ($attachments) {
 	echo '<ul>';
 	foreach ($attachments as $attachment) {

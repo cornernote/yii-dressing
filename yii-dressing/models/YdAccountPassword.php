@@ -17,7 +17,7 @@ class YdAccountPassword extends YdFormModel
     /**
      * @var
      */
-    public $password;
+    public $new_password;
 
     /**
      * @var
@@ -30,6 +30,11 @@ class YdAccountPassword extends YdFormModel
     public $current_password;
 
     /**
+     * @var string
+     */
+    public $userModelName = 'YdUser';
+
+    /**
      * @return array
      */
     public function rules()
@@ -40,9 +45,9 @@ class YdAccountPassword extends YdFormModel
             array('current_password', 'validateCurrentPassword', 'on' => 'password'),
             array('current_password', 'length', 'max' => 64, 'min' => 5),
 
-            // password
-            array('password', 'required'),
-            array('password', 'length', 'max' => 64, 'min' => 5),
+            // new_password
+            array('new_password', 'required'),
+            array('new_password', 'length', 'max' => 64, 'min' => 5),
 
             // confirm_password
             array('confirm_password', 'required', 'on' => 'password, recover'),
@@ -56,7 +61,7 @@ class YdAccountPassword extends YdFormModel
      */
     public function validateCurrentPassword()
     {
-        $user = YdUser::model()->findByPk(Yii::app()->user->id);
+        $user = CActiveRecord::model($this->userModelName)->findByPk(Yii::app()->user->id);
         if (!$user || !$user->validatePassword($this->current_password)) {
             $this->addError('current_password', 'Incorrect password.');
         }
@@ -69,7 +74,7 @@ class YdAccountPassword extends YdFormModel
     {
         return array(
             'current_password' => Yii::t('dressing', 'Current Password'),
-            'password' => Yii::t('dressing', 'New Password'),
+            'new_password' => Yii::t('dressing', 'New Password'),
             'confirm_password' => Yii::t('dressing', 'Confirm Password'),
         );
     }

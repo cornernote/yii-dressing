@@ -14,7 +14,6 @@
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'lookup-form',
     'type' => 'horizontal',
-    //'enableAjaxValidation' => true,
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($lookup);

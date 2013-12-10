@@ -16,7 +16,6 @@ $this->breadcrumbs[] = Yii::t('dressing', 'Set Password');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'password-form',
-    //'enableAjaxValidation' => true,
     'type' => 'horizontal',
 ));
 

@@ -78,7 +78,6 @@ class YdRoleController extends YdWebController
     {
         $role = new YdRole('create');
 
-        $this->performAjaxValidation($role, 'role-form');
         if (isset($_POST['YdRole'])) {
             $role->attributes = $_POST['YdRole'];
             if ($role->save()) {
@@ -106,7 +105,6 @@ class YdRoleController extends YdWebController
         /** @var $role YdRole */
         $role = $this->loadModel($id, 'YdRole');
 
-        $this->performAjaxValidation($role, 'role-form');
         if (isset($_POST['YdRole'])) {
             $role->attributes = $_POST['YdRole'];
             if ($role->save()) {
@@ -128,7 +126,7 @@ class YdRoleController extends YdWebController
     {
         $task = YdHelper::getSubmittedField('task', 'YdRole') == 'undelete' ? 'undelete' : 'delete';
         if (YdHelper::getSubmittedField('confirm', 'YdRole')) {
-            foreach ($this->getGridIds($id) as $_id) {
+            foreach (YdHelper::getGridIds($id) as $_id) {
                 $role = YdRole::model()->findByPk($_id);
                 if (!$role) {
                     continue;

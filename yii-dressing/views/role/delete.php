@@ -30,7 +30,7 @@ echo $form->errorSummary($role);
 
 echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
-$roles = Role::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
+$roles = Role::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
 if ($roles) {
 	echo '<ul>';
 	foreach ($roles as $role) {

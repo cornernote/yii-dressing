@@ -1,5 +1,11 @@
 <?php
 /**
+ * Default layout
+ *
+ * This layout will load a layout based on the type of request.
+ * - ajax requests will load ajax.php
+ * - all other requests will load _content.php wrapped in main.php
+ *
  * @var $this YdWebController
  * @var $content
  *

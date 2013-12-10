@@ -20,7 +20,6 @@ $this->menu = YdSiteMenu::getItemsFromMenu('User');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'account-form',
-    //'enableAjaxValidation' => true,
     'type' => 'horizontal',
 ));
 echo $form->beginModalWrap();

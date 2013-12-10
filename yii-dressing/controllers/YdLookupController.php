@@ -82,7 +82,6 @@ class YdLookupController extends YdWebController
     {
         $lookup = new YdLookup('create');
 
-        $this->performAjaxValidation($lookup, 'lookup-form');
         if (isset($_POST['YdLookup'])) {
             $lookup->attributes = $_POST['YdLookup'];
             if ($lookup->save()) {
@@ -110,7 +109,6 @@ class YdLookupController extends YdWebController
         /** @var $lookup YdLookup */
         $lookup = $this->loadModel($id, 'YdLookup');
 
-        $this->performAjaxValidation($lookup, 'lookup-form');
         if (isset($_POST['YdLookup'])) {
             $lookup->attributes = $_POST['YdLookup'];
             if ($lookup->save()) {
@@ -132,7 +130,7 @@ class YdLookupController extends YdWebController
     {
         $task = YdHelper::getSubmittedField('task', 'YdLookup') == 'undelete' ? 'undelete' : 'delete';
         if (YdHelper::getSubmittedField('confirm', 'YdLookup')) {
-            foreach ($this->getGridIds($id) as $_id) {
+            foreach (YdHelper::getGridIds($id) as $_id) {
                 $lookup = YdLookup::model()->findByPk($_id);
                 if (!$lookup) {
                     continue;
@@ -189,7 +187,7 @@ class YdLookupController extends YdWebController
 
         // get lookup for form
         $lookup = $id ? $this->loadModel($id, 'YdLookup') : new YdLookup;
-        $this->performAjaxValidation($lookup, 'lookup-form');
+
         if (isset($_POST['YdLookup'])) {
             if (!$id) {
                 $lookup->type = $type;

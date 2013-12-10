@@ -31,7 +31,7 @@ echo $form->errorSummary($contactUs);
 
 echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
-$contactUss = ContactUs::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
+$contactUss = ContactUs::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
 if ($contactUss) {
 	echo '<ul>';
 	foreach ($contactUss as $contactUs) {

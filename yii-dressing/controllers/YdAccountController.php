@@ -39,6 +39,43 @@ class YdAccountController extends YdWebController
     }
 
     /**
+     * @return array
+     */
+    public function actions()
+    {
+        return array(
+            'signup' => array(
+                'class' => 'dressing.actions.YdAccountSignupAction',
+            ),
+            'login' => array(
+                'class' => 'dressing.actions.YdAccountLoginAction',
+            ),
+            'logout' => array(
+                'class' => 'dressing.actions.YdAccountLogoutAction',
+            ),
+            'recover' => array(
+                'class' => 'dressing.actions.YdAccountRecoverAction',
+            ),
+            'passwordReset' => array(
+                'class' => 'dressing.actions.YdAccountPasswordResetAction',
+            ),
+        );
+    }
+
+    /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->pageTitle = $this->pageHeading = Yii::t('dressing', 'My Account');
+        //$this->breadcrumbs[] = Yii::t('dressing', 'My Account');
+        if ($view != 'login')
+            $this->menu = YdSiteMenu::getItemsFromMenu('User');
+        return parent::beforeRender($view);
+    }
+
+    /**
      * Displays current logged in user.
      */
     public function actionIndex()
@@ -50,219 +87,12 @@ class YdAccountController extends YdWebController
     }
 
     /**
-     * Displays the login page
-     */
-    public function actionLogin()
-    {
-        // redirect if the user is already logged in
-        if (Yii::app()->user->id && Yii::app()->session->get('UserIdentity.web')) {
-            $this->redirect(Yii::app()->homeUrl);
-        }
-
-        // enable recaptcha after 3 attempts
-        $attempts = Yii::app()->cache->get("login.attempt.{$_SERVER['REMOTE_ADDR']}");
-        if (!$attempts)
-            $attempts = 0;
-        $scenario = ($attempts > 3 && isset(Yii::app()->reCaptcha)) ? 'recaptcha' : '';
-
-        $user = new YdAccountLogin($scenario);
-
-        // collect user input data
-        if (isset($_POST['YdAccountLogin'])) {
-            $user->attributes = $_POST['YdAccountLogin'];
-            if ($user->validate() && $user->login()) {
-                Yii::app()->cache->delete("login.attempt.{$_SERVER['REMOTE_ADDR']}");
-                $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
-            }
-            // remove all other errors on recaptcha error
-            if (isset($user->errors['recaptcha'])) {
-                $errors = $user->errors['recaptcha'];
-                $user->clearErrors();
-                foreach ($errors as $error)
-                    $user->addError('recaptcha', $error);
-            }
-            Yii::app()->cache->set("login.attempt.{$_SERVER['REMOTE_ADDR']}", ++$attempts);
-        }
-        else {
-            $user->remember_me = Yii::app()->dressing->defaultRememberMe;
-        }
-
-        // display the login form
-        $this->render('login', array(
-            'user' => $user,
-            'recaptcha' => ($attempts >= 3 && isset(Yii::app()->reCaptcha)) ? true : false,
-        ));
-    }
-
-
-    /**
-     * Displays the signup page
-     */
-    public function actionSignup()
-    {
-        // redirect if the user is already logged in
-        if (Yii::app()->user->id) {
-            $this->redirect(Yii::app()->homeUrl);
-        }
-
-        $user = new YdAccountSignup();
-        $this->performAjaxValidation($user, 'signup-form');
-
-        // collect user input data
-        if (isset($_POST['YdAccountSignup'])) {
-            $user->attributes = $_POST['YdAccountSignup'];
-            if ($user->save()) {
-                $this->redirect(Yii::app()->returnUrl->getUrl(Yii::app()->user->returnUrl));
-            }
-        }
-
-        // display the signup form
-        $this->render('signup', array(
-            'user' => $user,
-        ));
-    }
-
-    /**
-     * User is requesting recover email
-     */
-    public function actionRecover()
-    {
-        // redirect if the user is already logged in
-        if (Yii::app()->user->id) {
-            $this->redirect(Yii::app()->homeUrl);
-        }
-
-        // enable recaptcha after 3 attempts
-        $attempts = Yii::app()->cache->get("recover.attempt.{$_SERVER['REMOTE_ADDR']}");
-        if (!$attempts)
-            $attempts = 0;
-        $scenario = ($attempts >= 3 && isset(Yii::app()->reCaptcha)) ? 'recaptcha' : '';
-
-        $accountRecover = new YdAccountRecover($scenario);
-        $this->performAjaxValidation($accountRecover, 'recover-form');
-
-        // collect user input data
-        if (isset($_POST['YdAccountRecover'])) {
-            $accountRecover->attributes = $_POST['YdAccountRecover'];
-
-            if ($accountRecover->validate()) {
-                $user = User::model()->findbyPk($accountRecover->user_id);
-                email()->sendRecoverPasswordEmail($user);
-                Yii::app()->user->addFlash(sprintf(Yii::t('dressing', 'Password reset instructions have been sent to %s. Please check your email.'), $user->email), 'success');
-                Yii::app()->cache->delete("recover.attempt.{$_SERVER['REMOTE_ADDR']}");
-                $this->redirect(array('/account/login'));
-            }
-            // remove all other errors on recaptcha error
-            if (isset($accountRecover->errors['recaptcha'])) {
-                $errors = $accountRecover->errors['recaptcha'];
-                $accountRecover->clearErrors();
-                foreach ($errors as $error)
-                    $accountRecover->addError('recaptcha', $error);
-            }
-            Yii::app()->cache->set("recover.attempt.{$_SERVER['REMOTE_ADDR']}", ++$attempts);
-
-        }
-        // display the recover form
-        $this->render('recover', array(
-            'user' => $accountRecover,
-            'recaptcha' => ($attempts >= 3 && isset(Yii::app()->reCaptcha)) ? true : false,
-        ));
-    }
-
-    /**
-     * User has clicked the email link
-     * @param $id
-     * @param $token
-     */
-    public function actionPasswordReset($id, $token)
-    {
-        // redirect if the user is already logged in
-        if (Yii::app()->user->id) {
-            $this->redirect(Yii::app()->homeUrl);
-        }
-
-        // redirect if they are not allowed to view this page
-        $valid = true;
-        $user = YdUser::model()->findByPk($id);
-        if (!$user) {
-            $valid = false;
-        }
-        if ($valid) {
-            $valid = Token::model()->checkToken('RecoverPasswordEmail', $id, $token);
-        }
-        if (!$valid) {
-            Log::model()->add('password could not be saved due to an invalid key', array(
-                'model' => 'PasswordRecover',
-                'model_id' => 2,
-                'details' => array(
-                    'user_id' => Yii::app()->user->id,
-                ),
-            ));
-            Yii::app()->user->addFlash(Yii::t('dressing', 'Invalid key.'), 'warning');
-            $this->redirect(array('/account/recover'));
-        }
-
-        $accountPassword = new YdAccountPassword('recover');
-        $this->performAjaxValidation($accountPassword, 'password-form');
-        if (isset($_POST['YdAccountPassword'])) {
-            $accountPassword->attributes = $_POST['YdAccountPassword'];
-            if ($accountPassword->validate()) {
-
-                $user->password = $user->hashPassword($accountPassword->password);
-                if (!$user->save(false)) {
-                    Yii::app()->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'error');
-                }
-
-                $identity = new YdUserIdentity($user->email, $accountPassword->password);
-                if ($identity->authenticate()) {
-                    Yii::app()->user->login($identity);
-                }
-
-                Log::model()->add('password has been saved and user logged in', array(
-                    'model' => 'PasswordReset',
-                    'model_id' => 0,
-                    'details' => array(
-                        'user_id' => $user->id,
-                    ),
-                ));
-
-                Token::model()->useToken('RecoverPasswordEmail', $id, $token);
-
-                Yii::app()->user->addFlash(Yii::t('dressing', 'Your password has been saved and you have been logged in.'), 'success');
-                $this->redirect(Yii::app()->homeUrl);
-            }
-            else {
-                Log::model()->add('password could not be saved ', array(
-                    'model' => 'PasswordReset',
-                    'model_id' => 1,
-                    'details' => array(
-                        'user_id' => $user->id,
-                    ),
-                ));
-                Yii::app()->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'warning');
-            }
-        }
-        $this->render('password_reset', array('user' => $accountPassword));
-    }
-
-    /**
-     * Logs out the current user and redirect to homepage.
-     */
-    public function actionLogout()
-    {
-        Yii::app()->user->logout();
-        $this->redirect(Yii::app()->homeUrl);
-    }
-
-    /**
      * Updates your own user details.
      */
     public function actionUpdate()
     {
         $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
         $user->scenario = 'account';
-
-        $this->performAjaxValidation($user, 'account-form');
 
         if (isset($_POST['YdUser'])) {
             $user->attributes = $_POST['YdUser'];
@@ -282,10 +112,8 @@ class YdAccountController extends YdWebController
      */
     public function actionPassword()
     {
-        /**@var $user User * */
         $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
         $accountPassword = new YdAccountPassword('password');
-        $this->performAjaxValidation($accountPassword, 'password-form');
         if (isset($_POST['YdAccountPassword'])) {
             $accountPassword->attributes = $_POST['YdAccountPassword'];
             if ($accountPassword->validate()) {
@@ -305,7 +133,6 @@ class YdAccountController extends YdWebController
      */
     public function actionSettings()
     {
-        /** @var $user User */
         $user = $this->loadModel(Yii::app()->user->id, 'YdUser');
 
         if (isset($_POST['YdUserEav'])) {

@@ -30,7 +30,7 @@ echo $form->errorSummary($menu);
 
 echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
-$menus = YdSiteMenu::model()->findAll('t.id IN (' . implode(',', $this->getGridIds($id)) . ')');
+$menus = YdSiteMenu::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
 if ($menus) {
     echo '<ul>';
     foreach ($menus as $menu) {

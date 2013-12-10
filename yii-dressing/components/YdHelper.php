@@ -40,6 +40,26 @@ class YdHelper
 
 
     /**
+     * @param $ids
+     * @return array
+     */
+    public static function getGridIds($ids = null)
+    {
+        if (!$ids)
+            $ids = array();
+        if (!is_array($ids))
+            $ids = explode(',', $ids);
+        foreach ($_REQUEST as $k => $v) {
+            if (strpos($k, '-grid_c0') === false || !is_array($v))
+                continue;
+            foreach ($v as $vv) {
+                $ids[$vv] = $vv;
+            }
+        }
+        return $ids;
+    }
+
+    /**
      * @return bool
      */
     public static function isHomePage()

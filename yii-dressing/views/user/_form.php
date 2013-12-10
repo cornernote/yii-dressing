@@ -13,7 +13,6 @@
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'user-form',
-    //'enableAjaxValidation' => true,
     'type' => 'horizontal',
 ));
 echo $form->beginModalWrap();

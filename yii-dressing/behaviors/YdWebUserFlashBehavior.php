@@ -9,7 +9,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  *
- * @package dressing.components
+ * @package dressing.behaviors
  */
 class YdWebUserFlashBehavior extends CBehavior
 {
