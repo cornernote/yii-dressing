@@ -111,11 +111,8 @@ class YdGeneratePropertiesAction extends CAction
     {
         $properties = $this->getModelProperties($modelName);
         $message = $this->replaceModelProperties($modelName, $properties);
-        $this->controller->breadcrumbs = array(
-            Yii::t('dressing', 'Generate Properties') => array('/tool/generateProperties'),
-            $modelName,
-        );
-        $this->controller->pageHeading = $this->controller->pageTitle = $modelName;
+        $this->controller->addBreadcrumb(Yii::t('dressing', 'Generate Properties'), array('/tool/generateProperties'));
+        $this->controller->pageTitle = $modelName;
         $this->controller->menu = $this->getModelList();
         $this->controller->renderText($message . '<pre>' . implode("\n", $properties) . '</pre>');
     }
@@ -130,11 +127,8 @@ class YdGeneratePropertiesAction extends CAction
             $properties = $this->getModelProperties($modelName);
             $this->replaceModelProperties($modelName, $properties);
         }
-        $this->controller->breadcrumbs = array(
-            Yii::t('dressing', 'Generate Properties') => array('/tool/generateProperties'),
-            Yii::t('dressing', 'Replace All Model Properties'),
-        );
-        $this->controller->pageHeading = $this->controller->pageTitle = Yii::t('dressing', 'Replace All Model Properties');
+        $this->controller->addBreadcrumb(Yii::t('dressing', 'Generate Properties'), array('/tool/generateProperties'));
+        $this->controller->pageTitle = Yii::t('dressing', 'Replace All Model Properties');
         $this->controller->menu = $this->getModelList();
         $this->controller->renderText(Yii::t('dressing', 'Done!'));
     }
@@ -183,24 +177,59 @@ class YdGeneratePropertiesAction extends CAction
      */
     public function getModelProperties($modelName)
     {
+        $properties = array(' *');
+
         // load the model
         $model = CActiveRecord::model($modelName);
         if (!$model) {
             throw new CHttpException(strtr(Yii::t('dressing', 'No CActiveRecord Class with name :modelName was not found.'), array(':modelName' => $modelName)));
         }
 
-        $properties = array();
-
         Yii::app()->db->getSchema()->refresh();
         $model->refreshMetaData();
         //$model->refresh(); // caused an error on many_to_many tables
 
-        // intro
-        $properties[] = " *";
-        $properties[] = " * This is the model class for table '" . $model->tableName() . "'";
-        $properties[] = " *";
+        // get own methods and properties
+        $reflection = new ReflectionClass($modelName);
+        $selfMethods = CHtml::listData($reflection->getMethods(), 'name', 'name');
+        $selfProperties = CHtml::listData($reflection->getProperties(), 'name', 'name');
 
-        // table
+        // table fields
+        $properties[] = ' * Properties from table ' . $model->tableName();
+        foreach ($model->tableSchema->columns as $column) {
+            $type = $column->type;
+            if (($column->dbType == 'datetime') || ($column->dbType == 'date')) {
+                $type = 'string'; // $column->dbType;
+            }
+            if (strpos($column->dbType, 'decimal') !== false) {
+                $type = 'number';
+            }
+            $properties[] = ' * @property ' . $type . ' $' . $column->name;
+        }
+        $properties[] = ' *';
+
+        // relations
+        $relations = $model->relations();
+        if ($relations) {
+            $properties[] = ' * Properties from relations';
+            foreach ($relations as $relationName => $relation) {
+                if (in_array($relation[0], array('CBelongsToRelation', 'CHasOneRelation')))
+                    $properties[] = ' * @property ' . $relation[1] . ' $' . $relationName;
+
+                elseif (in_array($relation[0], array('CHasManyRelation', 'CManyManyRelation')))
+                    $properties[] = ' * @property ' . $relation[1] . '[] $' . $relationName;
+
+                elseif (in_array($relation[0], array('CStatRelation')))
+                    $properties[] = ' * @property integer $' . $relationName;
+
+                else
+                    $properties[] = ' * @property unknown $' . $relationName;
+            }
+            $properties[] = ' *';
+        }
+
+        // active record
+        $properties[] = ' * Methods from CActiveRecord';
         $properties[] = " * @method {$modelName} model() static model(string \$className = NULL)";
         $properties[] = " * @method {$modelName} with() with()";
         $properties[] = " * @method {$modelName} find() find(\$condition, array \$params = array())";
@@ -215,105 +244,97 @@ class YdGeneratePropertiesAction extends CAction
 
         // behaviors
         $behaviors = $model->behaviors();
-        $inheritedMethods = array();
-        foreach (get_class_methods('CActiveRecordBehavior') as $methodName) {
-            $inheritedMethods[$methodName] = $methodName;
-        }
-        $reflection = new ReflectionClass ($modelName);
-        $selfMethods = CHtml::listData($reflection->getMethods(), 'name', 'name');
-        foreach ($behaviors as $behavior) {
-            $className = $behavior;
-            if (is_array($behavior)) {
-                $className = $behavior['class'];
-            }
-            $className = explode('.', $className);
-            $className = $className[count($className) - 1];
-            $methods = get_class_methods($className);
-            $header = false;
-            foreach ($methods as $methodName) {
-                if (isset($inheritedMethods[$methodName]) || isset($selfMethods[$methodName])) {
-                    continue;
-                }
-                if (!$header) {
-                    $properties[] = " * Methods from behavior " . $className;
-                    $header = true;
-                }
+        if ($behaviors) {
+            $behaviorMethods = array();
+            foreach (get_class_methods('CActiveRecordBehavior') as $methodName)
+                $behaviorMethods[$methodName] = $methodName;
+            $behaviorProperties = array();
+            foreach (get_class_vars('CActiveRecordBehavior') as $propertyName)
+                $behaviorProperties[$propertyName] = $propertyName;
 
-                $methodReturn = $this->getTypeFromDocComment($className, $methodName, 'return');
-                $paramTypes = $this->getDocComment($className, $methodName, 'param');
-                $methodReturn = $methodReturn ? current($methodReturn) . ' ' : '';
-                $property = " * @method $methodReturn$methodName() $methodName(";
-                $r = new ReflectionMethod($className, $methodName);
-                $params = $r->getParameters();
-                $separator = '';
-                foreach ($params as $param) {
-                    //$param is an instance of ReflectionParameter
-                    /* @var $param ReflectionParameter */
-                    $type = current($paramTypes);
-                    $filterType = '';
-                    if ($type && strpos($type, '$')) {
-                        $typeString = YdStringHelper::getBetweenString($type, false, '$');
-                        $typeString = trim($typeString);
-                        $filterType = $this->filterDocType($typeString);
-                        $filterType = $filterType ? trim($filterType) . ' ' : '';
+            foreach ($behaviors as $behavior) {
+                $behavior = $this->getBehaviorClass($behavior);
+                $behaviorProperties = $this->getBehaviorProperties($behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
+                if ($behaviorProperties) {
+                    $properties[] = ' * Methods from behavior ' . $behavior;
+                    foreach ($behaviorProperties as $behaviorProperty) {
+                        $properties[] = $behaviorProperty;
                     }
-                    next($paramTypes);
-                    $property .= $separator . $filterType . '$' . $param->getName();
-                    if ($param->isOptional()) {
-                        $property .= ' = ';
-                        $property .= strtr(str_replace("\n", '', var_export($param->getDefaultValue(), true)), array(
-                            'array (' => 'array(',
-                        ));
-                    }
-                    $separator = ', ';
+                    $properties[] = ' *';
                 }
-                $property .= ")";
-                $properties[] = $property;
-
-            }
-            if ($header) {
-                $properties[] = ' *';
             }
         }
-
-        // relations
-        $relations = $model->relations();
-        if ($relations) {
-            $properties[] = ' * Properties from relation';
-            foreach ($relations as $relationName => $relation) {
-                if (in_array($relation[0], array('CBelongsToRelation', 'CHasOneRelation'))) {
-                    $properties[] = ' * @property ' . $relation[1] . ' $' . $relationName;
-                }
-                elseif (in_array($relation[0], array('CHasManyRelation', 'CManyManyRelation'))) {
-                    $properties[] = ' * @property ' . $relation[1] . '[] $' . $relationName;
-                }
-                elseif (in_array($relation[0], array('CStatRelation'))) {
-                    $properties[] = ' * @property integer $' . $relationName;
-                }
-                else {
-                    $properties[] = ' * @property unknown $' . $relationName;
-                }
-
-            }
-            $properties[] = ' *';
-        }
-
-        // table fields
-        $properties[] = ' * Properties from table fields';
-        foreach ($model->tableSchema->columns as $column) {
-            $type = $column->type;
-            if (($column->dbType == 'datetime') || ($column->dbType == 'date')) {
-                $type = 'string'; // $column->dbType;
-            }
-            if (strpos($column->dbType, 'decimal') !== false) {
-                $type = 'number';
-            }
-            $properties[] = ' * @property ' . $type . ' $' . $column->name;
-        }
-
-        $properties[] = ' *';
 
         // all done...
+        return $properties;
+    }
+
+    /**
+     * @param $behavior
+     * @return mixed
+     */
+    public function getBehaviorClass($behavior)
+    {
+        if (is_array($behavior))
+            $behavior = $behavior['class'];
+        $behavior = explode('.', $behavior);
+        return $behavior[count($behavior) - 1];
+    }
+
+    /**
+     * @param $behavior
+     * @param array $ignoreMethods
+     * @param array $ignoreProperties
+     * @return array
+     */
+    public function getBehaviorProperties($behavior, $ignoreMethods = array(), $ignoreProperties = array())
+    {
+        $properties = array();
+
+        //// properties
+        //foreach (get_class_vars($behavior) as $propertyName => $default) {
+        //    if (isset($ignoreProperties[$propertyName]))
+        //        continue;
+        //    $properties[] = ' * @property ' . gettype($default) . ' $' . $propertyName;
+        //}
+
+        // methods
+        foreach (get_class_methods($behavior) as $methodName) {
+            if (isset($ignoreMethods[$methodName]))
+                continue;
+            $methodReturn = $this->getTypeFromDocComment($behavior, $methodName, 'return');
+            $paramTypes = $this->getDocComment($behavior, $methodName, 'param');
+            $methodReturn = $methodReturn ? current($methodReturn) . ' ' : '';
+            $property = " * @method $methodReturn$methodName() $methodName(";
+            $r = new ReflectionMethod($behavior, $methodName);
+            $params = $r->getParameters();
+            $separator = '';
+            foreach ($params as $param) {
+                //$param is an instance of ReflectionParameter
+                /* @var $param ReflectionParameter */
+                $type = current($paramTypes);
+                $filterType = '';
+                if ($type && strpos($type, '$')) {
+                    $typeString = YdStringHelper::getBetweenString($type, false, '$');
+                    $typeString = trim($typeString);
+                    $filterType = $this->filterDocType($typeString);
+                    $filterType = $filterType ? trim($filterType) . ' ' : '';
+                }
+                next($paramTypes);
+                $property .= $separator . $filterType . '$' . $param->getName();
+                if ($param->isOptional()) {
+                    $property .= ' = ';
+                    $property .= strtr(str_replace("\n", '', var_export($param->getDefaultValue(), true)), array(
+                        'array (' => 'array(',
+                    ));
+                }
+                $separator = ', ';
+            }
+            $property .= ")";
+            $properties[] = $property;
+
+        }
+
         return $properties;
     }
 
@@ -332,7 +353,7 @@ class YdGeneratePropertiesAction extends CAction
         }
 
         $matches = array();
-        preg_match_all("/" . $tag . " (.*)(\\r\\n|\\r|\\n)/U", $comment, $matches);
+        preg_match_all("/@" . $tag . " (.*)(\\r\\n|\\r|\\n)/U", $comment, $matches);
 
         $returns = array();
         foreach ($matches[1] as $match) {
