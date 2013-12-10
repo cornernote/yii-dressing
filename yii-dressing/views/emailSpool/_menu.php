@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this EmailSpoolController
+ * @var $this YdEmailSpoolController
  * @var $emailSpool YdEmailSpool
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -11,27 +11,37 @@
  */
 
 // index
-if ($this->action->id == 'index') {
-    $this->menu = YdSiteMenu::getItemsFromMenu('Logs', YdSiteMenu::MENU_ADMIN);
+if (!isset($emailSpool)) {
+    $this->menu = YdSiteMenu::getItemsFromMenu('Settings', YdSiteMenu::MENU_ADMIN);
     return; // no more links
 }
 
+$menu = array();
+
 // create
-//if ($emailSpool->isNewRecord) {
-//    $this->menu[] = array(
-//        'label' => Yii::t('dressing', 'Create'),
-//        'url' => array('/emailSpool/create'),
-//    );
-//    return; // no more links
-//}
+if ($emailSpool->isNewRecord) {
+    //$menu[] = array(
+    //    'label' => Yii::t('app', 'Create'),
+    //    'url' => array('/emailSpool/create'),
+    //);
+    return; // no more links
+}
 
 // view
-$this->menu[] = array(
-    'label' => Yii::t('dressing', 'View'),
+$menu[] = array(
+    'label' => Yii::t('app', 'View'),
     'url' => $emailSpool->getUrl(),
 );
 
 // others
 foreach ($emailSpool->getMenuLinks(true) as $linkItem) {
-    $this->menu[] = $linkItem;
+    $menu[] = $linkItem;
 }
+
+if (empty($render) || Yii::app()->getRequest()->getIsAjaxRequest())
+    $this->menu = $menu;
+else
+    $this->widget('bootstrap.widgets.TbMenu', array(
+        'type' => 'tabs',
+        'items' => $menu,
+    ));

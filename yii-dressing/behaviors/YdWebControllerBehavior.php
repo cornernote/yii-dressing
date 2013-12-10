@@ -176,7 +176,7 @@ class YdWebControllerBehavior extends CBehavior
     public function loadModel($id, $model = false)
     {
         if (!$model)
-            $model = str_replace('Controller', '', get_class($this));
+            $model = str_replace('Controller', '', get_class($this->owner));
         if ($this->_loadModel === null) {
             $this->_loadModel = CActiveRecord::model($model)->findbyPk($id);
             if ($this->_loadModel === null)

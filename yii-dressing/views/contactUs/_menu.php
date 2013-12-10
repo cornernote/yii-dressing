@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this ContactUsController
+ * @var $this YdContactUsController
  * @var $contactUs YdContactUs
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -11,27 +11,37 @@
  */
 
 // index
-if ($this->action->id == 'index') {
-    $this->menu = YdSiteMenu::getItemsFromMenu('Log', YdSiteMenu::MENU_ADMIN);
+if (!isset($contactUs)) {
+    $this->menu = YdSiteMenu::getItemsFromMenu('Logs', YdSiteMenu::MENU_ADMIN);
     return; // no more links
 }
 
+$menu = array();
+
 // create
 if ($contactUs->isNewRecord) {
-    $this->menu[] = array(
-        'label' => Yii::t('dressing', 'Create'),
-        'url' => array('/contactUs/create'),
-    );
+    //$menu[] = array(
+    //    'label' => Yii::t('app', 'Create'),
+    //    'url' => array('/contactUs/create'),
+    //);
     return; // no more links
 }
 
 // view
-$this->menu[] = array(
-    'label' => Yii::t('dressing', 'View'),
+$menu[] = array(
+    'label' => Yii::t('app', 'View'),
     'url' => $contactUs->getUrl(),
 );
 
 // others
 foreach ($contactUs->getMenuLinks(true) as $linkItem) {
-    $this->menu[] = $linkItem;
+    $menu[] = $linkItem;
 }
+
+if (empty($render) || Yii::app()->getRequest()->getIsAjaxRequest())
+    $this->menu = $menu;
+else
+    $this->widget('bootstrap.widgets.TbMenu', array(
+        'type' => 'tabs',
+        'items' => $menu,
+    ));

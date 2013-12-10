@@ -57,7 +57,7 @@ if ($this->showNavBar) {
     </div>
     <footer class="container-fluid">
         <?php
-        $this->renderPartial('/audit/_footer');
+        $this->renderPartial('dressing.views.audit._footer');
         echo '<p class="pull-right">' . l(t('Back to Top') . ' &uarr;', '#') . '</p>';
         ?>
     </footer>

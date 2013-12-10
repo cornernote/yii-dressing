@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this AuditController
+ * @var $this YdAuditController
  * @var $audit YdAudit
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -11,27 +11,37 @@
  */
 
 // index
-if ($this->action->id == 'index') {
-    $this->menu = YdSiteMenu::getItemsFromMenu('Logs', YdSiteMenu::MENU_ADMIN);
+if (!isset($audit)) {
+    $this->menu = YdSiteMenu::getItemsFromMenu('Settings', YdSiteMenu::MENU_ADMIN);
     return; // no more links
 }
 
+$menu = array();
+
 // create
-//if ($audit->isNewRecord) {
-//    $this->menu[] = array(
-//        'label' => Yii::t('dressing', 'Create'),
-//        'url' => array('/audit/create'),
-//    );
-//    return; // no more links
-//}
+if ($audit->isNewRecord) {
+    //$menu[] = array(
+    //    'label' => Yii::t('app', 'Create'),
+    //    'url' => array('/audit/create'),
+    //);
+    return; // no more links
+}
 
 // view
-$this->menu[] = array(
-    'label' => Yii::t('dressing', 'View'),
+$menu[] = array(
+    'label' => Yii::t('app', 'View'),
     'url' => $audit->getUrl(),
 );
 
 // others
 foreach ($audit->getMenuLinks(true) as $linkItem) {
-    $this->menu[] = $linkItem;
+    $menu[] = $linkItem;
 }
+
+if (empty($render) || Yii::app()->getRequest()->getIsAjaxRequest())
+    $this->menu = $menu;
+else
+    $this->widget('bootstrap.widgets.TbMenu', array(
+        'type' => 'tabs',
+        'items' => $menu,
+    ));
