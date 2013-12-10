@@ -67,12 +67,12 @@ class YdWebControllerBehavior extends CBehavior
     }
 
     /**
-     * @return string
+     * @return string Defaults to the controllers pageTitle.
      */
     public function getPageHeading()
     {
         if ($this->_pageHeading === null)
-            $this->_pageHeading = $this->pageTitle;
+            $this->_pageHeading = $this->owner->pageTitle;
         return $this->_pageHeading;
     }
 
