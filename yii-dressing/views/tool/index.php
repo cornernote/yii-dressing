@@ -3,8 +3,7 @@
  * @var $this ToolController
  */
 
-$this->pageTitle = $this->pageHeading = t('Tools');
-$this->breadcrumbs[] = t('Tools');
+$this->pageTitle = Yii::t('dressing', 'Tools');
 
 echo '<h2>' . t('Manage') . '</h2>';
 $this->widget('bootstrap.widgets.TbMenu', array(

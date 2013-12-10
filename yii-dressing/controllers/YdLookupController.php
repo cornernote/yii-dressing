@@ -29,6 +29,19 @@ class YdLookupController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        if (in_array($view, array('view', 'update', 'log'))) {
+            $this->addBreadcrumb(Yii::t('dressing', 'Lookups'), Yii::app()->user->getState('index.lookup', array('/lookup/index')));
+        }
+        return parent::beforeRender($view);
+    }
+
+    /**
      * Index
      */
     public function actionIndex()

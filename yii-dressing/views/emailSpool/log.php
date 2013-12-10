@@ -10,11 +10,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = $emailSpool->getName();
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Email Spools')] = Yii::app()->user->getState('index.emailSpool', array('/emailSpool/index'));
-$this->breadcrumbs[] = $emailSpool->getName();
+$this->pageTitle = $emailSpool->getName();
 
 $this->renderPartial('/emailSpool/_menu', array(
     'emailSpool' => $emailSpool,

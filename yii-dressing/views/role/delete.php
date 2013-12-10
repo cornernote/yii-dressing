@@ -11,11 +11,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Roles')] = Yii::app()->user->getState('index.role', array('/role/index'));
-$this->breadcrumbs[] = Yii::t('dressing', ucfirst($task));
+$this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
 
 $role = $id ? Role::model()->findByPk($id) : new Role('search');
 /** @var YdActiveForm $form */
@@ -32,13 +28,13 @@ echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
 $roles = Role::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
 if ($roles) {
-	echo '<ul>';
-	foreach ($roles as $role) {
-		echo '<li>';
-		echo $role->getName();
-		echo '</li>';
-	}
-	echo '</ul>';
+    echo '<ul>';
+    foreach ($roles as $role) {
+        echo '<li>';
+        echo $role->getName();
+        echo '</li>';
+    }
+    echo '</ul>';
 }
 echo '</fieldset>';
 

@@ -92,6 +92,17 @@ class YdAttachmentController extends YdWebController
         return false;
     }
 
+    /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        if (in_array($view, array('log'))) {
+            $this->addBreadcrumb(Yii::t('dressing', 'Attachments'), Yii::app()->user->getState('index.attachment', array('/attachment/index')));
+        }
+        return parent::beforeRender($view);
+    }
 
     /**
      * View a file

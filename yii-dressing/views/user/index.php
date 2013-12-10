@@ -10,10 +10,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 Yii::app()->user->setState('index.user', Yii::app()->request->requestUri);
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'List');
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Users');
+$this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
 $this->renderPartial('/user/_menu', array(
     'user' => $user,

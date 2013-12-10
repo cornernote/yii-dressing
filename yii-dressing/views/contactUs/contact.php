@@ -10,8 +10,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = $this->getName();
-$this->breadcrumbs[] = $this->getName();
+$this->pageTitle = $this->getName();
 
 $this->renderPartial('/contactUs/_form', array(
     'contactUs' => $contactUs,

@@ -10,10 +10,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
-$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Account Settings');
-
-$this->breadcrumbs[Yii::t('dressing', 'My Account')] = array('/account/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Account Settings');
+$this->pageTitle = Yii::t('dressing', 'Account Settings');
 
 $this->menu = YdSiteMenu::getItemsFromMenu('User');
 

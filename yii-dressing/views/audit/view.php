@@ -9,11 +9,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
-$this->pageTitle = $this->pageHeading = $audit->getName();
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Audits')] = Yii::app()->user->getState('index.audit', array('/audit/index'));
-$this->breadcrumbs[] = $audit->getName();
+$this->pageTitle = $audit->getName();
 
 $this->renderPartial('/audit/_menu', array(
     'audit' => $audit,

@@ -11,9 +11,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Login');
-
-$this->breadcrumbs[] = Yii::t('dressing', 'Login');
+$this->pageTitle = Yii::t('dressing', 'Login');
 
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(

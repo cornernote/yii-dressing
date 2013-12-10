@@ -11,8 +11,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Recover Password');
-$this->breadcrumbs[] = Yii::t('dressing', 'Recover Password');
+$this->pageTitle = Yii::t('dressing', 'Recover Password');
 
 
 /** @var YdActiveForm $form */

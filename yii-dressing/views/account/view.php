@@ -10,9 +10,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'My Account');
-
-$this->breadcrumbs[] = Yii::t('dressing', 'My Account');
+$this->pageTitle = Yii::t('dressing', 'My Account');
 
 $this->menu = YdSiteMenu::getItemsFromMenu('User');
 

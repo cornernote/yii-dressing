@@ -29,6 +29,19 @@ class YdSiteMenuController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        if (in_array($view, array('view', 'update'))) {
+            $this->addBreadcrumb(Yii::t('dressing', 'Site Menus'), Yii::app()->user->getState('index.siteMenu', array('/siteMenu/index')));
+        }
+        return parent::beforeRender($view);
+    }
+
+    /**
      * Index
      */
     public function actionIndex()

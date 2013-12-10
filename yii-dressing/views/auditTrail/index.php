@@ -11,10 +11,7 @@
  */
 
 Yii::app()->user->setState('search.auditTrail', Yii::app()->request->requestUri);
-$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Audit Trails');
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Audit Trails');
+$this->pageTitle = Yii::t('dressing', 'Audit Trails');
 
 $this->renderPartial('/auditTrail/_menu');
 $this->renderPartial('/auditTrail/_grid', array('auditTrail' => $auditTrail));

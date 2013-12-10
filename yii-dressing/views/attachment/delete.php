@@ -11,11 +11,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Attachments')] = Yii::app()->user->getState('index.attachment', array('/attachment/index'));
-$this->breadcrumbs[] = Yii::t('dressing', ucfirst($task));
+$this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
 
 $attachment = $id ? Attachment::model()->findByPk($id) : new Attachment('search');
 /** @var YdActiveForm $form */
@@ -32,13 +28,13 @@ echo '<fieldset>';
 echo '<legend>' . Yii::t('dressing', 'Selected Records') . '</legend>';
 $attachments = Attachment::model()->findAll('t.id IN (' . implode(',', YdHelper::getGridIds($id)) . ')');
 if ($attachments) {
-	echo '<ul>';
-	foreach ($attachments as $attachment) {
-		echo '<li>';
-		echo $attachment->getName();
-		echo '</li>';
-	}
-	echo '</ul>';
+    echo '<ul>';
+    foreach ($attachments as $attachment) {
+        echo '<li>';
+        echo $attachment->getName();
+        echo '</li>';
+    }
+    echo '</ul>';
 }
 echo '</fieldset>';
 

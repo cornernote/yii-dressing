@@ -9,10 +9,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
-$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Change Password');
-
-$this->breadcrumbs[Yii::t('dressing', 'My Account')] = array('/account/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Change Password');
+$this->pageTitle = Yii::t('dressing', 'Change Password');
 
 $this->menu = YdSiteMenu::getItemsFromMenu('User');
 

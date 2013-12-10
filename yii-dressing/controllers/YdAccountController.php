@@ -69,7 +69,6 @@ class YdAccountController extends YdWebController
     public function beforeRender($view)
     {
         $this->pageTitle = $this->pageHeading = Yii::t('dressing', 'My Account');
-        //$this->breadcrumbs[] = Yii::t('dressing', 'My Account');
         if ($view != 'login')
             $this->menu = YdSiteMenu::getItemsFromMenu('User');
         return parent::beforeRender($view);

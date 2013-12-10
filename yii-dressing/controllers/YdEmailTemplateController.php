@@ -31,6 +31,19 @@ class YdEmailTemplateController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        if (in_array($view, array('view', 'update'))) {
+            $this->addBreadcrumb(Yii::t('dressing', 'Email Templates'), Yii::app()->user->getState('index.emailTemplate', array('/emailTemplate/index')));
+        }
+        return parent::beforeRender($view);
+    }
+
+    /**
      * Lists all print methods.
      */
     public function actionIndex()

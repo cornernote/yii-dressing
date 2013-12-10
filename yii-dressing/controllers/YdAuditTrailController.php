@@ -31,6 +31,16 @@ class YdAuditTrailController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        return parent::beforeRender($view);
+    }
+
+    /**
      * Lists all AuditTrails.
      */
     public function actionIndex()

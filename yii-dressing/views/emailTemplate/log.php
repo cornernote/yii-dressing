@@ -10,12 +10,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = $emailTemplate->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'Log');
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Email Templates')] = Yii::app()->user->getState('index.emailTemplate', array('/emailTemplate/index'));
-$this->breadcrumbs[$emailTemplate->getName()] = $emailTemplate->getLink();
-$this->breadcrumbs[] = Yii::t('dressing', 'Log');
+$this->pageTitle = $emailTemplate->getName();
 
 $this->renderPartial('/emailTemplate/_menu', array(
     'emailTemplate' => $emailTemplate,

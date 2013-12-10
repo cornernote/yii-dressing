@@ -35,6 +35,22 @@ class YdContactUsController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        if (in_array($view, array('view', 'log'))) {
+            $this->addBreadcrumb(Yii::t('dressing', 'Contact Us'), Yii::app()->user->getState('index.contactUs', array('/contactUs/index')));
+        }
+        if ($view == 'thankYou') {
+            $this->addBreadcrumb(Yii::t('dressing', 'Contact Us'), array('/contactUs/contact'));
+        }
+        return parent::beforeRender($view);
+    }
+
+    /**
      * Index
      */
     public function actionIndex()

@@ -9,10 +9,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'List');
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Site Menus');
+$this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
 $this->renderPartial('/siteMenu/_menu');
 

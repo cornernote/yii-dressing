@@ -31,6 +31,19 @@ class YdUserController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        if (in_array($view, array('view', 'update', 'password'))) {
+            $this->addBreadcrumb(Yii::t('dressing', 'Users'), Yii::app()->user->getState('index.user', array('/user/index')));
+        }
+        return parent::beforeRender($view);
+    }
+
+    /**
      * List
      */
     public function actionIndex()

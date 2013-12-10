@@ -31,6 +31,19 @@ class YdEmailSpoolController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        if (in_array($view, array('view', 'log'))) {
+            $this->addBreadcrumb(Yii::t('dressing', 'Email Spools'), Yii::app()->user->getState('index.emailSpool', array('/emailSpool/index')));
+        }
+        return parent::beforeRender($view);
+    }
+
+    /**
      * Lists all emailSpools.
      */
     public function actionIndex()

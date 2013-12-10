@@ -9,14 +9,9 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
-$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Errors');
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Errors');
+$this->pageTitle = Yii::t('dressing', 'Errors');
+echo CHtml::link(Yii::t('dressing', 'Clear Errors'), array('/error/clear'));
 ?>
-
-<?php echo CHtml::link(Yii::t('dressing', 'Clear Errors'), array('/error/clear')); ?>
-
 <table class="table table-bordered table-striped table-condensed">
     <tr>
         <td><?php echo Yii::t('dressing', 'Error'); ?></td>

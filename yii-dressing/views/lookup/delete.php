@@ -11,11 +11,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Lookups')] = Yii::app()->user->getState('index.lookup', array('/lookup/index'));
-$this->breadcrumbs[] = Yii::t('dressing', ucfirst($task));
+$this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
 
 $lookup = $id ? Lookup::model()->findByPk($id) : new Lookup('search');
 /** @var YdActiveForm $form */

@@ -10,12 +10,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = $attachment->getName() . ' - ' . $this->getName() . ' ' . Yii::t('dressing', 'Log');
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Attachments')] = Yii::app()->user->getState('index.attachment', array('/attachment/index'));
-$this->breadcrumbs[$attachment->getName()] = $attachment->getLink();
-$this->breadcrumbs[] = Yii::t('dressing', 'Log');
+$this->pageTitle = $attachment->getName();
 
 $this->renderPartial('/attachment/_menu', array(
     'attachment' => $attachment,

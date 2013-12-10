@@ -31,6 +31,19 @@ class YdErrorController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        if (in_array($view, array('view'))) {
+            $this->addBreadcrumb(Yii::t('dressing', 'Errors'), array('/error/index'));
+        }
+        return parent::beforeRender($view);
+    }
+
+    /**
      *
      */
     public function actionIndex($ignoreCodes = false)
@@ -112,10 +125,7 @@ class YdErrorController extends YdWebController
         else {
             $contents = '<h1>' . $errorCode . $auditId . '</h1>' . '<h3> ' . $auditLink . ' logged on ' . date('Y-m-d H:i:s', filemtime($path)) . '</h3><pre>' . $contents . '</pre>';
         }
-        $this->breadcrumbs = array(
-            Yii::t('dressing', 'Error List') => array('/error/index'),
-            Yii::t('dressing', 'Error') . ' ' . $error,
-        );
+        $this->pageTitle = Yii::t('dressing', 'Error') . ' ' . $error;
         $this->renderText($contents);
         app()->end();
     }

@@ -11,10 +11,7 @@
  */
 
 Yii::app()->user->setState('index.attachment', Yii::app()->request->requestUri);
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'List');
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Attachments');
+$this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
 $this->menu = YdSiteMenu::getItemsFromMenu('Main');
 

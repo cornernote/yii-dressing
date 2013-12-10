@@ -10,11 +10,8 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = $this->pageHeading = Yii::t('dressing', 'Settings');
+$this->pageTitle = Yii::t('dressing', 'Settings');
 $this->menu = YdSiteMenu::getItemsFromMenu('Settings', YdSiteMenu::MENU_ADMIN);
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Settings');
 
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
@@ -75,13 +72,5 @@ echo $form->textFieldRow($settings['email'], 'value', array('name' => 'YdSetting
 echo '</fieldset>';
 
 echo $form->endModalWrap();
-echo '<div class="' . $form->getSubmitRowClass() . '">';
-$this->widget('bootstrap.widgets.TbButton', array(
-    'buttonType' => 'submit',
-    'type' => 'primary',
-    'icon' => 'ok white',
-    'label' => Yii::t('dressing', 'Save Settings'),
-    'htmlOptions' => array('class' => 'pull-right'),
-));
-echo '</div>';
+echo $form->getSubmitButtonRow(Yii::t('dressing', 'Save Settings'));
 $this->endWidget();

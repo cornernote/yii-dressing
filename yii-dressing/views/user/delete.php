@@ -10,11 +10,7 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[Yii::t('dressing', 'Users')] = Yii::app()->user->getState('index.user', array('/user/index'));
-$this->breadcrumbs[] = Yii::t('dressing', ucfirst($task));
+$this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', ucfirst($task));
 
 $user = $id ? User::model()->findByPk($id) : new User('search');
 /** @var YdActiveForm $form */

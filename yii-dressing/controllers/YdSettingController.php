@@ -29,6 +29,19 @@ class YdSettingController extends YdWebController
     }
 
     /**
+     * @param string $view the view to be rendered
+     * @return bool
+     */
+    public function beforeRender($view)
+    {
+        $this->addBreadcrumb(Yii::t('dressing', 'Tools'), array('/tool/index'));
+        //if (in_array($view, array('view', 'update'))) {
+        //    $this->addBreadcrumb(Yii::t('dressing', 'Settings'), Yii::app()->user->getState('index.setting', array('/setting/index')));
+        //}
+        return parent::beforeRender($view);
+    }
+
+    /**
      * Update settings
      */
     public function actionIndex()

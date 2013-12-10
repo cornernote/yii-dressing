@@ -8,30 +8,29 @@
  * @link https://github.com/cornernote/yii-skeleton
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
-$this->pageTitle = $this->pageHeading = t('Documentation');
+$this->pageTitle = Yii::t('dressing', 'Documentation');
 
 // menu
 $this->menu = YdSiteMenu::getItemsFromMenu('Help');
 
 // breadcrumbs
-$this->breadcrumbs[t('Help')] = array('/site/page', 'view' => 'help');
-$this->breadcrumbs[] = t('Documentation');
+$this->addBreadcrumb(Yii::t('dressing', 'Help'), array('/site/page', 'view' => 'help'));
 
-echo '<h2>' . t('Vendor Documentation') . '</h2>';
+echo '<h2>' . Yii::t('dressing', 'Vendor Documentation') . '</h2>';
 $this->widget('bootstrap.widgets.TbMenu', array(
     'type' => 'pills', // '', 'tabs', 'pills' (or 'list')
     'stacked' => false,
     'items' => array(
-        array('label' => t('Yii'), 'url' => 'http://www.yiiframework.com/doc/'),
-        array('label' => t('YiiExt'), 'url' => 'http://yiiext.github.io/'),
-        array('label' => t('Yii Booster'), 'url' => 'http://yiibooster.clevertech.biz/'),
-        array('label' => t('Yii Bootstrap'), 'url' => 'http://www.cniska.net/yii-bootstrap'),
-        array('label' => t('Bootstrap'), 'url' => 'http://twitter.github.io/bootstrap/'),
-        array('label' => t('jQuery'), 'url' => 'http://api.jquery.com/'),
-        array('label' => t('Swift Mailer'), 'url' => 'http://swiftmailer.org/docs/introduction.html'),
-        array('label' => t('Mustache PHP'), 'url' => 'https://github.com/bobthecow/mustache.php'),
-        array('label' => t('Kint'), 'url' => 'http://raveren.github.io/kint/'),
-        array('label' => t('Highcharts'), 'url' => 'http://api.highcharts.com/highcharts'),
+        array('label' => Yii::t('dressing', 'Yii'), 'url' => 'http://www.yiiframework.com/doc/'),
+        array('label' => Yii::t('dressing', 'YiiExt'), 'url' => 'http://yiiext.github.io/'),
+        array('label' => Yii::t('dressing', 'Yii Booster'), 'url' => 'http://yiibooster.clevertech.biz/'),
+        array('label' => Yii::t('dressing', 'Yii Bootstrap'), 'url' => 'http://www.cniska.net/yii-bootstrap'),
+        array('label' => Yii::t('dressing', 'Bootstrap'), 'url' => 'http://twitter.github.io/bootstrap/'),
+        array('label' => Yii::t('dressing', 'jQuery'), 'url' => 'http://api.jquery.com/'),
+        array('label' => Yii::t('dressing', 'Swift Mailer'), 'url' => 'http://swiftmailer.org/docs/introduction.html'),
+        array('label' => Yii::t('dressing', 'Mustache PHP'), 'url' => 'https://github.com/bobthecow/mustache.php'),
+        array('label' => Yii::t('dressing', 'Kint'), 'url' => 'http://raveren.github.io/kint/'),
+        array('label' => Yii::t('dressing', 'Highcharts'), 'url' => 'http://api.highcharts.com/highcharts'),
     ),
 ));
 

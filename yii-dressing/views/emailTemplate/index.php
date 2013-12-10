@@ -10,10 +10,7 @@
  * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 Yii::app()->user->setState('index.emailTemplate', Yii::app()->request->requestUri);
-$this->pageTitle = $this->pageHeading = $this->getName() . ' ' . Yii::t('dressing', 'List');
-
-$this->breadcrumbs[Yii::t('dressing', 'Tools')] = array('/tool/index');
-$this->breadcrumbs[] = Yii::t('dressing', 'Email Templates');
+$this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
 $this->renderPartial('/emailTemplate/_menu');
 

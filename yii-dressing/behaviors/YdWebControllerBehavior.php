@@ -21,11 +21,9 @@ class YdWebControllerBehavior extends CBehavior
     public $menu = array();
 
     /**
-     * @var array the breadcrumbs of the current page. The value of this property will
-     * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
-     * for more details on how to specify this property.
+     * @var array breadcrumbs links to current page. This property will be assigned to {@link CBreadcrumbs::links}.
      */
-    public $breadcrumbs = array();
+    protected $_breadcrumbs = array();
 
     /**
      * @var
@@ -61,7 +59,7 @@ class YdWebControllerBehavior extends CBehavior
      * Gets the humanized name of the controller
      *
      * @param bool $plural
-     * @return mixed
+     * @return string
      */
     public function getName($plural = false)
     {
@@ -87,6 +85,36 @@ class YdWebControllerBehavior extends CBehavior
     }
 
     /**
+     * @return string
+     */
+    public function getBreadcrumbs()
+    {
+        if ($this->_breadcrumbs === null)
+            $this->_breadcrumbs = $this->pageTitle;
+        return $this->_breadcrumbs;
+    }
+
+    /**
+     * @param string $breadcrumbs
+     */
+    public function setBreadcrumbs($breadcrumbs)
+    {
+        $this->_breadcrumbs = $breadcrumbs;
+    }
+
+    /**
+     * @param string $name
+     * @param array|string $link
+     */
+    public function addBreadcrumb($name, $link = null)
+    {
+        if ($link)
+            $this->_breadcrumbs[$name] = $link;
+        else
+            $this->_breadcrumbs[] = $name;
+    }
+
+    /**
      * @return bool
      */
     public function getIsModal()
@@ -97,7 +125,7 @@ class YdWebControllerBehavior extends CBehavior
     }
 
     /**
-     * @param $isModal bool
+     * @param bool $isModal
      */
     public function setIsModal($isModal)
     {
@@ -107,7 +135,7 @@ class YdWebControllerBehavior extends CBehavior
     /**
      * Performs the AJAX validation for one or more CActiveRecord models
      *
-     * @param $model CActiveRecord|CActiveRecord[]
+     * @param CActiveRecord|CActiveRecord[] $model
      * @param $form
      */
     protected function performAjaxValidation($model, $form)
@@ -121,21 +149,17 @@ class YdWebControllerBehavior extends CBehavior
     /**
      * Performs validation for one or more CActiveRecord models
      *
-     * @param $model CActiveRecord|CActiveRecord[]
+     * @param CActiveRecord|CActiveRecord[] $model
      * @return bool
      */
     protected function performValidation($model)
     {
-        if (!is_array($model)) {
+        if (!is_array($model))
             $model = array($model);
-        }
         $valid = true;
-        /** @var CActiveRecord[] $model */
-        foreach ($model as $_model) {
-            if (!$_model->validate()) {
+        foreach ($model as $_model)
+            if (!$_model->validate())
                 $valid = false;
-            }
-        }
         return $valid;
     }
 
@@ -169,9 +193,8 @@ class YdWebControllerBehavior extends CBehavior
     protected function flashRedirect($message, $messageType = 'info', $url = null)
     {
         Yii::app()->user->addFlash($message, $messageType);
-        if (!Yii::app()->request->isAjaxRequest) {
+        if (!Yii::app()->request->isAjaxRequest)
             $this->owner->redirect($url ? $url : Yii::app()->returnUrl->getUrl());
-        }
         Yii::app()->end();
     }
 
