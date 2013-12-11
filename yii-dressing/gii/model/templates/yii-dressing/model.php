@@ -30,18 +30,16 @@ echo "\n";
 echo "class " . $modelClass . " extends " . $this->baseClass . "\n";
 echo "{\n";
 echo "\n";
-if (!($this->baseClass instanceof YdActiveRecord)) {
-    echo "    /**\n";
-    echo "     * Returns the static model of the specified AR class.\n";
-    echo "     * @param string \$className active record class name.\n";
-    echo "     * @return " . $modelClass . " the static model class\n";
-    echo "     */\n";
-    echo "    public static function model(\$className=__CLASS__)\n";
-    echo "    {\n";
-    echo "        return parent::model(\$className);\n";
-    echo "    }\n";
-    echo "\n";
-}
+echo "    /**\n";
+echo "     * Returns the static model of the specified AR class.\n";
+echo "     * @param string \$className active record class name.\n";
+echo "     * @return " . $modelClass . " the static model class\n";
+echo "     */\n";
+echo "    public static function model(\$className=__CLASS__)\n";
+echo "    {\n";
+echo "        return parent::model(\$className);\n";
+echo "    }\n";
+echo "\n";
 if ($connectionId != 'db') {
     echo "    /**\n";
     echo "     * @return CDbConnection database connection\n";
@@ -161,8 +159,6 @@ echo "        \$links = array();\n";
 echo "        \$links[] = array('label' => Yii::t('app', 'Update'), 'url' => \$this->getUrl('update'));\n";
 echo "        if (\$extra) {\n";
 echo "            \$more = array();\n";
-echo "            \$more[] = array('label' => Yii::t('app', 'Clear Cache'), 'url' => array('/tool/clearCacheModel', 'model' => get_class(\$this), 'id' => \$this->getPrimaryKeyString()));\n";
-echo "            \$more[] = array('label' => Yii::t('app', 'View Log'), 'url' => \$this->getUrl('log'));\n";
 if (in_array('deleted', CHtml::listData($columns, 'name', 'name')))
     echo "            if (!\$this->deleted)\n    ";
 echo "            \$more[] = array('label' => Yii::t('app', 'Delete'), 'url' => \$this->getUrl('delete', array('returnUrl' => Yii::app()->returnUrl->getLinkValue(true))), 'linkOptions' => array('data-toggle' => 'modal-remote'));\n";
