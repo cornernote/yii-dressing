@@ -33,6 +33,11 @@ class YdAccountLoginAction extends CAction
     public $userIdentityClass = 'YdUserIdentity';
 
     /**
+     * @var bool Default setting for remember me checkbox on login page
+     */
+    public $defaultRememberMe = true;
+
+    /**
      *
      */
     public function run()
@@ -73,7 +78,7 @@ class YdAccountLoginAction extends CAction
             $app->cache->set($attemptKey, ++$attempts);
         }
         else {
-            $user->remember_me = $app->dressing->defaultRememberMe;
+            $user->remember_me = $this->defaultRememberMe;
         }
 
         // display the login form

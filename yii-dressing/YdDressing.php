@@ -31,11 +31,6 @@ class YdDressing extends CApplicationComponent
     public $modelMap = array();
 
     /**
-     * @var bool Default setting for remember me checkbox on login page
-     */
-    public $defaultRememberMe = true;
-
-    /**
      * @var string Url to the assets
      */
     private $_assetsUrl;
@@ -57,10 +52,6 @@ class YdDressing extends CApplicationComponent
         // set alias
         if (!Yii::getPathOfAlias('dressing'))
             Yii::setPathOfAlias('dressing', dirname(__FILE__));
-
-        // import classes
-        Yii::import('dressing.components.*');
-        Yii::import('dressing.models.*');
 
         // map models
         $this->mapModels();
