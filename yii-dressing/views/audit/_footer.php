@@ -20,4 +20,6 @@ if (Yii::app()->getComponent('auditTracker', false) && $audit = Yii::app()->audi
 echo number_format(microtime(true) - YII_BEGIN_TIME, 2) . 's';
 echo ' | ';
 echo round(memory_get_peak_usage() / 1024 / 1024, 1) . 'm';
+echo ' | ';
+echo date('Y-m-d H:i:s');
 echo '</span>';
