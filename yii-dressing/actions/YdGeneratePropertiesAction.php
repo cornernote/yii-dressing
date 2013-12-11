@@ -195,7 +195,7 @@ class YdGeneratePropertiesAction extends CAction
         $selfProperties = CHtml::listData($reflection->getProperties(), 'name', 'name');
 
         // table fields
-        $properties[] = ' * Properties from table ' . $model->tableName();
+        $properties[] = ' * Table ' . $model->tableName();
         foreach ($model->tableSchema->columns as $column) {
             $type = $column->type;
             if (($column->dbType == 'datetime') || ($column->dbType == 'date')) {
@@ -211,7 +211,7 @@ class YdGeneratePropertiesAction extends CAction
         // relations
         $relations = $model->relations();
         if ($relations) {
-            $properties[] = ' * Properties from relations';
+            $properties[] = ' * Relations';
             foreach ($relations as $relationName => $relation) {
                 if (in_array($relation[0], array('CBelongsToRelation', 'CHasOneRelation')))
                     $properties[] = ' * @property ' . $relation[1] . ' $' . $relationName;
@@ -229,7 +229,7 @@ class YdGeneratePropertiesAction extends CAction
         }
 
         // active record
-        $properties[] = ' * Methods from CActiveRecord';
+        $properties[] = ' * @see CActiveRecord';
         $properties[] = " * @method {$modelName} model() static model(string \$className = NULL)";
         $properties[] = " * @method {$modelName} with() with()";
         $properties[] = " * @method {$modelName} find() find(\$condition, array \$params = array())";
@@ -256,7 +256,7 @@ class YdGeneratePropertiesAction extends CAction
                 $behavior = $this->getBehaviorClass($behavior);
                 $behaviorProperties = $this->getBehaviorProperties($behavior, CMap::mergeArray($behaviorMethods, $selfMethods), CMap::mergeArray($behaviorProperties, $selfProperties));
                 if ($behaviorProperties) {
-                    $properties[] = ' * Methods from behavior ' . $behavior;
+                    $properties[] = ' * @see ' . $behavior;
                     foreach ($behaviorProperties as $behaviorProperty) {
                         $properties[] = $behaviorProperty;
                     }
