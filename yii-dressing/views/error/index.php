@@ -36,7 +36,7 @@ echo CHtml::link(Yii::t('dressing', 'Clear Errors'), array('/error/clear'));
                 $auditCreated = $audit->created;
                 $auditCreated = Yii::app()->format->agoIcon($auditCreated);
                 $auditRoute = str_replace(array(Yii::app()->request->baseUrl, $_SERVER['HTTP_HOST'], 'http://', 'https://'), '', $audit->link);
-                $auditRoute = YdStringHelper::getFirstLineWithIcon($auditRoute, 60);
+                $auditRoute = YdStringHelper::truncate($auditRoute, 60);
             }
         }
         ?>

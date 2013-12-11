@@ -54,43 +54,6 @@ class YdStringHelper
         return $subString;
     }
 
-
-    /**
-     * @static
-     * @param $fileName
-     * @return mixed
-     */
-    public static function getValidFileName($fileName)
-    {
-        $fileName = preg_replace('/[^0-9a-z\.]+/i', '', $fileName);
-        return $fileName;
-    }
-
-    /**
-     * @static
-     * @param $string
-     * @return mixed|string
-     */
-    public static function slug($string)
-    {
-        $string = strtolower($string);
-        $string = preg_replace('/[^0-9a-z ]/', '', $string);
-        while (strpos($string, '  ') !== false) $string = str_replace('  ', ' ', $string);
-        $string = str_replace(' ', '-', $string);
-        return $string;
-    }
-
-    /**
-     * Humanize
-     * converts "some_string" or "someString" to "Some String"
-     * @param $string
-     * @return string
-     */
-    public static function humanize($string)
-    {
-        return ucwords(trim(strtolower(str_replace(array('-', '_'), ' ', preg_replace('/(?<![A-Z])[A-Z]/', ' \0', $string)))));
-    }
-
     /**
      * @param $haystack
      * @param $needle
@@ -98,8 +61,7 @@ class YdStringHelper
      */
     public static function startsWith($haystack, $needle)
     {
-        $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
+        return (substr($haystack, 0, strlen($needle)) == $needle);
     }
 
     /**
@@ -109,12 +71,7 @@ class YdStringHelper
      */
     public static function endsWith($haystack, $needle)
     {
-        $length = strlen($needle);
-        if ($length == 0) {
-            return true;
-        }
-
-        return (substr($haystack, -$length) === $needle);
+        return (substr($haystack, strlen($needle) * -1) == $needle);
     }
 
     /**
@@ -171,39 +128,15 @@ class YdStringHelper
     }
 
     /**
-     * @param $contents
-     * @param int $limit
+     * @param $text
+     * @param $length
      * @return string
      */
-    static public function getFirstLineWithIcon($contents, $limit = 50)
+    static public function truncate($text, $length = 100)
     {
-        $contentsWithBr = nl2br($contents);
-        $contentLines = explode('<br />', $contentsWithBr);
-        // printr($issueLines);
-        $firstLine = $contentLines[0];
-        if (strlen($firstLine) > $limit) {
-            $firstLine = substr($firstLine, 0, $limit - 2);
-        }
-        $icon = CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $contentsWithBr));
-        if ($firstLine == $contentsWithBr) {
-            $return = $contentsWithBr;
-            $return = htmlentities($return);
-        }
-        else {
-            // echo "<br/> not same <br/>";die;
-            $return = htmlentities($firstLine) . '...&nbsp;' . $icon;
-        }
-        return $return;
-    }
-
-    /**
-     * @param $short
-     * @param $long
-     * @return string
-     */
-    static public function getTextWithIcon($short, $long)
-    {
-        return $short . '...&nbsp;' . CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $long));
+        return YdCakeString::truncate($text, $length, array(
+            'ellipsis' => '...&nbsp;' . CHtml::link('<i class="icon-comment"></i>', 'javascript:void();', array('title' => $text)),
+        ));
     }
 
     /**

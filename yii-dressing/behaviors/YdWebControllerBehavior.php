@@ -63,9 +63,11 @@ class YdWebControllerBehavior extends CBehavior
      */
     public function getName($plural = false)
     {
-        $name = preg_replace('/(?<![A-Z])[A-Z]/', ' \0', str_replace('Controller', '', get_class($this->getOwner())));
-        $name = ucwords(trim(strtolower(str_replace(array('-', '_', '.'), ' ', $name))));
-        return $name . ($plural ? 's' : '');
+        $name = YdCakeInflector::humanize(YdCakeInflector::underscore(str_replace('Controller', '', get_class($this->getOwner()))));
+        return $plural ? YdCakeInflector::pluralize($name) : $name;
+        //$name = preg_replace('/(?<![A-Z])[A-Z]/', ' \0', str_replace('Controller', '', get_class($this->getOwner())));
+        //$name = ucwords(trim(strtolower(str_replace(array('-', '_', '.'), ' ', $name))));
+        //return $name . ($plural ? 's' : '');
     }
 
     /**
