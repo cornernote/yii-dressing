@@ -55,14 +55,11 @@ class YdBase extends YiiBase
         // load the config array
         $config = self::loadConfig($config);
 
-        // add controller map
-        if (!isset($config['controllerMap']))
-            $config['controllerMap'] = array();
-        $config['controllerMap'] = self::mergeArray(self::getControllerMap(), $config['controllerMap']);
-
         // remove incompatibale items
-        // do not use isset() to check, as it will return false if the key is set to null
-        unset($config['commandMap']);
+        $excludeItems = array('commandMap');
+        foreach ($excludeItems as $excludeItem)
+            if (array_key_exists($excludeItem, $config))
+                unset($config[$excludeItem]);
 
         // log routes (only setup if not already defined)
         if (!isset($config['components']['log']['routes'])) {
@@ -96,21 +93,17 @@ class YdBase extends YiiBase
         $config = self::loadConfig($config);
 
         // remove incompatibale items
-        // do not use isset() to check, as it will return false if the key is set to null
-        unset($config['theme']);
-        unset($config['controllerMap']);
+        $excludeItems = array('theme', 'controllerMap');
+        foreach ($excludeItems as $excludeItem)
+            if (array_key_exists($excludeItem, $config))
+                unset($config[$excludeItem]);
 
         // remove things from preload
         if (isset($config['preload'])) {
-            $excludeConsolePreloads = array('bootstrap');
+            $excludePreloads = array('bootstrap');
             foreach ($config['preload'] as $k => $preload)
-                if (in_array($preload, $excludeConsolePreloads)) unset($config['preload'][$k]);
+                if (in_array($preload, $excludePreloads)) unset($config['preload'][$k]);
         }
-
-        // add command map
-        if (!isset($config['commandMap']))
-            $config['commandMap'] = array();
-        $config['commandMap'] = self::mergeArray(self::getCommandMap(), $config['commandMap']);
 
         // create app
         $app = self::createApplication('CConsoleApplication', $config);
@@ -152,115 +145,7 @@ class YdBase extends YiiBase
      */
     public static function getConfig()
     {
-        $config = array(
-            'components' => array(
-                'dressing' => array(
-                    'class' => 'dressing.YdDressing',
-                ),
-                'errorHandler' => array(
-                    'class' => 'dressing.components.YdErrorHandler',
-                    'errorAction' => 'site/error',
-                ),
-                'fatalErrorCatch' => array(
-                    'class' => 'dressing.components.YdFatalErrorCatch',
-                ),
-                'user' => array(
-                    'class' => 'dressing.components.YdWebUser',
-                    'allowAutoLogin' => true,
-                    'loginUrl' => array('/account/login'),
-                    'behaviors' => array(
-                        'webUserFlash' => array(
-                            'class' => 'dressing.behaviors.YdWebUserFlashBehavior',
-                        ),
-                    ),
-                ),
-                'returnUrl' => array(
-                    'class' => 'dressing.components.YdReturnUrl',
-                ),
-                'bootstrap' => array(
-                    'class' => 'bootstrap.components.Bootstrap',
-                    'fontAwesomeCss' => true,
-                ),
-                'urlManager' => array(
-                    'urlFormat' => isset($_GET['r']) ? 'get' : 'path', // allow filters in audit/index work
-                    'showScriptName' => false,
-                ),
-                'cacheFile' => array(
-                    'class' => 'CFileCache',
-                ),
-                'cacheDb' => array(
-                    'class' => 'CDbCache',
-                ),
-                'cacheApc' => array(
-                    'class' => 'CApcCache',
-                ),
-                'log' => array(
-                    'class' => 'CLogRouter',
-                ),
-                'clientScript' => array(
-                    'class' => 'YdClientScript',
-                ),
-                'session' => array(
-                    'class' => 'CCacheHttpSession',
-                    'cacheID' => 'cacheApc',
-                ),
-                'email' => array(
-                    'class' => 'dressing.components.YdEmail',
-                ),
-                'swiftMailer' => array(
-                    'class' => 'dressing.components.YdSwiftMailer',
-                ),
-                'auditTracker' => array(
-                    'class' => 'dressing.components.YdAuditTracker',
-                ),
-                'format' => array(
-                    'class' => 'dressing.components.YdFormatter',
-                ),
-                'reCapture' => array(
-                    'class' => 'dressing.components.YdReCapture',
-                ),
-                'widgetFactory' => array(
-                    'widgets' => array(
-                        'TbMenu' => array(
-                            'activateParents' => true,
-                        ),
-                        'TbCKEditor' => array(
-                            'editorOptions' => array(
-                                'toolbar_Full' => array(
-                                    array('name' => 'document', 'items' => array('Source', '-', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates')),
-                                    array('name' => 'clipboard', 'items' => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo')),
-                                    array('name' => 'editing', 'items' => array('Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt')),
-                                    array('name' => 'forms', 'items' => array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField')),
-                                    array('name' => 'basicstyles', 'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')),
-                                    array('name' => 'paragraph', 'items' => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl')),
-                                    array('name' => 'links', 'items' => array('Link', 'Unlink', 'Anchor')),
-                                    array('name' => 'insert', 'items' => array('Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe')),
-                                    array('name' => 'styles', 'items' => array('Styles', 'Format', 'Font', 'FontSize')),
-                                    array('name' => 'colors', 'items' => array('TextColor', 'BGColor')),
-                                    array('name' => 'tools', 'items' => array('Maximize', 'ShowBlocks', '-', 'About')),
-                                ),
-                                'toolbar_Basic' => array(
-                                    array('Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'About'),
-                                ),
-                                'toolbar_DressingFull' => array(
-                                    array('name' => 'tools', 'items' => array('Source', 'Maximize', 'ShowBlocks')),
-                                    array('name' => 'clipboard', 'items' => array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo')),
-                                    array('name' => 'basicstyles', 'items' => array('Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')),
-                                    array('name' => 'paragraph', 'items' => array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock')),
-                                    array('name' => 'links', 'items' => array('Link', 'Unlink', 'Anchor')),
-                                    array('name' => 'insert', 'items' => array('Image', 'Table', 'HorizontalRule', 'SpecialChar')),
-                                    array('name' => 'styles', 'items' => array('Format')),
-                                ),
-                                'toolbar_DressingBasic' => array(
-                                    array('Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'),
-                                ),
-                                'toolbar' => 'DressingFull',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        );
+        $config = array();
         if (YII_DEBUG && !YII_DRESSING_CLI && !isset($config['modules']['gii'])) {
             $config['modules']['gii'] = array(
                 'class' => 'system.gii.GiiModule',
@@ -273,59 +158,6 @@ class YdBase extends YiiBase
         }
         return $config;
     }
-
-    /**
-     * YdBase Controller Map
-     * @return array
-     */
-    public static function getControllerMap()
-    {
-        $controllers = array(
-            'account' => 'dressing.controllers.YdAccountController',
-            'attachment' => 'dressing.controllers.YdAttachmentController',
-            'audit' => 'dressing.controllers.YdAuditController',
-            'auditTrail' => 'dressing.controllers.YdAuditTrailController',
-            'contactUs' => 'dressing.controllers.YdContactUsController',
-            'emailSpool' => 'dressing.controllers.YdEmailSpoolController',
-            'emailTemplate' => 'dressing.controllers.YdEmailTemplateController',
-            'error' => 'dressing.controllers.YdErrorController',
-            'lookup' => 'dressing.controllers.YdLookupController',
-            'siteMenu' => 'dressing.controllers.YdSiteMenuController',
-            'role' => 'dressing.controllers.YdRoleController',
-            'setting' => 'dressing.controllers.YdSettingController',
-            'user' => 'dressing.controllers.YdUserController',
-        );
-        // unset controllers that app has defined
-        foreach (array_keys($controllers) as $controller)
-            if (file_exists(APP_PATH . DS . 'controllers' . DS . ucfirst($controller) . 'Controller.php'))
-                unset($controllers[$controller]);
-        return $controllers;
-    }
-
-    /**
-     * YdBase Command Map
-     * @return array
-     */
-    public static function getCommandMap()
-    {
-        $commands = array(
-            'migrate' => array(
-                'class' => 'system.cli.commands.MigrateCommand',
-                'migrationPath' => 'application.migrations',
-                'migrationTable' => 'migration',
-                'connectionID' => 'db',
-                'templateFile' => 'dressing.migrations.templates.migrate_template',
-            ),
-            'emailSpool' => 'dressing.commands.YdEmailSpoolCommand',
-            'errorEmail' => 'dressing.commands.YdErrorEmailCommand',
-        );
-        // unset commands that app has defined
-        foreach (array_keys($commands) as $command)
-            if (file_exists(APP_PATH . DS . 'commands' . DS . ucfirst($command) . 'Command.php'))
-                unset($commands[$command]);
-        return $commands;
-    }
-
 
     /**
      * Merges two or more arrays into one recursively.
