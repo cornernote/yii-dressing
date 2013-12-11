@@ -36,7 +36,7 @@
  * @author Zain Ul abidin <zainengineer@gmail.com>
  * @copyright 2013 Mr PHP
  * @link https://github.com/cornernote/yii-dressing
- * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
+ * @license BSD-3-Clause https://raw.github.com/cornernote/yii-dressing/master/license.txt
  *
  * @package dressing.models
  */

@@ -8,7 +8,7 @@
  * @link http://code.google.com/p/yiiext/
  *
  * @link https://github.com/cornernote/yii-dressing
- * @license https://raw.github.com/cornernote/yii-dressing/master/license.txt
+ * @license BSD-3-Clause https://raw.github.com/cornernote/yii-dressing/master/license.txt
  *
  * @package dressing.behaviors
  */
