@@ -1,14 +1,15 @@
 <?php
 /**
- *
- * Methods from behavior YdWebUserFlashBehavior
- * @method multiFlash() multiFlash()
- * @method addFlash() addFlash(string $message, string $class = 'info')
+ * YdWebUser represents the persistent state for a Web application user.
  *
  * Properties from getters
  * @property YdUser $user
  * @property integer $id
  * @property bool $api
+ *
+ * @see YdWebUserFlashBehavior
+ * @method multiFlash() multiFlash()
+ * @method addFlash() addFlash(string $message, string $class = 'info')
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

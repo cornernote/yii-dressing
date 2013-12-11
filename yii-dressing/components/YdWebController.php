@@ -2,7 +2,7 @@
 /**
  * Class YdWebController
  *
- * Properties and Methods from behavior YdWebControllerBehavior
+ * @see YdWebControllerBehavior
  * @property string $name
  * @property array $menu
  * @property array $breadcrumbs
