@@ -26,6 +26,11 @@ class YdDressing extends CApplicationComponent
 {
 
     /**
+     * @var string the default layout for the controller view.
+     */
+    public $defaultLayout = '/layouts/default';
+
+    /**
      * @var array Map of model info including relations and behaviors.
      */
     public $modelMap = array();

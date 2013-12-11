@@ -28,10 +28,14 @@
  */
 class YdWebController extends YdController
 {
+
     /**
-     * @var string the default layout for the controller view.
+     *
      */
-    public $layout = '/layouts/default';
+    public function init()
+    {
+        $this->layout = Yii::app()->dressing->defaultLayout;
+    }
 
     /**
      * @return array
