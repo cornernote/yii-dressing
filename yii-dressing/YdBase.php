@@ -70,7 +70,7 @@ class YdBase extends YiiBase
             );
             if (YII_DEBUG_TOOLBAR)
                 $config['components']['log']['routes'][] = array(
-                    'class' => 'vendor.malyshev.yii-debug-toolbar.yii-debug-toolbar.YiiDebugToolbarRoute',
+                    'class' => 'vendor.malyshev.yii-debug-toolbar.YiiDebugToolbarRoute',
                     'levels' => 'profile',
                 );
         }
