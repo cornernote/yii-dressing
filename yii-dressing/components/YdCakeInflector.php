@@ -275,7 +275,7 @@ class YdCakeInflector
     public static function reset()
     {
         if (empty(self::$_initialState)) {
-            self::$_initialState = get_class_vars('Inflector');
+            self::$_initialState = get_class_vars('YdCakeInflector');
             return;
         }
         foreach (self::$_initialState as $key => $val) {

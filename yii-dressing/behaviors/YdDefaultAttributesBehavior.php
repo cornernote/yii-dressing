@@ -35,7 +35,7 @@ class YdDefaultAttributesBehavior extends CActiveRecordBehavior
     /**
      * @param CModelEvent $event
      */
-    protected function beforeValidate($event)
+    public function beforeValidate($event)
     {
         $this->getOwner()->setDefaultAttributes();
         return parent::beforeValidate($event);
@@ -44,7 +44,7 @@ class YdDefaultAttributesBehavior extends CActiveRecordBehavior
     /**
      * @param CModelEvent $event
      */
-    protected function beforeSave($event)
+    public function beforeSave($event)
     {
         $this->getOwner()->setDefaultAttributes();
         return parent::beforeSave($event);
