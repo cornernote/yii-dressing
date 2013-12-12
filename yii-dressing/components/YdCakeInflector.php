@@ -275,7 +275,7 @@ class YdCakeInflector
     public static function reset()
     {
         if (empty(self::$_initialState)) {
-            self::$_initialState = get_class_vars('YdCakeInflector');
+            self::$_initialState = get_class_vars('Inflector');
             return;
         }
         foreach (self::$_initialState as $key => $val) {
@@ -546,7 +546,7 @@ class YdCakeInflector
     }
 
     /**
-     * Returns a string with all spaces converted to dashes (by default), accented
+     * Returns a string with all spaces converted to underscores (by default), accented
      * characters converted to non-accented characters, and non word characters removed.
      *
      * @param string $string the string you want to slug
@@ -554,7 +554,7 @@ class YdCakeInflector
      * @return string
      * @link http://book.cakephp.org/2.0/en/core-utility-libraries/inflector.html#Inflector::slug
      */
-    public static function slug($string, $replacement = '-')
+    public static function slug($string, $replacement = '_')
     {
         $quotedReplacement = preg_quote($replacement, '/');
 
