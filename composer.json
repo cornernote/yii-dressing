@@ -26,6 +26,8 @@
         "yiisoft/yii": "1.1.14",
         "mrphp/js-highcharts": "dev-master",
 		"mrphp/ckfinder-assets": "2.4.0",
+		"mrphp/mailchimp": "v1.3.1",
+		"mrphp/phpass": "0.3.0"
 		"clevertech/yii-booster": "v2.0.0",
         "swiftmailer/swiftmailer": "v5.0.2",
         "php-excel-reader/spreadsheet-reader": "dev-master",
