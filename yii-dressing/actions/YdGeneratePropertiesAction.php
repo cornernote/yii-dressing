@@ -44,6 +44,11 @@ class YdGeneratePropertiesAction extends CAction
     public $model;
 
     /**
+     * @var
+     */
+    public $modelPaths = array('application.models');
+
+    /**
      * Runs the action.
      * This method displays the view requested by the user.
      * @throws CHttpException if the modelName is invalid
@@ -88,7 +93,7 @@ class YdGeneratePropertiesAction extends CAction
      */
     public function getModelList()
     {
-        $pathList = CFileHelper::findFiles(Yii::getPathOfAlias("application.models"), array('fileTypes' => array('php')));
+        $pathList = CFileHelper::findFiles(Yii::getPathOfAlias($this->modelPaths[0]), array('fileTypes' => array('php')));
         $modelList = array();
         foreach ($pathList as $path) {
             $modelName = basename($path, '.php');
@@ -111,7 +116,7 @@ class YdGeneratePropertiesAction extends CAction
     {
         $properties = $this->getModelProperties($modelName);
         $message = $this->replaceModelProperties($modelName, $properties);
-        $this->controller->addBreadcrumb(Yii::t('dressing', 'Generate Properties'), array('/tool/generateProperties'));
+        $this->controller->addBreadcrumb(Yii::t('dressing', 'Generate Properties'), array($this->controller->id . '/' . $this->controller->action->id));
         $this->controller->pageTitle = $modelName;
         $this->controller->menu = $this->getModelList();
         $this->controller->renderText($message . '<pre>' . implode("\n", $properties) . '</pre>');
@@ -127,7 +132,7 @@ class YdGeneratePropertiesAction extends CAction
             $properties = $this->getModelProperties($modelName);
             $this->replaceModelProperties($modelName, $properties);
         }
-        $this->controller->addBreadcrumb(Yii::t('dressing', 'Generate Properties'), array('/tool/generateProperties'));
+        $this->controller->addBreadcrumb(Yii::t('dressing', 'Generate Properties'), array($this->controller->id . '/' . $this->controller->action->id));
         $this->controller->pageTitle = Yii::t('dressing', 'Replace All Model Properties');
         $this->controller->menu = $this->getModelList();
         $this->controller->renderText(Yii::t('dressing', 'Done!'));
@@ -144,9 +149,11 @@ class YdGeneratePropertiesAction extends CAction
         $end = " * --- END GenerateProperties ---";
         $contents = $begin . "\n" . implode("\n", $properties) . "\n" . $end;
 
-        $fileName = Yii::getPathOfAlias("application.models") . '/' . $modelName . '.php';
-        if (!file_exists($fileName)) {
-            $fileName = Yii::getPathOfAlias("application.models.cre") . '/' . $modelName . '.php';
+        $fileName = false;
+        foreach ($this->modelPaths as $modelPath) {
+            $fileName = Yii::getPathOfAlias($modelPath) . '/' . $modelName . '.php';
+            if (file_exists($fileName))
+                break;
         }
         if (file_exists($fileName)) {
             $fileContents = file_get_contents($fileName);

@@ -70,6 +70,19 @@ $('.form .row.model-class').toggle($('#{$class}_tableName').val().substring($('#
     </div>
     <?php echo $form->error($model, 'tablePrefix'); ?>
 </div>
+<div class="row sticky">
+    <?php echo $form->labelEx($model, 'modelPrefix'); ?>
+    <?php echo $form->textField($model, 'modelPrefix', array('size' => 65)); ?>
+    <div class="tooltip">
+        This refers to the prefix name that is shared by all models.
+        Setting this property mainly affects how model classes are named based on
+        the model names. For example, a model prefix <code>Model</code> will generate a model class named
+        <code>ModelPost</code>.
+        <br/>
+        Leave this field empty if your database models do not use common prefix.
+    </div>
+    <?php echo $form->error($model, 'modelPrefix'); ?>
+</div>
 <div class="row">
     <?php echo $form->labelEx($model, 'tableName'); ?>
     <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(

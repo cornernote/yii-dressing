@@ -22,6 +22,10 @@ class ModelCode extends CCodeModel
     /**
      * @var
      */
+    public $modelPrefix;
+    /**
+     * @var
+     */
     public $tableName;
     /**
      * @var
@@ -34,7 +38,7 @@ class ModelCode extends CCodeModel
     /**
      * @var string
      */
-    public $baseClass = 'YdActiveRecord';
+    public $baseClass = 'CActiveRecord';
     /**
      * @var bool
      */
@@ -52,16 +56,16 @@ class ModelCode extends CCodeModel
     public function rules()
     {
         return array_merge(parent::rules(), array(
-            array('tablePrefix, baseClass, tableName, modelClass, modelPath, connectionId', 'filter', 'filter' => 'trim'),
+            array('tablePrefix, modelPrefix, baseClass, tableName, modelClass, modelPath, connectionId', 'filter', 'filter' => 'trim'),
             array('connectionId, tableName, modelPath, baseClass', 'required'),
-            array('tablePrefix, tableName, modelPath', 'match', 'pattern' => '/^(\w+[\w\.]*|\*?|\w+\.\*)$/', 'message' => '{attribute} should only contain word characters, dots, and an optional ending asterisk.'),
+            array('tablePrefix, modelPrefix, tableName, modelPath', 'match', 'pattern' => '/^(\w+[\w\.]*|\*?|\w+\.\*)$/', 'message' => '{attribute} should only contain word characters, dots, and an optional ending asterisk.'),
             array('connectionId', 'validateConnectionId', 'skipOnError' => true),
             array('tableName', 'validateTableName', 'skipOnError' => true),
-            array('tablePrefix, modelClass, baseClass', 'match', 'pattern' => '/^[a-zA-Z_]\w*$/', 'message' => '{attribute} should only contain word characters.'),
+            array('tablePrefix, modelPrefix, modelClass, baseClass', 'match', 'pattern' => '/^[a-zA-Z_]\w*$/', 'message' => '{attribute} should only contain word characters.'),
             array('modelPath', 'validateModelPath', 'skipOnError' => true),
             array('baseClass, modelClass', 'validateReservedWord', 'skipOnError' => true),
             array('baseClass', 'validateBaseClass', 'skipOnError' => true),
-            array('connectionId, tablePrefix, modelPath, baseClass, buildRelations', 'sticky'),
+            array('connectionId, tablePrefix, modelPrefix, modelPath, baseClass, buildRelations', 'sticky'),
         ));
     }
 
@@ -72,6 +76,7 @@ class ModelCode extends CCodeModel
     {
         return array_merge(parent::attributeLabels(), array(
             'tablePrefix' => 'Table Prefix',
+            'modelPrefix' => 'Model Prefix',
             'tableName' => 'Table Name',
             'modelPath' => 'Model Path',
             'modelClass' => 'Model Class',
@@ -133,7 +138,7 @@ class ModelCode extends CCodeModel
 
         foreach ($tables as $table) {
             $tableName = $this->removePrefix($table->name);
-            $className = $this->generateClassName($table->name);
+            $className = $this->modelPrefix . $this->generateClassName($table->name);
             $params = array(
                 'tableName' => $schema === '' ? $tableName : $schema . '.' . $tableName,
                 'modelClass' => $className,
@@ -172,7 +177,7 @@ class ModelCode extends CCodeModel
             $tables = Yii::app()->{$this->connectionId}->schema->getTables($schema);
             foreach ($tables as $table) {
                 if ($this->tablePrefix == '' || strpos($table->name, $this->tablePrefix) === 0) {
-                    if (in_array(strtolower($table->name), self::$keywords))
+                    if (in_array(strtolower($this->modelPrefix . $table->name), self::$keywords))
                         $invalidTables[] = $table->name;
                     if (($invalidColumn = $this->checkColumns($table)) !== null)
                         $invalidColumns[] = $invalidColumn;
