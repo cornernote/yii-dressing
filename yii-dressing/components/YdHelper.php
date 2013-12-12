@@ -126,4 +126,25 @@ class YdHelper
         return substr(php_sapi_name(), 0, 3) == 'cli';
     }
 
+    /**
+     * @param $tables
+     * @param string $mode
+     */
+    public static function lockTables($tables, $mode = 'WRITE')
+    {
+        $tableSql = array();
+        foreach ($tables as $table => $alias) {
+            $tableSql[] = '`' . $table . '` ' . $mode;
+            $tableSql[] = '`' . $table . '` ' . $alias . ' ' . $mode;
+        }
+        Yii::app()->db->createCommand('LOCK TABLES ' . implode(', ', $tableSql))->execute();
+    }
+
+    /**
+     *
+     */
+    public static function unlockTables()
+    {
+        Yii::app()->db->createCommand("UNLOCK TABLES")->execute();
+    }
 }
