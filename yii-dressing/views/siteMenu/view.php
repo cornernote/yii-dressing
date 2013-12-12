@@ -13,7 +13,7 @@
 $this->pageTitle = $menu->getName();
 
 $this->renderPartial('/siteMenu/_menu', array(
-    'menu' => $menu,
+    'siteMenu' => $menu,
 ));
 ?>
 
