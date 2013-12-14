@@ -14,7 +14,7 @@ class PrefixModelGenerator extends CCodeGenerator
     /**
      * @var string
      */
-    public $codeModel = 'yiiembed.modules.gii.prefixmodel.PrefixModelCode';
+    public $codeModel = 'dressing.gii.prefixmodel.PrefixModelCode';
 
     /**
      * Provides autocomplete table names

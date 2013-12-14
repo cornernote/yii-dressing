@@ -22,7 +22,7 @@ class PrefixModelCode extends CCodeModel
     /**
      * @var
      */
-    public $modelPrefix = 'Oc';
+    public $modelPrefix;
     /**
      * @var
      */
@@ -138,7 +138,7 @@ class PrefixModelCode extends CCodeModel
 
         foreach ($tables as $table) {
             $tableName = $this->removePrefix($table->name);
-            $className = $this->modelPrefix . $this->generateClassName($table->name);
+            $className = $this->generateClassName($table->name);
             $params = array(
                 'tableName' => $schema === '' ? $tableName : $schema . '.' . $tableName,
                 'modelClass' => $className,
@@ -376,10 +376,10 @@ class PrefixModelCode extends CCodeModel
 
                 $unprefixedTableName = $this->removePrefix($tableName);
 
-                $relationName = $this->generateRelationName($table0, $table1, true);
+                $relationName = $this->generateRelationName($table0, $this->removePrefix($table1, false), true);
                 $relations[$className0][$relationName] = "array(self::MANY_MANY, '$className1', '$unprefixedTableName($pks[0], $pks[1])')";
 
-                $relationName = $this->generateRelationName($table1, $table0, true);
+                $relationName = $this->generateRelationName($table1, $this->removePrefix($table0, false), true);
 
                 $i = 1;
                 $rawName = $relationName;
@@ -436,7 +436,7 @@ class PrefixModelCode extends CCodeModel
     protected function generateClassName($tableName)
     {
         if ($this->tableName === $tableName || ($pos = strrpos($this->tableName, '.')) !== false && substr($this->tableName, $pos + 1) === $tableName)
-            return $this->modelClass;
+            return $this->modelPrefix . $this->modelClass;
 
         $tableName = $this->removePrefix($tableName, false);
         $className = '';
@@ -444,7 +444,7 @@ class PrefixModelCode extends CCodeModel
             if ($name !== '')
                 $className .= ucfirst($name);
         }
-        return $className;
+        return $this->modelPrefix . $className;
     }
 
     /**

@@ -49,6 +49,11 @@ class YdGeneratePropertiesAction extends CAction
     public $modelPaths = array('application.models');
 
     /**
+     * @var
+     */
+    public $addModelMethodDoc = false;
+
+    /**
      * Runs the action.
      * This method displays the view requested by the user.
      * @throws CHttpException if the modelName is invalid
@@ -237,16 +242,17 @@ class YdGeneratePropertiesAction extends CAction
 
         // active record
         $properties[] = ' * @see CActiveRecord';
-        $properties[] = " * @method {$modelName} model() static model(string \$className = NULL)";
-        $properties[] = " * @method {$modelName} with() with()";
+        if ($this->addModelMethodDoc)
+            $properties[] = " * @method {$modelName} model() static model(string \$className = NULL)";
         $properties[] = " * @method {$modelName} find() find(\$condition, array \$params = array())";
-        $properties[] = " * @method {$modelName}[] findAll() findAll(\$condition = '', array \$params = array())";
         $properties[] = " * @method {$modelName} findByPk() findByPk(\$pk, \$condition = '', array \$params = array())";
-        $properties[] = " * @method {$modelName}[] findAllByPk() findAllByPk(\$pk, \$condition = '', array \$params = array())";
         $properties[] = " * @method {$modelName} findByAttributes() findByAttributes(array \$attributes, \$condition = '', array \$params = array())";
-        $properties[] = " * @method {$modelName}[] findAllByAttributes() findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
         $properties[] = " * @method {$modelName} findBySql() findBySql(\$sql, array \$params = array())";
+        $properties[] = " * @method {$modelName}[] findAll() findAll(\$condition = '', array \$params = array())";
+        $properties[] = " * @method {$modelName}[] findAllByPk() findAllByPk(\$pk, \$condition = '', array \$params = array())";
+        $properties[] = " * @method {$modelName}[] findAllByAttributes() findAllByAttributes(array \$attributes, \$condition = '', array \$params = array())";
         $properties[] = " * @method {$modelName}[] findAllBySql() findAllBySql(\$sql, array \$params = array())";
+        $properties[] = " * @method {$modelName} with() with()";
         $properties[] = " *";
 
         // behaviors
