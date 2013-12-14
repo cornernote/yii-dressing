@@ -54,8 +54,12 @@ class YdAuditBehavior extends CActiveRecordBehavior
      */
     public function __construct()
     {
-        if ($this->enableAuditTrail === null)
-            $this->enableAuditTrail = Yii::app()->auditTracker->enableAuditTrail;
+        if ($this->enableAuditTrail === null) {
+            if (isset(Yii::app()->components['auditTracker']))
+                $this->enableAuditTrail = Yii::app()->auditTracker->enableAuditTrail;
+            else
+                $this->enableAuditTrail = true;
+        }
     }
 
     /**
@@ -131,7 +135,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
         $newAttributes = $this->owner->attributes;
         $oldAttributes = $this->_dbAttributes;
         $auditModels = $this->getAuditModels();
-        $auditId = Yii::app()->auditTracker->id;
+        $auditId = Yii::app()->auditTracker ? Yii::app()->auditTracker->id : 0;
         $auditTrails = array();
         $userId = Yii::app()->user && Yii::app()->user->id ? Yii::app()->user->id : 0;
 
@@ -218,7 +222,7 @@ class YdAuditBehavior extends CActiveRecordBehavior
 
         $date = date('Y-m-d H:i:s');
         $auditModels = $this->getAuditModels();
-        $auditId = Yii::app()->auditTracker->id;
+        $auditId = Yii::app()->auditTracker ? Yii::app()->auditTracker->id : 0;
         $userId = Yii::app()->user && Yii::app()->user->id ? Yii::app()->user->id : 0;
         $auditTrails = array();
 

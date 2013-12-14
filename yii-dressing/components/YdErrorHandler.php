@@ -193,7 +193,11 @@ class YdErrorHandler extends CErrorHandler
         //$auditId = class_exists('YdAudit') ? Yii::app()->auditTracker->id : 0;
         //Yii::$enableIncludePath = $enableIncludePath;
 
-        $auditId = Yii::app()->auditTracker->id;
+        try {
+            $auditId = Yii::app()->getComponent('auditTracker');
+        } catch (Exception $e) {
+            $auditId = false;
+        }
         return $auditId ? $auditId : uniqid();
     }
 
