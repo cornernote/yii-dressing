@@ -70,7 +70,7 @@ class YdDressing extends CApplicationComponent
      */
     public function mapModels()
     {
-        $this->modelMap = array_merge(array(
+        $this->modelMap = CMap::mergeArray(array(
             'YdAudit' => array(
                 'relations' => array(
                     'user' => array(
