@@ -62,7 +62,7 @@ class YdAuditTracker extends CComponent
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
