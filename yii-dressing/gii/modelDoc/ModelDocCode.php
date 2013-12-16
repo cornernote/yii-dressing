@@ -105,19 +105,20 @@ class ModelDocCode extends CCodeModel
     public function getModels()
     {
         $modelClass = $this->modelClass;
-        if ($modelClass != '*')
-            return array(new $modelClass);
-        $pathList = CFileHelper::findFiles(Yii::getPathOfAlias($this->modelPath), array('fileTypes' => array('php')));
+        if ($modelClass)
+            return array(CActiveRecord::model($modelClass));
         $modelList = array();
-        foreach ($pathList as $path) {
-            $modelClass = basename($path, '.php');
+        $files = CFileHelper::findFiles(Yii::getPathOfAlias($this->modelPath), array('fileTypes' => array('php'), 'level' => 0));
+        foreach ($files as $file) {
+            $modelClass = basename($file, '.php');
             // there is dot in modelName [$modelClass] probably a version conflict file
             if (strpos($modelClass, '.') !== false)
                 continue;
             // load the model
-            $model = CActiveRecord::model($modelClass);
+            $model = new $modelClass;
             if (!$model || !is_subclass_of($model, 'CActiveRecord'))
-                throw new CException(strtr(Yii::t('dressing', 'No CActiveRecord Class with name :modelClass was not found.'), array(':modelClass' => $modelClass)));
+                continue;
+            $modelList[] = $model;
         }
         return $modelList;
     }

@@ -136,10 +136,10 @@ echo "        \$criteria=new CDbCriteria;\n";
 echo "\n";
 foreach ($columns as $name => $column) {
     if ($column->type === 'string') {
-        echo "        \$criteria->compare('$name',\$this->$name,true);\n";
+        echo "        \$criteria->compare('t.$name',\$this->$name,true);\n";
     }
     else {
-        echo "        \$criteria->compare('$name',\$this->$name);\n";
+        echo "        \$criteria->compare('t.$name',\$this->$name);\n";
     }
 }
 echo "\n";
