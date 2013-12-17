@@ -70,7 +70,18 @@ class YdDressing extends CApplicationComponent
      */
     public function mapModels()
     {
-        $this->modelMap = CMap::mergeArray(array(
+        foreach ($this->getDefaultModelMap() as $method => $data)
+            foreach ($data as $name => $options)
+                if (empty($this->modelMap[$method][$name]))
+                    $this->modelMap[$method][$name] = $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultModelMap()
+    {
+        return array(
             'YdAudit' => array(
                 'relations' => array(
                     'user' => array(
@@ -121,8 +132,8 @@ class YdDressing extends CApplicationComponent
                 ),
             ),
             'YdEmailSpool' => array(
-                'attachment' => array(
-                    'relations' => array(
+                'relations' => array(
+                    'attachment' => array(
                         'CHasManyRelation',
                         'YdAttachment',
                         'model_id',
@@ -234,7 +245,7 @@ class YdDressing extends CApplicationComponent
                     ),
                 ),
             ),
-        ), $this->modelMap);
+        );
     }
 
     /**
