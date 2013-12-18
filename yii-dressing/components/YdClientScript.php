@@ -77,7 +77,7 @@ class YdClientScript extends CClientScript
             'app.css',
             'yii-dressing.css',
         );
-        if (app()->request->isAjaxRequest) {
+        if (Yii::app()->request->isAjaxRequest) {
             foreach ($ignoreAjax as $ignore) {
                 if ($this->endsWith($url, $ignore))
                     return $this;
@@ -217,7 +217,7 @@ class YdClientScript extends CClientScript
             'bootstrap.min.js',
             'bootstrap.js',
         );
-        if (app()->request->isAjaxRequest) {
+        if (Yii::app()->request->isAjaxRequest) {
             foreach ($ignoreAjax as $ignore) {
                 if ($this->endsWith($url, $ignore))
                     return $this;
@@ -309,7 +309,7 @@ class YdClientScript extends CClientScript
             'bootstrap.js',
             'bootbox',
         );
-        if (app()->request->isAjaxRequest && in_array($name, $ignoreAjax)) {
+        if (Yii::app()->request->isAjaxRequest && in_array($name, $ignoreAjax)) {
             return $this;
         }
         return parent::registerCoreScript($name);
