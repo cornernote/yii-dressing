@@ -58,14 +58,7 @@ class YdReturnUrl extends CApplicationComponent
      */
     public function getLinkValue($currentPage = false)
     {
-        if ($currentPage) {
-            $url = Yii::app()->request->getUrl();
-        }
-        else {
-            $url = $this->getUrlFromSubmitFields();
-        }
-        // base64 encode so seo urls dont break
-        return $this->encodeLinkValue($url);
+        return $this->encodeLinkValue($currentPage ? Yii::app()->request->getUrl() : $this->getUrlFromSubmitFields());
     }
 
     /**
@@ -103,7 +96,7 @@ class YdReturnUrl extends CApplicationComponent
         $url = $this->getUrlFromSubmitFields();
         // alt url or current page
         if (!$url)
-            $url = $altUrl ? $altUrl : Yii::app()->request->getUrl();
+            $url = $altUrl ? $altUrl : Yii::app()->getRequest()->getUrl();
         return $url;
     }
 
