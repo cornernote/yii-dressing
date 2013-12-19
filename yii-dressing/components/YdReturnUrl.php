@@ -1,6 +1,8 @@
 <?php
 /**
- * Wrapper to maintain state of a Return URL
+ * Wrapper to maintain state of a Return Url
+ *
+ * Allows the user to have multiple tabs open, each will have its own Return Url passed in via the GET or POST params.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -14,12 +16,9 @@ class YdReturnUrl extends CApplicationComponent
 {
 
     /**
-     * save returnUrl from submitted data
+     * @var string The key used in GET and POST requests for the Return Url.
      */
-    public function init()
-    {
-        $this->setUrlFromSubmitFields();
-    }
+    public $requestKey = 'returnUrl';
 
     /**
      * Get url from submitted data or the current page url
@@ -27,7 +26,9 @@ class YdReturnUrl extends CApplicationComponent
      *
      * @usage
      * in views/your_page.php
+     * <pre>
      * CHtml::hiddenField('returnUrl', Yii::app()->returnUrl->getFormValue());
+     * </pre>
      *
      * @param bool $currentPage
      * @param bool $encode
@@ -35,15 +36,10 @@ class YdReturnUrl extends CApplicationComponent
      */
     public function getFormValue($currentPage = false, $encode = false)
     {
-        if ($currentPage) {
-            $url = Yii::app()->request->getUrl();
-            if ($encode) {
-                $url = $this->urlEncode($url);
-            }
-        }
-        else {
+        if ($currentPage)
+            $url = $encode ? $this->urlEncode(Yii::app()->getRequest()->getUrl()) : Yii::app()->getRequest()->getUrl();
+        else
             $url = $this->getUrlFromSubmitFields();
-        }
         return $url;
     }
 
@@ -53,7 +49,9 @@ class YdReturnUrl extends CApplicationComponent
      *
      * @usage
      * in views/your_page.php
+     * <pre>
      * CHtml::link('my link', array('test/form', 'returnUrl' => Yii::app()->returnUrl->getLinkValue(true)));
+     * </pre>
      *
      * @param bool $currentPage
      * @return string
@@ -76,7 +74,9 @@ class YdReturnUrl extends CApplicationComponent
      *
      * @usage
      * in views/your_page.php
+     * <pre>
      * CHtml::link('my link', array('test/form', 'returnUrl' => Yii::app()->returnUrl->encodeLinkValue($item->getUrl())));
+     * </pre>
      *
      * @param $url
      * @return string
@@ -91,7 +91,9 @@ class YdReturnUrl extends CApplicationComponent
      *
      * @usage
      * in YourController::actionYourAction()
+     * <pre>
      * $this->redirect(Yii::app()->returnUrl->getUrl());
+     * </pre>
      *
      * @param bool|mixed $altUrl
      * @return mixed|null
@@ -99,37 +101,10 @@ class YdReturnUrl extends CApplicationComponent
     public function getUrl($altUrl = false)
     {
         $url = $this->getUrlFromSubmitFields();
-        if (!$url) {
-            // load from given url
-            $url = $altUrl;
-        }
-        if (!$url) {
-            // load from session
-            $url = Yii::app()->user->getReturnUrl();
-        }
-        if (!$url) {
-            // load from current page
-            $url = Yii::app()->request->getUrl();
-        }
-        // unset the session
-        Yii::app()->user->setReturnUrl(null);
+        // alt url or current page
+        if (!$url)
+            $url = $altUrl ? $altUrl : Yii::app()->request->getUrl();
         return $url;
-    }
-
-    /**
-     * If returnUrl is in submitted data it will be saved in session
-     *
-     * @usage
-     * in Controller::beforeAction()
-     *
-     */
-    public function setUrlFromSubmitFields()
-    {
-        $url = $this->getUrlFromSubmitFields();
-        if ($url) {
-            // save to session
-            Yii::app()->user->setReturnUrl($url);
-        }
     }
 
     /**
@@ -139,11 +114,9 @@ class YdReturnUrl extends CApplicationComponent
      */
     private function getUrlFromSubmitFields()
     {
-        $url = YdHelper::getSubmittedField('returnUrl');
-        if ($url && isset($_GET['returnUrl']) && base64_decode($url)) {
-            $url = $this->urlDecode($url);
-        }
-        return $url;
+        $requestKey = $this->requestKey;
+        $url = isset($_GET[$requestKey]) ? $_GET[$requestKey] : (isset($_POST[$requestKey]) ? $_POST[$requestKey] : false);
+        return isset($_GET[$requestKey]) ? $this->urlDecode($url) : $url;
     }
 
     /**
@@ -153,7 +126,7 @@ class YdReturnUrl extends CApplicationComponent
     private function urlEncode($input)
     {
         $key = uniqid();
-        Yii::app()->cache->set('ReturnUrl.' . $key, $input);
+        Yii::app()->cache->set($this->requestKey . '.' . $key, $input);
         return $key;
     }
 
@@ -163,7 +136,7 @@ class YdReturnUrl extends CApplicationComponent
      */
     private function urlDecode($key)
     {
-        return Yii::app()->cache->get('ReturnUrl.' . $key);
+        return Yii::app()->cache->get($this->requestKey . '.' . $key);
     }
 
 }
