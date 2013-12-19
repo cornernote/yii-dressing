@@ -194,9 +194,7 @@ class YdErrorHandler extends CErrorHandler
         //Yii::$enableIncludePath = $enableIncludePath;
 
         try {
-            /** @var YdAuditTracker $auditTracker */
-            $auditTracker = Yii::app()->getComponent('auditTracker');
-            $auditId = $auditTracker->getId();
+            $auditId = Yii::app()->hasComponent('auditTracker') ? Yii::app()->auditTracker->getId() : false;
         } catch (Exception $e) {
             $auditId = false;
         }
