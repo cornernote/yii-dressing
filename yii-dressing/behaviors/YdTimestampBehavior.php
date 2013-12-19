@@ -4,7 +4,7 @@ Yii::import('zii.behaviors.CTimestampBehavior');
 /**
  * YdTimestampBehavior automatically detects the created and updated fields and populates them when the model is saved.
  *
- * @property ActiveRecord $owner
+ * @property CActiveRecord $owner
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -46,7 +46,12 @@ class YdTimestampBehavior extends CTimestampBehavior
     public function beforeSave($event)
     {
         $this->_setAttributes();
-        parent::beforeSave($event);
+        if ($this->owner->getIsNewRecord() && ($this->createAttribute !== null) && $this->owner->{$this->createAttribute} === null) {
+            $this->owner->{$this->createAttribute} = $this->getTimestampByAttribute($this->createAttribute);
+        }
+        if ((!$this->owner->getIsNewRecord() || $this->setUpdateOnCreate) && ($this->updateAttribute !== null)) {
+            $this->owner->{$this->updateAttribute} = $this->getTimestampByAttribute($this->updateAttribute);
+        }
     }
 
     /**
