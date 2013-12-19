@@ -151,6 +151,7 @@ class YdBase extends YiiBase
                 'class' => 'system.gii.GiiModule',
                 'generatorPaths' => array(
                     'dressing.gii',
+                    'vendor.mrphp.gii-modeldoc-generator',
                 ),
                 'ipFilters' => array('127.0.0.1'),
                 'password' => false,
