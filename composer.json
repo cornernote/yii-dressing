@@ -16,11 +16,6 @@
             "email": "zainengineer@gmail.com"
         }
     ],
-    "support": {
-        "issues": "https://github.com/cornernote/yii-dressing/issues",
-        "wiki": "https://github.com/cornernote/yii-dressing/wiki",
-        "source": "https://github.com/cornernote/yii-dressing"
-    },
     "require": {
         "php": ">=5.3.0",
         "yiisoft/yii": "1.1.14",
@@ -29,6 +24,7 @@
 		"mrphp/mailchimp": "v1.3.1",
 		"mrphp/phpass": "0.3.0",
 		"mrphp/gii-modeldoc-generator": "dev-master",
+		"mrphp/gii-prefixmodel-generator": "dev-master",
 		"clevertech/yii-booster": "v2.0.0",
         "swiftmailer/swiftmailer": "v5.0.2",
         "php-excel-reader/spreadsheet-reader": "dev-master",
