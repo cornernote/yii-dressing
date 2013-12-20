@@ -25,6 +25,7 @@
 		"mrphp/phpass": "0.3.0",
 		"mrphp/gii-modeldoc-generator": "dev-master",
 		"mrphp/gii-prefixmodel-generator": "dev-master",
+		"mrphp/yii-return-url": "dev-master",
 		"clevertech/yii-booster": "v2.0.0",
         "swiftmailer/swiftmailer": "v5.0.2",
         "php-excel-reader/spreadsheet-reader": "dev-master",
