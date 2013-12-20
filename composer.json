@@ -26,7 +26,7 @@
 		"mrphp/gii-modeldoc-generator": "dev-master",
 		"mrphp/gii-prefixmodel-generator": "dev-master",
 		"mrphp/yii-return-url": "dev-master",
-		"mrphp/yii-audit-manager": "dev-master",
+		"mrphp/yii-audit-module": "dev-master",
 		"clevertech/yii-booster": "v2.0.0",
         "swiftmailer/swiftmailer": "v5.0.2",
         "php-excel-reader/spreadsheet-reader": "dev-master",
