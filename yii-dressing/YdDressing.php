@@ -82,48 +82,9 @@ class YdDressing extends CApplicationComponent
     public function getDefaultModelMap()
     {
         return array(
-            'YdAudit' => array(
-                'relations' => array(
-                    'user' => array(
-                        'CBelongsToRelation',
-                        'YdUser',
-                        'user_id',
-                    ),
-                    'auditTrail' => array(
-                        'CHasManyRelation',
-                        'YdAuditTrail',
-                        'audit_id',
-                    ),
-                    'auditTrailCount' => array(
-                        'CStatRelation',
-                        'YdAuditTrail',
-                        'audit_id',
-                    ),
-                ),
-                'behaviors' => array(
-                    'LinkBehavior' => array(
-                        'class' => 'dressing.behaviors.YdLinkBehavior',
-                        'controllerName' => 'audit',
-                    ),
-                ),
-            ),
-            'YdAuditTrail' => array(
-                'relations' => array(
-                    'user' => array(
-                        'CBelongsToRelation',
-                        'YdUser',
-                        'user_id',
-                    ),
-                    'audit' => array(
-                        'CBelongsToRelation',
-                        'YdAudit',
-                        'audit_id',
-                    ),
-                ),
-            ),
             'YdContactUs' => array(
                 'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
                     'LinkBehavior' => array(
                         'class' => 'dressing.behaviors.YdLinkBehavior',
@@ -143,7 +104,7 @@ class YdDressing extends CApplicationComponent
                     ),
                 ),
                 'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
                     'LinkBehavior' => array(
@@ -154,7 +115,7 @@ class YdDressing extends CApplicationComponent
             ),
             'YdEmailTemplate' => array(
                 'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                     'LinkBehavior' => array(
                         'class' => 'dressing.behaviors.YdLinkBehavior',
                         'controllerName' => 'emailTemplate',
@@ -163,7 +124,7 @@ class YdDressing extends CApplicationComponent
             ),
             'YdLookup' => array(
                 'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'LinkBehavior' => array(
@@ -174,7 +135,7 @@ class YdDressing extends CApplicationComponent
             ),
             'YdSetting' => array(
                 'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                 ),
             ),
             'YdSiteMenu' => array(
@@ -193,7 +154,7 @@ class YdDressing extends CApplicationComponent
                     ),
                 ),
                 'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
                     'LinkBehavior' => array(
@@ -204,7 +165,7 @@ class YdDressing extends CApplicationComponent
             ),
             'YdToken' => array(
                 'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                 ),
             ),
             'YdUser' => array(
@@ -221,7 +182,7 @@ class YdDressing extends CApplicationComponent
                     ),
                 ),
                 'behaviors' => array(
-                    'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                     'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
                     'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
                     'LinkBehavior' => array(
@@ -236,8 +197,8 @@ class YdDressing extends CApplicationComponent
             ),
             'YdUserToRole' => array(
                 'behaviors' => array(
-                    'AuditBehavior' => array(
-                        'class' => 'dressing.behaviors.YdAuditBehavior',
+                    'AuditFieldBehavior' => array(
+                        'class' => 'audit.components.AuditFieldBehavior',
                         'additionalAuditModels' => array(
                             'User' => 'user_id',
                             //'Role' => 'role_id',
