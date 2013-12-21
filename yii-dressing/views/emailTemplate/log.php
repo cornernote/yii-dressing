@@ -15,6 +15,6 @@ $this->pageTitle = $emailTemplate->getName();
 $this->renderPartial('/emailTemplate/_menu', array(
     'emailTemplate' => $emailTemplate,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('audit.views.field.__fields', array(
     'model' => $emailTemplate,
 ));

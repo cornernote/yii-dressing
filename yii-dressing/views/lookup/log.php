@@ -15,6 +15,6 @@ $this->pageTitle = $lookup->getName();
 $this->renderPartial('/lookup/_menu', array(
     'lookup' => $lookup,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('audit.views.field.__fields', array(
     'model' => $lookup,
 ));

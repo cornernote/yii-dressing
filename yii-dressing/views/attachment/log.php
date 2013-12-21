@@ -15,6 +15,6 @@ $this->pageTitle = $attachment->getName();
 $this->renderPartial('/attachment/_menu', array(
     'attachment' => $attachment,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('audit.views.field.__fields', array(
     'model' => $attachment,
 ));

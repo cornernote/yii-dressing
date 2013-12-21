@@ -15,6 +15,6 @@ $this->pageTitle = $role->getName();
 $this->renderPartial('/role/_menu', array(
     'role' => $role,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('audit.views.field.__fields', array(
     'model' => $role,
 ));

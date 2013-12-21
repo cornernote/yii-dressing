@@ -81,7 +81,7 @@ echo "     */\n";
 echo "    public function behaviors()\n";
 echo "    {\n";
 echo "        return array(\n";
-echo "            'AuditBehavior' => 'dressing.behaviors.YdAuditBehavior',\n";
+echo "            'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',\n";
 echo "            'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',\n";
 
 $useTimestampBehavior = false;

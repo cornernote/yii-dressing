@@ -15,6 +15,6 @@ $this->pageTitle = $menu->getName();
 $this->renderPartial('/siteMenu/_menu', array(
     'menu' => $menu,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('audit.views.field.__fields', array(
     'model' => $menu,
 ));

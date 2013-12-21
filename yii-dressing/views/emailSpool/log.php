@@ -15,6 +15,6 @@ $this->pageTitle = $emailSpool->getName();
 $this->renderPartial('/emailSpool/_menu', array(
     'emailSpool' => $emailSpool,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('audit.views.field.__fields', array(
     'model' => $emailSpool,
 ));

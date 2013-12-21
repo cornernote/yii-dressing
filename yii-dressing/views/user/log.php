@@ -14,6 +14,6 @@ $this->pageTitle = $user->getName();
 $this->renderPartial('/user/_menu', array(
     'user' => $user,
 ));
-$this->renderPartial('/auditTrail/_log', array(
+$this->renderPartial('audit.views.field.__fields', array(
     'model' => $user,
 ));

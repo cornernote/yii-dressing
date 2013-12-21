@@ -35,7 +35,6 @@ echo $form->checkBoxRow($settings['debug'], 'value', array('name' => 'YdSetting[
 echo $form->textFieldRow($settings['debug_levels'], 'value', array('name' => 'YdSetting[debug_levels][value]', 'labelOptions' => array('for' => 'YdSetting_debug_levels_value')));
 echo $form->checkBoxRow($settings['debug_db'], 'value', array('name' => 'YdSetting[debug_db][value]', 'labelOptions' => array('for' => 'YdSetting_debug_db_value')));
 echo $form->textFieldRow($settings['error_email'], 'value', array('name' => 'YdSetting[error_email][value]', 'labelOptions' => array('for' => 'YdSetting_error_email_value')));
-echo $form->checkBoxRow($settings['audit'], 'value', array('name' => 'YdSetting[audit][value]', 'labelOptions' => array('for' => 'YdSetting_audit_value')));
 echo '</fieldset>';
 
 echo '<fieldset><legend>' . Yii::t('dressing', 'PHP Settings') . '</legend>';
