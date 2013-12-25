@@ -92,36 +92,6 @@ class YdDressing extends CApplicationComponent
                     ),
                 ),
             ),
-            'YdEmailSpool' => array(
-                'relations' => array(
-                    'attachment' => array(
-                        'CHasManyRelation',
-                        'YdAttachment',
-                        'model_id',
-                        'condition' => 'attachment.model=:model AND deleted IS NULL',
-                        'params' => array(':model' => 'YdEmailSpool'),
-                        'order' => 'weight',
-                    ),
-                ),
-                'behaviors' => array(
-                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
-                    'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
-                    'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-                    'LinkBehavior' => array(
-                        'class' => 'dressing.behaviors.YdLinkBehavior',
-                        'controllerName' => 'emailSpool',
-                    ),
-                ),
-            ),
-            'YdEmailTemplate' => array(
-                'behaviors' => array(
-                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
-                    'LinkBehavior' => array(
-                        'class' => 'dressing.behaviors.YdLinkBehavior',
-                        'controllerName' => 'emailTemplate',
-                    ),
-                ),
-            ),
             'YdLookup' => array(
                 'behaviors' => array(
                     'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
