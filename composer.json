@@ -29,7 +29,6 @@
 		"mrphp/yii-audit-module": "dev-master",
 		"mrphp/yii-email-module": "dev-master",
 		"clevertech/yii-booster": "v2.0.0",
-        "php-excel-reader/spreadsheet-reader": "dev-master",
         "malyshev/yii-debug-toolbar": "dev-master"
     },
     "minimum-stability": "dev"
