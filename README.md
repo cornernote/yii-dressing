@@ -34,7 +34,7 @@ create a file named `composer.json` with the following contents:
 ```
 {
     "require": {
-        "mrphp/yii-dressing": "dev-master"
+        "cornernote/yii-dressing": "dev-master"
     }
 }
 ```
