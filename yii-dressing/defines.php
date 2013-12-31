@@ -46,14 +46,14 @@ defined('YII_DEBUG_TOOLBAR') or define('YII_DEBUG_TOOLBAR', false);
 /**
  * Defines the filesystem path to the public directory of the application.
  */
-defined('PUBLIC_PATH') or define('PUBLIC_PATH', str_replace(array('\\', '/'), DS, dirname(VENDOR_PATH) . DS . 'public'));
+defined('WWW_PATH') or define('WWW_PATH', str_replace(array('\\', '/'), DS, dirname(VENDOR_PATH) . DS . 'www'));
 
 /**
  * Defines the public hostname of the application.
  */
-defined('PUBLIC_HOST') or define('PUBLIC_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
+defined('WWW_HOST') or define('WWW_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost');
 
 /**
  * Defines the public url to the application.
  */
-defined('PUBLIC_URL') or define('PUBLIC_URL', '');
+defined('WWW_URL') or define('WWW_URL', '');

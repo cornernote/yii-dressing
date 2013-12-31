@@ -211,9 +211,9 @@ class YdConfig
             'YII_ENABLE_ERROR_HANDLER',
             'YII_DRESSING_CLI',
             'YII_DRESSING_HASH',
-            'PUBLIC_PATH',
-            'PUBLIC_HOST',
-            'PUBLIC_URL',
+            'WWW_PATH',
+            'WWW_HOST',
+            'WWW_URL',
         );
         foreach ($constants as $name)
             if (!defined($name) && ($value = $this->getValue($name)) !== null)
@@ -231,21 +231,21 @@ class YdConfig
         // paths
         defined('DS') or define('DS', DIRECTORY_SEPARATOR);
         defined('VENDOR_PATH') or define('VENDOR_PATH', self::cleanPath(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'vendor'));
-        defined('PUBLIC_PATH') or define('PUBLIC_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'public'));
+        defined('WWW_PATH') or define('WWW_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'public'));
 
-        // public_host and public_url are saved into config when accessed via web so that the value is available for cli
-        if (!defined('PUBLIC_HOST')) {
-            define('PUBLIC_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
+        // www_host and www_url are saved into config when accessed via web so that the value is available for cli
+        if (!defined('WWW_HOST')) {
+            define('WWW_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
             if (!YII_DRESSING_CLI)
-                $this->setValue('PUBLIC_HOST', PUBLIC_HOST);
+                $this->setValue('WWW_HOST', WWW_HOST);
         }
-        if (!defined('PUBLIC_URL')) {
+        if (!defined('WWW_URL')) {
             $url = isset($_SERVER['SCRIPT_NAME']) ? dirname($_SERVER['SCRIPT_NAME']) : '';
             if ($url == '/')
                 $url = '';
-            define('PUBLIC_URL', $url);
+            define('WWW_URL', $url);
             if (!YII_DRESSING_CLI)
-                $this->setValue('PUBLIC_URL', PUBLIC_URL);
+                $this->setValue('WWW_URL', WWW_URL);
         }
 
         // hash needs to be defined once and saved into config so that it does not change
@@ -277,7 +277,7 @@ class YdConfig
             // fix for fcgi
             defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
             // fix for absolute url
-            $_SERVER['SERVER_NAME'] = PUBLIC_HOST;
+            $_SERVER['SERVER_NAME'] = WWW_HOST;
         }
 
     }

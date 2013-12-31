@@ -41,8 +41,8 @@ class YdBase extends YiiBase
     }
 
     /**
-     * Creates a CWebApplication, in addition it will configure the controller map and log routes as well as remove
-     * config items that are incompatibale with CWebApplication.
+     * Creates a CWebApplication, in addition it will remove config items
+     * that are incompatibale with CWebApplication.
      * @param null $config
      * @return CWebApplication
      * @throws CException if it is called from CLI
@@ -61,25 +61,12 @@ class YdBase extends YiiBase
             if (array_key_exists($excludeItem, $config))
                 unset($config[$excludeItem]);
 
-        // log routes (only setup if not already defined)
-        if (!isset($config['components']['log']['routes'])) {
-            $config['components']['log']['routes'] = array();
-            $config['components']['log']['routes'][] = array(
-                'class' => YII_DEBUG ? 'CWebLogRoute' : 'CFileLogRoute',
-                'levels' => 'error, warning',
-            );
-            if (YII_DEBUG_TOOLBAR)
-                $config['components']['log']['routes'][] = array(
-                    'class' => 'vendor.malyshev.yii-debug-toolbar.YiiDebugToolbarRoute',
-                    'levels' => 'profile',
-                );
-        }
         return self::createApplication('CWebApplication', $config);
     }
 
     /**
-     * Creates a CConsoleApplication, in addition it will configure the command map as well as remove config items that
-     * are incompatibale with CConsoleApplication.
+     * Creates a CConsoleApplication, in addition it will remove config items
+     * that are incompatibale with CConsoleApplication.
      * @param null $config
      * @return CConsoleApplication
      * @throws CException if it is not called from CLI
@@ -109,7 +96,7 @@ class YdBase extends YiiBase
         $app = self::createApplication('CConsoleApplication', $config);
 
         // fix for absolute url
-        $app->getRequest()->setBaseUrl(PUBLIC_URL);
+        $app->getRequest()->setBaseUrl(WWW_URL);
 
         // add Yii commands
         $app->commandRunner->addCommands(YII_PATH . '/cli/commands');
@@ -137,28 +124,6 @@ class YdBase extends YiiBase
                 return self::mergeArray(require($config), $local);
         }
         return require($config);
-    }
-
-    /**
-     * YdBase Config
-     * @return array
-     */
-    public static function getConfig()
-    {
-        $config = array();
-        if (YII_DEBUG && !YII_DRESSING_CLI && !isset($config['modules']['gii'])) {
-            $config['modules']['gii'] = array(
-                'class' => 'system.gii.GiiModule',
-                'generatorPaths' => array(
-                    'dressing.gii',
-                    'vendor.mrphp.gii-modeldoc-generator',
-                    'vendor.mrphp.gii-prefixmodel-generator',
-                ),
-                'ipFilters' => array('127.0.0.1'),
-                'password' => false,
-            );
-        }
-        return $config;
     }
 
     /**
