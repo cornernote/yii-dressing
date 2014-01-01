@@ -37,7 +37,7 @@ class YdBase extends YiiBase
      */
     public static function createApplication($class, $config = null)
     {
-        return parent::createApplication($class, self::mergeArray(self::getConfig(), self::loadConfig($config)));
+        return parent::createApplication($class, self::loadConfig($config));
     }
 
     /**

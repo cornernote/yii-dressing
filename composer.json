@@ -30,6 +30,5 @@
 		"cornernote/yii-email-module": "dev-master",
 		"clevertech/yii-booster": "v2.0.0",
         "malyshev/yii-debug-toolbar": "dev-master"
-    },
-    "minimum-stability": "dev"
+    }
 }
