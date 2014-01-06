@@ -36,7 +36,7 @@ class YdDynamicMenu
         $data = user()->getState($menu, array());
         if (empty($data)) return $data;
         return array(
-            'class' => 'bootstrap.widgets.TbMenu',
+            'class' => 'bootstrap.widgets.TbNav',
             'items' => array(
                 array(
                     'label' => Yii::t('dressing', 'History'),

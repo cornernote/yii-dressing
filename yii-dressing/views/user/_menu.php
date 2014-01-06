@@ -41,7 +41,7 @@ foreach ($user->getMenuLinks(true) as $linkItem) {
 if (empty($render) || Yii::app()->getRequest()->getIsAjaxRequest())
     $this->menu = $menu;
 else
-    $this->widget('bootstrap.widgets.TbMenu', array(
-        'type' => 'tabs',
+    $this->widget('bootstrap.widgets.TbNav', array(
+        'type' => TbHtml::NAV_TYPE_TABS,
         'items' => $menu,
     ));

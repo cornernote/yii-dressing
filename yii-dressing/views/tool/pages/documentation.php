@@ -17,8 +17,8 @@ $this->menu = YdSiteMenu::getItemsFromMenu('Help');
 $this->addBreadcrumb(Yii::t('dressing', 'Help'), array('/site/page', 'view' => 'help'));
 
 echo '<h2>' . Yii::t('dressing', 'Vendor Documentation') . '</h2>';
-$this->widget('bootstrap.widgets.TbMenu', array(
-    'type' => 'pills', // '', 'tabs', 'pills' (or 'list')
+$this->widget('bootstrap.widgets.TbNav', array(
+    'type' => TbHtml::NAV_TYPE_PILLS,
     'stacked' => false,
     'items' => array(
         array('label' => Yii::t('dressing', 'Yii'), 'url' => 'http://www.yiiframework.com/doc/'),
