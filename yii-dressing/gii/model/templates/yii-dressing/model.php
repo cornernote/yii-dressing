@@ -19,12 +19,11 @@
 
 echo "<?php\n";
 echo "/**\n";
-echo " * --- BEGIN GenerateProperties ---\n";
+echo " * --- BEGIN ModelDoc ---\n";
 echo " *\n";
-echo " * you need to goto the following page in a browser:\n";
-echo " * /tool/generateProperties/modelName/" . $modelClass . "\n";
+echo " * @see https://github.com/cornernote/gii-modeldoc-generator#gii-modeldoc-generator-for-yii\n";
 echo " *\n";
-echo " * --- END GenerateProperties ---\n";
+echo " * --- END ModelDoc ---\n";
 echo " */\n";
 echo "\n";
 echo "class " . $modelClass . " extends " . $this->baseClass . "\n";
@@ -81,8 +80,10 @@ echo "     */\n";
 echo "    public function behaviors()\n";
 echo "    {\n";
 echo "        return array(\n";
-echo "            'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',\n";
-echo "            'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',\n";
+echo "            //'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',\n";
+echo "            //'CacheBehavior' => 'dressing.behaviors.YdCacheBehavior',\n";
+echo "            //'DefaultAttributesBehavior' => 'dressing.behaviors.YdDefaultAttributesBehavior',\n";
+echo "            //'LinkBehavior' => 'dressing.behaviors.YdLinkBehavior',\n";
 
 $useTimestampBehavior = false;
 $timestampFields = array('created', 'create_time', 'created_at', 'updated', 'update_time', 'updated_at');
@@ -91,9 +92,9 @@ foreach ($timestampFields as $timestampField)
     if (in_array($timestampField, $tableFields))
         $useTimestampBehavior = true;
 if ($useTimestampBehavior)
-    echo "            'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',\n";
+    echo "            //'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',\n";
 if (in_array('deleted', CHtml::listData($columns, 'name', 'name')))
-    echo "            'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',\n";
+    echo "            //'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',\n";
 
 echo "        );\n";
 echo "    }\n";
@@ -124,10 +125,9 @@ echo "    }\n";
 echo "\n";
 echo "    /**\n";
 echo "     * Retrieves a list of models based on the current search/filter conditions.\n";
-echo "     * @param array \$options\n";
-echo "     * @return YdActiveDataProvider the data provider that can return the models based on the search/filter conditions.\n";
+echo "     * @return ActiveDataProvider the data provider that can return the models based on the search/filter conditions.\n";
 echo "     */\n";
-echo "    public function search(\$options = array())\n";
+echo "    public function search()\n";
 echo "    {\n";
 echo "        // Warning: Please modify the following code to remove attributes that\n";
 echo "        // should not be searched.\n";
@@ -143,9 +143,9 @@ foreach ($columns as $name => $column) {
     }
 }
 echo "\n";
-echo "        return new YdActiveDataProvider(\$this, CMap::mergeArray(array(\n";
+echo "        return new ActiveDataProvider(\$this, array(\n";
 echo "            'criteria' => \$criteria,\n";
-echo "        ), \$options));\n";
+echo "        ));\n";
 echo "    }\n";
 echo "\n";
 echo "    /**\n";

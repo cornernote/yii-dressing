@@ -16,7 +16,6 @@ $this->menu = YdSiteMenu::getItemsFromMenu('User');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'account-form',
-    'type' => 'horizontal',
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);
@@ -27,13 +26,5 @@ echo $form->textFieldRow($user, 'email');
 echo $form->textFieldRow($user, 'phone');
 
 echo $form->endModalWrap();
-echo '<div class="' . $form->getSubmitRowClass() . '">';
-$this->widget('bootstrap.widgets.TbButton', array(
-    'buttonType' => 'submit',
-    'type' => 'primary',
-    'icon' => 'ok white',
-    'label' => Yii::t('dressing', 'Save'),
-    'htmlOptions' => array('class' => 'pull-right'),
-));
-echo '</div>';
+echo $form->getSubmitButtonRow(Yii::t('app', 'Save'));
 $this->endWidget();

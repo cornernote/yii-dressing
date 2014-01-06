@@ -51,13 +51,12 @@ class YdActiveForm extends TbActiveForm
         parent::init();
 
         // output the return url
-        if ($this->returnUrl !== false) {
+        if ($this->returnUrl !== false)
             echo CHtml::hiddenField('returnUrl', $this->returnUrl ? $this->returnUrl : Yii::app()->returnUrl->getFormValue());
-        }
 
         // ask to save work
         if ($this->askToSaveWork)
-            Yii::app()->controller->widget('widgets.AskToSaveWork', array('watchElement' => '#setting-form :input', 'message' => Yii::t('dressing', 'Please save before leaving the page.')));
+            Yii::app()->controller->widget('dressing.widgets.YdAskToSaveWork', array('watchElement' => '#setting-form :input', 'message' => Yii::t('dressing', 'Please save before leaving the page.')));
 
     }
 
@@ -126,34 +125,15 @@ class YdActiveForm extends TbActiveForm
     }
 
     /**
-     * @param string $label
-     * @return string
-     */
-    public function getSubmitButton($label = null, $options = array())
-    {
-        if (!$label)
-            $label = Yii::t('dressing', 'Submit');
-        $defaultOptions = array(
-            'buttonType' => 'submit',
-            'type' => 'primary',
-            //'icon' => 'ok white',
-            'label' => $label,
-        );
-        $options = CMap::mergeArray($defaultOptions, $options);
-        ob_start();
-        $this->widget('bootstrap.widgets.TbButton', $options);
-        return ob_get_clean();
-    }
-
-    /**
-     * @param string $label
+     * @param null $label
+     * @param array $options
      * @return string
      */
     public function getSubmitButtonRow($label = null, $options = array())
     {
-        echo '<div class="' . $this->getSubmitRowClass() . '">';
-        echo $this->getSubmitButton($label, $options);
-        echo '</div>';
+        if (!isset($options['color']))
+            $options['color'] = TbHtml::BUTTON_COLOR_PRIMARY;
+        return CHtml::tag('div', array('class' => $this->getSubmitRowClass()), TbHtml::submitButton($label, $options));
     }
 
 }

@@ -16,7 +16,6 @@ $this->pageTitle = Yii::t('dressing', 'Login');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'login-form',
-    'type' => 'horizontal',
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);
@@ -30,21 +29,5 @@ if ($recaptcha) {
     echo CHtml::error($user, 'recaptcha');
 }
 echo $form->endModalWrap();
-echo '<div class="' . $form->getSubmitRowClass() . '">';
-$this->widget('bootstrap.widgets.TbButton', array(
-    'label' => Yii::t('dressing', 'Login'),
-    'type' => 'primary',
-    'buttonType' => 'submit',
-));
-echo ' ';
-$this->widget('bootstrap.widgets.TbButton', array(
-    'label' => Yii::t('dressing', 'Lost Password'),
-    'url' => array('/account/recover'),
-));
-echo ' ';
-$this->widget('bootstrap.widgets.TbButton', array(
-    'label' => Yii::t('dressing', 'Sign Up'),
-    'url' => array('/account/signup'),
-));
-echo '</div>';
+echo $form->getSubmitButtonRow(Yii::t('app', 'Login'));
 $this->endWidget();

@@ -65,9 +65,6 @@ class YdWebControllerBehavior extends CBehavior
     {
         $name = YdCakeInflector::humanize(YdCakeInflector::underscore(str_replace('Controller', '', get_class($this->getOwner()))));
         return $plural ? YdCakeInflector::pluralize($name) : $name;
-        //$name = preg_replace('/(?<![A-Z])[A-Z]/', ' \0', str_replace('Controller', '', get_class($this->getOwner())));
-        //$name = ucwords(trim(strtolower(str_replace(array('-', '_', '.'), ' ', $name))));
-        //return $name . ($plural ? 's' : '');
     }
 
     /**
@@ -142,7 +139,7 @@ class YdWebControllerBehavior extends CBehavior
      * @param CActiveRecord|CActiveRecord[] $model
      * @param $form
      */
-    protected function performAjaxValidation($model, $form)
+    public function performAjaxValidation($model, $form)
     {
         if (isset($_POST['ajax']) && $_POST['ajax'] === $form) {
             echo CActiveForm::validate($model);
@@ -156,7 +153,7 @@ class YdWebControllerBehavior extends CBehavior
      * @param CActiveRecord|CActiveRecord[] $model
      * @return bool
      */
-    protected function performValidation($model)
+    public function performValidation($model)
     {
         if (!is_array($model))
             $model = array($model);
@@ -194,12 +191,58 @@ class YdWebControllerBehavior extends CBehavior
      * @param string $messageType
      * @param mixed $url
      */
-    protected function flashRedirect($message, $messageType = 'info', $url = null)
+    public function flashRedirect($message, $messageType = 'info', $url = null)
     {
         Yii::app()->user->addFlash($message, $messageType);
         if (!Yii::app()->request->isAjaxRequest)
             $this->owner->redirect($url ? $url : Yii::app()->returnUrl->getUrl());
         Yii::app()->end();
+    }
+
+    /**
+     * Gets a submitted field
+     * used to be named getSubmittedField()
+     *
+     * @param $field
+     * @param null $model
+     * @return mixed
+     */
+    public function getSubmittedField($field, $model = null)
+    {
+        $return = null;
+        if ($model && isset($_GET[$model][$field])) {
+            $return = $_GET[$model][$field];
+        }
+        elseif ($model && isset($_POST[$model][$field])) {
+            $return = $_POST[$model][$field];
+        }
+        elseif (isset($_GET[$field])) {
+            $return = $_GET[$field];
+        }
+        elseif (isset($_POST[$field])) {
+            $return = $_POST[$field];
+        }
+        return $return;
+    }
+
+    /**
+     * @param $ids
+     * @return array
+     */
+    public function getGridIds($ids = null)
+    {
+        if (!$ids)
+            $ids = array();
+        if (!is_array($ids))
+            $ids = explode(',', $ids);
+        foreach ($_REQUEST as $k => $v) {
+            if (strpos($k, '-grid_c0') === false || !is_array($v))
+                continue;
+            foreach ($v as $vv) {
+                $ids[$vv] = $vv;
+            }
+        }
+        return $ids;
     }
 
 }

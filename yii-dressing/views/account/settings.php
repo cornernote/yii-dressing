@@ -17,7 +17,6 @@ $this->menu = YdSiteMenu::getItemsFromMenu('User');
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'account-form',
-    'type' => 'horizontal',
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);

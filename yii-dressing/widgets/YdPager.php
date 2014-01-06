@@ -15,6 +15,8 @@ Yii::import('bootstrap.widgets.TbPager');
 class YdPager extends TbPager
 {
 
+    public $displayFirstAndLast = false;
+
     /**
      *### .createPageButtons()
      *

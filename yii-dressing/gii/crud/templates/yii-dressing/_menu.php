@@ -18,7 +18,7 @@ echo " */\n";
 echo "\n";
 echo "// index\n";
 echo "if (!isset(\$" . lcfirst($this->modelClass) . ")) {\n";
-echo "    //\$this->menu = YdSiteMenu::getItemsFromMenu('Main');\n";
+echo "    //\$this->menu = MenuItem::getItemsFromMenu(1);\n";
 echo "    return; // no more links\n";
 echo "}\n";
 echo "\n";

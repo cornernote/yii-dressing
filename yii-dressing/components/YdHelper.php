@@ -13,53 +13,6 @@ class YdHelper
 {
 
     /**
-     * Gets a submitted field
-     * used to be named getSubmittedField()
-     *
-     * @param $field
-     * @param null $model
-     * @return null
-     */
-    public static function getSubmittedField($field, $model = null)
-    {
-        $return = null;
-        if ($model && isset($_GET[$model][$field])) {
-            $return = $_GET[$model][$field];
-        }
-        elseif ($model && isset($_POST[$model][$field])) {
-            $return = $_POST[$model][$field];
-        }
-        elseif (isset($_GET[$field])) {
-            $return = $_GET[$field];
-        }
-        elseif (isset($_POST[$field])) {
-            $return = $_POST[$field];
-        }
-        return $return;
-    }
-
-
-    /**
-     * @param $ids
-     * @return array
-     */
-    public static function getGridIds($ids = null)
-    {
-        if (!$ids)
-            $ids = array();
-        if (!is_array($ids))
-            $ids = explode(',', $ids);
-        foreach ($_REQUEST as $k => $v) {
-            if (strpos($k, '-grid_c0') === false || !is_array($v))
-                continue;
-            foreach ($v as $vv) {
-                $ids[$vv] = $vv;
-            }
-        }
-        return $ids;
-    }
-
-    /**
      * @return bool
      */
     public static function isHomePage()

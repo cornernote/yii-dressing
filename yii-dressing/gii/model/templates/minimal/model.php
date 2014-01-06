@@ -19,12 +19,11 @@
 
 echo "<?php\n";
 echo "/**\n";
-echo " * --- BEGIN GenerateProperties ---\n";
+echo " * --- BEGIN ModelDoc ---\n";
 echo " *\n";
-echo " * you need to goto the following page in a browser:\n";
-echo " * /tool/generateProperties/modelName/" . $modelClass . "\n";
+echo " * @see https://github.com/cornernote/gii-modeldoc-generator#gii-modeldoc-generator-for-yii\n";
 echo " *\n";
-echo " * --- END GenerateProperties ---\n";
+echo " * --- END ModelDoc ---\n";
 echo " */\n";
 echo "\n";
 echo "class " . $modelClass . " extends " . $this->baseClass . "\n";

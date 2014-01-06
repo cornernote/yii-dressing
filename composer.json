@@ -4,7 +4,6 @@
     "type": "library",
     "license": "BSD-3-Clause",
     "keywords": ["yii","mrphp"],
-    "homepage": "http://yiidressing.mrphp.com.au/",
     "authors": [
         {
             "name": "Brett O'Donnell",

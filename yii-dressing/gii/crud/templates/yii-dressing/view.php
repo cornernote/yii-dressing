@@ -29,7 +29,7 @@ foreach ($this->tableSchema->columns as $column) {
     echo ");\n";
 }
 echo "\n";
-echo "\$this->widget('dressing.widgets.YdDetailView', array(\n";
+echo "\$this->widget('application.widgets.DetailView', array(\n";
 echo "    'data' => \$" . lcfirst($this->modelClass) . ",\n";
 echo "    'attributes' => \$attributes,\n";
 echo "));\n";

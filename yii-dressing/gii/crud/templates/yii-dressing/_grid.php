@@ -24,7 +24,7 @@ foreach ($this->tableSchema->columns as $column) {
     echo "\$columns[] = array(\n";
     echo "    'name' => '" . $column->name . "',\n";
     if ($column->autoIncrement) {
-        echo "    'class' => 'dressing.widgets.YdDropdownColumn',\n";
+        echo "    'class' => 'application.widgets.DropdownColumn',\n";
         echo "    'value' => '\$data->getIdString()',\n";
     }
     echo ");\n";
@@ -40,7 +40,7 @@ echo "    'url' => Yii::app()->createUrl('/" . lcfirst($this->modelClass) . "/de
 echo ");\n";
 echo "\n";
 echo "// grid\n";
-echo "\$this->widget('dressing.widgets.YdGridView', array(\n";
+echo "\$this->widget('application.widgets.GridView', array(\n";
 echo "    'id' => '" . lcfirst($this->modelClass) . "-grid',\n";
 echo "    'dataProvider' => isset(\$dataProvider) ? \$dataProvider : \$" . lcfirst($this->modelClass) . "->search(),\n";
 echo "    'filter' => \$" . lcfirst($this->modelClass) . ",\n";
