@@ -29,7 +29,7 @@ class YdWebUserFlashBehavior extends CBehavior
      * @param string $msg
      * @param string $class
      */
-    public function addFlash($msg = '', $class = 'info')
+    public function addFlash($msg, $class = 'info')
     {
         $key = $this->getNexMultiFlashKey();
         if ($key === false)

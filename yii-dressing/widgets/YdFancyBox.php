@@ -1,7 +1,11 @@
 <?php
 
 /**
- * EFancyBox widget class file.
+ * YdFancyBox widget class file.
+ *
+ * YdFancyBox extends CWidget and implements a base class for a fancybox widget.
+ * More about fancybox can be found at http://fancybox.net/.
+ *
  * @author Ahmed Sharaf <sharaf.developer@gmail.com>
  * @copyright (c) 2013, Ahmed Sharaf
  * MADE IN EGYPT
@@ -23,39 +27,64 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- * EFancyBox extends CWidget and implements a base class for a fancybox widget.
- * more about fancybox can be found at http://fancybox.net/.
- * @version: 2.1.4
  * @refrences Otaviani Vidal <thiagovidal@othys.com>
+ *
+ * @author Brett O'Donnell <cornernote@gmail.com>
+ * @copyright 2013 Mr PHP
+ * @link https://github.com/cornernote/yii-dressing
+ * @license BSD-3-Clause https://raw.github.com/cornernote/yii-dressing/master/license.txt
+ *
+ * @package dressing.widgets
  */
 
 class YdFancyBox extends CWidget
 {
 
-    // @ string the id of the widget, since version 2.1.4
+    /**
+     * @var the id of the widget
+     */
     public $id;
-    // @ string the taget element on DOM
+
+    /**
+     * @var string the taget element on DOM
+     */
     public $target = '.fancybox';
-    // @ boolean whether to enable the easing functions. You must set the eansing on $config.
+
+    /**
+     * @var bool whether to enable the easing functions. You must set the eansing on $config.
+     */
     public $easingEnabled = false;
-    // @ boolean whether to enable mouse interaction
+
+    /**
+     * @var bool whether to enable mouse interaction
+     */
     public $mouseEnabled = true;
-    // @ boolean whether to enable helpers interaction
+
+    /**
+     * @var bool whether to enable helpers interaction
+     */
     public $helpersEnabled = false;
-    // @ array of config settings for fancybox
+
+    /**
+     * @var array of config settings for fancybox
+     */
     public $config = array();
 
-    // function to init the widget
+    /**
+     *
+     */
     public function init()
     {
-        // if not informed will generate Yii defaut generated id, since version 1.6
+        // if not informed will generate Yii defaut generated id
         if (!isset($this->id))
             $this->id = $this->getId();
         // publish the required assets
         $this->publishAssets();
     }
 
-    // function to run the widget
+    /**
+     *
+     */
     public function run()
     {
         $config = CJavaScript::encode($this->config);
@@ -64,7 +93,9 @@ class YdFancyBox extends CWidget
 		");
     }
 
-    // function to publish and register assets on page 
+    /**
+     *
+     */
     public function publishAssets()
     {
         $cs = Yii::app()->getClientScript();
