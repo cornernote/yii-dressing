@@ -17,10 +17,12 @@
     ],
 	"require": {
 		"php": ">=5.3.0",
-		"yiisoft/yii": "1.1.14",
 		"cornernote/highcharts-assets": "v3.0.7",
 		"cornernote/ckfinder-assets": "2.4.0",
 		"cornernote/mailchimp": "v1.3.1",
 		"cornernote/phpass": "0.3.0"
+    }
+	"require-dev": {
+		"yiisoft/yii": "1.1.14"
     }
 }
