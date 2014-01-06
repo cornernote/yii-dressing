@@ -21,7 +21,7 @@
 		"cornernote/ckfinder-assets": "2.4.0",
 		"cornernote/mailchimp": "v1.3.1",
 		"cornernote/phpass": "0.3.0"
-    }
+    },
 	"require-dev": {
 		"yiisoft/yii": "1.1.14"
     }
