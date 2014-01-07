@@ -110,12 +110,21 @@ class YdConfig
     }
 
     /**
-     * Returns the Yii Config
+     * Returns the Yii App Config
      * @return string|array
      */
     public function getAppConfig()
     {
         return self::cleanPath(dirname(VENDOR_PATH) . DS . 'app' . DS . 'config' . DS . 'main.php');
+    }
+
+    /**
+     * Returns the Yii Test Config
+     * @return string|array
+     */
+    public function getTestConfig()
+    {
+        return self::cleanPath(dirname(VENDOR_PATH) . DS . 'tests' . DS . '_config.php');
     }
 
     /**

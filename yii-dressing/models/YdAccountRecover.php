@@ -74,14 +74,14 @@ class YdAccountRecover extends YdFormModel
             else
                 $user = User::model()->findByAttributes(array('username' => $this->username_or_email));
 
-            if ($user === null || $user->deleted) {
+            if ($user === null || !empty($user->deleted)) {
                 if (strpos($this->username_or_email, '@'))
-                    $this->addError('username_or_email', 'Email is incorrect.');
+                    $this->addError('username_or_email', Yii::t('dressing', 'Email is incorrect.'));
                 else
-                    $this->addError('username_or_email', 'Username is incorrect.');
+                    $this->addError('username_or_email', Yii::t('dressing', 'Username is incorrect.'));
             }
             else {
-                $this->user_id = $user->id;
+                $this->user_id = $user->primaryKey;
             }
         }
     }

@@ -52,7 +52,7 @@ class YdAccountPassword extends YdFormModel
             // confirm_password
             array('confirm_password', 'required', 'on' => 'password, recover'),
             array('confirm_password', 'length', 'max' => 64, 'min' => 5),
-            array('confirm_password', 'compare', 'compareAttribute' => 'password'),
+            array('confirm_password', 'compare', 'compareAttribute' => 'new_password'),
         );
     }
 
