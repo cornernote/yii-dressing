@@ -214,7 +214,6 @@ class YdConfig
             'DS',
             'VENDOR_PATH',
             'YII_DEBUG',
-            'YII_DEBUG_TOOLBAR',
             'YII_TRACE_LEVEL',
             'YII_ENABLE_EXCEPTION_HANDLER',
             'YII_ENABLE_ERROR_HANDLER',
@@ -230,7 +229,6 @@ class YdConfig
 
         // bools and strings
         defined('YII_DEBUG') or define('YII_DEBUG', false);
-        defined('YII_DEBUG_TOOLBAR') or define('YII_DEBUG_TOOLBAR', YII_DEBUG);
         defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', YII_DEBUG);
         defined('YII_ENABLE_EXCEPTION_HANDLER') or define('YII_ENABLE_EXCEPTION_HANDLER', true);
         defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER', true);

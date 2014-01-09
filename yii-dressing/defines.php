@@ -39,11 +39,6 @@ defined('YII_PATH') or define('YII_PATH', str_replace(array('\\', '/'), DS, VEND
 defined('YII_DRESSING_HASH') or define('YII_DRESSING_HASH', false);
 
 /**
- * Defines if we should use the yii-debug-toolbar.
- */
-defined('YII_DEBUG_TOOLBAR') or define('YII_DEBUG_TOOLBAR', false);
-
-/**
  * Defines the filesystem path to the public directory of the application.
  */
 defined('WWW_PATH') or define('WWW_PATH', str_replace(array('\\', '/'), DS, dirname(VENDOR_PATH) . DS . 'www'));
