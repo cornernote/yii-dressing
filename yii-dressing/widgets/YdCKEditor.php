@@ -6,7 +6,13 @@
 class YdCKEditor extends CInputWidget
 {
 
+    /**
+     * @var
+     */
     public $defaultValue;
+    /**
+     * @var
+     */
     public $config;
 
     /**
@@ -25,7 +31,7 @@ class YdCKEditor extends CInputWidget
      */
     public function init()
     {
-        $this->path = bp() . '/../../vendors/ckeditor/ckeditor.3.6.4';
+        $this->path = Yii::getPathOfAlias('vendor.cornernote.ckeditor-assets');
         $this->url = app()->assetManager->publish($this->path, false, -1, YII_DEBUG);
         if (substr($this->id, 0, 2) == 'yw' && $this->hasModel()) {
             $this->id = get_class($this->model) . '[' . $this->attribute . ']';
