@@ -46,14 +46,16 @@ class YdCacheBehavior extends CActiveRecordBehavior
      * @param $key
      * @param $value
      * @param bool $allowDbCache
+     * @return mixed
      */
-    public function setCache($key, $value, $allowDbCache = true)
+    public function setCache($key, $value, $allowDbCache = false)
     {
         $fullKey = $this->getCacheKeyPrefix() . $key;
         Yii::app()->cache->set($fullKey, $value);
         if ($allowDbCache && Yii::app()->cacheDb) {
             Yii::app()->cacheDb->set($fullKey, $value);
         }
+        return $value;
     }
 
     /**
@@ -61,9 +63,10 @@ class YdCacheBehavior extends CActiveRecordBehavior
      */
     public function clearCache()
     {
+        $owner = $this->owner;
         // clear related cache
         foreach ($this->cacheRelations as $cacheRelation) {
-            $models = is_array($this->owner->$cacheRelation) ? $this->owner->$cacheRelation : array($this->owner->$cacheRelation);
+            $models = is_array($owner->$cacheRelation) ? $owner->$cacheRelation : array($owner->$cacheRelation);
             foreach ($models as $cacheRelationModel) {
                 if ($cacheRelationModel instanceof CActiveRecord) {
                     $cacheRelationModel->clearCache();
@@ -82,7 +85,8 @@ class YdCacheBehavior extends CActiveRecordBehavior
      */
     private function getCacheKeyPrefix($removeOldKey = false)
     {
-        $key = 'getCacheKeyPrefix.' . get_class($this->owner) . '.' . $this->owner->getPrimaryKeyString();
+        $owner = $this->owner;
+        $key = 'getCacheKeyPrefix.' . get_class($owner) . '.' . (is_array($owner->getPrimaryKey()) ? implode('-', $owner->getPrimaryKey()) : $owner->getPrimaryKey());
         $prefix = $removeOldKey ? false : Yii::app()->cache->get($key);
         if (!$prefix) {
             $prefix = uniqid();
