@@ -54,12 +54,12 @@ class YdAccountPasswordResetAction extends CAction
 
         // redirect if the key is invalid
         $valid = true;
-        $user = CActiveRecord::model($userModelName)->findByPk($id);
+        $user = CActiveRecord::model($this->userModelName)->findByPk($id);
         if (!$user) {
             $valid = false;
         }
         if ($valid) {
-            $valid = YdToken::model()->checkToken('RecoverPasswordEmail', $id, $token);
+            $valid = Yii::app()->tokenManager->checkToken('AccountRecover', $id, $token);
         }
         if (!$valid) {
             $app->user->addFlash(Yii::t('dressing', 'Invalid key.'), 'warning');
@@ -83,7 +83,7 @@ class YdAccountPasswordResetAction extends CAction
                     $app->user->login($identity);
                 }
 
-                YdToken::model()->useToken('RecoverPasswordEmail', $id, $token);
+                Yii::app()->tokenManager->useToken('AccountRecover', $id, $token);
 
                 $app->user->addFlash(Yii::t('dressing', 'Your password has been saved and you have been logged in.'), 'success');
                 $this->controller->redirect($app->homeUrl);
@@ -92,7 +92,7 @@ class YdAccountPasswordResetAction extends CAction
                 $app->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'warning');
             }
         }
-        $this->render($this->view, array(
+        $this->controller->render($this->view, array(
             'user' => $accountPassword,
         ));
     }

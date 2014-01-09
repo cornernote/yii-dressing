@@ -19,11 +19,10 @@ class YdEmail
      */
     public static function sendAccountRecover($user)
     {
-        Yii::log();
         $emailManager = Yii::app()->emailManager;
 
         // get recovery temp login link
-        $token = Yii::app()->tokenManager->createToken(strtotime('+1day'), get_class($user), $user->primaryKey, 1);
+        $token = Yii::app()->tokenManager->createToken(strtotime('+1day'), 'AccountRecover', $user->primaryKey, 1);
         $url = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->primaryKey, 'token' => $token));
 
         // build the templates
@@ -59,7 +58,7 @@ class YdEmail
         $emailManager = Yii::app()->emailManager;
 
         // get activation token
-        $token = EmailToken::model()->add('+30days', 1, get_class($user), $user->primaryKey);
+        $token = EmailToken::model()->add('+30days', 1, 'ActivateRecover', $user->primaryKey);
         $url = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->primaryKey, 'token' => $token));
 
         // build the templates

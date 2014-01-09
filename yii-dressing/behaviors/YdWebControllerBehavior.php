@@ -90,8 +90,6 @@ class YdWebControllerBehavior extends CBehavior
      */
     public function getBreadcrumbs()
     {
-        if ($this->_breadcrumbs === null)
-            $this->_breadcrumbs = $this->pageTitle;
         return $this->_breadcrumbs;
     }
 
@@ -113,6 +111,16 @@ class YdWebControllerBehavior extends CBehavior
             $this->_breadcrumbs[$name] = $link;
         else
             $this->_breadcrumbs[] = $name;
+    }
+
+    /**
+     *
+     */
+    public function getPageBreadcrumbs()
+    {
+        $breadcrumbs = $this->_breadcrumbs;
+        $breadcrumbs[] = $this->owner->pageTitle;
+        return $breadcrumbs;
     }
 
     /**

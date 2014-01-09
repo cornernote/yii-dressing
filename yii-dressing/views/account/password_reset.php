@@ -19,16 +19,9 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);
 
-echo $form->passwordFieldRow($user, 'password');
-echo $form->passwordFieldRow($user, 'confirm_password');
+echo $form->passwordFieldControlGroup($user, 'new_password');
+echo $form->passwordFieldControlGroup($user, 'confirm_password');
 
 echo $form->endModalWrap();
-echo '<div class="' . $form->getSubmitRowClass() . '">';
-$this->widget('bootstrap.widgets.TbButton', array(
-    'buttonType' => 'submit',
-    'type' => 'primary',
-    'icon' => 'ok white',
-    'label' => Yii::t('dressing', 'Save'),
-));
-echo '</div>';
+echo $form->getSubmitButtonRow(Yii::t('dressing', 'Save'));
 $this->endWidget();
