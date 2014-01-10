@@ -58,7 +58,7 @@ class YdCKEditor extends CWidget
      */
     public function init()
     {
-        $baseUrl = app()->assetManager->publish(Yii::getPathOfAlias('vendor.cornernote.ckeditor-assets.ckeditor'), false, -1, YII_DEBUG);
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('vendor.cornernote.ckeditor-assets.ckeditor'), false, -1, YII_DEBUG);
         $clientScript = Yii::app()->clientScript;
         $clientScript->registerScriptFile($baseUrl . '/ckeditor.js');
         $clientScript->registerScriptFile($baseUrl . '/adapters/jquery.js');
