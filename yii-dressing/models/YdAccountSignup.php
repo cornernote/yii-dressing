@@ -48,7 +48,7 @@ class YdAccountSignup extends YdFormModel
     /**
      * @var
      */
-    public $remember_me;
+    public $rememberMe;
 
     /**
      * @var YdUserIdentity
@@ -142,7 +142,7 @@ class YdAccountSignup extends YdFormModel
             $this->_identity = new YdUserIdentity($this->email, $this->password);
         }
         if ($this->_identity->authenticate()) {
-            $duration = $this->remember_me ? 3600 * 24 * 30 : 0; // 30 days
+            $duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
             Yii::app()->user->login($this->_identity, $duration);
             return true;
         }

@@ -35,7 +35,7 @@ class YdAccountLoginAction extends CAction
     /**
      * @var bool Default setting for remember me checkbox on login page
      */
-    public $defaultRememberMe = true;
+    public $defaultRememberMe = false;
 
     /**
      *
@@ -78,7 +78,7 @@ class YdAccountLoginAction extends CAction
             $app->cache->set($attemptKey, ++$attempts);
         }
         else {
-            $user->remember_me = $this->defaultRememberMe;
+            $user->rememberMe = $this->defaultRememberMe;
         }
 
         // display the login form

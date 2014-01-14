@@ -31,6 +31,11 @@ class YdAccountLogin extends YdFormModel
     public $remember_me;
 
     /**
+     * @var int
+     */
+    public $rememberMeDuration = 2592000; // 30 days
+
+    /**
      * @var
      */
     public $recaptcha;
@@ -61,8 +66,8 @@ class YdAccountLogin extends YdFormModel
             array('password', 'required'),
             array('password', 'authenticate', 'skipOnError' => true),
 
-            // remember_me
-            array('remember_me', 'boolean'),
+            // rememberMe
+            array('rememberMe', 'boolean'),
         );
         // recaptcha
         if (isset(Yii::app()->reCaptcha)) {
@@ -80,7 +85,7 @@ class YdAccountLogin extends YdFormModel
         return array(
             'email' => Yii::t('dressing', 'Email'),
             'password' => Yii::t('dressing', 'Password'),
-            'remember_me' => Yii::t('dressing', 'Remember me next time'),
+            'rememberMe' => Yii::t('dressing', 'Remember me next time'),
             'recaptcha' => Yii::t('dressing', 'Enter both words separated by a space'),
         );
     }
@@ -109,9 +114,7 @@ class YdAccountLogin extends YdFormModel
             $this->_identity = new $this->userIdentityClass($this->email, $this->password);
         }
         if ($this->_identity->authenticate()) {
-            $duration = $this->remember_me ? 3600 * 24 * 30 : 0; // 30 days
-            Yii::app()->user->login($this->_identity, $duration);
-            return true;
+            return Yii::app()->user->login($this->_identity, $this->rememberMe ? $this->rememberMeDuration : 0);
         }
         return false;
     }

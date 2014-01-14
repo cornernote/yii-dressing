@@ -21,7 +21,7 @@ echo $form->beginModalWrap();
 echo $form->errorSummary($user);
 echo $form->textFieldRow($user, 'email');
 echo $form->passwordFieldRow($user, 'password');
-echo $form->checkBoxRow($user, 'remember_me');
+echo $form->checkBoxRow($user, 'rememberMe');
 
 if ($recaptcha) {
     echo CHtml::activeLabel($user, 'recaptcha');
