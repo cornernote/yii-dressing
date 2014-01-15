@@ -29,12 +29,12 @@ class YdCacheBehavior extends CActiveRecordBehavior
      * @param $key
      * @return mixed
      */
-    public function getCache($key)
+    public function getCache($key, $allowDbCache = false)
     {
         $fullKey = $this->getCacheKeyPrefix() . $key;
         $return = Yii::app()->cache->get($fullKey);
         //attempt to get it from database keyvalue
-        if (!$return && Yii::app()->cacheDb) {
+        if (!$return && $allowDbCache && Yii::app()->cacheDb) {
             $return = Yii::app()->cacheDb->get($fullKey);
         }
         return $return;
