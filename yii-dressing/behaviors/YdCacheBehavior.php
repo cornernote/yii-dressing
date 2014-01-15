@@ -27,6 +27,7 @@ class YdCacheBehavior extends CActiveRecordBehavior
      * Get a cached element
      *
      * @param $key
+     * @param bool $allowDbCache
      * @return mixed
      */
     public function getCache($key, $allowDbCache = false)
