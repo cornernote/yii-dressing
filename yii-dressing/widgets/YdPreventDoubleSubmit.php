@@ -33,7 +33,14 @@ class YdPreventDoubleSubmit extends CWidget
         $cs = Yii::app()->clientScript;
         $cs->registerCoreScript('jquery');
         $cs->registerScript($this->id, "$(document).on('submit', '" . $this->selector . "', function (e) {
-            var form = $(this); if (form.data('submitted') !== true) { form.data('submitted', true); form.find(':submit').attr('disabled', true); } else { e.preventDefault(); }
+            var form = $(this); 
+            if (form.data('submitted') !== true) { 
+                form.data('submitted', true); 
+                form.find(':submit').attr('disabled', true); 
+            } 
+            else {
+                e.preventDefault(); 
+            }
         });", CClientScript::POS_END);
         parent::init();
     }
