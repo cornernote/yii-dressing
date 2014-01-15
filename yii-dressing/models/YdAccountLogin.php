@@ -28,7 +28,7 @@ class YdAccountLogin extends YdFormModel
     /**
      * @var
      */
-    public $remember_me;
+    public $rememberMe;
 
     /**
      * @var int
