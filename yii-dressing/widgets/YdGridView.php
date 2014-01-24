@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('bootstrap.widgets.TbGridView');
+
 /**
  * YdGridView
  *
@@ -18,12 +19,12 @@ class YdGridView extends TbGridView
     /**
      * @var string
      */
-    public $template = "{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{items}";
+    public $template = "{header}{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{items}{footer}";
 
     /**
      * @var string
      */
-    public $templateLong = "{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{items}{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{clear}";
+    public $templateLong = "{header}{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{items}{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{footer}";
 
     /**
      * @var string
@@ -69,6 +70,16 @@ class YdGridView extends TbGridView
      * @var array
      */
     public $pager = array('class' => 'dressing.widgets.YdPager');
+
+    /**
+     * @var string
+     */
+    public $header;
+
+    /**
+     * @var string
+     */
+    public $footer;
 
     /**
      *
@@ -295,14 +306,6 @@ class YdGridView extends TbGridView
     }
 
     /**
-     *
-     */
-    public function renderClear()
-    {
-        echo '<div class="clear"></div>';
-    }
-
-    /**
      * @return bool
      */
     public function getUserPageSize()
@@ -368,6 +371,22 @@ class YdGridView extends TbGridView
         }
         else
             $this->widget($class, $pager);
+    }
+
+    /**
+     *
+     */
+    public function renderHeader()
+    {
+        echo $this->header;
+    }
+
+    /**
+     *
+     */
+    public function renderFooter()
+    {
+        echo $this->footer;
     }
 
 
