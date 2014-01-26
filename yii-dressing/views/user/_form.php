@@ -18,10 +18,10 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);
 
-echo $form->textFieldRow($user, 'username');
-echo $form->textFieldRow($user, 'name');
-echo $form->textFieldRow($user, 'email');
-echo $form->textFieldRow($user, 'phone');
+echo $form->textFieldControlGroup($user, 'username');
+echo $form->textFieldControlGroup($user, 'name');
+echo $form->textFieldControlGroup($user, 'email');
+echo $form->textFieldControlGroup($user, 'phone');
 
 echo $form->endModalWrap();
 echo '<div class="' . $form->getSubmitRowClass() . '">';

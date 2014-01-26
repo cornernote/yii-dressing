@@ -18,7 +18,7 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 echo $form->beginModalWrap();
 echo $form->errorSummary($role);
 
-echo $form->textFieldRow($role, 'name');
+echo $form->textFieldControlGroup($role, 'name');
 
 echo $form->endModalWrap();
 echo '<div class="' . $form->getSubmitRowClass() . '">';

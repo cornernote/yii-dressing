@@ -21,17 +21,17 @@ $form->searchField('attachment-grid-search', 'attachment-grid');
 
 echo '<fieldset>';
 echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
-echo $form->textFieldRow($attachment, 'id');
-echo $form->textFieldRow($attachment, 'model');
-echo $form->textFieldRow($attachment, 'model_id');
-echo $form->textFieldRow($attachment, 'filename');
-echo $form->textFieldRow($attachment, 'extension');
-echo $form->textFieldRow($attachment, 'filetype');
-echo $form->textFieldRow($attachment, 'filesize');
-echo $form->textFieldRow($attachment, 'notes');
-echo $form->textFieldRow($attachment, 'sort_order');
-echo $form->textFieldRow($attachment, 'created');
-echo $form->textFieldRow($attachment, 'deleted');
+echo $form->textFieldControlGroup($attachment, 'id');
+echo $form->textFieldControlGroup($attachment, 'model');
+echo $form->textFieldControlGroup($attachment, 'model_id');
+echo $form->textFieldControlGroup($attachment, 'filename');
+echo $form->textFieldControlGroup($attachment, 'extension');
+echo $form->textFieldControlGroup($attachment, 'filetype');
+echo $form->textFieldControlGroup($attachment, 'filesize');
+echo $form->textFieldControlGroup($attachment, 'notes');
+echo $form->textFieldControlGroup($attachment, 'sort_order');
+echo $form->textFieldControlGroup($attachment, 'created');
+echo $form->textFieldControlGroup($attachment, 'deleted');
 echo '</fieldset>';
 
 echo '<div class="form-actions">';

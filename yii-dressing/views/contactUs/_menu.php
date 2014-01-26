@@ -12,7 +12,7 @@
 
 // index
 if (!isset($contactUs)) {
-    $this->menu = YdSiteMenu::getItemsFromMenu('Logs', YdSiteMenu::MENU_ADMIN);
+    $this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_MAIN);
     return; // no more links
 }
 

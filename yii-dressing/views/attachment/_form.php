@@ -63,16 +63,16 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 echo $form->beginModalWrap();
 echo $form->errorSummary($attachment);
 
-echo $form->textFieldRow($attachment, 'model');
-echo $form->textFieldRow($attachment, 'model_id');
-echo $form->textFieldRow($attachment, 'filename');
-echo $form->textFieldRow($attachment, 'extension');
-echo $form->textFieldRow($attachment, 'filetype');
-echo $form->textFieldRow($attachment, 'filesize');
-echo $form->textFieldRow($attachment, 'notes');
-echo $form->textFieldRow($attachment, 'sort_order');
-echo $form->textFieldRow($attachment, 'created');
-echo $form->textFieldRow($attachment, 'deleted');
+echo $form->textFieldControlGroup($attachment, 'model');
+echo $form->textFieldControlGroup($attachment, 'model_id');
+echo $form->textFieldControlGroup($attachment, 'filename');
+echo $form->textFieldControlGroup($attachment, 'extension');
+echo $form->textFieldControlGroup($attachment, 'filetype');
+echo $form->textFieldControlGroup($attachment, 'filesize');
+echo $form->textFieldControlGroup($attachment, 'notes');
+echo $form->textFieldControlGroup($attachment, 'sort_order');
+echo $form->textFieldControlGroup($attachment, 'created');
+echo $form->textFieldControlGroup($attachment, 'deleted');
 
 echo $form->endModalWrap();
 echo '<div class="' . $form->getSubmitRowClass() . '">';

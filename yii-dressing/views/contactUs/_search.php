@@ -21,15 +21,15 @@ $form->searchToggle('contactUs-grid-search', 'contactUs-grid');
 
 echo '<fieldset>';
 echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
-echo $form->textFieldRow($contactUs, 'id');
-echo $form->textFieldRow($contactUs, 'name');
-echo $form->textFieldRow($contactUs, 'email');
-echo $form->textFieldRow($contactUs, 'phone');
-echo $form->textFieldRow($contactUs, 'company');
-echo $form->textFieldRow($contactUs, 'subject');
-echo $form->textFieldRow($contactUs, 'message');
-echo $form->textFieldRow($contactUs, 'ip_address');
-echo $form->textFieldRow($contactUs, 'created');
+echo $form->textFieldControlGroup($contactUs, 'id');
+echo $form->textFieldControlGroup($contactUs, 'name');
+echo $form->textFieldControlGroup($contactUs, 'email');
+echo $form->textFieldControlGroup($contactUs, 'phone');
+echo $form->textFieldControlGroup($contactUs, 'company');
+echo $form->textFieldControlGroup($contactUs, 'subject');
+echo $form->textFieldControlGroup($contactUs, 'message');
+echo $form->textFieldControlGroup($contactUs, 'ip_address');
+echo $form->textFieldControlGroup($contactUs, 'created');
 echo '</fieldset>';
 
 echo '<div class="form-actions">';

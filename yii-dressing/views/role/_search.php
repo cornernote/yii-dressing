@@ -21,8 +21,8 @@ $form->searchToggle('role-grid-search', 'role-grid');
 
 echo '<fieldset>';
 echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
-echo $form->textFieldRow($role, 'id');
-echo $form->textFieldRow($role, 'name');
+echo $form->textFieldControlGroup($role, 'id');
+echo $form->textFieldControlGroup($role, 'name');
 echo '</fieldset>';
 
 echo '<div class="form-actions">';

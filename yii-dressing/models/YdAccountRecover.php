@@ -70,9 +70,9 @@ class YdAccountRecover extends YdFormModel
     {
         if (!$this->hasErrors()) {
             if (strpos($this->username_or_email, '@'))
-                $user = User::model()->findByAttributes(array('email' => $this->username_or_email));
+                $user = YdUser::model()->findByAttributes(array('email' => $this->username_or_email));
             else
-                $user = User::model()->findByAttributes(array('username' => $this->username_or_email));
+                $user = YdUser::model()->findByAttributes(array('username' => $this->username_or_email));
 
             if ($user === null || !empty($user->deleted)) {
                 if (strpos($this->username_or_email, '@'))

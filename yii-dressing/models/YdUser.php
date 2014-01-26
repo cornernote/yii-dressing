@@ -118,10 +118,12 @@ class YdUser extends YdActiveRecord
             $rules[] = array('email', 'email');
             $rules[] = array('email', 'unique', 'criteria' => array('condition' => 't.deleted IS NULL'));
             $rules[] = array('email', 'validateEmail');
+            $rules[] = array('email', 'required');
 
             // username
             $rules[] = array('username', 'length', 'max' => 255);
             $rules[] = array('username', 'unique', 'criteria' => array('condition' => 'deleted IS NULL'));
+            $rules[] = array('username', 'required');
 
             // first_name
             $rules[] = array('first_name', 'length', 'max' => 255);

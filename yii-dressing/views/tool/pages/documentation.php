@@ -11,7 +11,7 @@
 $this->pageTitle = Yii::t('dressing', 'Documentation');
 
 // menu
-$this->menu = YdSiteMenu::getItemsFromMenu('Help');
+$this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_MAIN);
 
 // breadcrumbs
 $this->addBreadcrumb(Yii::t('dressing', 'Help'), array('/site/page', 'view' => 'help'));

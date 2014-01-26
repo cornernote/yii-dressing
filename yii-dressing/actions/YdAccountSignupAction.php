@@ -27,6 +27,11 @@ class YdAccountSignupAction extends CAction
     public $modelName = 'YdAccountSignup';
 
     /**
+     * @var array
+     */
+    public $emailCallback = array('EEmailManager', 'sendAccountSignup');
+
+    /**
      *
      */
     public function run()
@@ -44,6 +49,7 @@ class YdAccountSignupAction extends CAction
         if (isset($_POST[$this->modelName])) {
             $user->attributes = $_POST[$this->modelName];
             if ($user->save()) {
+                call_user_func_array($this->emailCallback, array($user)); // EEmailManager::sendAccountSignup($user);
                 $this->controller->redirect($app->returnUrl->getUrl($app->user->returnUrl));
             }
         }

@@ -12,7 +12,7 @@
  */
 $this->pageTitle = Yii::t('dressing', 'Account Settings');
 
-$this->menu = YdSiteMenu::getItemsFromMenu('User');
+$this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_USER);
 
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(

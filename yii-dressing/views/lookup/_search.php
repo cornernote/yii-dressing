@@ -21,12 +21,12 @@ $form->searchToggle('lookup-grid-search', 'lookup-grid');
 
 echo '<fieldset>';
 echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
-echo $form->textFieldRow($lookup, 'id');
-echo $form->textFieldRow($lookup, 'name');
-echo $form->textFieldRow($lookup, 'type');
-echo $form->textFieldRow($lookup, 'position');
-echo $form->textFieldRow($lookup, 'created');
-echo $form->textFieldRow($lookup, 'deleted');
+echo $form->textFieldControlGroup($lookup, 'id');
+echo $form->textFieldControlGroup($lookup, 'name');
+echo $form->textFieldControlGroup($lookup, 'type');
+echo $form->textFieldControlGroup($lookup, 'position');
+echo $form->textFieldControlGroup($lookup, 'created');
+echo $form->textFieldControlGroup($lookup, 'deleted');
 echo '</fieldset>';
 
 echo '<div class="form-actions">';

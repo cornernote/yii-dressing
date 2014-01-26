@@ -124,7 +124,6 @@ class YdAccountSignup extends YdFormModel
         if (!$user->save()) {
             return false;
         }
-        YdEMailHelper::sendUserWelcome($user);
 
         // login
         $this->login();

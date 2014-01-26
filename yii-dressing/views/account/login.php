@@ -19,9 +19,9 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);
-echo $form->textFieldRow($user, 'email');
-echo $form->passwordFieldRow($user, 'password');
-echo $form->checkBoxRow($user, 'rememberMe');
+echo $form->textFieldControlGroup($user, 'email');
+echo $form->passwordFieldControlGroup($user, 'password');
+echo $form->checkBoxControlGroup($user, 'rememberMe');
 
 if ($recaptcha) {
     echo CHtml::activeLabel($user, 'recaptcha');
@@ -29,5 +29,5 @@ if ($recaptcha) {
     echo CHtml::error($user, 'recaptcha');
 }
 echo $form->endModalWrap();
-echo $form->getSubmitButtonRow(Yii::t('app', 'Login'));
+echo $form->getSubmitButtonRow(Yii::t('dressing', 'Login'));
 $this->endWidget();

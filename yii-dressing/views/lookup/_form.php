@@ -18,11 +18,11 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 echo $form->beginModalWrap();
 echo $form->errorSummary($lookup);
 
-echo $form->textFieldRow($lookup, 'name');
-echo $form->textFieldRow($lookup, 'type');
-echo $form->textFieldRow($lookup, 'position');
-echo $form->textFieldRow($lookup, 'created');
-echo $form->textFieldRow($lookup, 'deleted');
+echo $form->textFieldControlGroup($lookup, 'name');
+echo $form->textFieldControlGroup($lookup, 'type');
+echo $form->textFieldControlGroup($lookup, 'position');
+echo $form->textFieldControlGroup($lookup, 'created');
+echo $form->textFieldControlGroup($lookup, 'deleted');
 
 echo $form->endModalWrap();
 echo '<div class="' . $form->getSubmitRowClass() . '">';

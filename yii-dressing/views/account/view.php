@@ -12,7 +12,7 @@
 
 $this->pageTitle = Yii::t('dressing', 'My Account');
 
-$this->menu = YdSiteMenu::getItemsFromMenu('User');
+$this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_USER);
 
 $this->widget('dressing.widgets.YdDetailView', array(
     'data' => $user,

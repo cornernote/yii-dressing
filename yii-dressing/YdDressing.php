@@ -108,36 +108,6 @@ class YdDressing extends CApplicationComponent
                     'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                 ),
             ),
-            'YdSiteMenu' => array(
-                'relations' => array(
-                    'child' => array(
-                        'CHasManyRelation',
-                        'YdSiteMenu',
-                        'parent_id',
-                        'condition' => 'child.enabled=1 AND child.deleted IS NULL',
-                        'order' => 'sort_order ASC, label ASC',
-                    ),
-                    'parent' => array(
-                        'CBelongsToRelation',
-                        'YdSiteMenu',
-                        'parent_id',
-                    ),
-                ),
-                'behaviors' => array(
-                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
-                    'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
-                    'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-                    'LinkBehavior' => array(
-                        'class' => 'dressing.behaviors.YdLinkBehavior',
-                        'controllerName' => 'siteMenu',
-                    ),
-                ),
-            ),
-            'YdToken' => array(
-                'behaviors' => array(
-                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
-                ),
-            ),
             'YdUser' => array(
                 'relations' => array(
                     'role' => array(

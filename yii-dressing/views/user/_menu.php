@@ -12,7 +12,7 @@
 
 // index
 if (!isset($user)) {
-    $this->menu = YdSiteMenu::getItemsFromMenu('Manage', YdSiteMenu::MENU_ADMIN);
+    $this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_MAIN);
     return; // no more links
 }
 

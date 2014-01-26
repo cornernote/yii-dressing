@@ -21,9 +21,9 @@ $form->searchToggle('user-grid-search', 'user-grid');
 
 echo '<fieldset>';
 echo '<legend>' . $this->getName() . ' ' . Yii::t('dressing', 'Search') . '</legend>';
-echo $form->textFieldRow($user, 'name');
-echo $form->textFieldRow($user, 'email', array('size' => 60, 'maxlength' => 255));
-echo $form->dropDownListRow($user, 'role', CHtml::listData(YdRole::model()->findAll(), 'id', 'name'), array('empty' => ''));
+echo $form->textFieldControlGroup($user, 'name');
+echo $form->textFieldControlGroup($user, 'email', array('size' => 60, 'maxlength' => 255));
+echo $form->dropDownListControlGroup($user, 'role', CHtml::listData(YdRole::model()->findAll(), 'id', 'name'), array('empty' => ''));
 echo '</fieldset>';
 
 echo '<div class="form-actions">';

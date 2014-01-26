@@ -18,12 +18,12 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 echo $form->beginModalWrap();
 echo $form->errorSummary($contactUs);
 
-echo $form->textFieldRow($contactUs, 'name');
-echo $form->textFieldRow($contactUs, 'email');
-echo $form->textFieldRow($contactUs, 'phone');
-echo $form->textFieldRow($contactUs, 'company');
-echo $form->textFieldRow($contactUs, 'subject');
-echo $form->textAreaRow($contactUs, 'message',array('rows' => 6, 'class' => 'span8'));
+echo $form->textFieldControlGroup($contactUs, 'name');
+echo $form->textFieldControlGroup($contactUs, 'email');
+echo $form->textFieldControlGroup($contactUs, 'phone');
+echo $form->textFieldControlGroup($contactUs, 'company');
+echo $form->textFieldControlGroup($contactUs, 'subject');
+echo $form->textAreaControlGroup($contactUs, 'message',array('rows' => 6, 'class' => 'span8'));
 
 echo $form->endModalWrap();
 echo '<div class="' . $form->getSubmitRowClass() . '">';

@@ -18,14 +18,14 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);
 
-echo $form->textFieldRow($user, 'email');
-echo $form->textFieldRow($user, 'first_name');
-echo $form->textFieldRow($user, 'last_name');
+echo $form->textFieldControlGroup($user, 'email');
+echo $form->textFieldControlGroup($user, 'first_name');
+echo $form->textFieldControlGroup($user, 'last_name');
 
-echo $form->textFieldRow($user, 'username');
-echo $form->passwordFieldRow($user, 'password');
-echo $form->passwordFieldRow($user, 'confirm_password');
+echo $form->textFieldControlGroup($user, 'username');
+echo $form->passwordFieldControlGroup($user, 'password');
+echo $form->passwordFieldControlGroup($user, 'confirm_password');
 
 echo $form->endModalWrap();
-echo $form->getSubmitButtonRow(Yii::t('app', 'Signup'));
+echo $form->getSubmitButtonRow(Yii::t('dressing', 'Signup'));
 $this->endWidget();

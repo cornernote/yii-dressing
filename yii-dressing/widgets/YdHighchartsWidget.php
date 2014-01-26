@@ -125,7 +125,7 @@ class YdHighchartsWidget extends CWidget
      */
     protected function registerScripts($id, $jsOptions)
     {
-        $basePath = Yii::getPathOfAlias('vendor') . DIRECTORY_SEPARATOR . 'mrphp' . DIRECTORY_SEPARATOR . 'js-highcharts' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . $this->mode;
+        $basePath = VENDOR_PATH . DS . 'cornernote' . DS . 'highcharts-assets' . DS . 'assets' . DS . $this->mode;
         $baseUrl = Yii::app()->assetManager->publish($basePath, true, 1, YII_DEBUG);
         $scriptFile = YII_DEBUG ? '/' . $this->mode . '.src.js' : '/' . $this->mode . '.js';
 

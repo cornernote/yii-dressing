@@ -1,4 +1,5 @@
 <?php
+Yii::import('dressing.components.YdFormModel');
 
 /**
  * YdActiveFormModel provides a model for ActiveForm when you don't have a model

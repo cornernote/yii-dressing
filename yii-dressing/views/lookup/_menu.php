@@ -12,7 +12,7 @@
 
 // index
 if (!isset($lookup)) {
-    $this->menu = YdSiteMenu::getItemsFromMenu('Settings', YdSiteMenu::MENU_ADMIN);
+    $this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_ADMIN);
     return; // no more links
 }
 

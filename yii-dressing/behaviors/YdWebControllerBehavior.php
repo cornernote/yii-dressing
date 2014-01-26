@@ -1,4 +1,5 @@
 <?php
+
 /**
  * YdWebControllerBehavior
  *
@@ -63,6 +64,7 @@ class YdWebControllerBehavior extends CBehavior
      */
     public function getName($plural = false)
     {
+        Yii::import('dressing.components.YdCakeInflector');
         $name = YdCakeInflector::humanize(YdCakeInflector::underscore(str_replace('Controller', '', get_class($this->getOwner()))));
         return $plural ? YdCakeInflector::pluralize($name) : $name;
     }

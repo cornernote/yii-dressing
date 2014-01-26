@@ -30,7 +30,7 @@ class YdAccountRecoverAction extends CAction
     /**
      * @var string
      */
-    public $emailCallback = array('YdEmail', 'sendAccountRecover');
+    public $emailCallback = array('EEmailManager', 'sendAccountRecover');
 
     /**
      *
@@ -58,8 +58,8 @@ class YdAccountRecoverAction extends CAction
             $accountRecover->attributes = $_POST[$this->modelName];
 
             if ($accountRecover->validate()) {
-                $user = User::model()->findbyPk($accountRecover->user_id);
-                call_user_func_array($this->emailCallback, array($user)); // YdEmail::sendAccountRecover($user);
+                $user = YdUser::model()->findbyPk($accountRecover->user_id);
+                call_user_func_array($this->emailCallback, array($user)); // EEmailManager::sendAccountRecover($user);
                 $app->user->addFlash(sprintf(Yii::t('dressing', 'Password reset instructions have been sent to %s. Please check your email.'), $user->email), 'success');
                 $app->cache->delete($attemptKey);
                 $this->controller->redirect($app->user->loginUrl);

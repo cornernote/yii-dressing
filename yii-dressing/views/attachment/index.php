@@ -13,7 +13,7 @@
 Yii::app()->user->setState('index.attachment', Yii::app()->request->requestUri);
 $this->pageTitle = $this->getName() . ' ' . Yii::t('dressing', 'List');
 
-$this->menu = YdSiteMenu::getItemsFromMenu('Main');
+$this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_MAIN);
 
 echo '<div class="spacer">';
 $this->widget('bootstrap.widgets.TbButton', array(

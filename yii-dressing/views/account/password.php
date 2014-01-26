@@ -11,7 +11,7 @@
  */
 $this->pageTitle = Yii::t('dressing', 'Change Password');
 
-$this->menu = YdSiteMenu::getItemsFromMenu('User');
+$this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_USER);
 
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
@@ -20,18 +20,10 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);
 
-echo $form->passwordFieldRow($user, 'current_password');
-echo $form->passwordFieldRow($user, 'password');
-echo $form->passwordFieldRow($user, 'confirm_password');
+echo $form->passwordFieldControlGroup($user, 'current_password');
+echo $form->passwordFieldControlGroup($user, 'new_password');
+echo $form->passwordFieldControlGroup($user, 'confirm_password');
 
 echo $form->endModalWrap();
-echo '<div class="' . $form->getSubmitRowClass() . '">';
-$this->widget('bootstrap.widgets.TbButton', array(
-    'buttonType' => 'submit',
-    'type' => 'primary',
-    'icon' => 'ok white',
-    'label' => Yii::t('dressing', 'Save'),
-    'htmlOptions' => array('class' => 'pull-right'),
-));
-echo '</div>';
+echo $form->getSubmitButtonRow(Yii::t('dressing', 'Save'));
 $this->endWidget();
