@@ -187,7 +187,7 @@ class YdWebControllerBehavior extends CBehavior
         if (!$model)
             $model = str_replace('Controller', '', get_class($this->owner));
         if ($this->_loadModel === null) {
-            $this->_loadModel = CActiveRecord::model($model)->findbyPk($id);
+            $this->_loadModel = CActiveRecord::model($model)->findByPk($id);
             if ($this->_loadModel === null)
                 throw new CHttpException(404, Yii::t('dressing', 'The requested page does not exist.'));
         }
