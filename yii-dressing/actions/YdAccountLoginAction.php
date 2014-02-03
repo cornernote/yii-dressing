@@ -56,9 +56,9 @@ class YdAccountLoginAction extends CAction
             $attempts = 0;
         $scenario = ($attempts > 3 && isset($app->reCaptcha)) ? 'recaptcha' : '';
 
+        /** @var YdAccountLogin $user */
         $user = new $this->modelName($scenario);
-        if ($this->userIdentityClass && isset($user->userIdentityClass))
-            $user->userIdentityClass = $this->userIdentityClass;
+        $user->userIdentityClass = $this->userIdentityClass;
 
         // collect user input data
         if (isset($_POST[$this->modelName])) {

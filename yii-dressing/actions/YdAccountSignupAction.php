@@ -27,6 +27,11 @@ class YdAccountSignupAction extends CAction
     public $modelName = 'YdAccountSignup';
 
     /**
+     * @var
+     */
+    public $userIdentityClass = 'YdUserIdentity';
+
+    /**
      * @var array
      */
     public $emailCallback = array('EEmailManager', 'sendAccountSignup');
@@ -43,7 +48,9 @@ class YdAccountSignupAction extends CAction
             $this->controller->redirect($app->homeUrl);
         }
 
+        /** @var YdAccountSignup $user */
         $user = new $this->modelName();
+        $user->userIdentityClass = $this->userIdentityClass;
 
         // collect user input data
         if (isset($_POST[$this->modelName])) {

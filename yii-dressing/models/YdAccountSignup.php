@@ -51,6 +51,11 @@ class YdAccountSignup extends YdFormModel
     public $rememberMe;
 
     /**
+     * @var
+     */
+    public $userIdentityClass;
+
+    /**
      * @var YdUserIdentity
      */
     private $_identity;
@@ -138,7 +143,7 @@ class YdAccountSignup extends YdFormModel
     public function login()
     {
         if ($this->_identity === null) {
-            $this->_identity = new YdUserIdentity($this->email, $this->password);
+            $this->_identity = new $this->userIdentityClass($this->email, $this->password);
         }
         if ($this->_identity->authenticate()) {
             $duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
