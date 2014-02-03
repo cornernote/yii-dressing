@@ -201,11 +201,9 @@ class YdUser extends YdActiveRecord
     public function validatePassword($plain, $encrypted = null)
     {
         $encrypted = $encrypted ? $encrypted : $this->password;
-        if (!$plain || !$encrypted) {
+        if (!$plain || !$encrypted)
             return false;
-        }
-        $ph = new YdPasswordHash(8, false);
-        return $ph->CheckPassword($plain, $encrypted);
+        return CPasswordHelper::verifyPassword($plain, $encrypted);
     }
 
     /**
@@ -214,8 +212,7 @@ class YdUser extends YdActiveRecord
      */
     public function hashPassword($plain)
     {
-        $ph = new YdPasswordHash(8, false);
-        return $ph->HashPassword($plain);
+        return CPasswordHelper::hashPassword($plain);
     }
 
     /**

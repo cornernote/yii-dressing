@@ -1,6 +1,21 @@
 <?php
+
 /**
  * YdApiControllerBehavior
+ *
+ * Add to your Yii config (config/main.php):
+ * return array(
+ *     'urlManager' => array(
+ *         'rules' => array(
+ *             // REST patterns
+ *             array('<model>Api/index', 'pattern' => 'api/<model:\w+>', 'verb' => 'GET'),
+ *             array('<model>Api/view', 'pattern' => 'api/<model:\w+>/<id:\d+>', 'verb' => 'GET'),
+ *             array('<model>Api/update', 'pattern' => 'api/<model:\w+>/<id:\d+>', 'verb' => 'PUT'),
+ *             array('<model>Api/delete', 'pattern' => 'api/<model:\w+>/<id:\d+>', 'verb' => 'DELETE'),
+ *             array('<model>Api/create', 'pattern' => 'api/<model:\w+>', 'verb' => 'POST'),
+ *         ),
+ *     ),
+ * ),
  *
  * @property CController $owner
  *
@@ -15,6 +30,9 @@
 class YdApiControllerBehavior extends CBehavior
 {
 
+    /**
+     * @var string
+     */
     public $userIdentityClass = 'YdUserIdentity';
 
     /**
@@ -60,21 +78,17 @@ class YdApiControllerBehavior extends CBehavior
      */
     public function actionError()
     {
-        if ($error = app()->errorHandler->error) {
-            if (app()->request->isAjaxRequest)
-                echo $error['message'];
-            else {
-                $this->HTTPStatus = $this->getHttpStatus($error['code']);
-                if ($this->HTTPStatus == $this->getHttpStatus(200))
-                    $this->HTTPStatus = $this->getHttpStatus(500);
-                $this->renderJson(array(
-                    'success' => false,
+        if ($error = Yii::app()->errorHandler->error) {
+            $this->HTTPStatus = $this->getHttpStatus($error['code']);
+            if ($this->HTTPStatus == $this->getHttpStatus(200))
+                $this->HTTPStatus = $this->getHttpStatus(500);
+            $this->renderText($this->jsonEncode(array(
+                'success' => false,
+                'data' => array(
                     'message' => $error['message'],
-                    'data' => array(
-                        'errorCode' => $error['code'],
-                    ),
-                ));
-            }
+                    'errorCode' => $error['code'],
+                ),
+            )));
         }
     }
 
@@ -119,6 +133,72 @@ class YdApiControllerBehavior extends CBehavior
                 throw new CHttpException(404, Yii::t('dressing', 'The requested model does not exist.'));
         }
         return $this->loadModel;
+    }
+
+    /**
+     * @param $json
+     * @return string
+     * @link http://stackoverflow.com/questions/6054033/pretty-printing-json-with-php
+     */
+    public function jsonEncode($array)
+    {
+        $json = json_encode($array);
+        $result = '';
+        $level = 0;
+        $prev_char = '';
+        $in_quotes = false;
+        $ends_line_level = NULL;
+        $json_length = strlen($json);
+
+        for ($i = 0; $i < $json_length; $i++) {
+            $char = $json[$i];
+            $new_line_level = NULL;
+            $post = "";
+            if ($ends_line_level !== NULL) {
+                $new_line_level = $ends_line_level;
+                $ends_line_level = NULL;
+            }
+            if ($char === '"' && $prev_char != '\\') {
+                $in_quotes = !$in_quotes;
+            }
+            else if (!$in_quotes) {
+                switch ($char) {
+                    case '}':
+                    case ']':
+                        $level--;
+                        $ends_line_level = NULL;
+                        $new_line_level = $level;
+                        break;
+
+                    case '{':
+                    case '[':
+                        $level++;
+                    case ',':
+                        $ends_line_level = $level;
+                        break;
+
+                    case ':':
+                        $post = " ";
+                        break;
+
+                    case " ":
+                    case "\t":
+                    case "\n":
+                    case "\r":
+                        $char = "";
+                        $ends_line_level = $new_line_level;
+                        $new_line_level = NULL;
+                        break;
+                }
+            }
+            if ($new_line_level !== NULL) {
+                $result .= "\n" . str_repeat("\t", $new_line_level);
+            }
+            $result .= $char . $post;
+            $prev_char = $char;
+        }
+
+        return $result;
     }
 
 }
