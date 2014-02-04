@@ -1,6 +1,22 @@
 <?php
+
 /**
  * Class YdCsv
+ *
+ * usage:
+ * $sample=array(
+ *   array(
+ *     'key'=>'row1 value',
+ *     'key2'=>'row1 value2',
+ *   ),
+ *   array(
+ *     'key'=>'row2 value',
+ *     'key2'=>'row2 value2',
+ *   ),
+ * );
+ * $sample = addCsvHeader($sample);
+ * $csvString = getCsvData($sample);
+ * YdCsv::sendCsvInHeader($csvString);
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -12,28 +28,13 @@
  */
 class YdCsv
 {
-    /*
-     usage:
-         $sample=array(
-             array(
-                 'key'=>'value',
-                 'key2'=>'value2',
-                 ),
-             array('key'=>'value2',),
-         );
-         $sample=PutCaptionsOnCSVArray($sample);
-         $csvString=GetCVsString($sample);
-         SendCSVInHeader($csvString);
-
-
-     */
     /**
      * @param $dataElement
      * @param string $delimiter
      * @param string $enclosure
      * @return mixed
      */
-    static function escapeCSVElement($dataElement, $delimiter = ",", $enclosure = "\"")
+    static function escapeCsvElement($dataElement, $delimiter = ",", $enclosure = "\"")
     {
 
         $dataElement = str_replace("\"", "\"\"", $dataElement);
@@ -47,7 +48,7 @@ class YdCsv
      * @param string $enclosure
      * @return string
      */
-    static function getCSVString($dataArray, $delimiter = ",", $enclosure = "\"")
+    static function getCsvData($dataArray, $delimiter = ",", $enclosure = "\"")
     {
         // Write a line to a file
         // $filePointer = the file resource to write to
@@ -65,7 +66,7 @@ class YdCsv
 
             foreach ($line as $dataElement) {
                 // Replaces a double quote with two double quotes
-                $dataElement = self::escapeCSVElement($dataElement, $delimiter, $enclosure);
+                $dataElement = self::escapeCsvElement($dataElement, $delimiter, $enclosure);
 
                 // Adds a delimiter before each field (except the first)
                 if ($writeDelimiter)
@@ -90,7 +91,7 @@ class YdCsv
      * @param $cvsString
      * @param string $filename
      */
-    static function sendCSVInHeader($cvsString, $filename = "csvreport.csv")
+    static function sendCsvInHeader($cvsString, $filename = "csvreport.csv")
     {
         header("Content-Type: application/vnd.ms-excel");
         header("Expires: 0");
@@ -104,7 +105,7 @@ class YdCsv
      * @param $rows
      * @return array
      */
-    static function putCaptionsOnCSVArray($rows)
+    static function addCsvHeader($rows)
     {
         if ($rows) {
             $FirstRow = $rows[0];
@@ -114,11 +115,6 @@ class YdCsv
             }
             $FieldsZero[0] = $Fields;
             $RowsWithCaption = array_merge($FieldsZero, $rows);
-
-            // printr($FieldsZero,"FieldsZero");
-            // printr($rows,"rows");
-            // printr($RowsWithCaption,"RowsWithCaption");
-
         }
         else {
             $RowsWithCaption = $rows;
@@ -133,10 +129,9 @@ class YdCsv
      * @param string $enclosure
      * @param string $filename
      */
-    static function outputCSVFromKeyValueArray($keyValueArray, $delimiter = ",", $enclosure = "\"", $filename = "csvreport.csv")
+    static function outputCsvFromKeyValueArray($keyValueArray, $delimiter = ",", $enclosure = "\"", $filename = "csvreport.csv")
     {
-        $arrayWithCaptions = self::putCaptionsOnCSVArray($keyValueArray);
-        $csvString = self::getCVsString($arrayWithCaptions, $delimiter, $enclosure);
+        $csvString = self::getCsvString(self::addCsvHeader($keyValueArray), $delimiter, $enclosure);
         self::SendCSVInHeader($csvString, $filename);
     }
 
