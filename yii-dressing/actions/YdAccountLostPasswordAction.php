@@ -25,7 +25,7 @@ class YdAccountLostPasswordAction extends CAction
     /**
      * @var string
      */
-    public $modelName = 'YdAccountLostPassword';
+    public $formClass = 'YdAccountLostPassword';
 
     /**
      * @var string
@@ -57,12 +57,12 @@ class YdAccountLostPasswordAction extends CAction
         $scenario = ($attempts >= 3 && isset($app->reCaptcha)) ? 'recaptcha' : '';
 
         /** @var YdAccountLostPassword $accountLostPassword */
-        $accountLostPassword = new $this->modelName($scenario);
+        $accountLostPassword = new $this->formClass($scenario);
         $accountLostPassword->userClass = $this->userClass;
 
         // collect user input data
-        if (isset($_POST[$this->modelName])) {
-            $accountLostPassword->attributes = $_POST[$this->modelName];
+        if (isset($_POST[$this->formClass])) {
+            $accountLostPassword->attributes = $_POST[$this->formClass];
 
             if ($accountLostPassword->validate()) {
                 $user = CActiveRecord::model($this->userClass)->findbyPk($accountLostPassword->user_id);

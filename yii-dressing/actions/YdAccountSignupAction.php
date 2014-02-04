@@ -24,7 +24,7 @@ class YdAccountSignupAction extends CAction
     /**
      * @var string
      */
-    public $modelName = 'YdAccountSignup';
+    public $formClass = 'YdAccountSignup';
 
     /**
      * @var
@@ -54,13 +54,13 @@ class YdAccountSignupAction extends CAction
         }
 
         /** @var YdAccountSignup $accountSignup */
-        $accountSignup = new $this->modelName();
+        $accountSignup = new $this->formClass();
         $accountSignup->userClass = $this->userClass;
         $accountSignup->userIdentityClass = $this->userIdentityClass;
 
         // collect user input data
-        if (isset($_POST[$this->modelName])) {
-            $accountSignup->attributes = $_POST[$this->modelName];
+        if (isset($_POST[$this->formClass])) {
+            $accountSignup->attributes = $_POST[$this->formClass];
             if ($accountSignup->save()) {
                 call_user_func_array($this->emailCallback, array($accountSignup->user)); // EEmailManager::sendAccountSignup($accountSignup->user);
                 $this->controller->redirect($app->returnUrl->getUrl($app->user->returnUrl));

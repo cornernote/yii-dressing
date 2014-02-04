@@ -25,7 +25,7 @@ class YdAccountLoginAction extends CAction
     /**
      * @var string
      */
-    public $modelName = 'YdAccountLogin';
+    public $formClass = 'YdAccountLogin';
 
     /**
      * @var string
@@ -57,12 +57,12 @@ class YdAccountLoginAction extends CAction
         $scenario = ($attempts > 3 && isset($app->reCaptcha)) ? 'recaptcha' : '';
 
         /** @var YdAccountLogin $user */
-        $user = new $this->modelName($scenario);
+        $user = new $this->formClass($scenario);
         $user->userIdentityClass = $this->userIdentityClass;
 
         // collect user input data
-        if (isset($_POST[$this->modelName])) {
-            $user->attributes = $_POST[$this->modelName];
+        if (isset($_POST[$this->formClass])) {
+            $user->attributes = $_POST[$this->formClass];
 
             if ($user->validate() && $user->login()) {
                 $app->cache->delete($attemptKey);

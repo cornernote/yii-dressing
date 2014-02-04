@@ -32,7 +32,7 @@ class YdAccountPassword extends YdFormModel
     /**
      * @var string
      */
-    public $userModelName = 'YdUser';
+    public $userformClass = 'YdUser';
 
     /**
      * @return array
@@ -61,7 +61,7 @@ class YdAccountPassword extends YdFormModel
      */
     public function validateCurrentPassword()
     {
-        $user = CActiveRecord::model($this->userModelName)->findByPk(Yii::app()->user->id);
+        $user = CActiveRecord::model($this->userformClass)->findByPk(Yii::app()->user->id);
         if (!$user || !$user->validatePassword($this->current_password)) {
             $this->addError('current_password', 'Incorrect password.');
         }

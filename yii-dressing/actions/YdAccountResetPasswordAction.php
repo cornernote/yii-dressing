@@ -25,12 +25,12 @@ class YdAccountResetPasswordAction extends CAction
     /**
      * @var string
      */
-    public $modelName = 'YdAccountPassword';
+    public $formClass = 'YdAccountPassword';
 
     /**
      * @var string
      */
-    public $userModelName = 'YdUser';
+    public $userClass = 'YdUser';
 
     /**
      * @var string
@@ -54,7 +54,7 @@ class YdAccountResetPasswordAction extends CAction
 
         // redirect if the key is invalid
         $valid = true;
-        $user = CActiveRecord::model($this->userModelName)->findByPk($id);
+        $user = CActiveRecord::model($this->userClass)->findByPk($id);
         if (!$user) {
             $valid = false;
         }
@@ -66,11 +66,11 @@ class YdAccountResetPasswordAction extends CAction
             $this->controller->redirect($app->user->loginUrl);
         }
 
-        $accountPassword = new $this->modelName('lostPassword');
-        if ($this->userModelName && isset($accountPassword->userModelName))
-            $accountPassword->userModelName = $this->userModelName;
-        if (isset($_POST[$this->modelName])) {
-            $accountPassword->attributes = $_POST[$this->modelName];
+        $accountPassword = new $this->formClass('lostPassword');
+        if ($this->userClass && isset($accountPassword->userClass))
+            $accountPassword->userClass = $this->userClass;
+        if (isset($_POST[$this->formClass])) {
+            $accountPassword->attributes = $_POST[$this->formClass];
             if ($accountPassword->validate()) {
 
                 $user->password = $user->hashPassword($accountPassword->new_password);
