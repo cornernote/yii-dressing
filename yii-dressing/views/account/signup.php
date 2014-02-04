@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this YdAccountController
- * @var $user YdUserRegister
+ * @var $accountSignup YdUserRegister
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -16,15 +16,15 @@ $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
     'id' => 'register-form',
 ));
 echo $form->beginModalWrap();
-echo $form->errorSummary($user);
+echo $form->errorSummary($accountSignup);
 
-echo $form->textFieldControlGroup($user, 'email');
-echo $form->textFieldControlGroup($user, 'first_name');
-echo $form->textFieldControlGroup($user, 'last_name');
+echo $form->textFieldControlGroup($accountSignup, 'email');
+echo $form->textFieldControlGroup($accountSignup, 'first_name');
+echo $form->textFieldControlGroup($accountSignup, 'last_name');
 
-echo $form->textFieldControlGroup($user, 'username');
-echo $form->passwordFieldControlGroup($user, 'password');
-echo $form->passwordFieldControlGroup($user, 'confirm_password');
+echo $form->textFieldControlGroup($accountSignup, 'username');
+echo $form->passwordFieldControlGroup($accountSignup, 'password');
+echo $form->passwordFieldControlGroup($accountSignup, 'confirm_password');
 
 echo $form->endModalWrap();
 echo $form->getSubmitButtonRow(Yii::t('dressing', 'Signup'));

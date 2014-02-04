@@ -48,12 +48,17 @@ class YdAccountSignup extends YdFormModel
     /**
      * @var
      */
-    public $rememberMe;
+    public $userClass = 'YdUser';
 
     /**
      * @var
      */
-    public $userIdentityClass;
+    public $userIdentityClass = 'YdUserIdentity';
+
+    /**
+     * @var YdUser
+     */
+    public $user;
 
     /**
      * @var YdUserIdentity
@@ -82,11 +87,11 @@ class YdAccountSignup extends YdFormModel
         // email
         $rules[] = array('email', 'length', 'max' => 255);
         $rules[] = array('email', 'email');
-        $rules[] = array('email', 'unique', 'className' => 'YdUser', 'criteria' => array('condition' => 't.deleted IS NULL'));
+        $rules[] = array('email', 'unique', 'className' => $this->userClass);
 
         // username
         $rules[] = array('username', 'length', 'max' => 255);
-        $rules[] = array('username', 'unique', 'className' => 'YdUser', 'criteria' => array('condition' => 't.deleted IS NULL'));
+        $rules[] = array('username', 'unique', 'className' => $this->userClass);
 
         // confirm_password
         $rules[] = array('confirm_password', 'compare', 'compareAttribute' => 'password');
@@ -119,20 +124,19 @@ class YdAccountSignup extends YdFormModel
         }
 
         // create user
-        $user = new YdUser();
-        $user->username = $this->username;
-        $user->first_name = $this->first_name;
-        $user->last_name = $this->last_name;
-        $user->email = $this->email;
-        $user->password = $user->hashPassword($this->password);
-        $user->web_status = 1;
-        if (!$user->save()) {
+        $this->user = new $this->userClass();
+        $this->user->username = $this->username;
+        $this->user->first_name = $this->first_name;
+        $this->user->last_name = $this->last_name;
+        $this->user->email = $this->email;
+        $this->user->password = $this->user->hashPassword($this->password);
+        if (!$this->user->save()) {
             return false;
         }
 
         // login
         $this->login();
-        return $user;
+        return $this->user;
     }
 
 
@@ -146,8 +150,7 @@ class YdAccountSignup extends YdFormModel
             $this->_identity = new $this->userIdentityClass($this->email, $this->password);
         }
         if ($this->_identity->authenticate()) {
-            $duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
-            Yii::app()->user->login($this->_identity, $duration);
+            Yii::app()->user->login($this->_identity);
             return true;
         }
         return false;
