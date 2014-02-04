@@ -30,12 +30,12 @@ class YdTimestampBehavior extends CTimestampBehavior
     /**
      * @var array Contains any fields that may be used to store the created timestamp.
      */
-    public $createAttributes = array('created', 'create_time', 'created_at', 'date_added');
+    public $createAttributes = array('created', 'create_time', 'created_at', 'added', 'date_added');
 
     /**
      * @var array Contains any fields that may be used to store the updated timestamp.
      */
-    public $updateAttributes = array('updated', 'update_time', 'updated_at', 'date_modified');
+    public $updateAttributes = array('updated', 'update_time', 'updated_at', 'modified', 'date_modified');
 
     /**
      * Responds to {@link CModel::onBeforeSave} event.
