@@ -2,7 +2,7 @@
 
 /**
  * YdAccountLogin is the data structure for keeping account login form data.
- * It is used by the 'login' action of 'AccountController'.
+ * It is used by the 'login' action of 'YdAccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>

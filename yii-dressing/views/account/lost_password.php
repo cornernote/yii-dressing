@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this YdAccountController
- * @var $user YdAccountRecover
+ * @var $user YdAccountLostPassword
  * @var $recaptcha string
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -11,12 +11,12 @@
  * @license BSD-3-Clause https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-$this->pageTitle = Yii::t('dressing', 'Recover Password');
+$this->pageTitle = Yii::t('dressing', 'Lost Password');
 
 
 /** @var YdActiveForm $form */
 $form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
-    'id' => 'recover-form',
+    'id' => 'lostPassword-form',
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($user);

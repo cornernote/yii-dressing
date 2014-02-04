@@ -1,8 +1,8 @@
 <?php
 
 /**
- * YdAccountRecover is the data structure for keeping account recover form data.
- * It is used by the 'recover' action of 'AccountController'.
+ * YdAccountLostPassword is the data structure for keeping account lost password form data.
+ * It is used by the 'lostPassword' action of 'YdAccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -12,7 +12,7 @@
  *
  * @package dressing.models
  */
-class YdAccountRecover extends YdFormModel
+class YdAccountLostPassword extends YdFormModel
 {
     /**
      * @var
@@ -29,6 +29,10 @@ class YdAccountRecover extends YdFormModel
      */
     public $recaptcha;
 
+    /**
+     * @var string
+     */
+    public $userClass = 'YdUser';
 
     /**
      * Declares the validation rules.
@@ -70,11 +74,11 @@ class YdAccountRecover extends YdFormModel
     {
         if (!$this->hasErrors()) {
             if (strpos($this->username_or_email, '@'))
-                $user = YdUser::model()->findByAttributes(array('email' => $this->username_or_email));
+                $user = CActiveRecord::model($this->userClass)->findByAttributes(array('email' => $this->username_or_email));
             else
-                $user = YdUser::model()->findByAttributes(array('username' => $this->username_or_email));
+                $user = CActiveRecord::model($this->userClass)->findByAttributes(array('username' => $this->username_or_email));
 
-            if ($user === null || !empty($user->deleted)) {
+            if ($user === null) {
                 if (strpos($this->username_or_email, '@'))
                     $this->addError('username_or_email', Yii::t('dressing', 'Email is incorrect.'));
                 else

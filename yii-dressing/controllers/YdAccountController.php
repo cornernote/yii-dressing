@@ -23,7 +23,7 @@ class YdAccountController extends YdWebController
     {
         return array(
             array('allow',
-                'actions' => array('login', 'recover', 'passwordReset'),
+                'actions' => array('login', 'lostPassword', 'resetPassword'),
                 'users' => array('*'),
             ),
             array('allow',
@@ -53,11 +53,11 @@ class YdAccountController extends YdWebController
             'logout' => array(
                 'class' => 'dressing.actions.YdAccountLogoutAction',
             ),
-            'recover' => array(
-                'class' => 'dressing.actions.YdAccountRecoverAction',
+            'lostPassword' => array(
+                'class' => 'dressing.actions.YdAccountLostPasswordAction',
             ),
-            'passwordReset' => array(
-                'class' => 'dressing.actions.YdAccountPasswordResetAction',
+            'resetPassword' => array(
+                'class' => 'dressing.actions.YdAccountResetPasswordAction',
             ),
         );
     }

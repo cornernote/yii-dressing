@@ -1,7 +1,7 @@
 <?php
 
 /**
- * YdAccountRecoverAction
+ * YdAccountLostPasswordAction
  *
  * @property YdWebController $controller
  *
@@ -14,23 +14,28 @@
  *
  * @package dressing.actions
  */
-class YdAccountRecoverAction extends CAction
+class YdAccountLostPasswordAction extends CAction
 {
 
     /**
      * @var string
      */
-    public $view = 'dressing.views.account.recover';
+    public $view = 'dressing.views.account.lost_password';
 
     /**
      * @var string
      */
-    public $modelName = 'YdAccountRecover';
+    public $modelName = 'YdAccountLostPassword';
 
     /**
      * @var string
      */
-    public $emailCallback = array('EEmailManager', 'sendAccountRecover');
+    public $userClass = 'YdUser';
+
+    /**
+     * @var string
+     */
+    public $emailCallback = array('EEmailManager', 'sendAccountLostPassword');
 
     /**
      *
@@ -45,39 +50,41 @@ class YdAccountRecoverAction extends CAction
         }
 
         // enable recaptcha after 3 attempts
-        $attemptKey = "recover.attempt.{$_SERVER['REMOTE_ADDR']}";
+        $attemptKey = "lostPassword.attempt.{$_SERVER['REMOTE_ADDR']}";
         $attempts = $app->cache->get($attemptKey);
         if (!$attempts)
             $attempts = 0;
         $scenario = ($attempts >= 3 && isset($app->reCaptcha)) ? 'recaptcha' : '';
 
-        $accountRecover = new $this->modelName($scenario);
+        /** @var YdAccountLostPassword $accountLostPassword */
+        $accountLostPassword = new $this->modelName($scenario);
+        $accountLostPassword->userClass = $this->userClass;
 
         // collect user input data
         if (isset($_POST[$this->modelName])) {
-            $accountRecover->attributes = $_POST[$this->modelName];
+            $accountLostPassword->attributes = $_POST[$this->modelName];
 
-            if ($accountRecover->validate()) {
-                $user = YdUser::model()->findbyPk($accountRecover->user_id);
-                call_user_func_array($this->emailCallback, array($user)); // EEmailManager::sendAccountRecover($user);
+            if ($accountLostPassword->validate()) {
+                $user = CActiveRecord::model($this->userClass)->findbyPk($accountLostPassword->user_id);
+                call_user_func_array($this->emailCallback, array($user)); // EEmailManager::sendAccountLostPassword($user);
                 $app->user->addFlash(sprintf(Yii::t('dressing', 'Password reset instructions have been sent to %s. Please check your email.'), $user->email), 'success');
                 $app->cache->delete($attemptKey);
                 $this->controller->redirect($app->user->loginUrl);
             }
             // remove all other errors on recaptcha error
-            if (isset($accountRecover->errors['recaptcha'])) {
-                $errors = $accountRecover->errors['recaptcha'];
-                $accountRecover->clearErrors();
+            if (isset($accountLostPassword->errors['recaptcha'])) {
+                $errors = $accountLostPassword->errors['recaptcha'];
+                $accountLostPassword->clearErrors();
                 foreach ($errors as $error)
-                    $accountRecover->addError('recaptcha', $error);
+                    $accountLostPassword->addError('recaptcha', $error);
             }
             $app->cache->set($attemptKey, ++$attempts);
 
         }
 
-        // display the recover form
+        // display the lost password form
         $this->controller->render($this->view, array(
-            'user' => $accountRecover,
+            'user' => $accountLostPassword,
             'recaptcha' => ($attempts >= 3 && isset($app->reCaptcha)) ? true : false,
         ));
     }

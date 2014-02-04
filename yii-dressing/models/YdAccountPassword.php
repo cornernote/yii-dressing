@@ -1,7 +1,7 @@
 <?php
 /**
  * YdAccountPassword is the data structure for keeping account password form data.
- * It is used by the 'password' action of 'AccountController'.
+ * It is used by the 'password' action of 'YdAccountController'.
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -50,7 +50,7 @@ class YdAccountPassword extends YdFormModel
             array('new_password', 'length', 'max' => 64, 'min' => 5),
 
             // confirm_password
-            array('confirm_password', 'required', 'on' => 'password, recover'),
+            array('confirm_password', 'required', 'on' => 'password, lostPassword'),
             array('confirm_password', 'length', 'max' => 64, 'min' => 5),
             array('confirm_password', 'compare', 'compareAttribute' => 'new_password'),
         );

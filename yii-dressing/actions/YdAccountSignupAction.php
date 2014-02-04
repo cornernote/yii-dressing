@@ -19,7 +19,7 @@ class YdAccountSignupAction extends CAction
     /**
      * @var string
      */
-    public $view = 'dressing.views.account.recover';
+    public $view = 'dressing.views.account.signup';
 
     /**
      * @var string

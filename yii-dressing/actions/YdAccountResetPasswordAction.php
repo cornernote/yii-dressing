@@ -1,7 +1,7 @@
 <?php
 
 /**
- * YdAccountPasswordResetAction
+ * YdAccountResetPasswordAction
  *
  * @property YdWebController $controller
  *
@@ -14,13 +14,13 @@
  *
  * @package dressing.actions
  */
-class YdAccountPasswordResetAction extends CAction
+class YdAccountResetPasswordAction extends CAction
 {
 
     /**
      * @var string
      */
-    public $view = 'dressing.views.account.password_reset';
+    public $view = 'dressing.views.account.reset_password';
 
     /**
      * @var string
@@ -59,14 +59,14 @@ class YdAccountPasswordResetAction extends CAction
             $valid = false;
         }
         if ($valid) {
-            $valid = Yii::app()->tokenManager->checkToken('AccountRecover', $id, $token);
+            $valid = Yii::app()->tokenManager->checkToken('AccountLostPassword', $id, $token);
         }
         if (!$valid) {
             $app->user->addFlash(Yii::t('dressing', 'Invalid key.'), 'warning');
             $this->controller->redirect($app->user->loginUrl);
         }
 
-        $accountPassword = new $this->modelName('recover');
+        $accountPassword = new $this->modelName('lostPassword');
         if ($this->userModelName && isset($accountPassword->userModelName))
             $accountPassword->userModelName = $this->userModelName;
         if (isset($_POST[$this->modelName])) {
@@ -83,7 +83,7 @@ class YdAccountPasswordResetAction extends CAction
                     $app->user->login($identity);
                 }
 
-                Yii::app()->tokenManager->useToken('AccountRecover', $id, $token);
+                Yii::app()->tokenManager->useToken('AccountLostPassword', $id, $token);
 
                 $app->user->addFlash(Yii::t('dressing', 'Your password has been saved and you have been logged in.'), 'success');
                 $this->controller->redirect($app->homeUrl);

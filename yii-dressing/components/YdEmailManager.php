@@ -1,6 +1,6 @@
 <?php
 /**
- * YdEmail
+ * YdEmailManager
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -10,23 +10,23 @@
  *
  * @package dressing.components
  */
-class YdEmail
+class YdEmailManager
 {
 
     /**
      * @param $user User
      * @return bool
      */
-    public static function sendAccountRecover($user)
+    public static function sendAccountLostPassword($user)
     {
         $emailManager = Yii::app()->emailManager;
 
-        // get recovery temp login link
-        $token = Yii::app()->tokenManager->createToken(strtotime('+1day'), 'AccountRecover', $user->primaryKey, 1);
-        $url = Yii::app()->createAbsoluteUrl('/account/passwordReset', array('id' => $user->primaryKey, 'token' => $token));
+        // get lost password temp login link
+        $token = Yii::app()->tokenManager->createToken(strtotime('+1day'), 'AccountLostPassword', $user->primaryKey, 1);
+        $url = Yii::app()->createAbsoluteUrl('/account/resetPassword', array('id' => $user->primaryKey, 'token' => $token));
 
         // build the templates
-        $template = 'account_recover';
+        $template = 'account_lost_password';
         $message = $emailManager->buildTemplateMessage($template, array(
             'user' => $user,
             'url' => $url,
@@ -58,8 +58,8 @@ class YdEmail
         $emailManager = Yii::app()->emailManager;
 
         // get activation token
-        $token = EmailToken::model()->add('+30days', 1, 'ActivateRecover', $user->primaryKey);
-        $url = Yii::app()->createAbsoluteUrl('/account/activate', array('id' => $user->primaryKey, 'token' => $token));
+        $token = EmailToken::model()->add('+30days', 1, 'AccountLostPassword', $user->primaryKey);
+        $url = Yii::app()->createAbsoluteUrl('/account/lostPassword', array('id' => $user->primaryKey, 'token' => $token));
 
         // build the templates
         $template = 'account_welcome';
