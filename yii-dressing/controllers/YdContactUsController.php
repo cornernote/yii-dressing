@@ -108,7 +108,7 @@ class YdContactUsController extends YdWebController
                 Yii::app()->user->addFlash(Yii::t('dressing', 'Your message has been sent successfully.'), 'success');
                 $this->redirect(Yii::app()->returnUrl->getUrl(array('contactUs/thankYou')));
             }
-            Yii::app()->user->addFlash(Yii::t('dressing', 'Could not communicate the message.'), 'warning');
+            Yii::app()->user->addFlash(Yii::t('dressing', 'Could not send the message.'), 'error');
         }
         else {
             if (isset($_GET['YdContactUs'])) {

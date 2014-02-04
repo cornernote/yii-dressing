@@ -69,7 +69,7 @@ class YdUserController extends YdWebController
 
         // check for deleted user
         if ($user->deleted) {
-            Yii::app()->user->addFlash('THIS USER IS DELETED', 'warning');
+            Yii::app()->user->addFlash('THIS USER IS DELETED', 'error');
         }
 
         $this->render('view', array(

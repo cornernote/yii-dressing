@@ -62,7 +62,7 @@ class YdAccountResetPasswordAction extends CAction
             $valid = Yii::app()->tokenManager->checkToken('AccountLostPassword', $id, $token);
         }
         if (!$valid) {
-            $app->user->addFlash(Yii::t('dressing', 'Invalid key.'), 'warning');
+            $app->user->addFlash(Yii::t('dressing', 'Invalid key.'), 'error');
             $this->controller->redirect($app->user->loginUrl);
         }
 
@@ -89,7 +89,7 @@ class YdAccountResetPasswordAction extends CAction
                 $this->controller->redirect($app->homeUrl);
             }
             else {
-                $app->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'warning');
+                $app->user->addFlash(Yii::t('dressing', 'Your password could not be saved.'), 'error');
             }
         }
         $this->controller->render($this->view, array(

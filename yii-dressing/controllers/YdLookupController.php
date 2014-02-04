@@ -66,7 +66,7 @@ class YdLookupController extends YdWebController
 
         // check for deleted YdLookup
         if ($lookup->deleted) {
-            Yii::app()->user->addFlash('THIS RECORD IS DELETED', 'warning');
+            Yii::app()->user->addFlash('THIS RECORD IS DELETED', 'error');
         }
 
         $this->render('view', array(

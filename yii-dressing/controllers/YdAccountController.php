@@ -149,7 +149,7 @@ class YdAccountController extends YdWebController
                 $this->redirect(Yii::app()->returnUrl->getUrl());
             }
             else {
-                Yii::app()->user->addFlash('Your settings could not be saved.', 'warning');
+                Yii::app()->user->addFlash('Your settings could not be saved.', 'error');
             }
         }
 
