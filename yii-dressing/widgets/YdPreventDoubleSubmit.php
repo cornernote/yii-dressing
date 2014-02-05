@@ -23,16 +23,24 @@ class YdPreventDoubleSubmit extends CWidget
     /**
      * @var string The jQuery selector, by default all forms except those with class="allow-double-submit"
      */
-    public $selector = 'form:not(.allow-double-submit)';
+    public $formSelector = 'form:not(.allow-double-submit)';
+
+    /**
+     * @var string The jQuery selector, by default only links with class="prevent-double-click"
+     */
+    public $linkSelector = 'a.prevent-double-click';
 
     /**
      * Register jQuery and the JavaScript to prevent Double Form Submission
      */
     public function init()
     {
+        parent::init();
         $cs = Yii::app()->clientScript;
         $cs->registerCoreScript('jquery');
-        $cs->registerScript($this->id, "$(document).on('submit', '" . $this->selector . "', function (e) {
+
+        // forms
+        $cs->registerScript($this->id . '-form', "$(document).on('submit', '" . $this->formSelector . "', function (e) {
             var form = $(this); 
             if (form.data('submitted') !== true) { 
                 form.data('submitted', true); 
@@ -42,7 +50,18 @@ class YdPreventDoubleSubmit extends CWidget
                 e.preventDefault(); 
             }
         });", CClientScript::POS_END);
-        parent::init();
+
+        // links
+        $cs->registerScript($this->id . '-form', "$(document).on('click', '" . $this->linkSelector . "', function (e) {
+            var link = $(this);
+            if (link.data('clicked') !== true) {
+                link.data('clicked', true);
+                link.attr('disabled', true);
+            }
+            else {
+                e.preventDefault();
+            }
+        });", CClientScript::POS_END);
     }
 
 }
