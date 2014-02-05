@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class YdBPayHelper
  *
@@ -19,10 +20,6 @@ class YdBPayHelper
      * @var string
      */
     public $text = 'Call your bank, credit union or building society to make this payment from your cheque, savings or credit card account';
-    /**
-     * @var string
-     */
-    public $logo = 'http://d2v52na0ig3b4y.cloudfront.net/images/icons/Bpayv54ha.gif';
 
     /**
      *
@@ -67,11 +64,12 @@ class YdBPayHelper
      */
     public function crnLogo($crn)
     {
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.bpay'), false, 1, YII_DEBUG);
         return Yii::app()->controller->renderPartial('dressing.views.misc.bpay', array(
             'bPay' => $this,
             'crn' => $crn,
+            'logo' => $baseUrl . '/bpay.gif'
         ), true);
     }
-
 
 }
