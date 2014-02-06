@@ -65,7 +65,7 @@ class YdBPayHelper
     public function crnLogo($crn)
     {
         $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.bpay'), false, 1, YII_DEBUG);
-        $controller = Yii::app()->controller ? Yii::app()->controller : Yii::app()->createController('/');
+        $controller = Yii::app()->controller ? Yii::app()->controller : new CController('command');
         return $controller->renderPartial('dressing.views.misc.bpay', array(
             'bPay' => $this,
             'crn' => $crn,
