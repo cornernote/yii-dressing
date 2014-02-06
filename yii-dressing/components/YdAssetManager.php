@@ -17,7 +17,7 @@ class YdAssetManager extends CAssetManager
     /**
      * Publishes a file or a directory.
      *
-     * Will use linkAssets even if $forceCopy is true
+     * Will set $forceCopy=false if $this->linkAssets is true to prevent throwing an exception
      *
      * @param string $path
      * @param bool $hashByName
@@ -26,8 +26,8 @@ class YdAssetManager extends CAssetManager
      */
     public function publish($path, $hashByName = false, $level = -1, $forceCopy = null)
     {
-        if ($forceCopy && $this->linkAssets)
-            $forceCopy = null;
+        if ($this->linkAssets)
+            $forceCopy = false;
         return parent::publish($path, $hashByName, $level, $forceCopy);
     }
 
