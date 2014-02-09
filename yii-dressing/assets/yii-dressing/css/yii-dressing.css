@@ -24,18 +24,6 @@
     font-size: 85%;
 }
 
-.text-center, table th.text-center, .table td.text-center {
-    text-align: center;
-}
-
-.text-left, table th.text-left, .table td.text-left {
-    text-align: left;
-}
-
-.text-right, table th.text-right, .table td.text-right {
-    text-align: right;
-}
-
 .cursor-help {
     cursor: help;
 }
