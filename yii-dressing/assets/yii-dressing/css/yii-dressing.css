@@ -266,15 +266,6 @@ ul.ui-sortable, ul.ui-sortable li {
 }
 
 /**
- * Hero Unit
- */
-
-.hero-unit h1, .hero-unit h2, .hero-unit h3, .hero-unit h4, .hero-unit h5 {
-    padding-left: 0;
-    margin-bottom: 1em;
-}
-
-/**
  * prevent checkbox label going entire width
  * @see YdActiveForm
  * @see https://github.com/twbs/bootstrap/issues/5046
