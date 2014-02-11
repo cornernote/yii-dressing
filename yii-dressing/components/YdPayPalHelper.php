@@ -126,6 +126,7 @@ class YdPayPalHelper extends CApplicationComponent
      * Yii::app()->payPalHelper->verifyIpn($_POST, $_SERVER['HTTP_USER_AGENT'])
      *
      * NOTE: In addition you should check other POST data including the business, amount, currency, item number and quantity.
+     * You may also consider hashing these values with a seed into the custom field.
      * These are not checked here because they come through as different variables depending on the payment type.
      *
      * @link https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/
