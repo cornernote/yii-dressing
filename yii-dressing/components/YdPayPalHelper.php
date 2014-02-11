@@ -120,6 +120,14 @@ class YdPayPalHelper extends CApplicationComponent
     }
 
     /**
+     * Verify the IPN came from PayPal
+     *
+     * Example:
+     * Yii::app()->payPalHelper->verifyIpn($_POST, $_SERVER['HTTP_USER_AGENT'])
+     *
+     * NOTE: In addition you should check other POST data including the business, amount, currency, item number and quantity.
+     * These are not checked here because they come through as different variables depending on the payment type.
+     *
      * @link https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/
      * @param $data - $_POST
      * @param $agent - $_SERVER['HTTP_USER_AGENT']
@@ -132,7 +140,7 @@ class YdPayPalHelper extends CApplicationComponent
      * @param $quantity
      * @return array of errors, or empty array if no errors
      */
-    public function verifyIpn($data, $agent, $amount, $tax, $currency, $invoice, $custom, $itemNumber, $quantity)
+    public function verifyIpn($data, $agent)
     {
         $errors = array();
 
@@ -141,36 +149,6 @@ class YdPayPalHelper extends CApplicationComponent
 
         if (strpos($agent, 'PayPal IPN') === false)
             $errors[] = 'Invalid user agent';
-
-        if ($data['payment_status'] != 'Complete')
-            $errors[] = 'Invalid payment status';
-
-        if (abs($data['mc_gross'] - $amount) < 0.009)
-            $errors[] = 'Invalid amount';
-
-        if (abs($data['tax'] - $tax) < 0.009)
-            $errors[] = 'Invalid tax';
-
-        if ($data['mc_currency'] != $currency)
-            $errors[] = 'Invalid currency';
-
-        if ($data['business'] != $this->business)
-            $errors[] = 'Invalid business';
-
-        if ($data['receiver_email'] != $this->business)
-            $errors[] = 'Invalid receiver email';
-
-        if ($data['quantity'] != $quantity)
-            $errors[] = 'Invalid quantity';
-
-        if ($data['invoice'] != $invoice)
-            $errors[] = 'Invalid invoice';
-
-        if ($data['custom'] != $custom)
-            $errors[] = 'Invalid custom';
-
-        if ($data['item_number'] != $itemNumber)
-            $errors[] = 'Invalid item number';
 
         return $errors;
     }
