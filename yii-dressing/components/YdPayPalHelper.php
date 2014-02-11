@@ -90,7 +90,7 @@ class YdPayPalHelper extends CApplicationComponent
     public function formButton($options = array())
     {
         $form = CHtml::beginForm($this->url(), 'get');
-        CHtml::hiddenField('business', $this->business);
+        $form .= CHtml::hiddenField('business', $this->business);
         foreach (CMap::mergeArray($this->defaultOptions, $options) as $k => $v)
             $form .= CHtml::hiddenField($k, $v);
         $form .= CHtml::imageButton($this->image, array('border' => 0, 'alt' => $this->imageAltText));
