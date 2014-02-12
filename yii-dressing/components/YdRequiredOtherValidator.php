@@ -39,7 +39,7 @@ class YdRequiredOtherValidator extends CRequiredValidator
             $value = $object->$attribute;
             if ($this->requiredValue !== null) {
                 if (!$this->strict && $value != $this->requiredValue || $this->strict && $value !== $this->requiredValue) {
-                    $message = $this->message !== null ? $this->message : Yii::t('dressing', '{attribute} must be {value} when {otherFieldLabel} is {otherFieldValueLabel}.', 'app', array(
+                    $message = $this->message !== null ? $this->message : Yii::t('dressing', '{attribute} must be {value} when {otherFieldLabel} is {otherFieldValueLabel}.', array(
                         '{value}' => $this->requiredValue,
                         '{otherFieldLabel}' => $otherFieldLabel,
                         '{otherFieldValueLabel}' => $otherFieldValueLabel,
@@ -48,7 +48,7 @@ class YdRequiredOtherValidator extends CRequiredValidator
                 }
             }
             else if ($this->isEmpty($value, true)) {
-                $message = $this->message !== null ? $this->message : Yii::t('dressing', '{attribute} cannot be blank when {otherFieldLabel} is {otherFieldValueLabel}.', 'app', array(
+                $message = $this->message !== null ? $this->message : Yii::t('dressing', '{attribute} cannot be blank when {otherFieldLabel} is {otherFieldValueLabel}.', array(
                     '{otherFieldLabel}' => $otherFieldLabel,
                     '{otherFieldValueLabel}' => $otherFieldValueLabel,
                 ));
