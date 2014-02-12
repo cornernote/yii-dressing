@@ -319,8 +319,8 @@ class YdEncoding {
   public static function encode($encodingLabel, $text)
   {
     $encodingLabel = self::normalizeEncoding($encodingLabel);
-    if($encodingLabel == 'UTF-8') return YdEncoding::toUTF8($text);
-    if($encodingLabel == 'ISO-8859-1') return YdEncoding::toLatin1($text);
+    if($encodingLabel == 'UTF-8') return self::toUTF8($text);
+    if($encodingLabel == 'ISO-8859-1') return self::toLatin1($text);
   }
 
 }
