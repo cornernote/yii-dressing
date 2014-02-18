@@ -35,7 +35,8 @@ class YdMailChimp extends CApplicationComponent
     {
         if ($this->_mcapi)
             return $this->_mcapi;
-        return $this->_mcapi = new YdMailChimp($apiKey ? $apiKey : $this->apiKey);
+        Yii::import('dressing.components.YdMailChimpAPI');
+        return $this->_mcapi = new YdMailChimpAPI($apiKey ? $apiKey : $this->apiKey);
     }
 
     public function getList($list)
@@ -103,9 +104,8 @@ class YdMailChimp extends CApplicationComponent
      */
     public function subscribeIfNotExists($email, $list = null)
     {
-        if (!$this->exists($email, $this->getList($list))) {
+        if (!$this->exists($email, $list))
             return $this->subscribe($email, $this->getList($list));
-        }
         return false;
     }
 
