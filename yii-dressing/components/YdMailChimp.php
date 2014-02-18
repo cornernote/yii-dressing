@@ -13,9 +13,14 @@ class YdMailChimp extends CApplicationComponent
     public $apiKey;
 
     /**
+     * @var array
+     */
+    public $lists = array();
+
+    /**
      * @var string
      */
-    public $list;
+    public $defaultList;
 
     /**
      * @var YdMailChimpAPI
@@ -33,6 +38,11 @@ class YdMailChimp extends CApplicationComponent
         return $this->_mcapi = new YdMailChimp($apiKey ? $apiKey : $this->apiKey);
     }
 
+    public function getList($list)
+    {
+        return $this->lists[$list ? $list : $this->defaultList];
+    }
+
     /**
      * @param $email
      * @param null $list
@@ -40,7 +50,7 @@ class YdMailChimp extends CApplicationComponent
      */
     public function unsubscribe($email, $list = null)
     {
-        return $this->getMCAPI()->listUnsubscribe($list ? $list : $this->list, $email, false, false, true);
+        return $this->getMCAPI()->listUnsubscribe($this->getList($list), $email, false, false, true);
     }
 
     /**
@@ -50,7 +60,7 @@ class YdMailChimp extends CApplicationComponent
      */
     public function subscribe($email, $list = null)
     {
-        return $this->getMCAPI()->listSubscribe($list ? $list : $this->list, $email, array('INTERESTS' => ''), 'html', false, true, false, false);
+        return $this->getMCAPI()->listSubscribe($this->getList($list), $email, array('INTERESTS' => ''), 'html', false, true, false, false);
     }
 
     /**
@@ -60,7 +70,7 @@ class YdMailChimp extends CApplicationComponent
      */
     public function subscribed($email, $list = null)
     {
-        $user = $this->getMCAPI()->listMemberInfo($list ? $list : $this->list, $email);
+        $user = $this->getMCAPI()->listMemberInfo($this->getList($list), $email);
         return ($user && $user['status'] == 'subscribed') ? true : false;
     }
 
@@ -71,7 +81,7 @@ class YdMailChimp extends CApplicationComponent
      */
     public function unsubscribed($email, $list = null)
     {
-        $user = $this->getMCAPI()->listMemberInfo($list ? $list : $this->list, $email);
+        $user = $this->getMCAPI()->listMemberInfo($this->getList($list), $email);
         return (!$user || $user['status'] == 'subscribed') ? false : true;
     }
 
@@ -82,7 +92,7 @@ class YdMailChimp extends CApplicationComponent
      */
     public function exists($email, $list = null)
     {
-        $user = $this->getMCAPI()->listMemberInfo($list ? $list : $this->list, $email);
+        $user = $this->getMCAPI()->listMemberInfo($this->getList($list), $email);
         return $user ? $user : false;
     }
 
@@ -93,8 +103,8 @@ class YdMailChimp extends CApplicationComponent
      */
     public function subscribeIfNotExists($email, $list = null)
     {
-        if (!$this->exists($email, $list ? $list : $this->list)) {
-            return $this->subscribe($email, $list ? $list : $this->list);
+        if (!$this->exists($email, $this->getList($list))) {
+            return $this->subscribe($email, $this->getList($list));
         }
         return false;
     }
