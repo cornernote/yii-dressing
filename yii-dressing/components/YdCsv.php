@@ -28,7 +28,7 @@
  */
 class YdCsv
 {
-    
+
     /**
      * @param $dataElement
      * @param string $delimiter
@@ -39,14 +39,14 @@ class YdCsv
     {
         return str_replace("\"", "\"\"", $dataElement);
     }
-    
+
     /**
      * @param $dataArray
      * @param string $delimiter
      * @param string $enclosure
      * @return string
      */
-    static function getCsvData($dataArray, $delimiter = ",", $enclosure = "\"")
+    static function getCsvData($dataArray, $delimiter = ",", $enclosure = "\"", $newLine = "\n")
     {
         // Write a line to a file
         // $filePointer = the file resource to write to
@@ -60,7 +60,7 @@ class YdCsv
         foreach ($dataArray as $line) {
 
             // No leading delimiter
-            $writeDelimiter = FALSE;
+            $writeDelimiter = false;
 
             foreach ($line as $dataElement) {
                 // Replaces a double quote with two double quotes
@@ -74,10 +74,10 @@ class YdCsv
                 $string .= $enclosure . $dataElement . $enclosure;
 
                 // Delimiters are used every time except the first.
-                $writeDelimiter = TRUE;
+                $writeDelimiter = true;
             }
             // Append new line
-            $string .= "\n";
+            $string .= $newLine;
 
         } // end foreach($dataArray as $line)
 
@@ -154,5 +154,5 @@ class YdCsv
         fclose($handle);
         return $rows;
     }
-    
+
 }
