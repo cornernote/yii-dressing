@@ -28,6 +28,7 @@
  */
 class YdCsv
 {
+    
     /**
      * @param $dataElement
      * @param string $delimiter
@@ -36,12 +37,9 @@ class YdCsv
      */
     static function escapeCsvElement($dataElement, $delimiter = ",", $enclosure = "\"")
     {
-
-        $dataElement = str_replace("\"", "\"\"", $dataElement);
-
-        return $dataElement;
+        return str_replace("\"", "\"\"", $dataElement);
     }
-
+    
     /**
      * @param $dataArray
      * @param string $delimiter
@@ -131,11 +129,9 @@ class YdCsv
      */
     static function outputCsvFromKeyValueArray($keyValueArray, $delimiter = ",", $enclosure = "\"", $filename = "csvreport.csv")
     {
-        $csvString = self::getCsvString(self::addCsvHeader($keyValueArray), $delimiter, $enclosure);
-        self::SendCSVInHeader($csvString, $filename);
+        $csvString = self::getCsvData(self::addCsvHeader($keyValueArray), $delimiter, $enclosure);
+        self::sendCsvInHeader($csvString, $filename);
     }
-
-    //echo "<br/> result is $result <br/>";
 
     /**
      * @param $fileName
@@ -158,4 +154,5 @@ class YdCsv
         fclose($handle);
         return $rows;
     }
+    
 }
