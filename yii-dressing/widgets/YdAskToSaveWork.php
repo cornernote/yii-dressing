@@ -68,8 +68,8 @@ class YdAskToSaveWork extends CWidget
             $js .= "});";
         }
 
-        app()->clientScript->registerCoreScript('jquery');
-        app()->clientScript->registerScript($this->getId(), $js, CClientScript::POS_READY);
+        Yii::app()->clientScript->registerCoreScript('jquery');
+        Yii::app()->clientScript->registerScript($this->getId(), $js, CClientScript::POS_READY);
     }
 }
 
