@@ -13,7 +13,7 @@ class YdUrlReader
      * @param bool $return
      * @return bool|mixed
      */
-    public function getUrl($url, $referer = null, $follow = true, $return = true)
+    public static function getUrl($url, $referer = null, $follow = true, $return = true)
     {
         if (!file_exists(Yii::app()->getRuntimePath() . '/cookies')) {
             mkdir(Yii::app()->getRuntimePath() . '/cookies');
@@ -49,7 +49,7 @@ class YdUrlReader
      * @param $params
      * @return mixed
      */
-    public function postUrl($url, $params)
+    public static function postUrl($url, $params)
     {
         if (!file_exists(Yii::app()->getRuntimePath() . '/cookies')) {
             mkdir(Yii::app()->getRuntimePath() . '/cookies');
@@ -83,7 +83,7 @@ class YdUrlReader
      * @param $array
      * @return string
      */
-    public function preparePostFields($array)
+    public static function preparePostFields($array)
     {
         if (!is_array($array)) return $array;
         $params = array();
