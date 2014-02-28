@@ -19,12 +19,12 @@ class YdGridView extends TbGridView
     /**
      * @var string
      */
-    public $template = "{header}{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{items}{footer}";
+    public $template = "{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{items}";
 
     /**
      * @var string
      */
-    public $templateLong = "{header}{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{items}{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{footer}";
+    public $templateLong = "{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}{items}{summary}{pager}{gridButtons}{pageSelect}{gridActions}{multiActions}";
 
     /**
      * @var string
@@ -205,6 +205,8 @@ class YdGridView extends TbGridView
      */
     public function run()
     {
+        $this->renderHeader();
+
         if ($this->multiActions || $this->gridActions || $this->gridButtons) {
             echo CHtml::openTag('div', array(
                     'id' => $this->id . '-multi-checkbox',
@@ -222,6 +224,8 @@ class YdGridView extends TbGridView
             echo CHtml::endForm();
             echo CHtml::closeTag('div');
         }
+
+        $this->renderFooter();
     }
 
     /**
