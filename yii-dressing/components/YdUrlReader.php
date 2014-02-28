@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class YdUrlReader
  *
@@ -34,6 +35,9 @@ class YdUrlReader
         if ($return) {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $data = curl_exec($ch);
+            if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != '200') {
+                $data = '';
+            }
         }
         else {
             curl_exec($ch);
