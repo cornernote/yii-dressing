@@ -37,7 +37,7 @@ class YdConsoleCommand extends CConsoleCommand
         if (isset(self::$_instances[$className]))
             return self::$_instances[$className];
         else
-            return self::$_instances[$className] = new $class(null, null);
+            return self::$_instances[$className] = new $className(null, null);
     }
 
     /**
