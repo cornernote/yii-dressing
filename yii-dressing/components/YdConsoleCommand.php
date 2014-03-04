@@ -24,31 +24,20 @@ class YdConsoleCommand extends CConsoleCommand
     private $timer;
 
     /**
-     * @param string $class
-     * @return ErrorEmailCommand
-     */
-
-    /**
      * Returns the static instance of the specified CC class. The object returned is a static instance of the CC class.
      * It is provided for invoking class-level methods (something similar to static class methods.)
      *
-     * EVERY derived CC class must override this method as follows:
-     * <pre>
-     * public static function instance($class=__CLASS__) {
-     *     return parent::instance($class);
-     * }
-     * </pre>
-     *
-     * @static
-     * @param string $class
-     * @return ConsoleCommand
+     * @param string $className
+     * @return YdConsoleCommand
      */
-    public static function instance($class = __CLASS__)
+    public static function instance($className = null)
     {
-        if (isset(self::$_instances[$class]))
-            return self::$_instances[$class];
+        if (!$className)
+            $className = get_called_class();
+        if (isset(self::$_instances[$className]))
+            return self::$_instances[$className];
         else
-            return self::$_instances[$class] = new $class(null, null);
+            return self::$_instances[$className] = new $class(null, null);
     }
 
     /**
