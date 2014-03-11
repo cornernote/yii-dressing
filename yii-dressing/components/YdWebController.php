@@ -11,6 +11,7 @@
  * @property string $pageIcon
  * @property bool $showNavBar
  * @property bool $isModal
+ * @property int $metaRefresh
  * @method performValidation() bool performValidation(CActiveRecord|CActiveRecord[] $model)
  * @method performAjaxValidation() void performAjaxValidation(CActiveRecord|CActiveRecord[] $model, string $form)
  * @method loadModel() CActiveRecord loadModel(mixed $id, bool|string $model)

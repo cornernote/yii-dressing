@@ -47,6 +47,11 @@ class YdWebControllerBehavior extends CBehavior
     public $showNavBar = true;
 
     /**
+     * @var int
+     */
+    public $metaRefresh;
+
+    /**
      * @var bool
      */
     protected $_isModal;
