@@ -108,44 +108,6 @@ class YdDressing extends CApplicationComponent
                     'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
                 ),
             ),
-            'YdUser' => array(
-                'relations' => array(
-                    'role' => array(
-                        'CManyManyRelation',
-                        'YdRole',
-                        'user_to_role(user_id, role_id)',
-                    ),
-                    'userToRole' => array(
-                        'CManyManyRelation',
-                        'YdUserToRole',
-                        'user_id',
-                    ),
-                ),
-                'behaviors' => array(
-                    'AuditFieldBehavior' => 'audit.components.AuditFieldBehavior',
-                    'SoftDeleteBehavior' => 'dressing.behaviors.YdSoftDeleteBehavior',
-                    'TimestampBehavior' => 'dressing.behaviors.YdTimestampBehavior',
-                    'LinkBehavior' => array(
-                        'class' => 'dressing.behaviors.YdLinkBehavior',
-                        'controllerName' => 'user',
-                    ),
-                    'EavBehavior' => array(
-                        'class' => 'dressing.behaviors.YdEavBehavior',
-                        'tableName' => 'user_eav',
-                    ),
-                ),
-            ),
-            'YdUserToRole' => array(
-                'behaviors' => array(
-                    'AuditFieldBehavior' => array(
-                        'class' => 'audit.components.AuditFieldBehavior',
-                        'additionalAuditModels' => array(
-                            'User' => 'user_id',
-                            //'Role' => 'role_id',
-                        ),
-                    ),
-                ),
-            ),
         );
     }
 
