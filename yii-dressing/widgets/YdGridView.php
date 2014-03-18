@@ -122,6 +122,7 @@ class YdGridView extends TbGridView
     public function registerClientScript()
     {
         parent::registerClientScript();
+        Yii::app()->clientScript->registerCssFile(Yii::app()->dressing->getAssetsUrl() . '/css/gridview.css');
 
         if ($this->multiActions || $this->gridActions || $this->gridButtons) {
             Yii::app()->clientScript->registerScriptFile(Yii::app()->dressing->getAssetsUrl() . '/js/jquery.form.js');
@@ -317,7 +318,7 @@ class YdGridView extends TbGridView
         $key = 'YdGridView_userPageSize_' . str_replace('-', '_', $this->id);
         $user = Yii::app()->getUser();
         $size = 0;
-        if (!$size && $this->saveUserPageSize && $user->user && $user->user->asa('EavBehavior'))
+        if (!$size && $this->saveUserPageSize && isset($user->user) && $user->user->asa('EavBehavior'))
             $size = $user->user->getEavAttribute($key);
         if (!$size && $this->saveUserPageSize)
             $size = Yii::app()->user->getState($key, $this->defaultPageSize);
@@ -337,6 +338,9 @@ class YdGridView extends TbGridView
             return;
 
         $user = Yii::app()->getUser();
+        if (!isset($user->user))
+            return;
+
         foreach ($_GET['userPageSize'] as $type => $size) {
             $key = 'YdGridView_userPageSize_' . $type;
             $user->setState($key, (int)$size);
