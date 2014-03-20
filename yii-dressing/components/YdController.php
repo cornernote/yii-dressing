@@ -20,7 +20,6 @@ class YdController extends CController
     //{
     //    return array(
     //        'accessControl',
-    //        'webUserType' => array('dressing.components.YdWebUserTypeFilter'),
     //    );
     //}
 
