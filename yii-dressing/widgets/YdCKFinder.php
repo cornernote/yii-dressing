@@ -56,7 +56,7 @@ class YdCKFinder extends CInputWidget
             mkdir($this->directory, 0755, true);
         }
 
-        $ckFinderPath = Yii::getPathOfAlias('vendor') . '/mrphp/ckfinder-assets/ckfinder';
+        $ckFinderPath = Yii::getPathOfAlias('vendor') . '/cornernote/ckfinder-assets/ckfinder';
         $this->path = app()->assetManager->publish($ckFinderPath, false, -1, YII_DEBUG);
 
         if (!$this->resourceTypes) {
