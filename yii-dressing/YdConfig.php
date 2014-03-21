@@ -238,9 +238,13 @@ class YdConfig
         // paths
         defined('DS') or define('DS', DIRECTORY_SEPARATOR);
         defined('VENDOR_PATH') or define('VENDOR_PATH', self::cleanPath(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DS . 'vendor'));
-        defined('WWW_PATH') or define('WWW_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'public'));
 
-        // www_host and www_url are saved into config when accessed via web so that the value is available for cli
+        // www_path, www_host and www_url are saved into config when accessed via web so that the value is available for cli
+        if (!defined('WWW_PATH')) {
+            define('WWW_PATH', self::cleanPath(dirname(VENDOR_PATH) . DS . 'www'));
+            if (!YII_DRESSING_CLI)
+                $this->setValue('WWW_PATH', WWW_PATH);
+        }
         if (!defined('WWW_HOST')) {
             define('WWW_HOST', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
             if (!YII_DRESSING_CLI)
