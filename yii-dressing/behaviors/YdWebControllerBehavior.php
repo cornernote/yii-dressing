@@ -216,7 +216,6 @@ class YdWebControllerBehavior extends CBehavior
 
     /**
      * Gets a submitted field
-     * used to be named getSubmittedField()
      *
      * @param $field
      * @param null $model

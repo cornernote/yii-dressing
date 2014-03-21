@@ -116,4 +116,30 @@ class YdSetting extends YdActiveRecord
         );
     }
 
+    /**
+     * @static
+     * @param string $name
+     * @param string $group
+     * @param $store_id
+     * @return string
+     */
+    public static function item($name)
+    {
+        if (!self::$_items)
+            self::loadItems();
+        if (isset(self::$_items[$name]))
+            return self::$_items[$name];
+
+        return param($name);
+    }
+
+    /**
+     *
+     */
+    private static function loadItems()
+    {
+        foreach (self::model()->findAll() as $setting)
+            self::$_items[$setting->key] = $setting->value;
+    }
+
 }
