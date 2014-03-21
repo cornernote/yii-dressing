@@ -23,5 +23,11 @@
     },
     "require-dev": {
         "yiisoft/yii": "1.1.14"
+    },
+    "autoload": {
+        "classmap": [
+            "yii-dressing/components/",
+            "yii-dressing/models/"
+        ]
     }
 }
