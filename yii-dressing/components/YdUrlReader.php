@@ -23,7 +23,7 @@ class YdUrlReader
         $_url = parse_url($url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_COOKIEFILE, Yii::app()->getRuntimePath() . '/cookies/' . DS . md5($_url['host']));
+        curl_setopt($ch, CURLOPT_COOKIEFILE, Yii::app()->getRuntimePath() . '/cookies/' . md5($_url['host']));
         //curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
         if ($follow) {
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
