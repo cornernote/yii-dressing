@@ -22,6 +22,11 @@ class YdBPayHelper
     public $text = 'Call your bank, credit union or building society to make this payment from your cheque, savings or credit card account';
 
     /**
+     * @var string
+     */
+    private $_logoUrl;
+
+    /**
      *
      */
     public function init()
