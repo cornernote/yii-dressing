@@ -4,6 +4,7 @@
  * YdWebControllerBehavior
  *
  * @property CController $owner
+ * @property array $breadcrumbs
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
