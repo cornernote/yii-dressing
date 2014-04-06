@@ -15,6 +15,11 @@ class YdQTip extends CWidget
 {
 
     /**
+     * @var string
+     */
+    public $selector = 'a[title],i[title],.icon[title],.not(.fancybox a)';
+
+    /**
      *
      */
     public function init()
@@ -32,7 +37,7 @@ class YdQTip extends CWidget
 
         // auto-qtip on <a title="something">link</a>
         $cs->registerScript('qtip2', '
-            $(document).on("mouseover", "a[title],i[title],.icon[title]", function(event) {
+            $(document).on("mouseover", "' . $this->selector . '", function(event) {
                 var e = $(this);
                 index = e.parent().index();
                 e.qtip({
