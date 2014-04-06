@@ -17,7 +17,7 @@ class YdQTip extends CWidget
     /**
      * @var string
      */
-    public $selector = 'a[title],i[title],.icon[title],.not(.fancybox a)';
+    public $selector = 'a[title]:not(.fancybox-item,.fancybox-nav),i[title],.icon[title]';
 
     /**
      *
@@ -58,7 +58,7 @@ class YdQTip extends CWidget
                     }
                 });
             });
-        ', CClientScript::POS_HEAD);
+        ', CClientScript::POS_READY);
         $cs->registerCSSFile($baseUrl . '/jquery.qtip.css', 'screen, projection');
         $cs->registerScriptFile($baseUrl . '/jquery.qtip.min.js', CClientScript::POS_HEAD);
     }
