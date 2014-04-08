@@ -85,13 +85,6 @@ class YdBase extends YiiBase
             if (array_key_exists($excludeItem, $config))
                 unset($config[$excludeItem]);
 
-        // remove things from preload
-        if (isset($config['preload'])) {
-            $excludePreloads = array('bootstrap');
-            foreach ($config['preload'] as $k => $preload)
-                if (in_array($preload, $excludePreloads)) unset($config['preload'][$k]);
-        }
-
         // create app
         $app = self::createApplication('CConsoleApplication', $config);
 
