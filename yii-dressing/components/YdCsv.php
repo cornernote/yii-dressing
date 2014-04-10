@@ -4,18 +4,18 @@
  * Class YdCsv
  *
  * usage:
- * $sample=array(
+ * $csv = array(
  *   array(
- *     'key'=>'row1 value',
- *     'key2'=>'row1 value2',
+ *     'key' => 'row1 value',
+ *     'key2' => 'row1 value2',
  *   ),
  *   array(
- *     'key'=>'row2 value',
- *     'key2'=>'row2 value2',
+ *     'key' => 'row2 value',
+ *     'key2' => 'row2 value2',
  *   ),
  * );
- * $sample = addCsvHeader($sample);
- * $csvString = getCsvData($sample);
+ * $csvString = YdCsv::addCsvHeader($csv);
+ * $csvString = YdCsv::getCsvData($csvString);
  * YdCsv::sendCsvInHeader($csvString);
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -106,18 +106,18 @@ class YdCsv
     static function addCsvHeader($rows)
     {
         if ($rows) {
-            $FirstRow = $rows[0];
-            $Fields = array();
-            foreach ($FirstRow as $key => $value) {
-                $Fields[$key] = $key;
+            $firstRow = $rows[0];
+            $fields = array();
+            foreach ($firstRow as $key => $value) {
+                $fields[$key] = $key;
             }
-            $FieldsZero[0] = $Fields;
-            $RowsWithCaption = array_merge($FieldsZero, $rows);
+            $fieldsZero[0] = $fields;
+            $rowsWithCaption = array_merge($fieldsZero, $rows);
         }
         else {
-            $RowsWithCaption = $rows;
+            $rowsWithCaption = $rows;
         }
-        return $RowsWithCaption;
+        return $rowsWithCaption;
 
     }
 

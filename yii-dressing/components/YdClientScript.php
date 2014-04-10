@@ -76,6 +76,8 @@ class YdClientScript extends CClientScript
             'jquery.qtip.css',
             'app.css',
             'yii-dressing.css',
+            'bootstrap-editable.css',
+            'bootstrap-editable.min.css',
         );
         if (Yii::app()->request->isAjaxRequest) {
             foreach ($ignoreAjax as $ignore) {
@@ -216,6 +218,8 @@ class YdClientScript extends CClientScript
             'jquery-ui-i18n.js',
             'bootstrap.min.js',
             'bootstrap.js',
+            'bootstrap-editable.js',
+            'bootstrap-editable.min.js',
         );
         if (Yii::app()->request->isAjaxRequest) {
             foreach ($ignoreAjax as $ignore) {

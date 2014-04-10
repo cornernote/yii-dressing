@@ -1,7 +1,7 @@
 <?php
 
 /**
- * YdJavaScriptWidget
+ * YdStyleSheetWidget
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -11,7 +11,7 @@
  *
  * @package dressing.widgets
  */
-class YdJavaScriptWidget extends CWidget
+class YdStyleSheetWidget extends CWidget
 {
     /**
      * @var
@@ -21,7 +21,7 @@ class YdJavaScriptWidget extends CWidget
     /**
      * @var
      */
-    public $position;
+    public $media;
 
     /**
      *
@@ -38,19 +38,14 @@ class YdJavaScriptWidget extends CWidget
     {
         // get id
         if (!$this->id) {
-            $this->id = 'script-' . uniqid();
-        }
-
-        // get position
-        if ($this->position === null) {
-            $this->position = CClientScript::POS_READY;
+            $this->id = 'css-' . uniqid();
         }
 
         // get contents
         $contents = ob_get_clean();
-        $contents = str_replace(array('<script>', '<script type="text/javascript">', '</script>'), '', $contents);
+        $contents = str_replace(array('<style>', '</style>'), '', $contents);
 
         // register the js script
-        Yii::app()->clientScript->registerScript($this->id, $contents, $this->position);
+        Yii::app()->clientScript->registerCss($this->id, $contents, $this->media);
     }
 }

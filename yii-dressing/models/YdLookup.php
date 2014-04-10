@@ -146,17 +146,17 @@ class YdLookup extends YdActiveRecord
     /**
      * @static
      * @param $type
-     * @param $code
+     * @param $id
      * @return mixed
      */
-    public static function item($type, $code)
+    public static function item($type, $id)
     {
         if (!isset(self::$_items[$type]))
             self::loadItems($type);
-        if (!isset(self::$_items[$type][$code])) {
-            self::$_items[$type][$code] = null;
+        if (!isset(self::$_items[$type][$id])) {
+            self::$_items[$type][$id] = null;
         }
-        return self::$_items[$type][$code];
+        return self::$_items[$type][$id];
     }
 
     /**
@@ -178,7 +178,7 @@ class YdLookup extends YdActiveRecord
             'order' => 'position, name',
         ));
         foreach ($models as $model) {
-            self::$_items[$type][$model->code] = $model->name;
+            self::$_items[$type][$model->id] = $model->name;
         }
         Yii::app()->cache->set('Lookup.loadItems.' . $type, self::$_items[$type]);
 
