@@ -47,6 +47,11 @@ class YdSetting extends YdActiveRecord
 {
 
     /**
+     * @var array
+     */
+    private static $_items = array();
+
+    /**
      * Returns the static model of the specified AR class.
      * @param string $className
      * @return YdSetting the static model class
@@ -59,68 +64,16 @@ class YdSetting extends YdActiveRecord
     /**
      * @return array
      */
-    static public function appVersions()
-    {
-        $_versions = array();
-        $p = dirname(Yii::app()->basePath);
-        $d = dir($p);
-        while (false !== ($entry = $d->read())) {
-            if (substr($entry, 0, 3) == 'app') {
-                $time = filemtime($p . DIRECTORY_SEPARATOR . $entry);
-                $_versions[$time] = array(
-                    'entry' => $entry,
-                    'display' => $entry . ' -- ' . YdTime::date($time, self::item('dateTimeFormat')) . ' -- (' . YdTime::ago($time) . ')',
-                );
-            }
-        }
-        $d->close();
-        krsort($_versions);
-        $versions = array();
-        foreach ($_versions as $version) {
-            $versions[$version['entry']] = $version['display'];
-        }
-        return $versions;
-    }
-
-    /**
-     * @return array
-     */
-    static public function themes()
-    {
-        $_themes = array();
-        $p = Yii::app()->themeManager->basePath;
-        $d = dir($p);
-        while (false !== ($entry = $d->read())) {
-            $time = filemtime($p . DIRECTORY_SEPARATOR . $entry);
-            $_themes[$time] = array(
-                'entry' => $entry,
-                'display' => $entry . ' -- ' . YdTime::date($time, self::item('dateTimeFormat')) . ' -- (' . YdTime::ago($time) . ')',
-            );
-        }
-        $d->close();
-        krsort($_themes);
-        $themes = array();
-        foreach ($_themes as $theme) {
-            $themes[$theme['entry']] = $theme['display'];
-        }
-        return $themes;
-    }
-
-    /**
-     * @return array
-     */
     public function attributeLabels()
     {
         return array(
-            'value' => YdStringHelper::humanize($this->key),
+            'value' => YdCakeInflector::humanize($this->key),
         );
     }
 
     /**
      * @static
      * @param string $name
-     * @param string $group
-     * @param $store_id
      * @return string
      */
     public static function item($name)
