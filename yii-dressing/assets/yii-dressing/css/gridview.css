@@ -17,7 +17,7 @@
     background: #FFF;
 }
 
-.grid-view table.table thead tr a {
+.grid-view table.table thead tr a.sort-link {
     color: #fff;
     text-decoration: underline;
     font-weight: bold;
