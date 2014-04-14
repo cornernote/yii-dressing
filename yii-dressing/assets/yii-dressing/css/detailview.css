@@ -8,10 +8,6 @@
  * @license BSD-3-Clause https://raw.github.com/cornernote/yii-dressing/master/license.txt
  */
 
-/**
- * Tables
- */
-
 table.detail-view.table thead tr {
     color: #fff;
     background: #B5B5B5;
@@ -58,10 +54,6 @@ table.detail-view.table-striped tbody tr:nth-child(odd) td,
 table.detail-view.table-striped tbody tr:nth-child(odd) th {
     background-color: #f7f7f7;
 }
-
-/**
- * Detail View
- */
 
 table.detail-view.table-bordered tbody tr th {
     color: #fff;
