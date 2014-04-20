@@ -32,6 +32,9 @@
     cursor: move;
 }
 
+.cursor-hand {
+    cursor: hand;
+}
 
 /**
  * Clear Fix
