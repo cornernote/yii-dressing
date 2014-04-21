@@ -19,11 +19,6 @@ class YdConsoleCommand extends CConsoleCommand
     private static $_instances = array();
 
     /**
-     * @var
-     */
-    private $timer;
-
-    /**
      * Returns the static instance of the specified CC class. The object returned is a static instance of the CC class.
      * It is provided for invoking class-level methods (something similar to static class methods.)
      *
@@ -41,27 +36,15 @@ class YdConsoleCommand extends CConsoleCommand
     }
 
     /**
-     *
-     */
-    public function init()
-    {
-        $this->timer = YII_BEGIN_TIME;
-        parent::init();
-    }
-
-
-    /**
      * @param $i
      * @param $count
      * @return string
      */
     protected function runStats($i, $count)
     {
-        if (!$this->timer)
-            $this->timer = YII_BEGIN_TIME;
         $stats = '';
         $stats .= '[mem=' . number_format(memory_get_peak_usage() / 1024 / 1024, 1) . '|' . number_format(memory_get_usage() / 1024 / 1024, 1) . ']';
-        $stats .= '[time=' . number_format((microtime(true) - $this->timer), 1) . ']';
+        $stats .= '[time=' . number_format((microtime(true) - YII_BEGIN_TIME), 1) . ']';
         $stats .= '[done=' . floor($i / $count * 100) . '%|' . $i . '/' . $count . ']';
         return $stats . ' ';
     }
