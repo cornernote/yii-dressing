@@ -129,7 +129,8 @@ class YdWebControllerBehavior extends CBehavior
     public function getPageBreadcrumbs()
     {
         $breadcrumbs = $this->_breadcrumbs;
-        $breadcrumbs[] = $this->owner->pageTitle;
+        if ($this->owner->pageTitle)
+            $breadcrumbs[] = $this->owner->pageTitle;
         return $breadcrumbs;
     }
 
