@@ -1,7 +1,7 @@
 <?php
 
 /**
- * YdDateFormatter
+ * YdDateHelper
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -11,14 +11,14 @@
  *
  * @package dressing.components
  */
-class YdDateFormatter extends CDateFormatter
+class YdDateHelper
 {
 
     /**
      * @param $timestamp
      * @return int|null
      */
-    public function timestamp($timestamp)
+    public static function timestamp($timestamp)
     {
         if (!$timestamp)
             return null;
@@ -28,14 +28,25 @@ class YdDateFormatter extends CDateFormatter
     }
 
     /**
+     * @static
+     * @param string $startDate
+     * @param string $endDate
+     * @return int
+     */
+    public static function differenceInDays($startDate, $endDate)
+    {
+        return round((self::strtotime($endDate) - self::strtotime($startDate)) / (60 * 60 * 24));
+    }
+
+    /**
      * The function returns the no. of business days between two dates
      *
      * @param string $startDate
      * @param string $endDate
      * @param array $holidays
-     * @return float|int
+     * @return int
      */
-    public function getWorkingDays($startDate, $endDate, $holidays)
+    public static function differenceInWeekDays($startDate, $endDate, $holidays = array())
     {
         // do strtotime calculations just once
         $endDate = strtotime($endDate);
@@ -106,9 +117,9 @@ class YdDateFormatter extends CDateFormatter
      * @param string $timestamp
      * @return boolean True if date is today
      */
-    public function isToday($timestamp)
+    public static function isToday($timestamp)
     {
-        $timestamp = $this->timestamp($timestamp);
+        $timestamp = self::timestamp($timestamp);
         return date('Y-m-d', $timestamp) == date('Y-m-d', time());
     }
 
@@ -118,9 +129,9 @@ class YdDateFormatter extends CDateFormatter
      * @param string $timestamp
      * @return boolean True if date was yesterday
      */
-    public function isYesterday($timestamp)
+    public static function isYesterday($timestamp)
     {
-        $timestamp = $this->timestamp($timestamp);
+        $timestamp = self::timestamp($timestamp);
         return date('Y-m-d', $timestamp) == date('Y-m-d', strtotime('yesterday'));
     }
 
@@ -130,9 +141,9 @@ class YdDateFormatter extends CDateFormatter
      * @param string $timestamp
      * @return boolean True if date is in this year
      */
-    public function isThisYear($timestamp)
+    public static function isThisYear($timestamp)
     {
-        $timestamp = $this->timestamp($timestamp);
+        $timestamp = self::timestamp($timestamp);
         return date('Y', $timestamp) == date('Y', time());
     }
 
@@ -142,9 +153,9 @@ class YdDateFormatter extends CDateFormatter
      * @param string $timestamp
      * @return boolean True if date is in this week
      */
-    public function isThisWeek($timestamp)
+    public static function isThisWeek($timestamp)
     {
-        $timestamp = $this->timestamp($timestamp);
+        $timestamp = self::timestamp($timestamp);
         return date('W Y', $date) == date('W Y', time());
     }
 
@@ -154,62 +165,10 @@ class YdDateFormatter extends CDateFormatter
      * @param string $timestamp
      * @return boolean True if date is in this month
      */
-    public function isThisMonth($timestamp)
+    public static function isThisMonth($timestamp)
     {
-        $timestamp = $this->timestamp($timestamp);
+        $timestamp = self::timestamp($timestamp);
         return date('m Y', $timestamp) == date('m Y', time());
-    }
-
-    /**
-     * @param $timestamp
-     * @param string $format
-     * @return bool|string
-     */
-    public function formatTimeAgoIcon($timestamp, $dateWidth = 'medium', $timeWidth = 'medium')
-    {
-        return CHtml::link('<i class="icon-time"></i>', 'javascript:void();', array('title' => $this->formatAgo($timestamp))) . '&nbsp;' . $this->formatDateTime($timestamp, $dateWidth, $timeWidth);
-    }
-
-    /**
-     * @param $timestamp
-     * @param int $rcs
-     * @param null $_ago
-     * @return string
-     */
-    public function formatTimeAgo($timestamp, $rcs = 0, $_ago = null)
-    {
-        $tm = $this->timestamp($timestamp);
-        if (!$tm) {
-            return '';
-        }
-        $cur_tm = time();
-        $dif = $cur_tm - $tm;
-        if ($cur_tm < $tm) {
-            $dif = $dif * -1;
-            $_ago = 'away';
-        }
-        $pds = array('second', 'minute', 'hour', 'day', 'week', 'month', 'year', 'decade');
-        $l = array(1, 60, 3600, 86400, 604800, 2630880, 31570560, 315705600);
-        $no = 0;
-        for ($v = sizeof($l) - 1; ($v >= 0) && (($no = $dif / $l[$v]) <= 1); $v--)
-            ;
-        if ($v < 0)
-            $v = 0;
-        $_tm = $cur_tm - ($dif % $l[$v]);
-        $no = floor($no);
-        if ($no <> 1)
-            $pds[$v] .= 's';
-        $x = sprintf("%d %s ", $no, $pds[$v]);
-        if (($rcs == 1) && ($v >= 1) && (($cur_tm - $_tm) > 0))
-            $x .= $this->ago($_tm, 0, $_ago);
-        $ago = '';
-        if (!$rcs) {
-            if (isset($_ago))
-                $ago = ' ' . $_ago;
-            else
-                $ago = ' ago';
-        }
-        return $x . $ago;
     }
 
 }
