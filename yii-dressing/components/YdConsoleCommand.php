@@ -36,16 +36,18 @@ class YdConsoleCommand extends CConsoleCommand
     }
 
     /**
-     * @param $i
-     * @param $count
+     * @param int|null $i
+     * @param int|null $count
      * @return string
      */
-    protected function runStats($i, $count)
+    protected function runStats($i = null, $count = null)
     {
         $stats = '';
         $stats .= '[mem=' . number_format(memory_get_peak_usage() / 1024 / 1024, 1) . '|' . number_format(memory_get_usage() / 1024 / 1024, 1) . ']';
         $stats .= '[time=' . number_format((microtime(true) - YII_BEGIN_TIME), 1) . ']';
-        $stats .= '[done=' . floor($i / $count * 100) . '%|' . $i . '/' . $count . ']';
+        if ($i && $count) {
+            $stats .= '[done=' . floor($i / $count * 100) . '%|' . $i . '/' . $count . ']';
+        }
         return $stats . ' ';
     }
 
