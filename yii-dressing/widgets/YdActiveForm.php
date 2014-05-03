@@ -127,14 +127,16 @@ class YdActiveForm extends TbActiveForm
 
     /**
      * @param null $label
-     * @param array $options
+     * @param array $buttonHtmlOptions
+     * @param array $rowHtmlOptions
      * @return string
      */
-    public function getSubmitButtonRow($label = null, $options = array())
+    public function getSubmitButtonRow($label = null, $buttonHtmlOptions = array(), $rowHtmlOptions = array())
     {
-        if (!isset($options['color']))
-            $options['color'] = TbHtml::BUTTON_COLOR_PRIMARY;
-        return CHtml::tag('div', array('class' => $this->getSubmitRowClass()), TbHtml::submitButton($label, $options));
+        if (!isset($buttonHtmlOptions['color']))
+            $buttonHtmlOptions['color'] = TbHtml::BUTTON_COLOR_PRIMARY;
+        $rowHtmlOptions['class'] = isset($rowOptions['class']) ? $rowOptions['class'] . ' ' . $this->getSubmitRowClass() : $this->getSubmitRowClass();
+        return CHtml::tag('div', $rowHtmlOptions, TbHtml::submitButton($label, $buttonHtmlOptions));
     }
 
 }
