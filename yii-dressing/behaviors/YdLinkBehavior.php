@@ -55,7 +55,7 @@ class YdLinkBehavior extends CActiveRecordBehavior
      */
     public function getIdString()
     {
-        return get_class($this->owner) . '-' . $this->getPrimaryKeyString();
+        return get_class($this->owner) . '-' . $this->owner->getPrimaryKeyString();
     }
 
     /**
@@ -70,8 +70,8 @@ class YdLinkBehavior extends CActiveRecordBehavior
         if (!$action)
             $action = $this->defaultAction;
         return array_merge(array(
-            '/' . $this->getControllerName() . '/' . $action,
-            'id' => $this->getPrimaryKeyString(),
+            '/' . $this->owner->getControllerName() . '/' . $action,
+            'id' => $this->owner->getPrimaryKeyString(),
         ), (array)$params);
     }
 
@@ -84,7 +84,7 @@ class YdLinkBehavior extends CActiveRecordBehavior
      */
     public function getUrlString($action = null, $params = array())
     {
-        $params = $this->getUrl($action, $params);
+        $params = $this->owner->getUrl($action, $params);
         $route = array_shift($params);
         return Yii::app()->createUrl($route, $params);
     }
