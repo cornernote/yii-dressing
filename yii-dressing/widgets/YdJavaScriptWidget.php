@@ -9,6 +9,15 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license BSD-3-Clause https://raw.github.com/cornernote/yii-dressing/master/license.txt
  *
+ *
+ * usage:
+ *
+ * <?php $this->beginWidget('dressing.widgets.YdJavaScriptWidget', array('id' => 'choose_uniquie_id')); ?>
+<script type="text/javascript">
+
+</script>
+<?php $this->endWidget(); ?>
+ *
  * @package dressing.widgets
  */
 class YdJavaScriptWidget extends CWidget
