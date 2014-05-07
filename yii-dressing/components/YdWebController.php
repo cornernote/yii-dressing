@@ -24,6 +24,16 @@ class YdWebController extends YdController
     }
 
     /**
+     * @return array action filters
+     */
+    public function filters()
+    {
+        return array(
+            'accessControl',
+        );
+    }
+
+    /**
      * @return array
      */
     public function behaviors()
