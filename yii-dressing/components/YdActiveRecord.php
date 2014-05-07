@@ -17,7 +17,7 @@ class YdActiveRecord extends CActiveRecord
      * Returns the static model of the specified AR class.
      *
      * @param string $className
-     * @return YdAttachment the static model class
+     * @return YdActiveRecord the static model class
      */
     public static function model($className = null)
     {
@@ -63,5 +63,29 @@ class YdActiveRecord extends CActiveRecord
         if (!empty(Yii::app()->dressing->modelMap[get_class($this)]['behaviors']))
             return Yii::app()->dressing->modelMap[get_class($this)]['behaviors'];
         return parent::behaviors();
+    }
+
+    public function getName()
+    {
+        if (isset($this->attributes['name'])) {
+            return $this->attributes['name'];
+        }
+        if (isset($this->attributes['title'])) {
+            return $this->attributes['title'];
+        }
+        return $this->getPrimaryKey();
+    }
+    /**
+     * Returns error array as a string
+     *
+     * @return string
+     */
+    public function getErrorString()
+    {
+        $output = array();
+        foreach ($this->getErrors() as $attribute => $errors) {
+            $output[] = $attribute . ': ' . implode(' ', $errors);
+        }
+        return implode(' | ', $output);
     }
 }
