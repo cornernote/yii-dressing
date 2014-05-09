@@ -245,7 +245,7 @@ class YdClientScript extends CClientScript
     {
         // do not load these scripts on ajax
         if (Yii::app()->request->isAjaxRequest) {
-            foreach ($ignoreAjaxScriptFile as $ignore) {
+            foreach ($this->ignoreAjaxScriptFile as $ignore) {
                 if ($this->endsWith($url, $ignore))
                     return $this;
             }
