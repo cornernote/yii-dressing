@@ -31,6 +31,14 @@ class YdActiveForm extends TbActiveForm
     public $askToSaveWork;
 
     /**
+     * @var array
+     */
+    public $clientOptions = array(
+        'validateOnChange' => true,
+        'validationDelay' => 0,
+    );
+
+    /**
      * Initializes the widget.
      * This renders the form open tag.
      */
