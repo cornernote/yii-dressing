@@ -65,27 +65,4 @@ class YdActiveRecord extends CActiveRecord
         return parent::behaviors();
     }
 
-    public function getName()
-    {
-        if (isset($this->attributes['name'])) {
-            return $this->attributes['name'];
-        }
-        if (isset($this->attributes['title'])) {
-            return $this->attributes['title'];
-        }
-        return $this->getPrimaryKey();
-    }
-    /**
-     * Returns error array as a string
-     *
-     * @return string
-     */
-    public function getErrorString()
-    {
-        $output = array();
-        foreach ($this->getErrors() as $attribute => $errors) {
-            $output[] = $attribute . ': ' . implode(' ', $errors);
-        }
-        return implode(' | ', $output);
-    }
 }
