@@ -146,14 +146,21 @@ class YdCsv
             $headerRow--;
             fgetcsv($handle, null, $delimiter);
         }
-        $header = fgetcsv($handle, null, $delimiter);
+        if ($headerRow) {
+            $header = fgetcsv($handle, null, $delimiter);
+        }
         while (($data = fgetcsv($handle, null, $delimiter)) !== FALSE) {
             $row = array();
-            foreach ($header as $key => $heading) {
-                $heading = trim($heading);
-                $row[$heading] = (isset($data[$key])) ? YdEncoding::toUTF8($data[$key]) : '';
+            if ($headerRow) {
+                foreach ($header as $key => $heading) {
+                    $heading = trim($heading);
+                    $row[$heading] = (isset($data[$key])) ? YdEncoding::toUTF8($data[$key]) : '';
+                }
+                $rows[] = $row;
             }
-            $rows[] = $row;
+            else {
+                $rows[] = $data;
+            }
         }
         fclose($handle);
         return $rows;
