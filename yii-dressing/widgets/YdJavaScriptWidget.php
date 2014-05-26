@@ -48,9 +48,15 @@ class YdJavaScriptWidget extends CWidget
         // get contents
         $contents = ob_get_clean();
         $contents = str_replace(array('<script>', '<script type="text/javascript">', '</script>'), '', $contents);
+        //just echo the script
+        if ($this->position ==-1){
+            echo $contents;
+        }
+        else{
+            // register the js script
+            Yii::app()->clientScript->registerScript($this->id, $contents, $this->position);
+        }
 
-        // register the js script
-        Yii::app()->clientScript->registerScript($this->id, $contents, $this->position);
     }
     
 }
