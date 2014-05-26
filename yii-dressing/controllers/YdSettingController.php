@@ -47,21 +47,21 @@ class YdSettingController extends YdWebController
     public function actionIndex()
     {
         // load settings
-        /** @var Setting[] $settings */
+        /** @var YdSetting[] $settings */
         $settings = array();
         $_settings = YdSetting::model()->findAll();
         foreach ($_settings as $setting) {
             $settings[$setting->key] = $setting;
         }
 //        // load from items
-        foreach (self::$_settings() as $key => $value) {
-            if (!isset($settings[$key])) {
-                $settings[$key] = new YdSetting();
-                $settings[$key]->key = $key;
-                $settings[$key]->value = $value;
-                $settings[$key]->save(false);
-            }
-        }
+//        foreach (YdSetting::items() as $key => $value) {
+//            if (!isset($settings[$key])) {
+//                $settings[$key] = new YdSetting();
+//                $settings[$key]->key = $key;
+//                $settings[$key]->value = $value;
+//                $settings[$key]->save(false);
+//            }
+//        }
         // load from params
         foreach (Yii::app()->params as $key => $value) {
             if (is_scalar($value) && !isset($settings[$key])) {
@@ -107,9 +107,9 @@ class YdSettingController extends YdWebController
         }
         // no data posted
         else {
-            $settings['script_path']->value = $settings['script_path']->value ? $settings['script_path']->value : dirname($_SERVER['SCRIPT_FILENAME']);
-            $settings['script_url']->value = $settings['script_url']->value ? $settings['script_url']->value : dirname($_SERVER['SCRIPT_NAME']);
-            $settings['server_name']->value = $settings['server_name']->value ? $settings['server_name']->value : $_SERVER['SERVER_NAME'];
+            !empty($settings['script_path']) && ($settings['script_path']->value = empty($settings['script_path']->value) ? dirname($_SERVER['SCRIPT_FILENAME']) : $settings['script_path']->value);
+            !empty($settings['script_url']) && $settings['script_url']->value = empty($settings['script_url']->value) ? dirname($_SERVER['SCRIPT_NAME']) : $settings['script_url']->value;
+            !empty($settings['server_name']) && $settings['server_name']->value = empty($settings['server_name']->value) ? $_SERVER['SERVER_NAME'] : $settings['server_name']->value;
         }
 
         $this->render('index', array(
