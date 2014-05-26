@@ -8,9 +8,11 @@ class {ClassName} extends YdDbMigration
     public function safeUp()
     {
 
-        $this->qs("
+        $sql = <<<unique_rpkjinpucx
 
-        ");
+unique_rpkjinpucx;
+
+        $this->qs($sql);
 
         /**
         // Run single query:
