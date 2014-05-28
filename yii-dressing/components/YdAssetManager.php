@@ -23,6 +23,7 @@ class YdAssetManager extends CAssetManager
      * @param bool $hashByName
      * @param int $level
      * @param null $forceCopy
+     * @return string
      */
     public function publish($path, $hashByName = false, $level = -1, $forceCopy = null)
     {
