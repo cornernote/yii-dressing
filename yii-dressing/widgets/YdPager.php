@@ -1,6 +1,7 @@
 <?php
 
 Yii::import('bootstrap.widgets.TbPager');
+
 /**
  * YdPager
  *
@@ -15,15 +16,16 @@ Yii::import('bootstrap.widgets.TbPager');
 class YdPager extends TbPager
 {
 
+    /**
+     * @var bool
+     */
     public $displayFirstAndLast = false;
 
     /**
-     *### .createPageButtons()
-     *
      * Creates the page buttons.
      * @return array a list of page buttons (in HTML code).
      */
-    protected function createPageButtons()
+    protected function createPageLinks()
     {
         if (($pageCount = $this->getPageCount()) <= 0) {
             return array();
