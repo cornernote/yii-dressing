@@ -31,15 +31,14 @@ class YdPager extends TbPager
             return array();
         }
 
-        list ($beginPage, $endPage) = $this->getPageRange();
+        list($beginPage, $endPage) = $this->getPageRange();
 
         $currentPage = $this->getCurrentPage(false); // currentPage is calculated in getPageRange()
-
-        $buttons = array();
+        $links = array();
 
         // first page
-        if ($this->displayFirstAndLast) {
-            $buttons[] = $this->createPageButton($this->firstPageLabel, 0, 'first', $currentPage <= 0, false);
+        if (!$this->hideFirstAndLast) {
+            $links[] = $this->createPageLink($this->firstPageLabel, 0, $currentPage <= 0, false);
         }
 
         // prev page
@@ -47,11 +46,11 @@ class YdPager extends TbPager
             $page = 0;
         }
 
-        $buttons[] = $this->createPageButton($this->prevPageLabel, $page, 'previous', $currentPage <= 0, false);
+        $links[] = $this->createPageLink($this->prevPageLabel, $page, $currentPage <= 0, false);
 
         // internal pages
         for ($i = $beginPage; $i <= $endPage; ++$i) {
-            $buttons[] = $this->createPageButton($i + 1, $i, '', false, $i == $currentPage);
+            $links[] = $this->createPageLink($i + 1, $i, false, $i == $currentPage);
         }
 
         // next page
@@ -59,26 +58,19 @@ class YdPager extends TbPager
             $page = $pageCount - 1;
         }
 
-        $buttons[] = $this->createPageButton(
-            $this->nextPageLabel,
-            $page,
-            'next',
-            $currentPage >= ($pageCount - 1),
-            false
-        );
+        $links[] = $this->createPageLink($this->nextPageLabel, $page, $currentPage >= $pageCount - 1, false);
 
         // last page
-        if ($this->displayFirstAndLast) {
-            $buttons[] = $this->createPageButton(
+        if (!$this->hideFirstAndLast) {
+            $links[] = $this->createPageLink(
                 $this->lastPageLabel,
                 $pageCount - 1,
-                'last',
-                $currentPage >= ($pageCount - 1),
+                $currentPage >= $pageCount - 1,
                 false
             );
         }
 
-        return $buttons;
+        return $links;
     }
 
 }
