@@ -17,11 +17,6 @@ class YdPager extends TbPager
 {
 
     /**
-     * @var bool
-     */
-    public $displayFirstAndLast = false;
-
-    /**
      * Creates the page buttons.
      * @return array a list of page buttons (in HTML code).
      */
