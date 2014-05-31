@@ -15,6 +15,61 @@ class YdClientScript extends CClientScript
 {
 
     /**
+     * @var array
+     */
+    public $ignoreAjaxCoreScript = array(
+        'jquery',
+        'yiiactiveform',
+        'bootstrap-yii',
+        'jquery-css',
+        'notify',
+        'bootstrap.js',
+        'bootbox',
+    );
+
+    /**
+     * @var array
+     */
+    public $ignoreAjaxScriptFile = array(
+        'jquery-ui.min.js',
+        'jquery-ui.js',
+        'jquery-ui-i18n.min.js',
+        'jquery-ui-i18n.js',
+        'bootstrap.min.js',
+        'bootstrap.js',
+        'bootstrap-editable.js',
+        'bootstrap-editable.min.js',
+        'jquery.yiiactiveform.js',
+        'jquery.yiiactiveform.min.js',
+    );
+
+    /**
+     * @var array
+     */
+    public $ignoreAjaxCssFile = array(
+        'yii.css',
+        'bootstrap-yii.css',
+        'bootstrap-yii.min.css',
+        'bootstrap-responsive.css',
+        'bootstrap-responsive.min.css',
+        'bootstrap.no-responsive.css',
+        'bootstrap.no-responsive.min.css',
+        'bootstrap.css',
+        'bootstrap.min.css',
+        'font-awesome.css',
+        'font-awesome.min.css',
+        'jquery-ui-bootstrap.css',
+        'jquery-ui-bootstrap.min.css',
+        'bootstrap-notify.css',
+        'bootstrap-notify.min.css',
+        'jquery.qtip.css',
+        'app.css',
+        'yii-dressing.css',
+        'bootstrap-editable.css',
+        'bootstrap-editable.min.css',
+    );
+
+    /**
      * @var array the registered CSS files (CSS URL=>media type).
      */
     protected $cssFiles = array();
@@ -57,30 +112,8 @@ class YdClientScript extends CClientScript
     public function registerCssFile($url, $media = '')
     {
         // do not load these scripts on ajax
-        $ignoreAjax = array(
-            'yii.css',
-            'bootstrap-yii.css',
-            'bootstrap-yii.min.css',
-            'bootstrap-responsive.css',
-            'bootstrap-responsive.min.css',
-            'bootstrap.no-responsive.css',
-            'bootstrap.no-responsive.min.css',
-            'bootstrap.css',
-            'bootstrap.min.css',
-            'font-awesome.css',
-            'font-awesome.min.css',
-            'jquery-ui-bootstrap.css',
-            'jquery-ui-bootstrap.min.css',
-            'bootstrap-notify.css',
-            'bootstrap-notify.min.css',
-            'jquery.qtip.css',
-            'app.css',
-            'yii-dressing.css',
-            'bootstrap-editable.css',
-            'bootstrap-editable.min.css',
-        );
         if (Yii::app()->request->isAjaxRequest) {
-            foreach ($ignoreAjax as $ignore) {
+            foreach ($this->ignoreAjaxCssFile as $ignore) {
                 if ($this->endsWith($url, $ignore))
                     return $this;
             }
@@ -211,18 +244,8 @@ class YdClientScript extends CClientScript
     public function registerScriptFile($url, $position = null, array $htmlOptions = array())
     {
         // do not load these scripts on ajax
-        $ignoreAjax = array(
-            'jquery-ui.min.js',
-            'jquery-ui.js',
-            'jquery-ui-i18n.min.js',
-            'jquery-ui-i18n.js',
-            'bootstrap.min.js',
-            'bootstrap.js',
-            'bootstrap-editable.js',
-            'bootstrap-editable.min.js',
-        );
         if (Yii::app()->request->isAjaxRequest) {
-            foreach ($ignoreAjax as $ignore) {
+            foreach ($this->ignoreAjaxScriptFile as $ignore) {
                 if ($this->endsWith($url, $ignore))
                     return $this;
             }
@@ -304,16 +327,7 @@ class YdClientScript extends CClientScript
     public function registerCoreScript($name, $options = array())
     {
         // do not load these scripts on ajax
-        $ignoreAjax = array(
-            'jquery',
-            'yiiactiveform',
-            'bootstrap-yii',
-            'jquery-css',
-            'notify',
-            'bootstrap.js',
-            'bootbox',
-        );
-        if (Yii::app()->request->isAjaxRequest && in_array($name, $ignoreAjax)) {
+        if (Yii::app()->request->isAjaxRequest && in_array($name, $this->ignoreAjaxCoreScript)) {
             return $this;
         }
         return parent::registerCoreScript($name);

@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Yii extension to the drag n drop HTML5 file upload Dropzone.js
  * For more info, see @link http://www.dropzonejs.com/
  *
@@ -31,56 +31,72 @@ class YdDropzone extends CWidget
      * @var string The name of the file field
      */
     public $id = 'dropzone';
+
+    /**
+     * @var array
+     */
+    public $htmlOptions = array();
+
     /**
      * @var string The name of the file field
      */
     public $name = false;
+
     /**
      * @var CModel The model for the file field
      */
     public $model = false;
+
     /**
      * @var string The attribute of the model
      */
     public $attribute = false;
+
     /**
      * @var array An array of options that are supported by Dropzone
      */
     public $options = array();
+
     /**
      * @var string The URL that handles the file upload
      */
     public $url = false;
+
     /**
      * @var array An array of supported MIME types
      */
     public $mimeTypes = array();
 
-
     /**
      * @var string
      */
     public $onAddedFile = false;
+
     /**
      * @var string Called whenever a file is removed from the list. You can listen to this and delete the file from your server if you want to.
      */
     public $onRemovedFile = false;
+
     /**
      * @var string Receives an array of files and gets called whenever files are dropped or selected.
      */
     public $onSelectedFiles = false;
+
     /**
      * @var string When the thumbnail has been generated. Receives the dataUrl as second parameter.
      */
     public $onThumbnail = false;
+
     /**
      * @var string An error occured. Receives the errorMessage as second parameter and if the error was due to the XMLHttpRequest the xhr object as third.
      */
     public $onError = false;
+
     /**
      * @var string When a file gets processed (since there is a queue not all files are processed immediately).
      */
     public $onProcessing = false;
+
     /**
      * @var string Gets called periodically whenever the file upload progress changes.
      * Gets the progress parameter as second parameter which is a percentage (0-100) and the bytesSent parameter as
@@ -88,27 +104,37 @@ class YdDropzone extends CWidget
      * ensures that uploadprogress will be called with a percentage of 100 at least once.
      */
     public $onUploadProgress = false;
+
     /**
      * @var string Called just before each file is sent. Gets the xhr object and the formData objects as second and
      * third parameters, so you can modify them (for example to add a CSRF token) or add additional data.
      */
     public $onSending = false;
+
     /**
      * @var string The file has been uploaded successfully. Gets the server response as second argument.
      */
     public $onSuccess = false;
+
     /**
      * @var string Called when the upload was either successful or erroneous.
      */
     public $onComplete = false;
+
     /**
      * @var string Called when a file upload gets canceled.
      */
     public $onCanceled = false;
+
     /**
      * @var string Called when the number of files accepted exceeds the maxFiles limit.
      */
     public $onMaxFilesExceeded = false;
+
+    /**
+     * @var bool If we should register the dropzone.css styles.
+     */
+    public $registerDropzoneCss = true;
 
     /**
      * Create a div and the appropriate Javascript to make the div into the file upload area
@@ -118,8 +144,10 @@ class YdDropzone extends CWidget
         if (!$this->url)
             $this->url = Yii::app()->getRequest()->getRequestUri();
 
-        echo CHtml::openTag('div', array('class' => 'dropzone', 'id' => $this->id));
-        echo CHtml::closeTag('div');
+        $this->htmlOptions['id'] = $this->id;
+        $this->htmlOptions['class'] = isset($this->htmlOptions['class']) ? $this->htmlOptions['class'] . ' dropzone' : 'dropzone';
+
+        echo CHtml::openTag('div', $this->htmlOptions) . CHtml::closeTag('div');
 
         if (!$this->name && ($this->model && $this->attribute) && $this->model instanceof CModel)
             $this->name = CHtml::activeName($this->model, $this->attribute);
@@ -166,7 +194,10 @@ class YdDropzone extends CWidget
         $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.dropzone'), true, -1, YII_DEBUG);
         $cs->registerCoreScript('jquery');
         $cs->registerScriptFile($baseUrl . '/js/dropzone.js', CClientScript::POS_END);
-        $cs->registerCssFile($baseUrl . '/css/dropzone.css');
+        $cs->registerCssFile($baseUrl . '/css/basic.css');
+        if ($this->registerDropzoneCss) {
+            $cs->registerCssFile($baseUrl . '/css/dropzone.css');
+        }
     }
 
 }

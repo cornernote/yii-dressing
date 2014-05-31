@@ -35,9 +35,9 @@ class YdCsv
      * @param string $enclosure
      * @return mixed
      */
-    static function escapeCsvElement($dataElement, $delimiter = ",", $enclosure = "\"")
+    static function escapeCsvElement($dataElement, $delimiter = ',', $enclosure = '"')
     {
-        return str_replace("\"", "\"\"", $dataElement);
+        return str_replace('"', '""', $dataElement);
     }
 
     /**
@@ -46,7 +46,7 @@ class YdCsv
      * @param string $enclosure
      * @return string
      */
-    static function getCsvData($dataArray, $delimiter = ",", $enclosure = "\"", $newLine = "\n")
+    static function getCsvData($dataArray, $delimiter = ',', $enclosure = '"', $newLine = "\n")
     {
         // Write a line to a file
         // $filePointer = the file resource to write to
@@ -54,7 +54,7 @@ class YdCsv
         // $delimeter = the field separator
 
         // Build the string
-        $string = "";
+        $string = '';
 
         // for each array element, which represents a line in the csv file...
         foreach ($dataArray as $line) {
@@ -89,12 +89,12 @@ class YdCsv
      * @param $cvsString
      * @param string $filename
      */
-    static function sendCsvInHeader($cvsString, $filename = "csvreport.csv")
+    static function sendCsvInHeader($cvsString, $filename = 'csvreport.csv')
     {
-        header("Content-Type: application/vnd.ms-excel");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Content-Disposition: attachment; filename=$filename");
+        header('Content-Type: application/vnd.ms-excel');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Content-Disposition: attachment; filename=' . $filename);
 
         echo $cvsString;
     }
@@ -127,7 +127,7 @@ class YdCsv
      * @param string $enclosure
      * @param string $filename
      */
-    static function outputCsvFromKeyValueArray($keyValueArray, $delimiter = ",", $enclosure = "\"", $filename = "csvreport.csv")
+    static function outputCsvFromKeyValueArray($keyValueArray, $delimiter = ',', $enclosure = '"', $filename = 'csvreport.csv')
     {
         $csvString = self::getCsvData(self::addCsvHeader($keyValueArray), $delimiter, $enclosure);
         self::sendCsvInHeader($csvString, $filename);
@@ -138,18 +138,29 @@ class YdCsv
      * @param string $delimiter
      * @return array
      */
-    static function csvToArray($fileName, $delimiter = ",")
+    static function csvToArray($fileName, $delimiter = ',', $headerRow = 1)
     {
-        $handle = fopen($fileName, "r");
+        $handle = fopen($fileName, 'r');
         $rows = array();
-        $header = fgetcsv($handle, null, $delimiter);
+        while ($headerRow > 1) {
+            $headerRow--;
+            fgetcsv($handle, null, $delimiter);
+        }
+        if ($headerRow) {
+            $header = fgetcsv($handle, null, $delimiter);
+        }
         while (($data = fgetcsv($handle, null, $delimiter)) !== FALSE) {
             $row = array();
-            foreach ($header as $key => $heading) {
-                $heading = trim($heading);
-                $row[$heading] = (isset($data[$key])) ? YdEncoding::toUTF8($data[$key]) : '';
+            if ($headerRow) {
+                foreach ($header as $key => $heading) {
+                    $heading = trim($heading);
+                    $row[$heading] = (isset($data[$key])) ? YdEncoding::toUTF8($data[$key]) : '';
+                }
+                $rows[] = $row;
             }
-            $rows[] = $row;
+            else {
+                $rows[] = $data;
+            }
         }
         fclose($handle);
         return $rows;

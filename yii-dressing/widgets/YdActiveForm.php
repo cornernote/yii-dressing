@@ -31,6 +31,14 @@ class YdActiveForm extends TbActiveForm
     public $askToSaveWork;
 
     /**
+     * @var array
+     */
+    public $clientOptions = array(
+        'validateOnChange' => true,
+        'validationDelay' => 0,
+    );
+
+    /**
      * Initializes the widget.
      * This renders the form open tag.
      */
@@ -130,11 +138,12 @@ class YdActiveForm extends TbActiveForm
      * @param array $options
      * @return string
      */
-    public function getSubmitButtonRow($label = null, $options = array())
+    public function getSubmitButtonRow($label = null, $buttonHtmlOptions = array(), $rowHtmlOptions = array())
     {
-        if (!isset($options['color']))
-            $options['color'] = TbHtml::BUTTON_COLOR_PRIMARY;
-        return CHtml::tag('div', array('class' => $this->getSubmitRowClass()), TbHtml::submitButton($label, $options));
+        if (!isset($buttonHtmlOptions['color']))
+            $buttonHtmlOptions['color'] = TbHtml::BUTTON_COLOR_PRIMARY;
+        $rowHtmlOptions['class'] = isset($rowOptions['class']) ? $rowOptions['class'] . ' ' . $this->getSubmitRowClass() : $this->getSubmitRowClass();
+        return CHtml::tag('div', $rowHtmlOptions, TbHtml::submitButton($label, $buttonHtmlOptions));
     }
 
 }

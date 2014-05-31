@@ -37,7 +37,10 @@ class YdDefaultAttributesBehavior extends CActiveRecordBehavior
      */
     public function beforeValidate($event)
     {
-        $this->getOwner()->setDefaultAttributes();
+        if (method_exists($this->getOwner(),'setDefaultAttributes')){
+            $this->getOwner()->setDefaultAttributes();
+        }
+        // will the following will be called twice?
         return parent::beforeValidate($event);
     }
 
@@ -46,7 +49,10 @@ class YdDefaultAttributesBehavior extends CActiveRecordBehavior
      */
     public function beforeSave($event)
     {
-        $this->getOwner()->setDefaultAttributes();
+        if (method_exists($this->getOwner(),'setDefaultAttributes')){
+            $this->getOwner()->setDefaultAttributes();
+        }
+        // will the following will be called twice?
         return parent::beforeSave($event);
     }
 

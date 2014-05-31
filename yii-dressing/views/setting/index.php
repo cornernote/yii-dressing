@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $this SettingController
+ * @var $this YdSettingController
  * @var $settings YdSetting[]
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
@@ -14,15 +14,14 @@ $this->pageTitle = Yii::t('dressing', 'Settings');
 $this->menu = SiteMenu::getItemsFromMenu(SiteMenu::MENU_MAIN);
 
 /** @var YdActiveForm $form */
-$form = $this->beginWidget('dressing.widgets.YdActiveForm', array(
+$form = $this->beginWidget('ActiveForm', array(
     'id' => 'setting-form',
-    'type' => 'horizontal',
+    'layout' => TbHtml::FORM_LAYOUT_HORIZONTAL,
 ));
 echo $form->beginModalWrap();
 echo $form->errorSummary($settings);
 
 echo '<h2>' . Yii::t('dressing', 'Core Settings') . '</h2>';
-
 echo '<fieldset><legend>' . Yii::t('dressing', 'Version Settings') . '</legend>';
 echo $form->textFieldControlGroup($settings['id'], 'value', array('name' => 'YdSetting[id][value]', 'labelOptions' => array('for' => 'YdSetting_id_value')));
 echo $form->dropDownListControlGroup($settings['app_version'], 'value', YdSetting::appVersions(), array('name' => 'YdSetting[app_version][value]', 'labelOptions' => array('for' => 'YdSetting_app_version_value')));
@@ -52,7 +51,6 @@ echo '</fieldset>';
 echo '<h2>' . Yii::t('dressing', 'App Settings') . '</h2>';
 
 echo '<fieldset><legend>' . Yii::t('dressing', 'PHP Settings') . '</legend>';
-echo $form->dropDownListControlGroup($settings['theme'], 'value', YdSetting::themes(), array('name' => 'YdSetting[theme][value]', 'empty' => '', 'labelOptions' => array('for' => 'YdSetting_theme_value')));
 echo $form->textFieldControlGroup($settings['defaultPageSize'], 'value', array('name' => 'YdSetting[defaultPageSize][value]', 'labelOptions' => array('for' => 'YdSetting_defaultPageSize_value')));
 echo '</fieldset>';
 
@@ -67,7 +65,6 @@ echo $form->textFieldControlGroup($settings['name'], 'value', array('name' => 'Y
 //echo $form->textAreaControlGroup($settings['address'], 'value', array('name' => 'YdSetting[address][value]', 'labelOptions' => array('for' => 'YdSetting_address_value')));
 //echo $form->textFieldControlGroup($settings['phone'], 'value', array('name' => 'YdSetting[phone][value]', 'labelOptions' => array('for' => 'YdSetting_phone_value')));
 //echo $form->textFieldControlGroup($settings['website'], 'value', array('name' => 'YdSetting[website][value]', 'labelOptions' => array('for' => 'YdSetting_website_value')));
-echo $form->textFieldControlGroup($settings['email'], 'value', array('name' => 'YdSetting[email][value]', 'labelOptions' => array('for' => 'YdSetting_email_value')));
 echo '</fieldset>';
 
 echo $form->endModalWrap();

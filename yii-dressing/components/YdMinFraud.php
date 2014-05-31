@@ -40,9 +40,8 @@ class YdMinFraud extends CApplicationComponent
     public function getMinFraud($options)
     {
         $options['license_key'] = $this->licenseKey;
-        $url = 'https://minfraud1.maxmind.com/app/ccv2r?' . http_build_query($options);
         $minfraud = array();
-        $minfraud_contents = YdUrlReader::getUrl($url);
+        $minfraud_contents = YdCurl::download('https://minfraud1.maxmind.com/app/ccv2r?' . http_build_query($options));
         $minfraud_array = explode(';', $minfraud_contents);
         foreach ($minfraud_array as $minfraud_row) {
             list($key, $val) = explode('=', $minfraud_row);

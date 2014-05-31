@@ -9,14 +9,18 @@
  * @link https://github.com/cornernote/yii-dressing
  * @license BSD-3-Clause https://raw.github.com/cornernote/yii-dressing/master/license.txt
  *
+ *
+ * @usage
+ * <?php $this->beginWidget('dressing.widgets.YdJavaScriptWidget', array('id' => 'optional_uniquie_id')); ?>
+ * <script type="text/javascript">
+ * ... your javascript ...
+ * </script>
+ * <?php $this->endWidget(); ?>
+ *
  * @package dressing.widgets
  */
 class YdJavaScriptWidget extends CWidget
 {
-    /**
-     * @var
-     */
-    public $id;
 
     /**
      * @var
@@ -36,11 +40,6 @@ class YdJavaScriptWidget extends CWidget
      */
     public function run()
     {
-        // get id
-        if (!$this->id) {
-            $this->id = 'script-' . uniqid();
-        }
-
         // get position
         if ($this->position === null) {
             $this->position = CClientScript::POS_READY;
@@ -49,8 +48,15 @@ class YdJavaScriptWidget extends CWidget
         // get contents
         $contents = ob_get_clean();
         $contents = str_replace(array('<script>', '<script type="text/javascript">', '</script>'), '', $contents);
+        //just echo the script
+        if ($this->position ==-1){
+            echo $contents;
+        }
+        else{
+            // register the js script
+            Yii::app()->clientScript->registerScript($this->id, $contents, $this->position);
+        }
 
-        // register the js script
-        Yii::app()->clientScript->registerScript($this->id, $contents, $this->position);
     }
+    
 }

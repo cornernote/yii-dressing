@@ -49,7 +49,7 @@ class YdSetting extends YdActiveRecord
     /**
      * @var array
      */
-    private static $_items = array();
+    static protected  $_items = array();
 
     /**
      * Returns the static model of the specified AR class.
@@ -62,37 +62,113 @@ class YdSetting extends YdActiveRecord
     }
 
     /**
-     * @return array
+     * @return string the associated database table name
      */
-    public function attributeLabels()
+    public function tableName()
+    {
+        return $_ENV['_core']['db']['setting'];
+    }
+
+    /**
+     * @return array containing model behaviors
+     */
+    public function behaviors()
     {
         return array(
-            'value' => YdCakeInflector::humanize($this->key),
+//            'AuditBehavior' => 'behaviors.AuditBehavior',
         );
     }
 
     /**
      * @static
      * @param string $name
-     * @return string
+     * @return string|int
      */
     public static function item($name)
     {
-        if (!self::$_items)
-            self::loadItems();
-        if (isset(self::$_items[$name]))
+        if (isset(self::$_items[$name])) {
             return self::$_items[$name];
-
+        }
+        $items = self::items();
+        if (isset($items[$name])) {
+            return $items[$name];
+        }
         return param($name);
     }
 
     /**
-     *
+     * @static
+     * @return array
      */
-    private static function loadItems()
+    public static function items()
     {
-        foreach (self::model()->findAll() as $setting)
-            self::$_items[$setting->key] = $setting->value;
+        if (self::$_items) {
+            return self::$_items;
+        }
+        return self::$_items = $_ENV['_core']['setting'];
+    }
+
+
+    /**
+     * @return array
+     */
+    static public function appVersions()
+    {
+        $_versions = array();
+        $p = dirname(bp());
+        $d = dir($p);
+        while (false !== ($entry = $d->read())) {
+            if (substr($entry, 0, 4) == 'app-') {
+                $time = filemtime($p . DS . $entry);
+                $_versions[$time] = array(
+                    'entry' => $entry,
+                    'display' => $entry . ' -- ' . date(self::item('dateTimeFormat'), $time) . ' -- (' . Time::ago($time) . ')',
+                );
+            }
+        }
+        $d->close();
+        krsort($_versions);
+        $versions = array();
+        foreach ($_versions as $version) {
+            $versions[$version['entry']] = $version['display'];
+        }
+        return $versions;
+    }
+
+    /**
+     * @return array
+     */
+    static public function yiiVersions()
+    {
+        $_versions = array();
+        $p = VENDOR_PATH . DS . 'yii';
+        $d = dir($p);
+        while (false !== ($entry = $d->read())) {
+            if (substr($entry, 0, 4) == 'yii-') {
+                $time = filemtime($p . DS . $entry);
+                $_versions[$time] = array(
+                    'entry' => $entry,
+                    'display' => $entry . ' -- ' . date(self::item('dateTimeFormat'), $time) . ' -- (' . Time::ago($time) . ')',
+                );
+            }
+        }
+        $d->close();
+        krsort($_versions);
+        $versions = array();
+        foreach ($_versions as $version) {
+            $versions[$version['entry']] = $version['display'];
+        }
+        return $versions;
+    }
+
+    /**
+     * @return array
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'value' => StringHelper::humanize($this->key),
+        );
     }
 
 }

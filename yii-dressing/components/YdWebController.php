@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class YdWebController
  *
@@ -21,6 +22,16 @@ class YdWebController extends YdController
     public function init()
     {
         $this->layout = Yii::app()->dressing->defaultLayout;
+    }
+
+    /**
+     * @return array action filters
+     */
+    public function filters()
+    {
+        return array(
+            'accessControl',
+        );
     }
 
     /**
