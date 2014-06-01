@@ -97,8 +97,8 @@ class YdGridView extends TbGridView
             $this->pager['prevPageLabel'] = '<i class="icon-backward"></i>';
         if (!isset($this->pager['maxButtonCount']))
             $this->pager['maxButtonCount'] = 5;
-        if (!isset($this->pager['displayFirstAndLast']))
-            $this->pager['displayFirstAndLast'] = true;
+        if (!isset($this->pager['hideFirstAndLast']))
+            $this->pager['hideFirstAndLast'] = false;
 
         // userPageSize drop down changed
         $this->setUserPageSize();

@@ -49,8 +49,8 @@ class YdListView extends CListView
             $this->pager['prevPageLabel'] = '<i class="icon-backward"></i>';
         if (!isset($this->pager['maxButtonCount']))
             $this->pager['maxButtonCount'] = 5;
-        if (!isset($this->pager['displayFirstAndLast']))
-            $this->pager['displayFirstAndLast'] = true;
+        if (!isset($this->pager['hideFirstAndLast']))
+            $this->pager['hideFirstAndLast'] = true;
 
         // userPageSize drop down changed
         $this->setUserPageSize();
