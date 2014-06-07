@@ -101,6 +101,36 @@ class YdBase extends YiiBase
     }
 
     /**
+     * Creates a GearmanWorkerApplication, in addition it will remove config items
+     * that are incompatibale with CConsoleApplication.
+     * @param null $config
+     * @return CConsoleApplication
+     * @throws CException if it is not called from CLI
+     */
+    public static function createGearmanApplication($config = null)
+    {
+        if (!YII_DRESSING_CLI)
+            throw new CException(Yii::t('dressing', 'This script can only run from a CLI.'));
+
+        // load the config array
+        $config = self::loadConfig($config);
+
+        // remove incompatibale items
+        $excludeItems = array('theme', 'controllerMap', 'commandMap');
+        foreach ($excludeItems as $excludeItem)
+            if (array_key_exists($excludeItem, $config))
+                unset($config[$excludeItem]);
+
+        // create app
+        $app = self::createApplication('EGearmanApplication', $config);
+
+        // fix for absolute url
+        $app->getRequest()->setBaseUrl(WWW_URL);
+
+        return $app;
+    }
+
+    /**
      * Config can be a string, in which case a file and optional local file override are loaded.
      * The files should return arrays.
      * @param $config
