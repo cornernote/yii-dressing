@@ -19,7 +19,8 @@ class YdModal extends CWidget
     public function init()
     {
         // fix modals on mobile devices
-        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.bootstrap-modal'), false, 1, YII_DEBUG);
+        //$baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.bootstrap-modal'), false, 1, YII_DEBUG);
+        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('vendor.jschr.bootstrap-modal'), false, 1, YII_DEBUG);
         $cs = Yii::app()->clientScript;
         $cs->registerCssFile($baseUrl . '/css/bootstrap-modal.css');
         $cs->registerScriptFile($baseUrl . '/js/bootstrap-modalmanager.js', CClientScript::POS_END);
