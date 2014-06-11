@@ -5,7 +5,7 @@
  *
  * @package dressing.components
  */
-class YdBPayHelper
+class YdBPayHelper extends CApplicationComponent
 {
 
     /**
@@ -25,14 +25,6 @@ class YdBPayHelper
      * @var string
      */
     private $_logoUrl;
-
-    /**
-     *
-     */
-    public function init()
-    {
-
-    }
 
     /**
      * @param $ref
