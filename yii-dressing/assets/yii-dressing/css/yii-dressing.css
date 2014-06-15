@@ -79,11 +79,15 @@ body {
  * Navbar Hover Open
  */
 
-.navbar-fixed-top .nav li:hover ul, .navbar-fixed-top .navbutton:hover ul {
+.navbar-fixed-top .nav li:hover ul,
+.navbar-fixed-top .navbutton:hover ul,
+.navbar-static-top .nav li:hover ul,
+.navbar-static-top .navbutton:hover ul {
     display: block;
 }
 
-.navbar-fixed-top .dropdown-menu {
+.navbar-fixed-top .dropdown-menu,
+.navbar-static-top .dropdown-menu {
     margin: 0;
 }
 
