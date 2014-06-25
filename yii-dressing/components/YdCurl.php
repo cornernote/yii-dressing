@@ -19,6 +19,11 @@ class YdCurl
     public static $referer;
 
     /**
+     * @var bool
+     */
+    public static $followLocation = true;
+
+    /**
      * @param string $url
      * @param string|array $post
      * @return bool|string
@@ -30,10 +35,12 @@ class YdCurl
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_AUTOREFERER, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         if ($post) {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, is_string($post) ? $post : http_build_query($post));
+        }
+        if (self::$followLocation) {
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         }
         if (self::$referer) {
             curl_setopt($ch, CURLOPT_REFERER, self::$referer);
