@@ -20,7 +20,8 @@
         "cornernote/highcharts-assets": "v3.0.7",
         "cornernote/ckeditor-assets": "4.3.1",
         "cornernote/ckfinder-assets": "2.4.1",
-        "jschr/bootstrap-modal": "2.2.5"
+        "jschr/bootstrap-modal": "2.2.5",
+        "components/angular.js": "1.2.16",
     },
     "require-dev": {
         "yiisoft/yii": "1.1.14"
