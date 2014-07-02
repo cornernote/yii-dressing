@@ -23,7 +23,7 @@
  *
  * @package dressing.widgets
  */
-class YdAngularjsHelper extends CWidget
+class YdAngularJs extends CWidget
 {
 
     /** Default parameter placeholders to be replaed when assets are published */
