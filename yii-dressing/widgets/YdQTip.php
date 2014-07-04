@@ -20,6 +20,11 @@ class YdQTip extends CWidget
     public $selector = 'a[title]:not(.fancybox-item,.fancybox-nav),i[title],.icon[title]';
 
     /**
+     * @var string
+     */
+    public $classes = 'qtip-bootstrap';
+
+    /**
      *
      */
     public function init()
@@ -43,7 +48,7 @@ class YdQTip extends CWidget
                 e.qtip({
                     overwrite: false,
                     style: {
-                        classes: "qtip-bootstrap"
+                        classes: "' . $this->classes . '"
                     },
                     show: {
                         ready: true
