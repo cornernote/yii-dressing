@@ -75,6 +75,9 @@ class YdDeviceDetection extends CApplicationComponent
         if ($this->_device) {
             return $this->_device;
         }
+        if (!isset($_SERVER['HTTP_USER_AGENT'])) {
+            return $this->_device = $this->deviceDesktop;
+        }
         $ua = $_SERVER['HTTP_USER_AGENT'];
 
         // Smart TV - http://goo.gl/FocDk
