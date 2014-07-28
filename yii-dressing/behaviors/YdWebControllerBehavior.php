@@ -155,7 +155,7 @@ class YdWebControllerBehavior extends CBehavior
     /**
      * Performs the AJAX validation for one or more CActiveRecord models
      *
-     * @param CActiveRecord|CActiveRecord[] $model
+     * @param CActiveRecord|CFormModel|CActiveRecord[]|CFormModel[] $model
      * @param $form
      */
     public function performAjaxValidation($model, $form)
