@@ -55,18 +55,18 @@ class YdDropdownColumn extends TbDataColumn
         parent::renderDataCellContent($row, $data);
         $parentContents = ob_get_clean();
 
-        $htmlOptions = TbArray::popValue('buttonOptions', $this->htmlOptions, array());
+        $buttonOptions = TbArray::popValue('buttonOptions', $this->htmlOptions, array());
         if ($data instanceof CActiveRecord && method_exists($data, 'getUrl')) {
-            $htmlOptions['split'] = true;
-            $htmlOptions['type'] = TbHtml::BUTTON_TYPE_LINK;
-            $htmlOptions['url'] = $data->getUrl();
+            $buttonOptions['split'] = true;
+            $buttonOptions['type'] = TbHtml::BUTTON_TYPE_LINK;
+            $buttonOptions['url'] = call_user_func(array($data, 'getUrl'));
             $links = method_exists($data, 'getMenuLinks') ? call_user_func(array($data, 'getMenuLinks')) : array();
             echo '<div class="filter-container">';
-            echo TbHtml::buttonDropdown($parentContents, $links, $htmlOptions);
+            echo TbHtml::buttonDropdown($parentContents, $links, $buttonOptions);
             echo '</div>';
         }
         else {
-            echo TbHtml::button($parentContents, $htmlOptions);
+            echo TbHtml::button($parentContents, $buttonOptions);
         }
     }
 
