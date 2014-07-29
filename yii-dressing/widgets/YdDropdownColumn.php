@@ -55,7 +55,7 @@ class YdDropdownColumn extends TbDataColumn
         parent::renderDataCellContent($row, $data);
         $parentContents = ob_get_clean();
 
-        $htmlOptions = array('size' => TbHtml::BUTTON_SIZE_MINI);
+        $htmlOptions = TbArray::popValue('buttonOptions', $this->htmlOptions, array());
         if ($data instanceof CActiveRecord && method_exists($data, 'getUrl')) {
             $htmlOptions['split'] = true;
             $htmlOptions['type'] = TbHtml::BUTTON_TYPE_LINK;
