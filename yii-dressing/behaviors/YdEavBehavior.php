@@ -566,10 +566,11 @@ class YdEavBehavior extends CActiveRecordBehavior
             }
             // If search models with attribute name with anything values.
             elseif (is_int($attribute)) {
+                $field = $values;
                 $values = $conn->quoteValue($values);
-                $criteria->join .= "\nJOIN {$this->tableName} eavb$i"
-                    . "\nON t.{$pk} = eavb$i.{$this->entityField}"
-                    . "\nAND eavb$i.{$this->attributeField} = $values";
+                $criteria->join .= "\nJOIN {$this->tableName} eav_$field"
+                    . "\nON t.{$pk} = eav_$field.{$this->entityField}"
+                    . "\nAND eav_$field.{$this->attributeField} = $values";
                 $i++;
             }
         }
