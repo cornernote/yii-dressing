@@ -88,13 +88,13 @@ class YdGridView extends TbGridView
     {
         // pager labels
         if (!isset($this->pager['firstPageLabel']))
-            $this->pager['firstPageLabel'] = '<i class="icon-fast-backward"></i>';
+            $this->pager['firstPageLabel'] = '<i class="fa fa-fast-backward"></i>';
         if (!isset($this->pager['lastPageLabel']))
-            $this->pager['lastPageLabel'] = '<i class="icon-fast-forward"></i>';
+            $this->pager['lastPageLabel'] = '<i class="fa fa-fast-forward"></i>';
         if (!isset($this->pager['nextPageLabel']))
-            $this->pager['nextPageLabel'] = '<i class="icon-forward"></i>';
+            $this->pager['nextPageLabel'] = '<i class="fa fa-forward"></i>';
         if (!isset($this->pager['prevPageLabel']))
-            $this->pager['prevPageLabel'] = '<i class="icon-backward"></i>';
+            $this->pager['prevPageLabel'] = '<i class="fa fa-backward"></i>';
         if (!isset($this->pager['maxButtonCount']))
             $this->pager['maxButtonCount'] = 5;
         if (!isset($this->pager['hideFirstAndLast']))
