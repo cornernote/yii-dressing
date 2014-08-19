@@ -42,7 +42,7 @@ class YdJavaScriptWidget extends CWidget
     {
         // get position
         if ($this->position === null) {
-            $this->position = CClientScript::POS_READY;
+            $this->position = Yii::app()->clientScript->defaultScriptPosition;
         }
 
         // get contents
