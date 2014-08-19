@@ -260,7 +260,7 @@ class YdWebControllerBehavior extends CBehavior
                 $ids[$vv] = $vv;
             }
         }
-        return $ids;
+        return array_unique($ids);
     }
 
 }
