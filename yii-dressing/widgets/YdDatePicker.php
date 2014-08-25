@@ -14,7 +14,7 @@ Yii::import('zii.widgets.jui.CJuiDatePicker');
 class YdDatePicker extends CJuiDatePicker
 {
     public $row; // vertical | horizontal
-    public $hint;
+    public $help;
 
     public function init()
     {
@@ -85,8 +85,8 @@ class YdDatePicker extends CJuiDatePicker
             if ($this->hasModel()) {
                 echo CHtml::error($this->model, $this->attribute);
             }
-            if ($this->hint) {
-                echo CHtml::tag('p', array('class' => 'help-block'), $this->hint);
+            if ($this->help) {
+                echo CHtml::tag('p', array('class' => 'help-block'), $this->help);
             }
             if ($this->row == 'horizontal') {
                 echo '</div>';
