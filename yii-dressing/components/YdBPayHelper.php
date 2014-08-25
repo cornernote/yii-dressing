@@ -64,7 +64,7 @@ class YdBPayHelper extends CApplicationComponent
         $controller = Yii::app()->controller ? Yii::app()->controller : new CController('command');
         return $controller->renderInternal(Yii::getPathOfAlias('dressing.views.misc') . '/bpay.php', array(
             'bPay' => $this,
-            'crn' => $crn,
+            'crn' => $this->crn($crn),
             'logo' => $this->getLogoUrl(),
         ), true);
     }
