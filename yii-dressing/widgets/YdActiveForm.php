@@ -52,12 +52,12 @@ class YdActiveForm extends TbActiveForm
             $this->htmlOptions['class'] .= ' modal-form';
         }
 
+        // init the parent (output <form> tag)
+        parent::init();
+
         // get a model we can use for this form
         Yii::import('dressing.components.YdActiveFormModel');
         $this->model = $this->model ? $this->model : new YdActiveFormModel();
-
-        // init the parent (output <form> tag)
-        parent::init();
 
         // output the return url
         if ($this->returnUrl !== false)
