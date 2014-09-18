@@ -22,7 +22,7 @@
         "cornernote/ckfinder-assets": "2.4.1",
         "jschr/bootstrap-modal": "2.2.5",
         "components/angular.js": "1.2.16",
-        "hashids/hashids": "0.3.*@dev"
+        "hashids/hashids": "1.0.*@dev"
     },
     "require-dev": {
         "yiisoft/yii": "1.1.14"
