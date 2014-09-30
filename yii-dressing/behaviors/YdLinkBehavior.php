@@ -4,6 +4,7 @@
  * YdLinkBehavior gives models a url() and link() method.
  *
  * @property YdActiveRecord $owner
+ * @property string $controllerName
  *
  * @author Brett O'Donnell <cornernote@gmail.com>
  * @author Zain Ul abidin <zainengineer@gmail.com>
@@ -24,18 +25,33 @@ class YdLinkBehavior extends CActiveRecordBehavior
     /**
      * @var string The name of the controller to be used in links
      */
-    public $controllerName;
+    public $moduleName;
 
     /**
-     * Returns the name of the controller to be used in links
+     * @var string The name of the controller to be used in links
+     */
+    private $_controllerName;
+
+    /**
+     * Gets the name of the controller to be used in links
      *
      * @return string
      */
     public function getControllerName()
     {
-        if ($this->controllerName)
-            return $this->controllerName;
-        return $this->controllerName = lcfirst(get_class($this->owner));
+        if ($this->_controllerName)
+            return $this->_controllerName;
+        return $this->_controllerName = lcfirst(get_class($this->owner));
+    }
+
+    /**
+     * Sets the name of the controller to be used in links
+     *
+     * @param $controllerName
+     */
+    public function setControllerName($controllerName)
+    {
+        $this->_controllerName = $controllerName;
     }
 
     /**
@@ -77,7 +93,7 @@ class YdLinkBehavior extends CActiveRecordBehavior
         if (!$action)
             $action = $this->defaultAction;
         return array_merge(array(
-            '/' . $this->owner->getControllerName() . '/' . $action,
+            '/' . ($this->owner->moduleName ? $this->owner->moduleName . '/' : '') . $this->owner->getControllerName() . '/' . $action,
             'id' => $this->owner->getPrimaryKeyString(),
         ), (array)$params);
     }
