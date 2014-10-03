@@ -89,6 +89,16 @@
     float: left;
 }
 
+.grid-view .pagination ul > li > a {
+    border: 0;
+}
+
+.grid-view .pager {
+    float: left;
+    clear: left;
+    margin: 0;
+}
+
 .grid-view .page-size, .grid-view .form-multi-actions, .grid-view .form-grid-actions, .grid-view .form-grid-buttons {
     float: right;
     margin-left: 10px;
