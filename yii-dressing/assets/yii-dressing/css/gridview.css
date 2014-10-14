@@ -83,22 +83,6 @@
     color: transparent;
 }
 
-.grid-view .pagination {
-    margin: 0;
-    clear: both;
-    float: left;
-}
-
-.grid-view .pagination ul > li > a {
-    border: 0;
-}
-
-.grid-view .pager {
-    float: left;
-    clear: left;
-    margin: 0;
-}
-
 .grid-view .page-size, .grid-view .form-multi-actions, .grid-view .form-grid-actions, .grid-view .form-grid-buttons {
     float: right;
     margin-left: 10px;
@@ -118,9 +102,17 @@
     clear: both;
 }
 
-/**
- * Pagination
- */
+.grid-view .pagination {
+    margin: 0;
+    clear: both;
+    float: left;
+}
+
+.grid-view .pager {
+    float: left;
+    clear: left;
+    margin: 0;
+}
 
 .grid-view .pagination a {
     color: #333;
@@ -133,4 +125,10 @@
 
 .grid-view .pagination i {
     line-height: 0;
+}
+
+.grid-view .pager li > a, .grid-view .pager li > span {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
