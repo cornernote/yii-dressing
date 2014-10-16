@@ -99,6 +99,20 @@ class YdLinkBehavior extends CActiveRecordBehavior
     }
 
     /**
+     * Returns a URL Array to the model
+     *
+     * @param string $action
+     * @param array $params
+     * @return array
+     */
+    public function getAbsoluteUrl($action = null, $params = array())
+    {
+        $params = $this->owner->getUrl($action, $params);
+        $route = array_shift($params);
+        return Yii::app()->createAbsoluteUrl($route, $params);
+    }
+
+    /**
      * Returns a URL String to the model
      *
      * @param string $action
@@ -126,6 +140,22 @@ class YdLinkBehavior extends CActiveRecordBehavior
         if ($title === null)
             $title = $this->owner->getName();
         return CHtml::link($title, $this->owner->getUrl($urlAction, $urlParams), $htmlOptions);
+    }
+
+    /**
+     * Returns a Link to the model
+     *
+     * @param string $title
+     * @param string $urlAction
+     * @param array $urlParams
+     * @param array $htmlOptions
+     * @return string
+     */
+    public function getAbsoluteLink($title = null, $urlAction = null, $urlParams = array(), $htmlOptions = array())
+    {
+        if ($title === null)
+            $title = $this->owner->getName();
+        return CHtml::link($title, $this->owner->getAbsoluteUrl($urlAction, $urlParams), $htmlOptions);
     }
 
     /**
