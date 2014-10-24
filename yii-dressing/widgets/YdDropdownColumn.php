@@ -60,15 +60,27 @@ class YdDropdownColumn extends TbDataColumn
         $parentContents = ob_get_clean();
 
         if ($data instanceof CActiveRecord) {
-            $this->buttonOptions['split'] = true;
-            if (is_callable(array($data, 'getUrl'))) {
-                $this->buttonOptions['type'] = TbHtml::BUTTON_TYPE_LINK;
-                $this->buttonOptions['url'] = call_user_func(array($data, 'getUrl'));
-            }
             $links = is_callable(array($data, 'getMenuLinks')) ? call_user_func(array($data, 'getMenuLinks')) : array();
-            echo '<div class="filter-container">';
-            echo TbHtml::buttonDropdown($parentContents, $links, $this->buttonOptions);
-            echo '</div>';
+            if ($links) {
+                if (is_callable(array($data, 'getUrl'))) {
+                    $this->buttonOptions['type'] = TbHtml::BUTTON_TYPE_LINK;
+                    $this->buttonOptions['url'] = call_user_func(array($data, 'getUrl'));
+                }
+                echo '<div class="filter-container">';
+                $this->buttonOptions['split'] = true;
+                echo TbHtml::buttonDropdown($parentContents, $links, $this->buttonOptions);
+                echo '</div>';
+            }
+            else {
+                $url = is_callable(array($data, 'getUrl')) ? call_user_func(array($data, 'getUrl')) : false;
+                if ($url) {
+                    $this->buttonOptions['class'] = isset($this->buttonOptions['class']) ? $this->buttonOptions['class'] . ' btn' : 'btn';
+                    echo TbHtml::link($parentContents, $url, $this->buttonOptions);
+                }
+                else {
+                    echo TbHtml::button($parentContents, $this->buttonOptions);
+                }
+            }
         }
         else {
             echo TbHtml::button($parentContents, $this->buttonOptions);
