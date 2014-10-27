@@ -11,14 +11,14 @@
  *
  * @package dressing.components
  */
-class YdNumberHelper extends CComponent
+class YdNumberHelper
 {
 
     /**
      * @param array $array
      * @return bool|float
      */
-    public function getMedian($array = array())
+    public static function getMedian($array = array())
     {
         if (!is_array($array) || empty($array)) return false;
         sort($array);
@@ -33,7 +33,7 @@ class YdNumberHelper extends CComponent
      * @param array $array
      * @return bool|float
      */
-    public function getAverage($array = array())
+    public static function getAverage($array = array())
     {
         if (!is_array($array) || empty($array)) return false;
         return array_sum($array) / count($array);
@@ -43,7 +43,7 @@ class YdNumberHelper extends CComponent
      * @param array $array
      * @return bool|float
      */
-    public function getHigh($array = array())
+    public static function getHigh($array = array())
     {
         if (!is_array($array) || empty($array)) return false;
         return max($array);
@@ -53,7 +53,7 @@ class YdNumberHelper extends CComponent
      * @param array $array
      * @return bool|float
      */
-    public function getLow($array = array())
+    public static function getLow($array = array())
     {
         if (!is_array($array) || empty($array)) return false;
         return min($array);
@@ -64,7 +64,7 @@ class YdNumberHelper extends CComponent
      * @param $num
      * @return string
      */
-    public function addOrdinalNumberSuffix($num)
+    public static function addOrdinalNumberSuffix($num)
     {
         if (!in_array(($num % 100), array(11, 12, 13))) {
             switch ($num % 10) {
