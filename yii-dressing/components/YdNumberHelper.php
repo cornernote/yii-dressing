@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class YdNumberHelper
  *
@@ -56,5 +57,25 @@ class YdNumberHelper extends CComponent
     {
         if (!is_array($array) || empty($array)) return false;
         return min($array);
+    }
+
+    /**
+     * @link http://www.if-not-true-then-false.com/2010/php-1st-2nd-3rd-4th-5th-6th-php-add-ordinal-number-suffix/
+     * @param $num
+     * @return string
+     */
+    public function addOrdinalNumberSuffix($num)
+    {
+        if (!in_array(($num % 100), array(11, 12, 13))) {
+            switch ($num % 10) {
+                case 1:
+                    return $num . 'st';
+                case 2:
+                    return $num . 'nd';
+                case 3:
+                    return $num . 'rd';
+            }
+        }
+        return $num . 'th';
     }
 }
