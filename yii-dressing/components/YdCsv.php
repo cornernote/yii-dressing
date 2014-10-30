@@ -106,7 +106,7 @@ class YdCsv
     static function addCsvHeader($rows)
     {
         if ($rows) {
-            $firstRow = $rows[0];
+            $firstRow = current($rows);
             $fields = array();
             foreach ($firstRow as $key => $value) {
                 $fields[$key] = $key;
