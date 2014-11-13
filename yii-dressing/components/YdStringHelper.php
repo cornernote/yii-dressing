@@ -682,6 +682,8 @@ class YdStringHelper
             $table["&nbsp;"] = ' '; # non-breaking space
             $table["&quot;"] = '"'; # quotation mark
             $table["&mdash;"] = '-'; # em dash
+            $table["&trade;"] = '(TM)';
+            $table["&trade;"] = '(TM)';
 
         }
         return strtr($text, $table);
