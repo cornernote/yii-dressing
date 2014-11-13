@@ -680,6 +680,9 @@ class YdStringHelper
             $table["&#8482;"] = '(TM)'; # trade mark sign
             $table["&amp;"] = '&'; # ampersand
             $table["&nbsp;"] = ' '; # non-breaking space
+            $table["&quot;"] = '"'; # quotation mark
+            $table["&mdash;"] = '-'; # em dash
+
         }
         return strtr($text, $table);
     }
