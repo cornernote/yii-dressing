@@ -684,7 +684,7 @@ class YdStringHelper
             $table["&mdash;"] = '-'; # em dash
             $table["&trade;"] = '(TM)';
             $table["&trade;"] = '(TM)';
-            $table["&bull;"] = '-';
+            $table["&bull;"] = '*';
 
         }
         return strtr($text, $table);
