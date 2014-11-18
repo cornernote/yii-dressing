@@ -37,7 +37,7 @@ class YdCsv
      */
     static function escapeCsvElement($dataElement, $delimiter = ',', $enclosure = '"')
     {
-        return str_replace('"', '""', $dataElement);
+        return str_replace($enclosure, $enclosure . $enclosure, $dataElement);
     }
 
     /**
