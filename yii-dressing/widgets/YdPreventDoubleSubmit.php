@@ -52,7 +52,7 @@ class YdPreventDoubleSubmit extends CWidget
         });", CClientScript::POS_END);
 
         // links
-        $cs->registerScript($this->id . '-form', "$(document).on('click', '" . $this->linkSelector . "', function (e) {
+        $cs->registerScript($this->id . '-link', "$(document).on('click', '" . $this->linkSelector . "', function (e) {
             var link = $(this);
             if (link.data('clicked') !== true) {
                 link.data('clicked', true);
