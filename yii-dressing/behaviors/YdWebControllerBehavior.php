@@ -263,4 +263,26 @@ class YdWebControllerBehavior extends CBehavior
         return array_unique($ids);
     }
 
+    /**
+     * @link http://www.yiiframework.com/forum/index.php/topic/2504-trailing-slash-for-urls/
+     */
+    public function endUrlInSlash()
+    {
+        // Remove any double slashes and force a trailing slash to the request URI
+        $requestUri = yii::app()->request->requestUri;
+        $repairedRequestUri = $requestUri;
+        while (false !== strpos($repairedRequestUri, '//')) {
+            $repairedRequestUri = preg_replace("////", '/', $repairedRequestUri);
+        }
+        if (false === strpos($repairedRequestUri, '?') && '/' !== substr($repairedRequestUri, strlen($repairedRequestUri) - 1, 1)) {
+            $repairedRequestUri = "{$repairedRequestUri}/";
+        }
+        elseif ('/' !== substr($repairedRequestUri, strpos($repairedRequestUri, '?') - 1, 1)) {
+            $repairedRequestUri = substr($repairedRequestUri, 0, strpos($repairedRequestUri, '?')) . '/' . substr($repairedRequestUri, strpos($repairedRequestUri, '?'));
+        }
+        if ($repairedRequestUri !== $requestUri) {
+            Yii::app()->request->redirect($repairedRequestUri, true, 301);
+        }
+    }
+
 }
