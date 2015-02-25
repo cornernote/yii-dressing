@@ -1,4 +1,5 @@
 <?php
+
 /**
  * YdRequiredOtherValidator validates that the specified attribute does not have null or empty value when the
  * otherField has a value.
@@ -14,12 +15,12 @@ class YdRequiredOtherValidator extends CRequiredValidator
 {
 
     /**
-     * @var string the field name of the otherField.
+     * @var string The field name of the otherField.
      */
     public $otherField;
 
     /**
-     * @var string the value of the otherField that will trigger the required.
+     * @var string|array The value of the otherField that will trigger the required, use an array for multiple values.
      */
     public $otherFieldValue = false;
 
@@ -32,7 +33,7 @@ class YdRequiredOtherValidator extends CRequiredValidator
     protected function validateAttribute($object, $attribute)
     {
         if ($this->otherFieldValue === false && !$object->{$this->otherField}) return;
-        if ($this->otherFieldValue === false || $object->{$this->otherField} == $this->otherFieldValue) {
+        if ($this->otherFieldValue === false || $object->{$this->otherField} == $this->otherFieldValue || (is_array($this->otherFieldValue) && in_array($object->{$this->otherField}, $this->otherFieldValue))) {
             $otherFieldLabel = $object->getAttributeLabel($this->otherField);
             $otherFieldValueLabel = $this->otherFieldValue ? $this->otherFieldValue : Yii::t('dressing', 'not blank');
 
