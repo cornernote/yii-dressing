@@ -132,8 +132,8 @@ class YdDeviceDetection extends CApplicationComponent
         if ((preg_match('/Bot|Crawler|Spider|Yahoo|ia_archiver|Covario-IDS|findlinks|DataparkSearch|larbin|Mediapartners-Google|NG-Search|Snappy|Teoma|Jeeves|TinEye/i', $ua)) && (!preg_match('/Mobile/i', $ua))) {
             return $this->_device = $this->deviceDesktop;
         }
-        // Assume it is a Mobile Device
-        return $this->_device = $this->deviceMobile;
+        // Assume it is a Desktop Device
+        return $this->_device = $this->deviceDesktop;
     }
 
     /**
