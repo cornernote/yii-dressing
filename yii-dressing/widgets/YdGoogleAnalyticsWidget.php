@@ -1,4 +1,5 @@
 <?php
+
 /**
  * YdGoogleAnalyticsWidget
  *
@@ -19,6 +20,7 @@ class YdGoogleAnalyticsWidget extends CWidget
      * @var string
      */
     public $account = '';
+
     /**
      * @var
      */
@@ -44,7 +46,7 @@ class YdGoogleAnalyticsWidget extends CWidget
                 s.parentNode.insertBefore(ga, s);
             })();
         ';
-        Yii::app()->clientScript->registerScript($this->id, $contents, $this->position);
+        Yii::app()->clientScript->registerScript($this->id, $contents, CClientScript::POS_END);
     }
 
     /**
