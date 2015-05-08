@@ -271,9 +271,9 @@ class YdWebControllerBehavior extends CBehavior
         // Remove any double slashes and force a trailing slash to the request URI
         $requestUri = yii::app()->request->requestUri;
         $repairedRequestUri = $requestUri;
-        while (false !== strpos($repairedRequestUri, '//')) {
-            $repairedRequestUri = preg_replace("////", '/', $repairedRequestUri);
-        }
+        //while (false !== strpos($repairedRequestUri, '//')) {
+        //    $repairedRequestUri = preg_replace("/\/\//", '/', $repairedRequestUri);
+        //}
         if (false === strpos($repairedRequestUri, '?') && '/' !== substr($repairedRequestUri, strlen($repairedRequestUri) - 1, 1)) {
             $repairedRequestUri = "{$repairedRequestUri}/";
         }
