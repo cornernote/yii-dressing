@@ -82,6 +82,11 @@ class YdGridView extends TbGridView
     public $footer;
 
     /**
+     * @var string
+     */
+    public $cssFile;
+
+    /**
      *
      */
     public function init()
@@ -122,7 +127,12 @@ class YdGridView extends TbGridView
     public function registerClientScript()
     {
         parent::registerClientScript();
-        Yii::app()->clientScript->registerCssFile(Yii::app()->dressing->getAssetsUrl() . '/css/gridview.css');
+        if ($this->cssFile !== false) {
+            if (!$this->cssFile) {
+                $this->cssFile = Yii::app()->dressing->getAssetsUrl() . '/css/gridview.css';
+            }
+            Yii::app()->clientScript->registerCssFile($this->cssFile);
+        }
 
         if ($this->multiActions || $this->gridActions || $this->gridButtons) {
             Yii::app()->clientScript->registerScriptFile(Yii::app()->dressing->getAssetsUrl() . '/js/jquery.form.js');
@@ -254,7 +264,7 @@ class YdGridView extends TbGridView
         }
         echo CHtml::dropDownList("userPageSize[{$this->id}]", $this->dataProvider->pagination->pageSize, $options, array(
             'onchange' => "$.fn.yiiGridView.update('{$this->id}',{data:{userPageSize:{" . str_replace('-', '_', $this->id) . ":$(this).val()}}})",
-            'class' => 'page-size',
+            'class' => 'page-size form-control',
         ));
     }
 
@@ -376,8 +386,7 @@ class YdGridView extends TbGridView
             echo '<div class="' . $this->pagerCssClass . '">';
             $this->widget($class, $pager);
             echo '</div>';
-        }
-        else
+        } else
             $this->widget($class, $pager);
     }
 
