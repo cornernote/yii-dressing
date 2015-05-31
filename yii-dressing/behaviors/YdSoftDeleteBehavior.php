@@ -1,4 +1,5 @@
 <?php
+
 /**
  * YdSoftDeleteBehavior automatically sets a deleted field to the date instead of deleting the row from the database.
  *
@@ -50,14 +51,10 @@ class YdSoftDeleteBehavior extends CActiveRecordBehavior
     public function undelete()
     {
         if (!$this->owner->isNewRecord) {
-            Yii::trace(get_class($this) . '.undelete()', 'system.db.ar.CActiveRecord');
-            $updateFields = array(
-                $this->deleted => null,
-            );
-            return $this->owner->updateByPk($this->owner->getPrimaryKey(), $updateFields);
+            $this->owner->setAttribute($this->deleted, null);
+            return $this->owner->save(false);
         }
-        else
-            throw new CDbException(Yii::t('yii', 'The active record cannot be undeleted because it is new.'));
+        return false;
     }
 
     /**
