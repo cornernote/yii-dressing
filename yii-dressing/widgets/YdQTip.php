@@ -25,6 +25,11 @@ class YdQTip extends CWidget
     public $classes = 'qtip-bootstrap';
 
     /**
+     * @var int
+     */
+    public $delay = 0;
+
+    /**
      *
      */
     public function init()
@@ -51,7 +56,8 @@ class YdQTip extends CWidget
                         classes: "' . $this->classes . '"
                     },
                     show: {
-                        ready: true
+                        ready: true,
+                        delay: ' . $this->delay . '
                     },
                     position: {
                         adjust: {
