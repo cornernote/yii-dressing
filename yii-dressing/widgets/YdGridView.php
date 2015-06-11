@@ -118,7 +118,11 @@ class YdGridView extends TbGridView
             )), $this->columns);
         }
 
+        // prevent parent from loading its own css
+        $cssFile = $this->cssFile;
+        $this->cssFile = false;
         parent::init();
+        $this->cssFile = $cssFile;
     }
 
     /**
