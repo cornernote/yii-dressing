@@ -284,7 +284,7 @@ class YdGridView extends TbGridView
         echo '<div class="form-multi-actions">';
         echo CHtml::dropDownList("multiAction[{$this->id}]", '', CHtml::listData($this->multiActions, 'url', 'name'), array(
             'empty' => Yii::t('dressing', 'with selected...'),
-            'class' => 'multi-actions',
+            'class' => 'multi-actions form-control',
         ));
         echo '</div>';
     }
