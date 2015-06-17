@@ -71,7 +71,7 @@ class YdQTip extends CWidget
             });
         ', CClientScript::POS_READY);
         $cs->registerCSSFile($baseUrl . '/jquery.qtip.css', 'screen, projection');
-        $cs->registerScriptFile($baseUrl . '/jquery.qtip.min.js', CClientScript::POS_HEAD);
+        $cs->registerScriptFile($baseUrl . '/jquery.qtip.min.js', CClientScript::POS_END);
     }
 
 }
