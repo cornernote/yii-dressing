@@ -192,14 +192,12 @@ class YdGridView extends TbGridView
                 function setupGridViewAjaxForm() {
                     $('#<?php echo $this->id; ?>-form').ajaxForm({
                         beforeSubmit: function (response) {
-                            if (!modalRemote.length) modalRemote = $('<div class="modal hide fade" id="modal-remote"></div>');
-                            //modalRemote.modalResponsiveFix();
-                            //modalRemote.touchScroll();
-                            modalRemote.html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>').modal();
+                            if (!modalRemote.length) modalRemote = $('<div class="modal fade" id="modal-remote" data-backdrop="static"><div class="modal-dialog modal-lg"><div class="modal-content"></div></div></div>');
+                            modalRemote.find('.modal-content').html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>');
+                            modalRemote.modal();
                         },
                         success: function (response) {
-                            modalRemote.html(response);
-                            $(window).resize();
+                            modalRemote.find('.modal-content').html(response);
                             $('#modal-remote input:text:visible:first').focus();
                         },
                         error: function (response) {
@@ -384,13 +382,8 @@ class YdGridView extends TbGridView
             }
         }
         $pager['pages'] = $this->dataProvider->getPagination();
-
-        if ($pager['pages']->getPageCount() > 0) {
-            echo '<div class="' . $this->pagerCssClass . '">';
-            $this->widget($class, $pager);
-            echo '</div>';
-        } else
-            $this->widget($class, $pager);
+        TbHtml::addCssClass('pagination', $pager['htmlOptions']['listOptions']);
+        $this->widget($class, $pager);
     }
 
     /**

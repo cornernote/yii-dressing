@@ -20,11 +20,11 @@ class YdModal extends CWidget
     {
         // fix modals on mobile devices
         //$baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('dressing.assets.bootstrap-modal'), false, 1, YII_DEBUG);
-        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('vendor.jschr.bootstrap-modal'), false, 1, YII_DEBUG);
-        $cs = Yii::app()->clientScript;
-        $cs->registerCssFile($baseUrl . '/css/bootstrap-modal.css');
-        $cs->registerScriptFile($baseUrl . '/js/bootstrap-modalmanager.js', CClientScript::POS_END);
-        $cs->registerScriptFile($baseUrl . '/js/bootstrap-modal.js', CClientScript::POS_END);
+//        $baseUrl = Yii::app()->assetManager->publish(Yii::getPathOfAlias('vendor.jschr.bootstrap-modal'), false, 1, YII_DEBUG);
+//        $cs = Yii::app()->clientScript;
+//        $cs->registerCssFile($baseUrl . '/css/bootstrap-modal.css');
+//        $cs->registerScriptFile($baseUrl . '/js/bootstrap-modalmanager.js', CClientScript::POS_END);
+//        $cs->registerScriptFile($baseUrl . '/js/bootstrap-modal.js', CClientScript::POS_END);
 
         // load yiiactiveform so it's not needed to load in remote modal
         Yii::app()->getClientScript()->registerCoreScript('yiiactiveform');
@@ -41,12 +41,12 @@ class YdModal extends CWidget
                 $.ajax({
                     url: url,
                     beforeSend: function (data) {
-                        if (!$modalRemote.length) $modalRemote = $('<div class="modal hide fade" id="modal-remote" data-width="940"></div>');
-                        $modalRemote.html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>');
+                        if (!$modalRemote.length) $modalRemote = $('<div class="modal fade" id="modal-remote" data-backdrop="static"><div class="modal-dialog modal-lg"><div class="modal-content"></div></div></div>');
+                        $modalRemote.find('.modal-content').html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>');
                         $modalRemote.modal();
                     },
                     success: function (data) {
-                        $modalRemote.html(data);
+                        $modalRemote.find('.modal-content').html(data);
                         $(window).resize();
                         $modalRemote.find('input:text:visible:first').focus();
                     },
