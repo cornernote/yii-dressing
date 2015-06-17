@@ -302,7 +302,7 @@ class YdGridView extends TbGridView
         echo '<div class="form-grid-actions">';
         echo CHtml::dropDownList("gridAction[{$this->id}]", '', CHtml::listData($this->gridActions, 'url', 'name'), array(
             'empty' => Yii::t('dressing', 'with all matching rows...'),
-            'class' => 'grid-actions',
+            'class' => 'grid-actions form-control',
         ));
         echo '</div>';
     }
