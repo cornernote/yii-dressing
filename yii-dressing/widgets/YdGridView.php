@@ -382,7 +382,7 @@ class YdGridView extends TbGridView
             }
         }
         $pager['pages'] = $this->dataProvider->getPagination();
-        TbHtml::addCssClass('pagination', $pager['htmlOptions']['listOptions']);
+        TbHtml::addCssClass('pager pagination', $pager['htmlOptions']);
         $this->widget($class, $pager);
     }
 
