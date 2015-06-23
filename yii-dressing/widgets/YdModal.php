@@ -42,7 +42,7 @@ class YdModal extends CWidget
                     url: url,
                     beforeSend: function (data) {
                         if (!$modalRemote.length) $modalRemote = $('<div class="modal fade" id="modal-remote" data-backdrop="static"><div class="modal-dialog modal-lg"><div class="modal-content"></div></div></div>');
-                        $modalRemote.find('.modal-content').html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>');
+                        $modalRemote.find('.modal-content').html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div></div>');
                         $modalRemote.modal();
                     },
                     success: function (data) {
