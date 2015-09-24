@@ -19,6 +19,11 @@ class YdCurl
     public static $referer;
 
     /**
+     * @var string
+     */
+    public static $basicAuth;
+
+    /**
      * @var bool
      */
     public static $followLocation = true;
@@ -35,9 +40,13 @@ class YdCurl
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_AUTOREFERER, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        if ($post) {
+        if (!empty($post)) {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, is_string($post) ? $post : http_build_query($post));
+        }
+        if (self::$basicAuth) {
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+            curl_setopt($ch, CURLOPT_USERPWD, self::$basicAuth);
         }
         if (self::$followLocation) {
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -55,6 +64,7 @@ class YdCurl
         curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieFile);
         curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFile);
         $output = curl_exec($ch);
+        //debug(curl_getinfo($ch));
         return curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' ? $output : false;
     }
 
