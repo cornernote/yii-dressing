@@ -26,6 +26,11 @@ class YdCurl
     /**
      * @var int
      */
+    public static $timeout = 30;
+
+    /**
+     * @var int
+     */
     public static $validStatus = 200;
 
     /**
@@ -61,6 +66,9 @@ class YdCurl
         }
         if (self::$agent) {
             curl_setopt($ch, CURLOPT_USERAGENT, self::$agent);
+        }
+        if (self::$timeout) {
+            curl_setopt($ch, CURLOPT_TIMEOUT, self::$timeout);
         }
         $_url = parse_url($url);
         $cookieFile = Yii::app()->getRuntimePath() . '/cookies/' . md5($_url['host']);
