@@ -81,6 +81,7 @@ class YdCurl
         if (self::$validStatus) {
             return curl_getinfo($ch, CURLINFO_HTTP_CODE) == self::$validStatus ? $output : false;
         }
+        curl_close($ch);
         return $output;
     }
 
