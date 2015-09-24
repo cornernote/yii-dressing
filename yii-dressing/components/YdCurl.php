@@ -24,6 +24,11 @@ class YdCurl
     public static $basicAuth;
 
     /**
+     * @var int
+     */
+    public static $validStatus = 200;
+
+    /**
      * @var bool
      */
     public static $followLocation = true;
@@ -65,7 +70,10 @@ class YdCurl
         curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFile);
         $output = curl_exec($ch);
         //debug(curl_getinfo($ch));
-        return curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200' ? $output : false;
+        if (self::$validStatus) {
+            return curl_getinfo($ch, CURLINFO_HTTP_CODE) == self::$validStatus ? $output : false;
+        }
+        return $output;
     }
 
 }
