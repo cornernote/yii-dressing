@@ -49,6 +49,9 @@ class YdQTip extends CWidget
         $cs->registerScript('qtip2', '
             $(document).on("mouseover", "' . $this->selector . '", function(event) {
                 var e = $(this);
+                if (e.data("qtip"){
+                    e.qtip("destroy");
+                }
                 index = e.parent().index();
                 e.qtip({
                     overwrite: false,
