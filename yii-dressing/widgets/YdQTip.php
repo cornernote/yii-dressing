@@ -48,13 +48,26 @@ class YdQTip extends CWidget
         // auto-qtip on <a title="something">link</a>
         $cs->registerScript('qtip2', '
             $(document).on("mouseover", "' . $this->selector . '", function(event) {
-                var e = $(this);
-                if (e.data("qtip"){
-                    e.qtip("destroy");
+                if (window.lastQtipX && window.lastQtipY){
+                   var movedX = window.lastQtipX - event.pageX
+                   var movedY = window.lastQtipY - event.pageY
+                   var distanceMoved = Math.sqrt(movedX * movedX + movedY * movedY);
+                   if (distanceMoved < 8){
+                    return;
+                   }
                 }
+
+                window.lastQtipX = event.pageX;
+                window.lastQtipY = event.pageY;
+                var e = $(this);
+                if (e.data("qtip")){
+                   e.qtip("destroy",true);
+                   e.removeData("qtip");
+                }
+                $(".qtip :visible").remove();
                 index = e.parent().index();
                 e.qtip({
-                    overwrite: false,
+                    overwrite: true,
                     style: {
                         classes: "' . $this->classes . '"
                     },
