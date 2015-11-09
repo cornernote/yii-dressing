@@ -30,20 +30,10 @@ class YdCsv
 {
 
     /**
-     * @param $dataElement
-     * @param string $delimiter
-     * @param string $enclosure
-     * @return mixed
-     */
-    static function escapeCsvElement($dataElement, $delimiter = ',', $enclosure = '"')
-    {
-        return str_replace($enclosure, $enclosure . $enclosure, $dataElement);
-    }
-
-    /**
      * @param $dataArray
      * @param string $delimiter
      * @param string $enclosure
+     * @param string $newLine
      * @return string
      */
     static function getCsvData($dataArray, $delimiter = ',', $enclosure = '"', $newLine = "\n")
@@ -64,7 +54,7 @@ class YdCsv
 
             foreach ($line as $dataElement) {
                 // Replaces a double quote with two double quotes
-                $dataElement = self::escapeCsvElement($dataElement, $delimiter, $enclosure);
+                $dataElement = str_replace($enclosure, $enclosure . $enclosure, $dataElement);
 
                 // Adds a delimiter before each field (except the first)
                 if ($writeDelimiter)
@@ -113,8 +103,7 @@ class YdCsv
             }
             $fieldsZero[0] = $fields;
             $rowsWithCaption = array_merge($fieldsZero, $rows);
-        }
-        else {
+        } else {
             $rowsWithCaption = $rows;
         }
         return $rowsWithCaption;
@@ -136,6 +125,7 @@ class YdCsv
     /**
      * @param $fileName
      * @param string $delimiter
+     * @param int $headerRow
      * @return array
      */
     static function csvToArray($fileName, $delimiter = ',', $headerRow = 1)
@@ -146,19 +136,16 @@ class YdCsv
             $headerRow--;
             fgetcsv($handle, null, $delimiter);
         }
-        if ($headerRow) {
-            $header = fgetcsv($handle, null, $delimiter);
-        }
+        $header = $headerRow ? fgetcsv($handle, null, $delimiter) : false;
         while (($data = fgetcsv($handle, null, $delimiter)) !== FALSE) {
             $row = array();
-            if ($headerRow) {
+            if ($header) {
                 foreach ($header as $key => $heading) {
                     $heading = trim($heading);
                     $row[$heading] = (isset($data[$key])) ? YdEncoding::toUTF8($data[$key]) : '';
                 }
                 $rows[] = $row;
-            }
-            else {
+            } else {
                 $rows[] = $data;
             }
         }
