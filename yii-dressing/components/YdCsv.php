@@ -38,40 +38,18 @@ class YdCsv
      */
     static function getCsvData($dataArray, $delimiter = ',', $enclosure = '"', $newLine = "\n")
     {
-        // Write a line to a file
-        // $filePointer = the file resource to write to
-        // $dataArray = the data to write out
-        // $delimeter = the field separator
-
-        // Build the string
         $string = '';
-
-        // for each array element, which represents a line in the csv file...
         foreach ($dataArray as $line) {
-
-            // No leading delimiter
             $writeDelimiter = false;
-
             foreach ($line as $dataElement) {
-                // Replaces a double quote with two double quotes
                 $dataElement = str_replace($enclosure, $enclosure . $enclosure, $dataElement);
-
-                // Adds a delimiter before each field (except the first)
                 if ($writeDelimiter)
                     $string .= $delimiter;
-
-                // Encloses each field with $enclosure and adds it to the string
                 $string .= $enclosure . $dataElement . $enclosure;
-
-                // Delimiters are used every time except the first.
                 $writeDelimiter = true;
             }
-            // Append new line
             $string .= $newLine;
-
-        } // end foreach($dataArray as $line)
-
-        // Write the string to the file
+        }
         return $string;
     }
 
@@ -85,7 +63,6 @@ class YdCsv
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Content-Disposition: attachment; filename=' . $filename);
-
         echo $cvsString;
     }
 
@@ -116,7 +93,7 @@ class YdCsv
      * @param string $enclosure
      * @param string $filename
      */
-    static function outputCsvFromKeyValueArray($keyValueArray, $delimiter = ',', $enclosure = '"', $filename = 'csvreport.csv')
+    static function outputCsvFromArray($keyValueArray, $delimiter = ',', $enclosure = '"', $filename = 'csvreport.csv')
     {
         $csvString = self::getCsvData(self::addCsvHeader($keyValueArray), $delimiter, $enclosure);
         self::sendCsvInHeader($csvString, $filename);
