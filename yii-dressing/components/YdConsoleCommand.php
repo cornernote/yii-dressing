@@ -23,7 +23,7 @@ class YdConsoleCommand extends CConsoleCommand
      * It is provided for invoking class-level methods (something similar to static class methods.)
      *
      * @param string $className
-     * @return YdConsoleCommand
+     * @return static
      */
     public static function instance($className = null)
     {
