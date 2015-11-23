@@ -76,7 +76,7 @@ class YdActiveForm extends TbActiveForm
     {
         // more modal stuff
         if (Yii::app()->getRequest()->isAjaxRequest) {
-            return '<div class="modal-body">';
+            return '<div class="modal-body">' . "\n";
         }
         return '';
     }
@@ -88,7 +88,7 @@ class YdActiveForm extends TbActiveForm
     {
         // more modal stuff
         if (Yii::app()->getRequest()->isAjaxRequest) {
-            return '</div>';
+            return "\n</div>\n";
         }
         return '';
     }

@@ -192,10 +192,10 @@ class YdGridView extends TbGridView
                 function setupGridViewAjaxForm() {
                     $('#<?php echo $this->id; ?>-form').ajaxForm({
                         beforeSubmit: function (response) {
-                            if (!modalRemote.length) modalRemote = $('<div class="modal hide fade" id="modal-remote"></div>');
-                            //modalRemote.modalResponsiveFix();
-                            //modalRemote.touchScroll();
-                            modalRemote.html('<div class="modal-header"><h3><?php echo Yii::t('dressing', 'Loading...'); ?></h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>').modal();
+                            if (!modalRemote.length) modalRemote = $('<div class="modal fade" id="modal-remote"></div>');
+//                            modalRemote.modalResponsiveFix();
+//                            modalRemote.touchScroll();
+                            modalRemote.html('<div class="modal-header"><h3>Loading</h3></div><div class="modal-body"><div class="modal-remote-indicator"></div>').modal();
                         },
                         success: function (response) {
                             modalRemote.html(response);
