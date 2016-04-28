@@ -99,14 +99,17 @@ class YdAssetCompressCommand extends YdConsoleCommand
                 $assetPath = Yii::getPathOfAlias($_assetPath);
                 $assetUrl = Yii::app()->assetManager->publish($assetPath);
             }
-            $assetUrl = ltrim($assetUrl, '.');
-
-            $relativePath = dirname($assetPath . '/' . $file);
-            $relativeUrl = str_replace($assetPath, $assetUrl, $relativePath);
-
             $_content = file_get_contents($assetPath . '/' . $file);
-            if (pathinfo($file, PATHINFO_EXTENSION) == 'css') {
+
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            if ($ext == 'css') {
+                $assetUrl = ltrim($assetUrl, '.');
+                $relativePath = dirname($assetPath . '/' . $file);
+                $relativeUrl = str_replace($assetPath, $assetUrl, $relativePath);
                 $_content = preg_replace('%url\s*\(\s*[\\\'"]?(?!(((?:https?:)?\/\/)|(?:data:?:)))([^\\\'")]+)[\\\'"]?\s*\)%', 'url("' . $relativeUrl . '/$3")', $_content);
+            }
+            if ($ext == 'js') {
+                $_content .= ';' . "\n";
             }
             $content .= $_content;
         }
