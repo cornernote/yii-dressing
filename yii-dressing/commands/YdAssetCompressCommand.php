@@ -165,7 +165,7 @@ class YdAssetCompressCommand extends YdConsoleCommand
     private function minifyJS($contents)
     {
         if (!$contents) return "";
-        return JShrink\Minifier::minify($contents);
+        return JShrink\Minifier::minify($contents, array('flaggedComments' => false));
         //return Minify_JS_ClosureCompiler::minify($contents);
     }
 
