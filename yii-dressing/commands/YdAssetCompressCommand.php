@@ -10,15 +10,7 @@ class YdAssetCompressCommand extends YdConsoleCommand
     /**
      * @var string
      */
-    public $basePath = 'application';
-    /**
-     * @var string
-     */
     public $assetsPath = 'application.assets';
-    /**
-     * @var string
-     */
-    public $runtimePath = 'application.runtime';
     /**
      * @var array
      */
@@ -36,17 +28,8 @@ class YdAssetCompressCommand extends YdConsoleCommand
     /**
      *
      */
-    public function actionIndex()
-    {
-        $this->publish();
-    }
-
-    /**
-     *
-     */
     public function init()
     {
-        $this->consoleEcho("Asset Compress engaged \r\n", "0;35");
         $this->_assetsPath = Yii::getPathOfAlias($this->assetsPath);
 
         $this->css = CMap::mergeArray(array(
@@ -61,25 +44,11 @@ class YdAssetCompressCommand extends YdConsoleCommand
     }
 
     /**
-     * @param $msg
-     * @param null $color
-     */
-    public function consoleEcho($msg, $color = null)
-    {
-        if (Yii::app() instanceof CConsoleApplication) {
-            if (!is_null($color)) {
-                echo "\033[{$color}m" . $msg . "\033[0m";
-            } else {
-                echo $msg;
-            }
-        }
-    }
-
-    /**
      *
      */
-    private function publish()
+    public function actionIndex()
     {
+        $this->consoleEcho("Asset Compress\r\n", "0;35");
         $combine = array_merge($this->css['combine'], $this->js['combine']);
         foreach ($combine as $filename => $files) {
             $this->consoleEcho("Combining ", "0;32");
@@ -163,6 +132,21 @@ class YdAssetCompressCommand extends YdConsoleCommand
         if (!$contents) return "";
         return JShrink\Minifier::minify($contents);
         //return Minify_JS_ClosureCompiler::minify($contents);
+    }
+
+    /**
+     * @param $msg
+     * @param null $color
+     */
+    public function consoleEcho($msg, $color = null)
+    {
+        if (Yii::app() instanceof CConsoleApplication) {
+            if (!is_null($color)) {
+                echo "\033[{$color}m" . $msg . "\033[0m";
+            } else {
+                echo $msg;
+            }
+        }
     }
 
 }
