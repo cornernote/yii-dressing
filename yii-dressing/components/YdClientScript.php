@@ -17,6 +17,21 @@ class YdClientScript extends CClientScript
     /**
      * @var array
      */
+    public $ignoreCoreScript = array();
+
+    /**
+     * @var array
+     */
+    public $ignoreScriptFile = array();
+
+    /**
+     * @var array
+     */
+    public $ignoreCssFile = array();
+
+    /**
+     * @var array
+     */
     public $ignoreAjaxCoreScript = array(
         'jquery',
         'yiiactiveform',
@@ -114,6 +129,11 @@ class YdClientScript extends CClientScript
         // do not load these scripts on ajax
         if (Yii::app()->request->isAjaxRequest) {
             foreach ($this->ignoreAjaxCssFile as $ignore) {
+                if ($this->endsWith($url, $ignore))
+                    return $this;
+            }
+        } else {
+            foreach ($this->ignoreCssFile as $ignore) {
                 if ($this->endsWith($url, $ignore))
                     return $this;
             }
@@ -249,6 +269,11 @@ class YdClientScript extends CClientScript
                 if ($this->endsWith($url, $ignore))
                     return $this;
             }
+        } else {
+            foreach ($this->ignoreScriptFile as $ignore) {
+                if ($this->endsWith($url, $ignore))
+                    return $this;
+            }
         }
         return parent::registerScriptFile($url, $position, $htmlOptions);
     }
@@ -327,8 +352,12 @@ class YdClientScript extends CClientScript
     public function registerCoreScript($name, $options = array())
     {
         // do not load these scripts on ajax
-        if (Yii::app()->request->isAjaxRequest && in_array($name, $this->ignoreAjaxCoreScript)) {
-            return $this;
+        if (Yii::app()->request->isAjaxRequest) {
+            if (in_array($name, $this->ignoreAjaxCoreScript))
+                return $this;
+        } else {
+            if (in_array($name, $this->ignoreCoreScript))
+                return $this;
         }
         return parent::registerCoreScript($name);
     }
