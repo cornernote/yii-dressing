@@ -3,6 +3,38 @@
 /**
  * Class YdAssetCompressCommand
  * @see https://github.com/aarondfrancis/mantis-manager
+ *
+ * @usage:
+ * ```
+ * 'commandMap' => array(
+ *   'assetCompress' => array(
+ *     'class' => 'dressing.commands.YdAssetCompressCommand',
+ *     'assetsPath' => 'application.assets',
+ *     'css' => array(
+ *       'combine' => array(
+ *         'css/combined.css' => array(
+ *           'vendor.twbs.bootstrap.dist|css/bootstrap.css',
+ *           'bootstrap.assets|css/yiistrap.css',
+ *           'vendor.fortawesome.font-awesome|css/font-awesome.min.css',
+ *           'application|catalog/view/css/app.css',
+ *         ),
+ *       ),
+ *       'minify' => true
+ *     ),
+ *     'js' => array(
+ *       'combine' => array(
+ *         'js/combined.js' => array(
+ *           'system.web.js.source|jquery.min.js',
+ *           'system.web.js.source|jquery.yiiactiveform.js',
+ *           'vendor.twbs.bootstrap.dist|js/bootstrap.js',
+ *           'application|catalog/view/javascript/app.js',
+ *         ),
+ *       ),
+ *       'minify' => true
+ *     ),
+ *   ),
+ * ),
+ * ```
  */
 class YdAssetCompressCommand extends YdConsoleCommand
 {
