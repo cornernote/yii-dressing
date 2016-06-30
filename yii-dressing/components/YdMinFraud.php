@@ -44,9 +44,9 @@ class YdMinFraud extends CApplicationComponent
         YdCurl::$followLocation = 0;
         $minfraud_contents = YdCurl::download('https://minfraud1.maxmind.com/app/ccv2r?' . http_build_query($options));
         YdCurl::$followLocation = 1;
-        $minfraud_array = explode(';', $minfraud_contents);
-        foreach ($minfraud_array as $minfraud_row) {
-            if ($minfraud_row) {
+        if ($minfraud_contents) {
+            $minfraud_array = explode(';', $minfraud_contents);
+            foreach ($minfraud_array as $minfraud_row) {
                 list($key, $val) = explode('=', $minfraud_row);
                 $minfraud[$key] = $val;
             }
