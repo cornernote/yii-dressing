@@ -46,8 +46,10 @@ class YdMinFraud extends CApplicationComponent
         YdCurl::$followLocation = 1;
         $minfraud_array = explode(';', $minfraud_contents);
         foreach ($minfraud_array as $minfraud_row) {
-            list($key, $val) = explode('=', $minfraud_row);
-            $minfraud[$key] = $val;
+            if ($minfraud_row) {
+                list($key, $val) = explode('=', $minfraud_row);
+                $minfraud[$key] = $val;
+            }
         }
         return $minfraud;
     }
