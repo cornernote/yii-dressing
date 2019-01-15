@@ -15,9 +15,9 @@ class YdActiveDataProvider extends CActiveDataProvider
     /**
      * @return CSort
      */
-    public function getSort()
+    public function getSort($className = 'CSort')
     {
-        if (($sort = parent::getSort()) !== false) {
+        if (($sort = parent::getSort($className)) !== false) {
             if (!$sort->defaultOrder) {
                 $sort->modelClass = $this->modelClass;
                 $sort->multiSort = true;
