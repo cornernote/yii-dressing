@@ -3,7 +3,7 @@
 /**
  * YdMinFraud
  *
- * @link http://www.maxmind.com/app/ccv
+ * @link https://minfraud.maxmind.com/app/ccv
  *
  * Usage:
  * Yii::app()->minFraud->getMinFraud(array(
@@ -42,7 +42,7 @@ class YdMinFraud extends CApplicationComponent
         $options['license_key'] = $this->licenseKey;
         $minfraud = array();
         YdCurl::$followLocation = 0;
-        $minfraud_contents = YdCurl::download('https://minfraud1.maxmind.com/app/ccv2r?' . http_build_query($options));
+        $minfraud_contents = YdCurl::download('https://minfraud.maxmind.com/app/ccv2r?' . http_build_query($options));
         YdCurl::$followLocation = 1;
         if ($minfraud_contents) {
             $minfraud_array = explode(';', $minfraud_contents);
